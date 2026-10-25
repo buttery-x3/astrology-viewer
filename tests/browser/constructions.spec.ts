@@ -5,7 +5,7 @@ async function coordinates(page:Page){await page.getByRole('button',{name:/^Moon
 
 test('all seven methods expose validated actual constructions without changing the chart',async({page})=>{
   const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));await example(page);
-  const initial=await coordinates(page),context=await page.locator('.context-details').innerText();
+  const initial=await coordinates(page),context=await page.locator('.context-details > span > strong').innerText();
   for(const system of ['W','E','O','P','K','R','C']){
     await page.getByLabel('House system',{exact:true}).selectOption(system);
     await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
@@ -22,7 +22,7 @@ test('all seven methods expose validated actual constructions without changing t
     }
     const sweep=page.getByLabel('Construction sweep',{exact:true});await sweep.focus();await sweep.press('Home');await sweep.press('ArrowRight');
     expect(await guide.locator('.validation-details').innerText()).toBe(values);
-    expect(await page.locator('.context-details').innerText()).toBe(context);
+    expect(await page.locator('.context-details > span > strong').innerText()).toBe(context);
     expect(await coordinates(page)).toEqual(initial);
     await guide.getByRole('button',{name:/Focus construction/}).click();
     await expect(page.locator('#inspector').getByRole('heading',{name:'Boundary 11',exact:true})).toBeVisible();

@@ -10,7 +10,7 @@ async function bodyCoordinates(page:Page){
 
 test('all 21 house system/display combinations preserve membership and body directions',async({page})=>{
   const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));
-  await example(page);const instant=await page.locator('.context-details').innerText();
+  await example(page);const instant=await page.locator('.context-details > span > strong').innerText();
   await page.getByRole('button',{name:/^Moon/}).click();const coordinates=await bodyCoordinates(page);
   for(const system of ['W','E','O','P','K','R','C']){
     await page.getByLabel('House system',{exact:true}).selectOption(system);
@@ -21,7 +21,7 @@ test('all 21 house system/display combinations preserve membership and body dire
       await page.getByRole('radio',{name:mode,exact:true}).check();
       expect(await page.locator('#inspector .data-list').first().innerText()).toBe(assignment);
       expect(await bodyCoordinates(page)).toEqual(coordinates);
-      expect(await page.locator('.context-details').innerText()).toBe(instant);
+      expect(await page.locator('.context-details > span > strong').innerText()).toBe(instant);
     }
   }
   await page.getByRole('button',{name:'House 1',exact:true}).click();
