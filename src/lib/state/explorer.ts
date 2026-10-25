@@ -42,6 +42,7 @@ export const DEFAULT_EXPLORER_INPUT: Readonly<ExplorerInput> = Object.freeze({
   instantMs: Date.UTC(2000, 0, 1, 12),
   observer: Object.freeze({ latitudeDeg: 51.5, longitudeDeg: 0 }),
   system: 'W',
+  comparisonSystem: null,
 });
 
 function mergeInput(input: ExplorerInput, patch: ExplorerInputPatch): unknown {
@@ -51,7 +52,7 @@ function defaultWorkerFactory(): CalculationWorker {
   return new Worker(new URL('../workers/ephemeris-worker.ts', import.meta.url), { type: 'module', name: 'spatial-ephemeris' });
 }
 function sameInput(a: ExplorerInput, b: ExplorerInput): boolean {
-  return a.instantMs === b.instantMs && a.system === b.system
+  return a.instantMs === b.instantMs && a.system === b.system && a.comparisonSystem === b.comparisonSystem
     && a.observer.latitudeDeg === b.observer.latitudeDeg && a.observer.longitudeDeg === b.observer.longitudeDeg;
 }
 function freeze<T>(value: T): T {
@@ -98,7 +99,7 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
   function calculate(): void {
     if (!workerReady || !worker || destroyed) return;
     try {
-      worker.postMessage({ type: 'calculate', revision: state.revision, instantMs: state.input.instantMs, observer: { ...state.input.observer }, systems: [state.input.system] });
+      worker.postMessage({ type: 'calculate', revision: state.revision, instantMs: state.input.instantMs, observer: { ...state.input.observer }, systems: state.input.comparisonSystem ? [state.input.system,state.input.comparisonSystem] : [state.input.system] });
     } catch { fail('Unable to send the chart calculation. Retry to restart the calculation worker.'); }
   }
   function startWorker(): void {
@@ -133,7 +134,8 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
           const snapshot = message.snapshot;
           if (snapshot.instantMs !== state.input.instantMs || snapshot.observer.latitudeDeg !== state.input.observer.latitudeDeg
             || snapshot.observer.longitudeDeg !== state.input.observer.longitudeDeg
-            || !snapshot.houses.some((house) => house.system === state.input.system)) {
+            || snapshot.houses[0]?.system !== state.input.system
+            || (state.input.comparisonSystem ? snapshot.houses.length!==2 || snapshot.houses[1]?.system!==state.input.comparisonSystem : snapshot.houses.length!==1)) {
             fail('The calculation response does not match the requested chart. Retry to recalculate it.');
             return;
           }
@@ -172,7 +174,7 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
     const parsed = patchResult.success ? chartInputSchema.safeParse(mergeInput(state.input, patchResult.data)) : patchResult;
     if (!parsed.success) {
       errorOrigin = 'validation';
-      publish({ status: 'error', error: 'Enter a UTC instant in 1900–2100, latitude between −90° and 90°, longitude between −180° and 180°, and a supported house system.' });
+      publish({ status: 'error', error: 'Enter a UTC instant in 1900–2100, latitude between −90° and 90°, longitude between −180° and 180°, and distinct supported house systems.' });
       return;
     }
     const changed = !sameInput(parsed.data, state.input);

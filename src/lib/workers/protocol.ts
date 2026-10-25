@@ -11,9 +11,9 @@ export const bodyIdSchema = z.enum(['sun', 'moon', 'mercury', 'venus', 'mars', '
 export const observerSchema = z.object({ latitudeDeg: latitude, longitudeDeg: finite.min(-180).max(180) }).strict();
 export const instantSchema = finite.int().min(Date.UTC(1900, 0, 1)).lt(Date.UTC(2101, 0, 1));
 
-export const chartInputSchema = z.object({ instantMs: instantSchema, observer: observerSchema, system: houseSystemSchema }).strict();
+export const chartInputSchema = z.object({ instantMs: instantSchema, observer: observerSchema, system: houseSystemSchema, comparisonSystem: houseSystemSchema.nullable() }).strict().refine(value=>value.comparisonSystem!==value.system,'Choose distinct primary and comparison systems.');
 export type ExplorerInput = z.infer<typeof chartInputSchema>;
-export const explorerInputPatchSchema = chartInputSchema.partial().extend({ observer: observerSchema.partial().optional() }).strict();
+export const explorerInputPatchSchema = z.object({instantMs:instantSchema.optional(),observer:observerSchema.partial().optional(),system:houseSystemSchema.optional(),comparisonSystem:houseSystemSchema.nullable().optional()}).strict();
 
 export const calculationRequestSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('init'), revision }).strict(),
