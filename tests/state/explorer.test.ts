@@ -124,6 +124,33 @@ describe('exploration state and worker coordination', () => {
     store.destroy();
   });
 
+  it('calculates two distinct systems atomically and retains comparison during time edits',()=>{
+    const {store,start}=setup();const worker=start();
+    const original=get(store).snapshot;
+    store.requestChart({comparisonSystem:'P'});
+    expect(worker.latestRequest().systems).toEqual(['W','P']);
+    expect(get(store).snapshot).toBe(original);
+    worker.complete();
+    expect(get(store).snapshot?.houses.map(h=>h.system)).toEqual(['W','P']);
+    const bodies=get(store).snapshot?.bodies;
+    store.requestChart({instantMs:Date.UTC(2000,0,2,12)});
+    expect(worker.latestRequest().systems).toEqual(['W','P']);
+    worker.complete();
+    expect(get(store).input.comparisonSystem).toBe('P');
+    store.requestChart({comparisonSystem:null});worker.complete();
+    expect(get(store).snapshot?.houses).toHaveLength(1);
+    expect(get(store).snapshot?.bodies).toEqual(bodies);
+    store.destroy();
+  });
+
+  it('rejects swapped or missing comparison results instead of publishing misleading labels',()=>{
+    const {store,start}=setup();const worker=start();const prior=get(store).snapshot;
+    store.requestChart({comparisonSystem:'P'});const req=worker.latestRequest();
+    const wrong=makeSnapshot(req);wrong.houses.reverse();worker.complete(req,wrong);
+    expect(get(store).snapshot).toBe(prior);expect(get(store).error).toMatch(/does not match/);
+    store.destroy();
+  });
+
   it('prevents subscribers from mutating committed input or computed snapshot fields', () => {
     const { store, start } = setup();
     start();

@@ -20,7 +20,8 @@ describe('calculation protocol boundary', () => {
     ]) expect(calculationRequestSchema.safeParse(payload).success).toBe(false);
   });
   it('uses the same bounds for committed chart inputs', () => {
-    expect(chartInputSchema.safeParse({ instantMs: Date.UTC(1900, 0, 1), observer: request.observer, system: 'W' }).success).toBe(true);
-    expect(chartInputSchema.safeParse({ instantMs: Date.UTC(1900, 0, 1) - 1, observer: request.observer, system: 'W' }).success).toBe(false);
+    expect(chartInputSchema.safeParse({ instantMs: Date.UTC(1900, 0, 1), observer: request.observer, system: 'W', comparisonSystem:null }).success).toBe(true);
+    expect(chartInputSchema.safeParse({ instantMs: Date.UTC(1900, 0, 1) - 1, observer: request.observer, system: 'W', comparisonSystem:null }).success).toBe(false);
+    expect(chartInputSchema.safeParse({ instantMs: request.instantMs, observer: request.observer, system: 'W', comparisonSystem:'W' }).success).toBe(false);
   });
 });

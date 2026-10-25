@@ -6,6 +6,8 @@ Development follows the approved [implementation plan](IMPLEMENTATION_PLAN.md), 
 
 Requires Node 24.15.0. Install with `npm ci`, start the application with `npm run dev`, and build with `npm run build`. Run checks with `npm run check`, `npm run lint`, and `npm test`. Install the test browser with `node scripts/install-browsers.mjs chromium`, then run `npm run test:browser` against the production bundle.
 
-Milestone results are in [M0 feasibility](docs/reports/M0.md) and [M1 foundation](docs/reports/M1.md); compiler rebuild instructions are in [docs/m0-build.md](docs/m0-build.md).
+The current app includes historical local-time input, place/globe lookup, an immutable session birth anchor, real star/constellation overlays, selectable spatial references and seven house systems across three display modes with ghost comparison. Milestone results and outstanding work are recorded in the [implementation status](docs/IMPLEMENTATION_STATUS.md). Calculation compiler instructions are in [docs/m0-build.md](docs/m0-build.md), historical time preparation in [docs/timezone-build.md](docs/timezone-build.md), and sky extraction in `scripts/prepare-sky-data.mjs`.
+
+Development and preview include a location API. Chart calculation stays in the browser; only place queries or coordinates are sent for lookup. Manual coordinate/zone/offset entry remains available. Open-Meteo's default search endpoint is for noncommercial development; production hosting/provider configuration is a release milestone.
 
 Application source is AGPL-3.0-only. Upstream source/data and asset notices remain separately identified; see [data and licensing](docs/data-and-licensing.md).
