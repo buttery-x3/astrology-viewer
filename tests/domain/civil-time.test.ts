@@ -66,7 +66,7 @@ describe('offsets and rule provenance', () => {
     expect(paris.candidates[0]?.offsetMinutes).toBeCloseTo(9.35, 10);
     expect(paris.warnings.map((entry) => entry.code)).toContain('pre-1970-history');
     expect(paris.warnings.map((entry) => entry.code)).toContain('pre-utc-reference');
-    expect(paris.provenance.historicalLimitation).toMatch(/merge pre-1970/);
+    expect(paris.provenance.historicalLimitation).toMatch(/backzone/);
   });
 
   it('records dataset version and future projections without depending on the machine zone', () => {

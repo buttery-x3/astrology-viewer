@@ -71,6 +71,12 @@ export async function fetchEngineAssets(base = ''): Promise<EngineAssets> {
 
 /** One worker owns one instance; all C calls are synchronous and serial. */
 export class EphemerisEngine {
+  // Only the most recent instant is retained. Observer/system edits reuse the
+  // geocentric calculation; callers receive copies so they cannot poison it.
+  private cachedSky: {
+    instantMs: number; time: EngineTime; sidereal: number; trueObliquityDeg: number;
+    frame: EquatorialFrameTransform; bodies: Omit<BodyPosition, 'horizon'>[];
+  } | undefined;
   private constructor(private readonly module: EmscriptenModule) {}
   static async create(assets: EngineAssets): Promise<EphemerisEngine> {
     if ([...assets.files.keys()].some(name => !EPHEMERIS_FILES.some(file => file.name === name)))
@@ -88,7 +94,7 @@ export class EphemerisEngine {
   }
   get version(): string { return this.module.ccall('sa_version','string',[],[]) as string; }
   get heapBytes(): number { return this.module.HEAPU8.byteLength; }
-  close(): void { this.module.ccall('sa_close',null,[],[]); }
+  close(): void { this.cachedSky = undefined; this.module.ccall('sa_close',null,[],[]); }
 
   private call(name: string, args: number[], lengths: number[]): { status: number; arrays: number[][]; error: string } {
     const pointers = lengths.map(length => this.module._malloc(length * 8));
@@ -122,24 +128,31 @@ export class EphemerisEngine {
       throw new Error(`Swiss ephemeris unavailable for body ${body}; refusing fallback (flags ${result.status}).`);
     return { values: result.arrays[0]!, flags: result.status };
   }
-  calculate(instantMs: number, observer: ObserverCoordinates, systems: readonly HouseSystemId[] = HOUSE_SYSTEMS.map(s => s.id)): EphemerisSnapshot {
-    if (!Number.isFinite(observer.latitudeDeg) || Math.abs(observer.latitudeDeg)>90 || !Number.isFinite(observer.longitudeDeg) || Math.abs(observer.longitudeDeg)>180)
-      throw new RangeError('Observer coordinates are outside their valid range.');
+  private geocentricSky(instantMs: number) {
+    if (this.cachedSky?.instantMs === instantMs) return this.cachedSky;
     const time = this.resolveTime(instantMs);
     const sidereal = this.module.ccall('sa_sidereal','number',['number'],[time.julianDateUt1]) as number;
-    const bodies = BODY_IDS.map((id,index): BodyPosition => {
+    const bodies = BODY_IDS.map((id,index): Omit<BodyPosition, 'horizon'> => {
       const ecl = this.position(time.julianDateTt,index,258);
       const eq = this.position(time.julianDateTt,index,2306).values;
       const fixed = this.position(time.julianDateTt,index,2338).values;
       const equatorial = { rightAscensionDeg: eq[0]!, declinationDeg: eq[1]! };
       return { id,longitudeDeg:ecl.values[0]!,latitudeDeg:ecl.values[1]!,distanceAu:ecl.values[2]!,longitudeSpeedDegPerDay:ecl.values[3]!,effectiveFlags:ecl.flags,
-        equatorial,fixedEquatorial:{rightAscensionDeg:fixed[0]!,declinationDeg:fixed[1]!},
-        horizon:equatorialToHorizon(equatorial,observer,sidereal) };
+        equatorial,fixedEquatorial:{rightAscensionDeg:fixed[0]!,declinationDeg:fixed[1]!} };
     });
     const nutation = this.position(time.julianDateTt,-1,0).values;
     const frameResult = this.call('sa_frame',[time.julianDateTt],[9]);
     if (frameResult.status < 0) throw new Error(frameResult.error || 'Frame rotation failed.');
     const frame = createEquatorialFrameTransform({julianDateTt:time.julianDateTt,ofDateKind:'true',source:`Swiss Ephemeris ${this.version}`,rotation:frameResult.arrays[0]! as unknown as Matrix3});
+    this.cachedSky = { instantMs, time, sidereal, trueObliquityDeg: nutation[0]!, frame, bodies };
+    return this.cachedSky;
+  }
+  calculate(instantMs: number, observer: ObserverCoordinates, systems: readonly HouseSystemId[] = HOUSE_SYSTEMS.map(s => s.id)): EphemerisSnapshot {
+    if (!Number.isFinite(observer.latitudeDeg) || Math.abs(observer.latitudeDeg)>90 || !Number.isFinite(observer.longitudeDeg) || Math.abs(observer.longitudeDeg)>180)
+      throw new RangeError('Observer coordinates are outside their valid range.');
+    const sky = structuredClone(this.geocentricSky(instantMs));
+    const { time, sidereal, frame } = sky;
+    const bodies = sky.bodies.map(body => ({ ...body, horizon: equatorialToHorizon(body.equatorial, observer, sidereal) }));
     const houses = systems.map((system): HouseResult => {
       if (!HOUSE_SYSTEMS.some(s => s.id === system)) throw new Error('Unsupported house system.');
       if (Math.abs(observer.latitudeDeg) === 90) return {system,status:'undefined',reason:'The geographic pole has no unique local east–west horizon orientation.'};
@@ -148,7 +161,7 @@ export class EphemerisEngine {
       const angles = r.arrays[1]!;
       return {system,status:'valid',cusps:r.arrays[0]!.slice(1,13),ascendantDeg:angles[0]!,midheavenDeg:angles[1]!,armcDeg:angles[2]!};
     });
-    return {instantMs,observer:{...observer},time,greenwichSiderealTimeDeg:sidereal,trueObliquityDeg:nutation[0]!,frame,bodies,houses,
+    return {instantMs,observer:{...observer},time,greenwichSiderealTimeDeg:sidereal,trueObliquityDeg:sky.trueObliquityDeg,frame,bodies,houses,
       provenance:{engine:this.version,revision:ENGINE_REVISION,calculation:'apparent geocentric; tropical of date; geometric horizon; longitude houses',data:EPHEMERIS_FILES}};
   }
 }

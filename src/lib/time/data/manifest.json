@@ -1,0 +1,55 @@
+{
+  "ianaVersion": "2026e",
+  "packratData": "backzone",
+  "packratList": "zone.tab",
+  "dataform": "main",
+  "range": {
+    "fromInclusive": "1899-01-01T00:00:00.000Z",
+    "toExclusive": "2102-01-01T00:00:00.000Z",
+    "purpose": "Guards local date entry around the supported 1900–2100 UTC boundaries."
+  },
+  "compiler": {
+    "ianaZic": "2026e",
+    "emscripten": "4.0.23",
+    "python": "3.13.3",
+    "flags": [
+      "-O2",
+      "-DHAVE_GETTEXT=0",
+      "-DHAVE_MEMPCPY=1",
+      "-DHAVE_FCHMOD=0",
+      "-DHAVE_GETRANDOM=0",
+      "-DHAVE_LINK=0",
+      "-Dlinkat=sa_tz_linkat",
+      "-Dsymlink=sa_tz_symlink",
+      "-sNODERAWFS=1",
+      "-sALLOW_MEMORY_GROWTH=1",
+      "-sENVIRONMENT=node",
+      "-sEXIT_RUNTIME=1"
+    ]
+  },
+  "sources": [
+    {
+      "name": "tzcode2026e.tar.gz",
+      "sha256": "cc3d27ca2a0d8399504551b920970d80af83bfb9c216e8082a15491921935d54",
+      "url": "https://data.iana.org/time-zones/releases/tzcode2026e.tar.gz"
+    },
+    {
+      "name": "tzdata2026e.tar.gz",
+      "sha256": "b26882805f26aac59d5b222978e6580484b834ccdc98be89df2f05a6dc53a652",
+      "url": "https://data.iana.org/time-zones/releases/tzdata2026e.tar.gz"
+    }
+  ],
+  "zoneCount": 598,
+  "verifiedPeriods": 64774,
+  "packing": {
+    "library": "moment-timezone",
+    "version": "0.6.5",
+    "precision": "One second for offsets and transition instants; no historical zone deduplication."
+  },
+  "output": {
+    "name": "tzdata-2026e-backzone.json",
+    "bytes": 402780,
+    "sha256": "27baaed4e41ec7948cfc58e06d985534c5335a6d00c353d1e5b75f43875e297d"
+  },
+  "limitation": "Backzone retains additional historical identities but can contain uncertain records. This is not a historical boundary atlas or a certification of recorded civil time; future rules are projections."
+}

@@ -14,8 +14,8 @@ The approved plan is [IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md); the so
 | Milestone | Status | Evidence / review |
 |---|---|---|
 | M0 Feasibility and conventions | Complete and merged | [PR #1](https://github.com/buttery-x3/astrology-viewer/pull/1), [checksum follow-up #2](https://github.com/buttery-x3/astrology-viewer/pull/2), [M0 evidence](reports/M0.md), 37 tests and real browser worker |
-| M1 Application foundation | Complete; review and integration pending | [M1 evidence](reports/M1.md): Svelte shell, scene lifecycle, immutable coordinator, validated commands, CI; 53 tests and 3 production browser workflows |
-| M2 Numerical chart and input | Pending | |
+| M1 Application foundation | Complete and merged | [PR #3](https://github.com/buttery-x3/astrology-viewer/pull/3), [M1 evidence](reports/M1.md): 53 tests and 3 production browser workflows; remote CI passed |
+| M2 Numerical chart and input | Complete; review and integration pending | [M2 evidence](reports/M2.md): historical civil time, location input, birth anchor, domain results; 87 tests and 8 browser workflows |
 | M3 Spatial vertical slice | Pending | |
 | M4 House displays and comparison | Pending | |
 | M5 Actual house constructions | Pending | |
@@ -30,6 +30,6 @@ The approved plan is [IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md); the so
 - Git transport can push the remote; the connected GitHub integration can create/review/merge PRs. The CLI's independent stored token is invalid and is not required.
 - Swiss Ephemeris `v2.10.3bfinal`, revision `f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0`, with the two 1800–2399 planet/Moon files, covers the product range.
 - An audited browser wrapper lacks the required UTC/TT/UT1 functions. M0 builds an owned minimal binding instead.
-- Full pinned Moment rules supply the initial adapter; pre-1970 historical identity needs explicit limitation/provenance and fixture coverage.
+- Pinned IANA 2026e with backzone supplies 598 historical identities, independently checked against TZif files. Geographic lookup uses server-only comprehensive geo-tz data; historical uncertainty remains explicit.
 
 Unmeasured budgets and incomplete milestones are not treated as completed acceptance criteria.

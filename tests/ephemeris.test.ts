@@ -51,6 +51,19 @@ describe('owned WASM against pinned native Swiss reference', () => {
     }
     expect(snapshot.houses.filter(h=>h.status==='valid')).toHaveLength(5);
   });
+  it('keeps geocentric directions fixed across observer/system edits and isolates returned data', () => {
+    const instant = Date.parse('2000-01-01T12:00:00Z');
+    const north = engine.calculate(instant, {latitudeDeg:51.5,longitudeDeg:0}, ['W']);
+    const south = engine.calculate(instant, {latitudeDeg:-33.8688,longitudeDeg:151.2093}, ['P']);
+    expect(north.bodies.map(({horizon: _horizon,...body})=>body)).toEqual(south.bodies.map(({horizon: _horizon,...body})=>body));
+    expect(north.bodies[0]!.horizon.altitudeDeg).not.toBe(south.bodies[0]!.horizon.altitudeDeg);
+    const expectedLongitude = south.bodies[0]!.longitudeDeg;
+    north.bodies[0]!.longitudeDeg = 999;
+    (north.frame.rotation as unknown as number[])[0] = 999;
+    const again = engine.calculate(instant, {latitudeDeg:51.5,longitudeDeg:0}, ['W']);
+    expect(again.bodies[0]!.longitudeDeg).toBe(expectedLongitude);
+    expect(again.frame.rotation[0]).not.toBe(999);
+  });
   it('true-date frame rotation agrees with separately calculated J2000 directions', () => {
     for (const fixture of reference.cases) {
       const snapshot = engine.calculate(fixture.instantMs,{latitudeDeg:0,longitudeDeg:0});
