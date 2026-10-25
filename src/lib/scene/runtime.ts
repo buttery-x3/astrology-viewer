@@ -12,10 +12,12 @@ import { classifyLongitude } from '../domain/chart';
 import { DEFAULT_HOUSE_DISPLAY, isHouseDirectionPickable, type HouseDisplaySettings } from '../domain/house-geometry';
 import { DEFAULT_CONSTRUCTION, type ConstructionSettings } from '../domain/house-construction';
 import { DEFAULT_ASPECT_DISPLAY, getAspectDetails, type AspectDisplaySettings } from '../domain/aspect-presentation';
+import { DEFAULT_TRAIL_DISPLAY, DEFAULT_BOUNDARY_HISTORY, type TrailDisplaySettings, type TrailResult, type BoundaryHistorySettings, type BoundaryHistoryResult } from '../domain/trails';
 import { CATALOGUE_STARS, CONSTELLATION_REGIONS, catalogueStarDirection } from './sky-data';
 import { createHouseRenderer } from './house-renderer';
 import { createConstructionRenderer } from './construction-renderer';
 import { createAspectRenderer } from './aspect-renderer';
+import { createTrailRenderer } from './trail-renderer';
 import coastline from './data/natural-earth-coastline.json';
 
 export interface ScenePresentation {
@@ -24,6 +26,10 @@ export interface ScenePresentation {
   houseDisplay: HouseDisplaySettings;
   construction: ConstructionSettings;
   aspects: AspectDisplaySettings;
+  trails: TrailDisplaySettings;
+  trailResult: TrailResult | null;
+  history: BoundaryHistorySettings;
+  historyResult: BoundaryHistoryResult | null;
   layers: { bodies: boolean; horizon: boolean; ecliptic: boolean; houses: boolean; stars: boolean;
     signs?: boolean; equator?: boolean; meridian?: boolean; primeVertical?: boolean;
     angles?: boolean; constellations?: boolean };
@@ -117,13 +123,18 @@ function label(text: string, color: string, size = 0.28): THREE.Sprite {
   canvas.height = 96;
   const context = canvas.getContext('2d');
   if (context) {
-    context.font = `${text.length === 1 ? 52 : 32}px "Segoe UI Symbol", "Arial Unicode MS", sans-serif`;
+    const font = `${text.length === 1 ? 52 : 32}px "Segoe UI Symbol", "Arial Unicode MS", sans-serif`;
+    context.font = font;
+    // UTC timestamps and reference names must remain complete. Resizing resets
+    // the canvas context, so reapply font/style after measuring the exact text.
+    canvas.width = Math.min(2048, Math.max(canvas.width, Math.ceil(context.measureText(text).width) + 32));
+    context.font = font;
     context.textAlign = 'center';
     context.textBaseline = 'middle';
     context.fillStyle = color;
     context.shadowColor = '#050b16';
     context.shadowBlur = 8;
-    context.fillText(text, canvas.width / 2, 50);
+    context.fillText(text, canvas.width / 2, 50, canvas.width - 24);
   }
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
@@ -383,13 +394,15 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   scene.add(constructionRenderer.group);
   const aspectRenderer = createAspectRenderer(SKY_RADIUS, label);
   scene.add(aspectRenderer.group);
+  const trailRenderer = createTrailRenderer(SKY_RADIUS, label);
+  scene.add(trailRenderer.group);
   const selection = new THREE.Mesh(new THREE.RingGeometry(0.105, 0.119, 48), new THREE.MeshBasicMaterial({ color: 0xf5e0ac, transparent: true, opacity: 0.9, side: THREE.DoubleSide, depthWrite: false }));
   selection.renderOrder = 5;
   selection.visible = false;
   scene.add(selection);
 
   let snapshot: EphemerisSnapshot | null = null;
-  let presentation: ScenePresentation = { viewpoint: 'overview', selectedId: null, houseDisplay: { ...DEFAULT_HOUSE_DISPLAY }, construction: { ...DEFAULT_CONSTRUCTION }, aspects: { ...DEFAULT_ASPECT_DISPLAY }, layers: { bodies: true, horizon: true, ecliptic: true, houses: false, stars: true, signs: true, angles: true } };
+  let presentation: ScenePresentation = { viewpoint: 'overview', selectedId: null, houseDisplay: { ...DEFAULT_HOUSE_DISPLAY }, construction: { ...DEFAULT_CONSTRUCTION }, aspects: { ...DEFAULT_ASPECT_DISPLAY }, trails: { ...DEFAULT_TRAIL_DISPLAY }, trailResult: null, history: { ...DEFAULT_BOUNDARY_HISTORY }, historyResult: null, layers: { bodies: true, horizon: true, ecliptic: true, houses: false, stars: true, signs: true, angles: true } };
   let observerEast = new THREE.Vector3(0, 0, -1);
   let observerNorth = new THREE.Vector3(0, 1, 0);
   let observerUp = new THREE.Vector3(1, 0, 0);
@@ -460,7 +473,8 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       const x = (projected.x + 1) * width / 2, y = (1 - projected.y) * height / 2;
       const id = object.userData.entityId as string | undefined;
       const guideId = object.userData.constructionId as string | undefined;
-      const priority = guideId ? guideId === hoveredGuideId ? 95 : object.userData.labelPriority as number || 18
+      const priority = object.userData.trailLabel ? object.userData.labelPriority as number || 20
+        : guideId ? guideId === hoveredGuideId ? 95 : object.userData.labelPriority as number || 18
         : id === presentation.selectedId ? 100 : id === hoveredId ? 90 : object.userData.labelPriority as number || 10;
       candidates.push({ sprite: object, priority, rectangle: [x - spriteWidth / 2 - 3, y - spriteHeight / 2 - 3, x + spriteWidth / 2 + 3, y + spriteHeight / 2 + 3] });
     });
@@ -481,6 +495,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     aspectRenderer.resize(width, height);
+    trailRenderer.resize(width, height);
     camera.updateProjectionMatrix();
     if (defaultFraming && presentation.viewpoint !== 'observer') {
       if (presentation.globePickMode) frameEarthForPicking();
@@ -545,6 +560,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     houseRenderer.update(snapshot, presentation.houseDisplay, { selectedId: presentation.selectedId, hoveredId, visible: hasData && !picking && presentation.layers.houses, quietComparison: presentation.construction.enabled });
     constructionRenderer.update(snapshot, presentation.construction, { visible: hasData && !picking, hoveredGuideId });
     aspectRenderer.update(snapshot, presentation.aspects, { visible: hasData && !picking, selectedId: presentation.selectedId, hoveredId });
+    trailRenderer.update(snapshot, presentation.trails, presentation.trailResult, presentation.history, presentation.historyResult, { visible: hasData && !picking, selectedId: presentation.selectedId });
     // The bounded render pool can represent a different eligible pair after a
     // chart/orb change. Rebind stable IDs without retaining Three object identity.
     for (const [id, entity] of entities) if (entity.kind === 'aspect') entities.delete(id);
@@ -763,7 +779,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   function entityAt(event: PointerEvent): (SceneEntity & { guideId?: string }) | undefined {
     if (!snapshot || presentation.globePickMode) return;
     pointRay(event);
-    const targets = [...[...entities.values()].flatMap(entity => entity.objects), ...constructionRenderer.hitTargets].filter(object => object.userData.pickable !== false && isVisible(object));
+    const targets = [...[...entities.values()].flatMap(entity => entity.objects), ...constructionRenderer.hitTargets, ...trailRenderer.hitTargets].filter(object => object.userData.pickable !== false && isVisible(object));
     const globeIntersection = earth.visible ? raycaster.intersectObject(earth.children[0]!, false)[0] : undefined;
     const pointDistance = (object: THREE.Object3D): number => {
       const id = object.userData.entityId as string;
@@ -955,7 +971,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       const wasPicking = presentation.globePickMode === true;
       const changedSnapshot = nextSnapshot !== snapshot;
       const aspectSettings = nextPresentation.aspects ?? DEFAULT_ASPECT_DISPLAY;
-      presentation = { ...nextPresentation, houseDisplay: { ...(nextPresentation.houseDisplay ?? DEFAULT_HOUSE_DISPLAY) }, construction: { ...(nextPresentation.construction ?? DEFAULT_CONSTRUCTION) }, aspects: { ...aspectSettings, types: { ...aspectSettings.types }, orbs: { ...aspectSettings.orbs } }, layers: { ...nextPresentation.layers } };
+      presentation = { ...nextPresentation, houseDisplay: { ...(nextPresentation.houseDisplay ?? DEFAULT_HOUSE_DISPLAY) }, construction: { ...(nextPresentation.construction ?? DEFAULT_CONSTRUCTION) }, aspects: { ...aspectSettings, types: { ...aspectSettings.types }, orbs: { ...aspectSettings.orbs } }, trails: { ...(nextPresentation.trails ?? DEFAULT_TRAIL_DISPLAY) }, trailResult: nextPresentation.trailResult ?? null, history: { ...(nextPresentation.history ?? DEFAULT_BOUNDARY_HISTORY) }, historyResult: nextPresentation.historyResult ?? null, layers: { ...nextPresentation.layers } };
       snapshot = nextSnapshot;
       if (changedSnapshot && snapshot) updateSnapshot(snapshot);
       if (presentation.globePickMode) {

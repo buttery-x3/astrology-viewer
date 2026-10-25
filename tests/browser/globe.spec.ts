@@ -53,8 +53,10 @@ test('a deliberate globe click proposes coordinates and keeps the chart unchange
   if (!box) throw new Error('Expected a visible globe.');
   await canvas.click({ position: { x: box.width / 2, y: box.height / 2 } });
   await expect(page.getByRole('dialog')).toBeVisible();
-  expect(Number(await page.getByLabel('Latitude · north positive').inputValue())).toBeCloseTo(51.5, 4);
-  expect(Number(await page.getByLabel('Longitude · east positive').inputValue())).toBeCloseTo(0, 4);
+  // Real pointer coordinates are quantized to CSS pixels. Exact inverse/frame
+  // precision is covered separately by known-answer coordinate tests.
+  expect(Number(await page.getByLabel('Latitude · north positive').inputValue())).toBeCloseTo(51.5, 1);
+  expect(Number(await page.getByLabel('Longitude · east positive').inputValue())).toBeCloseTo(0, 1);
   expect(await page.locator('.context-details').innerText()).toBe(context);
   await page.getByRole('dialog').getByRole('button', { name: 'Cancel', exact: true }).click();
   expect(await page.locator('.context-details').innerText()).toBe(context);

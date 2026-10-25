@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, tick } from 'svelte';
+  import { onMount, tick, untrack } from 'svelte';
   import { HOUSE_SYSTEMS, type BodyPosition, type EphemerisSnapshot, type HouseResult } from './lib/astronomy/ephemeris';
   import { classifyLongitude, zodiacSign } from './lib/domain/chart';
   import { createExplorerStore, type LayerKey } from './lib/state/explorer';
@@ -23,8 +23,15 @@
   import ContentCard from './lib/ui/ContentCard.svelte';
   import {DEFAULT_ASPECT_DISPLAY,getAspectDetails,getVisibleAspects,type AspectDisplaySettings} from './lib/domain/aspect-presentation';
   import {ASPECT_LEGEND} from './lib/scene/aspect-style';
+  import Timeline from './lib/ui/Timeline.svelte';
+  import {PlaybackClock,TIMELINE_PRESETS,clampInstant,explorationOffset,stepInstant,timelineWindow,type StepUnit,type TimelinePreset} from './lib/domain/timeline';
+  import {DEFAULT_TRAIL_DISPLAY,DEFAULT_BOUNDARY_HISTORY,type TrailDisplaySettings,type BoundaryHistorySettings} from './lib/domain/trails';
+  import {createTrailService} from './lib/services/trails';
+  import TrailControls from './lib/ui/TrailControls.svelte';
+  import {TRAIL_LEGEND,TRAIL_REFERENCE_LABELS} from './lib/scene/trail-style';
 
   const explorer = createExplorerStore();
+  const trailService=createTrailService();
   const bodies = [
     { id: 'sun', name: 'Sun', glyph: '☉', color: '#f1c576' },
     { id: 'moon', name: 'Moon', glyph: '☽', color: '#d5deeb' },
@@ -75,6 +82,18 @@
   let aspects=$state<AspectDisplaySettings>({...DEFAULT_ASPECT_DISPLAY,types:{...DEFAULT_ASPECT_DISPLAY.types},orbs:{...DEFAULT_ASPECT_DISPLAY.orbs}});
   let evidenceOpen=$state(false);
   let evidenceDialog:HTMLDialogElement;
+  let timelinePreset=$state<TimelinePreset>('1d');
+  let timeWindow=$state(timelineWindow(initialBirthContext.instantMs,TIMELINE_PRESETS['1d']));
+  let stepUnit=$state<StepUnit>('day');
+  let playbackDirection=$state<1|-1>(1);
+  let playbackSpeed=$state(3600000);
+  let playing=$state(false);
+  let pauseReason=$state<string|null>(null);
+  let playbackClock:PlaybackClock|null=null;
+  let trails=$state<TrailDisplaySettings>({...DEFAULT_TRAIL_DISPLAY});
+  let history=$state<BoundaryHistorySettings>({...DEFAULT_BOUNDARY_HISTORY});
+  let trailKey:string|null=null,historyKey:string|null=null;
+  let trailInterval:{startMs:number;endMs:number}|null=null,historyInterval:{startMs:number;endMs:number}|null=null;
   let formDialog: HTMLDialogElement;
   let sceneCanvas: { focusSelection(): void; returnToObserver(): void } | undefined = $state();
   let observedSnapshot: EphemerisSnapshot | null = null;
@@ -91,6 +110,31 @@
   const localContext = $derived(civilAtInstant(shownInstant, displayedObserver));
   const visibleAspects=$derived(($explorer.snapshot?getVisibleAspects($explorer.snapshot.bodies,aspects,$explorer.selectedId):[]).filter(aspect=>!$explorer.selectedId?.startsWith('aspect:')||aspect.id===$explorer.selectedId));
   const aspectLegend=$derived(ASPECT_LEGEND.filter(type=>visibleAspects.some(aspect=>aspect.type===type.id)));
+  const boundaryHouse=$derived(Number(/^(?:house|boundary):([1-9]|1[0-2])$/.exec($explorer.selectedId??'')?.[1])||null);
+  const activeTrail=$derived(trails.enabled&&selectedBody&&$trailService.trail.result?.bodyId===selectedBody.id&&$trailService.trail.result.frame===trails.frame&&$trailService.trail.result.observer.latitudeDeg===$explorer.snapshot?.observer.latitudeDeg&&$trailService.trail.result.observer.longitudeDeg===$explorer.snapshot?.observer.longitudeDeg?$trailService.trail.result:null);
+  const activeHistory=$derived(history.enabled&&boundaryHouse&&$trailService.history.result?.house===boundaryHouse&&$trailService.history.result.system===selectedHouses?.system&&$trailService.history.result.observer.latitudeDeg===$explorer.snapshot?.observer.latitudeDeg&&$trailService.history.result.observer.longitudeDeg===$explorer.snapshot?.observer.longitudeDeg?$trailService.history.result:null);
+
+  $effect(()=>{
+    const snapshot=$explorer.snapshot,bodyId=selectedBody?.id,settings={...trails};
+    if(!settings.enabled||!snapshot||!bodyId){untrack(()=>{trailService.cancelTrail();trailKey=null;trailInterval=null;});return;}
+    const key=JSON.stringify({bodyId,observer:snapshot.observer,...settings});
+    const result=$trailService.trail.result;
+    const outside=!trailInterval||snapshot.instantMs<trailInterval.startMs||snapshot.instantMs>trailInterval.endMs;
+    const limitedOutside=result?.status==='limited'&&(snapshot.instantMs<result.startMs||snapshot.instantMs>result.endMs);
+    if(key!==trailKey||outside||limitedOutside)untrack(()=>{
+      trailKey=key;trailInterval={startMs:snapshot.instantMs-Math.floor(settings.windowMs/2),endMs:snapshot.instantMs+Math.ceil(settings.windowMs/2)};
+      trailService.requestTrail({bodyId,frame:settings.frame,observer:snapshot.observer,...trailInterval,anchorMs:snapshot.instantMs,maxVertices:settings.maxVertices,toleranceDeg:settings.toleranceDeg,maxComputeMs:settings.maxComputeMs});
+    });
+  });
+  $effect(()=>{
+    const snapshot=$explorer.snapshot,house=boundaryHouse,settings={...history};
+    if(!settings.enabled||!snapshot||!house){untrack(()=>{trailService.cancelHistory();historyKey=null;historyInterval=null;});return;}
+    const system=snapshot.houses[0]!.system,key=JSON.stringify({house,system,observer:snapshot.observer,...settings});
+    if(key!==historyKey||!historyInterval||snapshot.instantMs<historyInterval.startMs||snapshot.instantMs>historyInterval.endMs)untrack(()=>{
+      historyKey=key;historyInterval={startMs:snapshot.instantMs-Math.floor(settings.windowMs/2),endMs:snapshot.instantMs+Math.ceil(settings.windowMs/2)};
+      trailService.requestHistory({house,system,observer:snapshot.observer,...historyInterval,anchorMs:snapshot.instantMs,count:settings.count});
+    });
+  });
 
   $effect(() => {
     const snapshot = $explorer.snapshot;
@@ -105,7 +149,16 @@
 
   onMount(() => {
     explorer.init();
-    return () => explorer.destroy();
+    const transport=setInterval(()=>{
+      if(!playing||!playbackClock)return;
+      if($explorer.status==='error'){pausePlayback('Playback paused because the calculation needs attention.');return;}
+      const next=playbackClock.tick(performance.now(),$explorer.status==='ready');
+      if(next.type==='request')requestTimelineInstant(next.instantMs);
+      else if(next.type==='pause'){if(next.instantMs!==undefined)requestTimelineInstant(next.instantMs);pausePlayback(next.reason);}
+    },80);
+    const hidden=()=>{if(document.hidden&&playing)pausePlayback('Playback paused while this tab was hidden.');};
+    document.addEventListener('visibilitychange',hidden);
+    return () => {clearInterval(transport);document.removeEventListener('visibilitychange',hidden);trailService.destroy();explorer.destroy();};
   });
 
   function formatInstant(ms: number) {
@@ -141,6 +194,7 @@
   }
   async function focusConstruction(){selectFeature(`boundary:${construction.boundaryHouse}`);await tick();sceneCanvas?.focusSelection();}
   function openForm(mode: 'birth' | 'moment' | 'location' = 'moment', observer?: ObserverContext) {
+    pausePlayback('Playback paused while editing the context.');
     formMode = mode;
     formInstant = mode === 'birth' ? birthContext.instantMs : $explorer.input.instantMs;
     formObserver = observer ?? (mode === 'birth' ? birthContext.observer : explorationObserver);
@@ -164,9 +218,11 @@
       displayedObserver = commit.observer; displayedTimeKnown = commit.timeKnown;
     }
     explorer.requestChart({ instantMs: commit.instantMs, observer: { latitudeDeg: commit.observer.latitudeDeg, longitudeDeg: commit.observer.longitudeDeg } });
+    keepInstantInWindow(commit.instantMs);
     formOpen = false; welcome = false;
   }
   function restoreBirthContext() {
+    pausePlayback();keepInstantInWindow(birthContext.instantMs);
     explorationObserver = birthContext.observer;
     explorationTimeKnown = birthContext.timeKnown;
     explorer.requestChart({ instantMs: birthContext.instantMs, observer: { latitudeDeg: birthContext.observer.latitudeDeg, longitudeDeg: birthContext.observer.longitudeDeg } });
@@ -175,6 +231,7 @@
     }
   }
   function returnBirthInstant() {
+    pausePlayback();keepInstantInWindow(birthContext.instantMs);
     explorationTimeKnown = birthContext.timeKnown;
     if ($explorer.snapshot?.instantMs === birthContext.instantMs) displayedTimeKnown = birthContext.timeKnown;
     explorer.requestChart({ instantMs: birthContext.instantMs });
@@ -185,17 +242,28 @@
     formObserver = { ...formObserver, ...coordinates, label: 'Globe selection', source: 'globe', zoneOverride: true };
     formSession += 1; formOpen = true;
   }
-  function step(days: number) {
-    const instantMs = $explorer.input.instantMs + days * 86400000;
-    if (instantMs >= Date.UTC(1900, 0, 1) && instantMs < Date.UTC(2101, 0, 1)) explorer.requestChart({ instantMs });
+  function pausePlayback(reason:string|null=null){playing=false;playbackClock=null;pauseReason=reason;}
+  function togglePlayback(){
+    if(playing){pausePlayback();return;}
+    if(busy||$explorer.status==='error'){pauseReason='Wait for a valid calculated moment before playback.';return;}
+    playbackClock=new PlaybackClock(playbackSpeed,playbackDirection);playbackClock.start(shownInstant,performance.now());pauseReason=null;playing=true;
   }
+  function keepInstantInWindow(instantMs:number){if(instantMs<timeWindow.startMs||instantMs>timeWindow.endMs)timeWindow=timelineWindow(instantMs,timeWindow.endMs-timeWindow.startMs);}
+  function requestTimelineInstant(instantMs:number){const value=clampInstant(instantMs);keepInstantInWindow(value);explorer.requestChart({instantMs:value});}
+  function seekInstant(instantMs:number){pausePlayback();requestTimelineInstant(instantMs);}
+  function stepTime(direction:1|-1){seekInstant(stepInstant($explorer.input.instantMs,stepUnit,direction));}
+  function changeWindow(preset:Exclude<TimelinePreset,'custom'>){timelinePreset=preset;timeWindow=timelineWindow(shownInstant,TIMELINE_PRESETS[preset]);}
+  function zoomWindow(factor:0.5|2){timelinePreset='custom';timeWindow=timelineWindow(shownInstant,(timeWindow.endMs-timeWindow.startMs)*factor);}
+  function changePlayback(patch:{speed?:number;direction?:1|-1}){const resume=playing;pausePlayback();if(patch.speed!==undefined)playbackSpeed=patch.speed;if(patch.direction)playbackDirection=patch.direction;if(resume)togglePlayback();}
   function onKey(event: KeyboardEvent) {
+    if(event.defaultPrevented)return;
     if(event.altKey||event.ctrlKey||event.metaKey)return;
     const target = event.target;
     if (formOpen || evidenceOpen || target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) return;
     if (event.key === 'Escape') { explorer.select(null); leftOpen = false; rightOpen = false; globePickMode = false; }
     if (event.key.toLowerCase() === 'f') sceneCanvas?.focusSelection();
     if (event.key.toLowerCase() === 'o') { explorer.setViewpoint('observer'); sceneCanvas?.returnToObserver(); }
+    if(event.code==='Space'&&target instanceof HTMLElement&&(target.tagName==='CANVAS'||target.closest('.timeline'))&&target.tagName!=='BUTTON'){event.preventDefault();togglePlayback();}
   }
 </script>
 
@@ -210,7 +278,7 @@
     </button>
     <div class="context-details">
       <span class="context-symbol" aria-hidden="true">◷</span>
-      <span><strong>{formatInstant(shownInstant)} UTC</strong><small>{civilDateValue(localContext.civil)} · {civilTimeValue(localContext.civil)} local · {formatOffset(localContext.offsetMinutes)}</small>{#if !displayedTimeKnown}<small class="provisional-badge">Provisional time · local noon anchor</small>{/if}</span>
+      <span><strong>{formatInstant(shownInstant)} UTC</strong><small>{civilDateValue(localContext.civil)} · {civilTimeValue(localContext.civil)} local · {formatOffset(localContext.offsetMinutes)}</small><small class="exploration-badge">{explorationOffset(shownInstant,birthContext.instantMs)} · {HOUSE_SYSTEMS.find(system=>system.id===selectedHouses?.system)?.name??$explorer.input.system}</small>{#if !displayedTimeKnown}<small class="provisional-badge">Provisional time · local noon anchor</small>{/if}</span>
       <span class="context-divider"></span>
       <button class="context-location context-location-button" onclick={() => openForm('location')} title="Change observer location"><strong>{coordinate($explorer.snapshot?.observer.latitudeDeg ?? $explorer.input.observer.latitudeDeg, 'N', 'S')} <span class="dot">·</span> {coordinate($explorer.snapshot?.observer.longitudeDeg ?? $explorer.input.observer.longitudeDeg, 'E', 'W')}</strong><small>{displayedObserver.manualOffsetMinutes === null ? displayedObserver.zoneId : 'Explicit UTC offset'} · Change location ↗</small></button>
     </div>
@@ -241,6 +309,7 @@
       <HouseControls system={$explorer.input.system} comparisonSystem={$explorer.input.comparisonSystem} display={houseDisplay} snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} {busy} onSystemChange={(system)=>explorer.requestChart({system,comparisonSystem:$explorer.input.comparisonSystem===system?null:$explorer.input.comparisonSystem})} onComparisonChange={(comparisonSystem)=>explorer.requestChart({comparisonSystem})} onDisplayChange={(patch)=>houseDisplay={...houseDisplay,...patch}} onSelect={selectFeature} onShowConstruction={showConstruction} />
       {#if construction.enabled}<ConstructionGuide snapshot={$explorer.snapshot} settings={construction} onChange={(patch)=>construction={...construction,...patch}} onSelect={selectFeature} onFocus={focusConstruction} />{/if}
       <AspectControls snapshot={$explorer.snapshot} settings={aspects} selectedId={$explorer.selectedId} onChange={patch=>aspects={...aspects,...patch}} onSelect={selectFeature} />
+      <TrailControls settings={trails} historySettings={history} bodyId={selectedBody?.id??null} {boundaryHouse} state={$trailService} onChange={patch=>trails={...trails,...patch}} onHistoryChange={patch=>history={...history,...patch}} onRetry={()=>trailService.retry()} onRetryHistory={()=>trailService.retry()} onCancel={()=>trailService.cancelTrail()} onCancelHistory={()=>trailService.cancelHistory()} />
       <section class="dock-section object-section">
         <div class="section-title"><h2 id="object-list" tabindex="-1">Celestial objects</h2><span class="count">10</span></div>
         <div class="object-list" aria-label="Select celestial body">
@@ -257,7 +326,7 @@
     <section class="scene-stage" aria-label="Spatial exploration">
       <div class="scene-topline"><span class="scene-tag"><span class="status-dot"></span> CELESTIAL SPHERE</span><span class="scene-mode">{views.find((view) => view.id === $explorer.viewpoint)?.label}</span></div>
       <span class="schematic-label">Schematic sky · distances not to scale</span>
-      <SceneCanvas bind:this={sceneCanvas} snapshot={$explorer.snapshot} presentation={{ viewpoint: $explorer.viewpoint, selectedId: $explorer.selectedId, layers: $explorer.layers,houseDisplay,construction,aspects }} {globePickMode} onObserverPick={observerPicked} onSelect={(id) => { if(id)selectFeature(id);else explorer.select(null); }} onViewpoint={(viewpoint) => explorer.setViewpoint(viewpoint)} onStatus={(message) => sceneStatus = message} />
+      <SceneCanvas bind:this={sceneCanvas} snapshot={$explorer.snapshot} presentation={{ viewpoint: $explorer.viewpoint, selectedId: $explorer.selectedId, layers: $explorer.layers,houseDisplay,construction,aspects,trails,trailResult:activeTrail,history,historyResult:activeHistory }} {globePickMode} onObserverPick={observerPicked} onSelect={(id) => { if(id)selectFeature(id);else explorer.select(null); }} onViewpoint={(viewpoint) => explorer.setViewpoint(viewpoint)} onStatus={(message) => sceneStatus = message} />
       {#if globePickMode}<div class="globe-pick-banner" role="status"><span>Click Earth to choose observer coordinates. Drag to rotate.</span><button class="text-button" onclick={() => globePickMode = false}>Cancel</button></div>{/if}
       {#if welcome}
         <div class="welcome-card">
@@ -274,6 +343,7 @@
       <div class="interaction-hint"><span>Drag to orbit</span><i>·</i><span>Scroll to zoom</span><i>·</i><kbd>F</kbd><span>focus</span></div>
       {#if construction.enabled}<div class="construction-key" aria-label="Construction legend">{#each constructionLegend as item (item.kind)}<span><i style:border-top={`1px ${item.dashed?'dashed':'solid'} ${item.color}`}></i>{item.label}</span>{/each}<small>C{construction.boundaryHouse} · {activeConstruction?.status==='valid'?`stage ${construction.stage+1} · sweep ${Math.round(construction.progress*100)}%`:'construction unavailable'}</small></div>{/if}
       {#if aspectLegend.length}<div class="aspect-key" aria-label="Aspect legend">{#each aspectLegend as type (type.id)}<span><i style:border-top={`2px ${type.dashed?'dashed':'solid'} ${type.color}`}></i>{type.glyph} {type.label}</span>{/each}<small>Brighter core: closer to exact · curved strand: connection{aspects.glow?' · glow: emphasis':''}</small>{#if $explorer.selectedId?.startsWith('aspect:')&&aspects.measurement}<small>Gold arc: longitude separation · dashed leaders: latitude projection</small>{/if}</div>{/if}
+      {#if activeTrail||activeHistory}<div class="trail-key" aria-label="Motion history legend">{#if activeTrail}<strong>{selectedMeta?.name} · {TRAIL_REFERENCE_LABELS[activeTrail.frame]}</strong>{#each TRAIL_LEGEND.filter(item=>['past','future','direction','tick'].includes(item.id)) as item (item.id)}<span><i style:border-top={`1px ${item.dashed?'dashed':'solid'} ${item.color}`}></i>{item.label}</span>{/each}<small>{formatInstant(activeTrail.startMs)} → {formatInstant(activeTrail.endMs)} UTC</small>{#if activeTrail.status!=='complete'}<small>{activeTrail.status==='partial'?'Refining sampled path…':'Limited to the sampled interval · see trail controls'}</small>{/if}{/if}{#if activeHistory}<strong>C{activeHistory.house} · {activeHistory.samples.filter(sample=>sample.status!=='undefined').length} discrete boundary ghosts</strong><small>Dashed violet: history · gold: discrete boundary change · undefined samples omitted</small>{/if}</div>{/if}
     </section>
 
     <button class="mobile-panel-toggle right-toggle" aria-expanded={rightOpen} aria-controls="inspector" onclick={() => { rightOpen = !rightOpen; leftOpen = false; }}>ⓘ Inspector</button>
@@ -302,13 +372,8 @@
     </aside>
   </main>
 
-  <footer class="timeline">
-    <div class="timeline-label"><span class="eyebrow">EXPLORE TIME</span><strong>One moment, in motion</strong></div>
-    <div class="time-step-controls"><button class="icon-button" onclick={() => step(-1)} aria-label="Previous day" title="Previous day">‹</button><span class="paused-indicator"><span></span> PAUSED</span><button class="icon-button" onclick={() => step(1)} aria-label="Next day" title="Next day">›</button></div>
-    <div class="timeline-track" aria-hidden="true"><span class="timeline-tick"></span><span></span><span></span><span></span><span></span><i></i><span></span><span></span><span></span><span></span><span></span><b>1 day / step</b></div>
-    <button class="anchor-button" onclick={returnBirthInstant} title="Return to the birth instant at the current observer location"><span aria-hidden="true">↺</span> Return to birth instant</button>
-  </footer>
-  <div class="app-status"><span role="status" aria-live="polite" aria-atomic="true"><span class:working={busy} class="status-dot"></span>{statusLabel}{busy && $explorer.snapshot ? ' · previous moment shown' : ''}</span><span class="status-links"><button onclick={()=>evidenceOpen=true}>Evidence & sources</button><span>M6 · Aspects & interpretations</span><a href="https://github.com/buttery-x3/astrology-viewer/tree/codex/development" target="_blank" rel="noreferrer">Source & licences ↗</a></span></div>
+  <Timeline displayedInstantMs={shownInstant} requestedInstantMs={$explorer.input.instantMs} birthInstantMs={birthContext.instantMs} window={timeWindow} preset={timelinePreset} {stepUnit} direction={playbackDirection} speed={playbackSpeed} {playing} {busy} {pauseReason} onSeek={seekInstant} onStep={stepTime} onPresetChange={changeWindow} onZoom={zoomWindow} onPlayPause={togglePlayback} onDirectionChange={direction=>changePlayback({direction})} onSpeedChange={speed=>changePlayback({speed})} onStepUnitChange={unit=>stepUnit=unit} onReturnBirth={returnBirthInstant} onEditMoment={()=>openForm('moment')} />
+  <div class="app-status"><span role="status" aria-live="polite" aria-atomic="true"><span class:working={busy} class="status-dot"></span>{statusLabel}{busy && $explorer.snapshot ? ' · previous moment shown' : ''}</span><span class="status-links"><button onclick={()=>evidenceOpen=true}>Evidence & sources</button><span>M7 · Timeline & motion history</span><a href="https://github.com/buttery-x3/astrology-viewer/tree/codex/development" target="_blank" rel="noreferrer">Source & licences ↗</a></span></div>
   {#if $explorer.error}<div class="error-toast" role="alert"><span>{$explorer.error}</span><button class="text-button" onclick={() => explorer.retry()}>Retry calculation</button></div>{/if}
 </div>
 
