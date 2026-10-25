@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "sources": [
+    {
+      "name": "hygdata_v41.csv",
+      "url": "https://raw.githubusercontent.com/astronexus/HYG-Database/c7f7f883fe678cc7680169a50ccd7dcc49b060ce/hyg/CURRENT/hygdata_v41.csv",
+      "blob": "ba2dec4eb0f6768914c7fc1051258100214ddf84",
+      "bytes": 33932548,
+      "sha256": "d9f69fd86bbf90a4e4d52b4c5c53eacfa6dfc0bfdef85bfd94f095e0bebe4ebd"
+    },
+    {
+      "name": "bound_in_20.txt",
+      "url": "https://pbarbier.com/constellations/bound_in_20.txt",
+      "sha256": "bca972f08c3d136b77edf393c260533ec52003b5a6e1dda58c470d6ccdf262ac",
+      "bytes": 344415
+    },
+    {
+      "name": "centers_20.txt",
+      "url": "https://pbarbier.com/constellations/centers_20.txt",
+      "sha256": "c34e3bdbc6448eced93df4ff25af1032ac90b91d717b9d29582b8ed3a05bf94b",
+      "bytes": 3332
+    }
+  ],
+  "stars": {
+    "author": "David Nash / Astronexus, HYG Database v4.1",
+    "documentation": "https://raw.githubusercontent.com/astronexus/HYG-Database/c7f7f883fe678cc7680169a50ccd7dcc49b060ce/hyg/README.md",
+    "license": "CC-BY-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "notice": "https://raw.githubusercontent.com/astronexus/HYG-Database/c7f7f883fe678cc7680169a50ccd7dcc49b060ce/LICENSE",
+    "changes": "Excluded the Sun and stars fainter than visual magnitude 5.5; retained ID/name, magnitude, J2000 Cartesian position/velocity and colour index; sorted by HYG ID.",
+    "count": 2865,
+    "policy": "Mean astrometric J2000-aligned directions propagated linearly using catalogue Cartesian pc/year velocities and Julian years since J2000. No annual aberration, annual parallax, light deflection, observer parallax, extinction, or variable-star brightness modelling. Unknown radial velocities retain the catalogue zero assumption. Catalogue star sizes/brightness are visual encodings, not photometry or physical sizes."
+  },
+  "constellations": {
+    "author": "Pierre Barbier, constellation boundary compilation, 2012–2022; from Eugène Delporte (1930)",
+    "documentation": "https://pbarbier.com/constellations/boundaries.html",
+    "license": "CC-BY-SA-4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "notice": "https://pbarbier.com/terms.html",
+    "changes": "Parsed the author-provided interpolated J2000 boundary vertices and label centres; converted RA hours to degrees; retained constellation order including the two Serpens regions.",
+    "policy": "Author-transformed B1875 Delporte meridian/parallel boundaries to J2000 using Explanatory Supplement pp103–104 and SOFA Besselian/Julian epoch conversion. Boundary samples follow original small-circle parallels before precession; never replace them with one endpoint-to-endpoint great-circle arc. Fixed J2000 sky regions do not undergo stellar proper motion.",
+    "count": 88
+  },
+  "assets": [
+    {
+      "file": "bright-stars.json",
+      "bytes": 273417,
+      "sha256": "14606c209186bd9c144464f1123ff20ae9d0c855cf81d19ffa864a3d103a258d"
+    },
+    {
+      "file": "constellation-boundaries.json",
+      "bytes": 346958,
+      "sha256": "75d14867d93f3620771d7536258f8ea527fa8fb7f598868eb700438740a65eae"
+    }
+  ]
+}

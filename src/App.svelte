@@ -2,7 +2,10 @@
   import { onMount } from 'svelte';
   import { HOUSE_SYSTEMS, type BodyPosition, type EphemerisSnapshot } from './lib/astronomy/ephemeris';
   import { classifyLongitude, zodiacSign } from './lib/domain/chart';
-  import { createExplorerStore } from './lib/state/explorer';
+  import { createExplorerStore, type LayerKey } from './lib/state/explorer';
+  import FeatureObjectList from './lib/ui/FeatureObjectList.svelte';
+  import FeatureInspector from './lib/ui/FeatureInspector.svelte';
+  import CalculationProvenance from './lib/ui/CalculationProvenance.svelte';
   import { civilAtInstant, civilDateValue, civilTimeValue, exampleBirthContext, formatOffset, makeBirthContext, type GlobeDraft, type MomentCommit, type ObserverContext } from './lib/state/birth-context';
   import type { CivilDateTime } from './lib/time/civil-time';
   import MomentForm from './lib/ui/MomentForm.svelte';
@@ -22,7 +25,18 @@
     { id: 'pluto', name: 'Pluto', glyph: '♇', color: '#c8ade6' },
   ];
   const views = [{ id: 'overview', label: 'Earth overview' }, { id: 'observer', label: 'Observer sky' }, { id: 'outside', label: 'Outside sphere' }] as const;
-  const layerOptions = [{ id: 'bodies', label: 'Celestial bodies' }, { id: 'horizon', label: 'Horizon & compass' }, { id: 'ecliptic', label: 'Ecliptic' }] as const;
+  const layerOptions = [
+    { id: 'bodies', label: 'Celestial bodies', color: '#e4c49a' },
+    { id: 'horizon', label: 'Horizon & compass', color: '#64c9c6' },
+    { id: 'ecliptic', label: 'Ecliptic', color: '#dcb879' },
+    { id: 'signs', label: 'Tropical signs', color: '#bd91db' },
+    { id: 'angles', label: 'Ascendant, MC & opposites', color: '#f0d7a8' },
+    { id: 'equator', label: 'Celestial equator', color: '#928bbf' },
+    { id: 'meridian', label: 'Local meridian', color: '#80a7d7' },
+    { id: 'primeVertical', label: 'Prime vertical', color: '#9aaeb3' },
+    { id: 'stars', label: 'Catalogue stars', color: '#cad8e8' },
+    { id: 'constellations', label: 'Constellation regions', color: '#7394b3' },
+  ] as const;
   const initialBirthContext = exampleBirthContext();
   let birthContext = $state.raw(initialBirthContext);
   let explorationObserver = $state<ObserverContext>(initialBirthContext.observer);
@@ -81,7 +95,14 @@
     const result = classifyLongitude(selectedHouses, body.longitudeDeg);
     return result.status === 'valid' ? String(result.house) : 'Unavailable';
   }
-  function selectBody(id: string) { explorer.select(`body:${id}`); rightOpen = true; }
+  function selectBody(id: string) { explorer.select(`body:${id}`); explorer.setLayer('bodies',true); rightOpen = true; }
+  function selectFeature(id: string) {
+    explorer.select(id); rightOpen = true;
+    const kind=id.split(':')[0];
+    const referenceLayer:Record<string,LayerKey>={'reference:horizon':'horizon','reference:ecliptic':'ecliptic','reference:equator':'equator','reference:meridian':'meridian','reference:prime-vertical':'primeVertical','reference:zenith':'horizon','reference:nadir':'horizon','reference:north-pole':'equator','reference:south-pole':'equator'};
+    const layer:LayerKey|undefined=kind==='sign'?'signs':kind==='constellation'?'constellations':kind==='angle'?'angles':referenceLayer[id];
+    if(layer)explorer.setLayer(layer,true);
+  }
   function openForm(mode: 'birth' | 'moment' | 'location' = 'moment', observer?: ObserverContext) {
     formMode = mode;
     formInstant = mode === 'birth' ? birthContext.instantMs : $explorer.input.instantMs;
@@ -131,6 +152,7 @@
     if (instantMs >= Date.UTC(1900, 0, 1) && instantMs < Date.UTC(2101, 0, 1)) explorer.requestChart({ instantMs });
   }
   function onKey(event: KeyboardEvent) {
+    if(event.altKey||event.ctrlKey||event.metaKey)return;
     const target = event.target;
     if (formOpen || target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) return;
     if (event.key === 'Escape') { explorer.select(null); leftOpen = false; rightOpen = false; globePickMode = false; }
@@ -195,6 +217,7 @@
           {/each}
         </div>
       </section>
+      <FeatureObjectList snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} onSelect={selectFeature} />
       <div class="dock-footer"><span class="status-dot"></span> Browser calculation <a href="https://github.com/aloistr/swisseph" target="_blank" rel="noreferrer">Swiss Ephemeris ↗</a></div>
     </aside>
 
@@ -213,8 +236,8 @@
         </div>
       {/if}
       {#if sceneStatus}<div class="scene-notice" role="status"><strong>3D view unavailable</strong><span>{sceneStatus}</span><span>The moment controls and celestial object list remain available.</span></div>{/if}
-      <div class="scene-controls"><button class="icon-button" onclick={() => sceneCanvas?.focusSelection()} aria-label="Focus selected body" title="Focus selection (F)">⌕</button><button class="icon-button" onclick={() => { explorer.setViewpoint('observer'); sceneCanvas?.returnToObserver(); }} aria-label="Return to observer" title="Return to observer (O)">⌖</button></div>
-      <div class="scene-legend"><span><i class="legend-line cyan"></i> Horizon</span><span><i class="legend-line gold"></i> Ecliptic</span><span><i class="legend-line violet"></i> Equator</span></div>
+      <div class="scene-controls"><button class="icon-button" onclick={() => sceneCanvas?.focusSelection()} aria-label="Focus selected feature" title="Focus selection (F)">⌕</button><button class="icon-button" onclick={() => { explorer.setViewpoint('observer'); sceneCanvas?.returnToObserver(); }} aria-label="Return to observer" title="Return to observer (O)">⌖</button></div>
+      <div class="scene-legend" aria-label="Active layer legend">{#each layerOptions.filter(layer=>$explorer.layers[layer.id]) as layer (layer.id)}<span><i class="legend-line" style:background={layer.color}></i>{layer.label}</span>{/each}<span class="legend-convention">Below horizon: dimmed body · distances schematic</span></div>
       <div class="interaction-hint"><span>Drag to orbit</span><i>·</i><span>Scroll to zoom</span><i>·</i><kbd>F</kbd><span>focus</span></div>
     </section>
 
@@ -226,11 +249,15 @@
         <div class="inspector-section"><h3>Position in the chart</h3><dl class="data-list"><div><dt>Ecliptic longitude</dt><dd>{deg(selectedBody.longitudeDeg)}</dd></div><div><dt>Ecliptic latitude</dt><dd>{deg(selectedBody.latitudeDeg)}</dd></div><div><dt>House</dt><dd>{houseFor(selectedBody)}</dd></div><div><dt>Motion</dt><dd>{selectedBody.longitudeSpeedDegPerDay < 0 ? 'Retrograde' : 'Direct'}</dd></div></dl></div>
         <div class="inspector-section"><h3>From the observer</h3><dl class="data-list"><div><dt>Altitude</dt><dd>{deg(selectedBody.horizon.altitudeDeg)}</dd></div><div><dt>Azimuth</dt><dd>{selectedBody.horizon.azimuthDeg === null ? 'Undefined' : deg(selectedBody.horizon.azimuthDeg)}</dd></div><div><dt>Horizon</dt><dd class:above={selectedBody.horizon.altitudeDeg >= 0}>{selectedBody.horizon.altitudeDeg >= 0 ? 'Above' : 'Below'}</dd></div></dl><p class="field-note">Geometric horizon; atmospheric refraction is excluded.</p></div>
         <button class="button secondary focus-button" onclick={() => sceneCanvas?.focusSelection()}>Focus in the scene <kbd>F</kbd></button>
+        <section class="inspector-section numerical-sources"><h3>How these values are defined</h3><p>Apparent geocentric positions use the tropical ecliptic of date. Latitude is retained in the 3D position. Houses and aspects use longitude alone. The horizon is geometric, with no atmospheric refraction.</p><p class="field-note">Swiss Ephemeris {$explorer.snapshot?.provenance.engine} · {selectedHouses?.system} houses · TT for body positions, UT1 for Earth rotation.</p><a class="source-link" href="https://www.astro.com/swisseph/swephprg.htm" target="_blank" rel="noreferrer">Swiss Ephemeris — swe_calc, coordinate flags and swe_houses_ex2 ↗</a></section>
+      {:else if $explorer.selectedId}
+        <FeatureInspector snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} onFocus={()=>sceneCanvas?.focusSelection()} />
       {:else}
         <div class="inspector-empty"><div class="empty-orbit" aria-hidden="true"><span>✦</span></div><span class="eyebrow">FOLLOW YOUR CURIOSITY</span><h2>A sky full of connections.</h2><p>Select a body in the sphere or celestial objects list to inspect its position.</p><div class="empty-rule"></div><small>The same moment.<br />A new point of view.</small></div>
       {/if}
       {#if !displayedTimeKnown}<div class="warning-note"><strong>Provisional birth time</strong><p>Local noon is an example when the birth time is unknown. Houses and angles depend on the actual time.</p></div>{/if}
       {#if selectedHouses?.status === 'undefined'}<div class="warning-note"><strong>House system unavailable</strong><p>{selectedHouses.reason}</p></div>{/if}
+      {#if $explorer.snapshot}<CalculationProvenance snapshot={$explorer.snapshot} />{/if}
       <div class="inspector-footer"><span class="tiny-cross" aria-hidden="true">✦</span><span>Astronomical positions<br />with explicit chart conventions.</span></div>
     </aside>
   </main>
@@ -241,7 +268,7 @@
     <div class="timeline-track" aria-hidden="true"><span class="timeline-tick"></span><span></span><span></span><span></span><span></span><i></i><span></span><span></span><span></span><span></span><span></span><b>1 day / step</b></div>
     <button class="anchor-button" onclick={returnBirthInstant} title="Return to the birth instant at the current observer location"><span aria-hidden="true">↺</span> Return to birth instant</button>
   </footer>
-  <div class="app-status"><span role="status" aria-live="polite" aria-atomic="true"><span class:working={busy} class="status-dot"></span>{statusLabel}{busy && $explorer.snapshot ? ' · previous moment shown' : ''}</span><span class="status-links"><span>M2 · Time & observer context</span><a href="https://github.com/buttery-x3/astrology-viewer/tree/codex/development" target="_blank" rel="noreferrer">Source & licences ↗</a></span></div>
+  <div class="app-status"><span role="status" aria-live="polite" aria-atomic="true"><span class:working={busy} class="status-dot"></span>{statusLabel}{busy && $explorer.snapshot ? ' · previous moment shown' : ''}</span><span class="status-links"><span>M3 · Spatial sky</span><a href="https://github.com/buttery-x3/astrology-viewer/tree/codex/development" target="_blank" rel="noreferrer">Source & licences ↗</a></span></div>
   {#if $explorer.error}<div class="error-toast" role="alert"><span>{$explorer.error}</span><button class="text-button" onclick={() => explorer.retry()}>Retry calculation</button></div>{/if}
 </div>
 

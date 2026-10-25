@@ -7,12 +7,16 @@ import {
   type Matrix3, type ObserverCoordinates, type Vector3,
 } from '../astronomy/coordinates';
 import { BODY_IDS, type BodyId, type EphemerisSnapshot } from '../astronomy/ephemeris';
+import { eclipticDirection, getSkyReferences } from '../domain/sky-reference';
+import { CATALOGUE_STARS, CONSTELLATION_REGIONS, catalogueStarDirection } from './sky-data';
 import coastline from './data/natural-earth-coastline.json';
 
 export interface ScenePresentation {
   viewpoint: 'overview' | 'observer' | 'outside';
   selectedId: string | null;
-  layers: { bodies: boolean; horizon: boolean; ecliptic: boolean; houses: boolean; stars: boolean };
+  layers: { bodies: boolean; horizon: boolean; ecliptic: boolean; houses: boolean; stars: boolean;
+    signs?: boolean; equator?: boolean; meridian?: boolean; primeVertical?: boolean;
+    angles?: boolean; constellations?: boolean };
   /** Only this explicit mode permits a globe click to propose an observer. */
   globePickMode?: boolean;
 }
@@ -23,6 +27,7 @@ export interface SceneOptions {
   /** Keeps the application picker in sync with the canvas Home command. */
   onViewpoint?: (viewpoint: ScenePresentation['viewpoint']) => void;
   onObserverPick?: (observer: ObserverCoordinates) => void;
+  onHover?: (entity: { id: string; name: string } | null) => void;
 }
 
 export interface SceneRuntime {
@@ -35,6 +40,8 @@ export interface SceneRuntime {
 const SKY_RADIUS = 5.8;
 const EARTH_RADIUS = 0.82;
 const RAD = Math.PI / 180;
+const SIGNS = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'];
+const SIGN_GLYPHS = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
 const BODY_STYLE: Record<BodyId, { color: number; glyph: string }> = {
   sun: { color: 0xf4c976, glyph: '☉' }, moon: { color: 0xe0e8f3, glyph: '☽' },
   mercury: { color: 0xa6c3cb, glyph: '☿' }, venus: { color: 0xe5ba9f, glyph: '♀' },
@@ -96,26 +103,30 @@ function setPoints(target: THREE.Line, points: THREE.Vector3[]): void {
 
 function label(text: string, color: string, size = 0.28): THREE.Sprite {
   const canvas = document.createElement('canvas');
-  canvas.width = 128;
+  canvas.width = text.length > 4 ? 256 : 128;
   canvas.height = 96;
   const context = canvas.getContext('2d');
   if (context) {
-    context.font = '52px "Segoe UI Symbol", "Arial Unicode MS", sans-serif';
+    context.font = `${text.length === 1 ? 52 : 32}px "Segoe UI Symbol", "Arial Unicode MS", sans-serif`;
     context.textAlign = 'center';
     context.textBaseline = 'middle';
     context.fillStyle = color;
     context.shadowColor = '#050b16';
     context.shadowBlur = 8;
-    context.fillText(text, 64, 50);
+    context.fillText(text, canvas.width / 2, 50);
   }
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false }));
-  sprite.scale.set(size * 128 / 96, size, 1);
+  sprite.scale.set(size * canvas.width / 96, size, 1);
+  sprite.userData.labelEnabled = true;
+  sprite.userData.baseHeight = size;
+  sprite.userData.textFraction = (text.length === 1 ? 52 : 32) / 96;
+  sprite.userData.minimumTextPixels = text.length === 1 ? 16 : 11;
   return sprite;
 }
 
-/** A quiet reference graticule, with no invented star catalogue. */
+/** A quiet fixed-J2000 coordinate graticule, distinct from catalogue stars. */
 function celestialGrid(): THREE.Group {
   const group = new THREE.Group();
   for (const declination of [-60, -30, 0, 30, 60]) {
@@ -193,6 +204,39 @@ function releaseScene(scene: THREE.Scene): void {
   scene.clear();
 }
 
+interface SceneEntity {
+  id: string; name: string; kind: 'body' | 'sign' | 'angle' | 'reference' | 'constellation';
+  objects: THREE.Object3D[]; anchor: THREE.Vector3; valid: boolean;
+  lines: THREE.Line[]; label?: THREE.Sprite; marker?: THREE.Mesh;
+}
+
+/** Magnitude controls only the restrained display encoding, never star position. */
+function starField(): THREE.Points<THREE.BufferGeometry, THREE.ShaderMaterial> {
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(CATALOGUE_STARS.length * 3), 3));
+  const colors = new Float32Array(CATALOGUE_STARS.length * 3);
+  const sizes = new Float32Array(CATALOGUE_STARS.length);
+  for (const [index, star] of CATALOGUE_STARS.entries()) {
+    const color = new THREE.Color(star[9] !== null && star[9] > 0.9 ? 0xd9c6ad : star[9] !== null && star[9] < 0.1 ? 0xb9cee6 : 0xd4d9df);
+    colors.set([color.r, color.g, color.b], index * 3);
+    sizes[index] = THREE.MathUtils.clamp(2.6 - star[2] * 0.29, 0.8, 3.2);
+  }
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  geometry.setAttribute('pointSize', new THREE.BufferAttribute(sizes, 1));
+  return new THREE.Points(geometry, new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, vertexColors: true,
+    uniforms: { pixelRatio: { value: 1 } },
+    vertexShader: `attribute float pointSize; uniform float pixelRatio; varying vec3 starColor; varying float facing;
+      void main() { starColor = color; vec4 world = modelMatrix * vec4(position, 1.0);
+        facing = length(cameraPosition) > ${SKY_RADIUS.toFixed(1)} ? dot(world.xyz, cameraPosition - world.xyz) : 1.0;
+        gl_Position = projectionMatrix * viewMatrix * world; gl_PointSize = pointSize * pixelRatio; }`,
+    fragmentShader: `varying vec3 starColor; varying float facing;
+      void main() { if (facing < 0.0) discard; float radius = length(gl_PointCoord - vec2(0.5));
+        if (radius > 0.5) discard; float alpha = (1.0 - smoothstep(0.04, 0.5, radius)) * 0.72;
+        gl_FragColor = vec4(starColor, alpha); }`,
+  }));
+}
+
 /** One canvas owns its renderer, controls, listeners, geometry, and animation frame. */
 export function mountScene(container: HTMLElement, options: SceneOptions = {}): SceneRuntime {
   const canvas = document.createElement('canvas');
@@ -251,6 +295,23 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   compass.add(...compassLabels);
   scene.add(ecliptic, equator, horizon, horizonPlane, observerMarker, tangentRing, observerConnector, compass);
 
+  const entities = new Map<string, SceneEntity>();
+  function register(entity: SceneEntity): void {
+    for (const object of entity.objects) {
+      object.userData.entityId = entity.id;
+      object.userData.entityKind = entity.kind;
+      if (object instanceof THREE.Line) {
+        const material = object.material as THREE.LineBasicMaterial;
+        object.userData.baseColor = material.color.getHex();
+        object.userData.baseOpacity = material.opacity;
+      }
+      if (object instanceof THREE.Mesh && object.material instanceof THREE.MeshBasicMaterial) object.userData.baseColor = object.material.color.getHex();
+    }
+    if (entity.label) entity.label.userData.labelPriority = entity.kind === 'body' ? 30 : entity.kind === 'angle' ? 25 : entity.kind === 'constellation' ? 1 : 10;
+    entities.set(entity.id, entity);
+  }
+  register({ id: 'reference:earth', name: 'Earth · geographic reference', kind: 'reference', objects: [earth.children[0]!], anchor: new THREE.Vector3(), valid: true, lines: [] });
+  register({ id: 'reference:observer', name: 'Observer location', kind: 'reference', objects: [observerMarker], anchor: observerMarker.position, marker: observerMarker, valid: true, lines: [] });
   const bodies = new THREE.Group();
   const bodyGeometry = new THREE.SphereGeometry(0.063, 14, 10);
   const markerMap = new Map<BodyId, THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>>();
@@ -264,15 +325,53 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     markerMap.set(id, marker);
     textMap.set(id, caption);
     bodies.add(marker, caption);
+    register({ id: `body:${id}`, name: id[0]!.toUpperCase() + id.slice(1), kind: 'body', objects: [marker, caption], anchor: marker.position, valid: true, lines: [], label: caption, marker });
   }
   scene.add(bodies);
-  const selection = new THREE.Mesh(new THREE.RingGeometry(0.105, 0.119, 48), new THREE.MeshBasicMaterial({ color: 0xf5e0ac, transparent: true, opacity: 0.9, side: THREE.DoubleSide, depthTest: false, depthWrite: false }));
+
+  const stars = starField();
+  scene.add(stars);
+  const constellationGroup = new THREE.Group();
+  for (const region of CONSTELLATION_REGIONS) {
+    const outline = line(region.points.map(point => vector(point, SKY_RADIUS * 1.002)), 0x63758e, 0.28, true);
+    const caption = label(region.abbreviation.replace(/[12]$/, ''), '#7c8ba2', 0.19);
+    caption.position.copy(vector(region.centre, SKY_RADIUS * 1.012));
+    caption.userData.labelPriority = 1;
+    constellationGroup.add(outline, caption);
+    const existing = entities.get(region.id);
+    if (existing) {
+      existing.objects.push(outline, caption); existing.lines.push(outline);
+      outline.userData.entityId = region.id; outline.userData.entityKind = 'constellation';
+      outline.userData.baseColor = 0x63758e; outline.userData.baseOpacity = 0.28;
+      caption.userData.entityId = region.id; caption.userData.entityKind = 'constellation';
+    } else register({ id: region.id, name: region.name, kind: 'constellation', objects: [outline, caption], anchor: caption.position.clone(), valid: true, lines: [outline], label: caption });
+  }
+  scene.add(constellationGroup);
+  const signs = new THREE.Group();
+  const signBands: THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>[] = [];
+  for (const [index, id] of SIGNS.entries()) {
+    const band = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: index % 2 ? 0xa79872 : 0x788d93, transparent: true, opacity: 0.045, side: THREE.DoubleSide, depthWrite: false }));
+    const boundary = line([], 0xc3a76c, 0.48);
+    const caption = label(SIGN_GLYPHS[index]!, '#b9a87f', 0.23);
+    signs.add(band, boundary, caption); signBands.push(band);
+    register({ id: `sign:${id}`, name: `${id[0]!.toUpperCase()}${id.slice(1)} · tropical sign`, kind: 'sign', objects: [band, boundary, caption], anchor: caption.position, valid: true, lines: [boundary], label: caption });
+  }
+  scene.add(signs);
+  const referenceGroup = new THREE.Group();
+  scene.add(referenceGroup);
+  for (const [id, name, target] of [
+    ['reference:horizon', 'Local horizon', horizon], ['reference:ecliptic', 'Ecliptic', ecliptic], ['reference:equator', 'Celestial equator', equator],
+  ] as const) register({ id, name, kind: 'reference', objects: [target], anchor: new THREE.Vector3(), valid: true, lines: [target] });
+  const longitudeProjection = line([], 0xf1d49a, 0.9);
+  const longitudeAnchor = new THREE.Mesh(new THREE.RingGeometry(0.056, 0.071, 32), new THREE.MeshBasicMaterial({ color: 0xf1d49a, transparent: true, opacity: 0.95, side: THREE.DoubleSide, depthWrite: false }));
+  scene.add(longitudeProjection, longitudeAnchor);
+  const selection = new THREE.Mesh(new THREE.RingGeometry(0.105, 0.119, 48), new THREE.MeshBasicMaterial({ color: 0xf5e0ac, transparent: true, opacity: 0.9, side: THREE.DoubleSide, depthWrite: false }));
   selection.renderOrder = 5;
   selection.visible = false;
   scene.add(selection);
 
   let snapshot: EphemerisSnapshot | null = null;
-  let presentation: ScenePresentation = { viewpoint: 'overview', selectedId: null, layers: { bodies: true, horizon: true, ecliptic: true, houses: false, stars: false } };
+  let presentation: ScenePresentation = { viewpoint: 'overview', selectedId: null, layers: { bodies: true, horizon: true, ecliptic: true, houses: false, stars: true, signs: true, angles: true } };
   let observerEast = new THREE.Vector3(0, 0, -1);
   let observerNorth = new THREE.Vector3(0, 1, 0);
   let observerUp = new THREE.Vector3(1, 0, 0);
@@ -283,6 +382,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   let defaultFraming = true;
   let animationFrame = 0;
   let pointer: { id: number; x: number; y: number; lastX: number; lastY: number; dragged: boolean } | null = null;
+  let hoveredId: string | null = null;
   const raycaster = new THREE.Raycaster();
   const pointerNdc = new THREE.Vector2();
 
@@ -294,7 +394,8 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       .addScaledVector(observerEast, Math.cos(altitude) * Math.sin(azimuth))
       .addScaledVector(observerUp, Math.sin(altitude));
     camera.position.set(0, 0, 0);
-    camera.up.copy(observerUp);
+    // Looking exactly at zenith/nadir needs a nonparallel camera-up direction.
+    camera.up.copy(Math.abs(look.dot(observerUp)) > 0.9999 ? observerNorth : observerUp);
     camera.lookAt(look);
     camera.updateMatrixWorld();
   }
@@ -303,13 +404,57 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     if (disposed || contextLost) return;
     if (controls.enabled) controls.update();
     if (selection.visible) selection.quaternion.copy(camera.quaternion);
+    if (longitudeAnchor.visible) longitudeAnchor.quaternion.copy(camera.quaternion);
+    updateLabelLayout();
     renderer.render(scene, camera);
+  }
+  function updateLabelLayout(): void {
+    camera.updateMatrixWorld(); scene.updateMatrixWorld(true);
+    const outside = camera.position.length() > SKY_RADIUS * 1.04;
+    const width = Math.max(1, container.clientWidth), height = Math.max(1, container.clientHeight);
+    const candidates: { sprite: THREE.Sprite; priority: number; rectangle: number[] }[] = [];
+    const sightline = new THREE.Ray();
+    const earthSphere = new THREE.Sphere(new THREE.Vector3(), EARTH_RADIUS);
+    const earthHit = new THREE.Vector3();
+    scene.traverse(object => {
+      if (!(object instanceof THREE.Sprite)) return;
+      object.visible = false;
+      if (!object.userData.labelEnabled) return;
+      const point = object.getWorldPosition(new THREE.Vector3());
+      if (outside && point.dot(camera.position) < point.lengthSq()) return;
+      const toward = point.clone().sub(camera.position), distance = toward.length();
+      if (earth.visible) {
+        sightline.set(camera.position, toward.clone().normalize());
+        if (sightline.intersectSphere(earthSphere, earthHit) && earthHit.distanceTo(camera.position) < distance - 0.025) return;
+      }
+      const projected = point.clone().project(camera);
+      if (projected.z < -1 || projected.z > 1 || Math.abs(projected.x) > 1.04 || Math.abs(projected.y) > 1.04) return;
+      const naturalHeight = (object.userData.baseHeight as number) * height / (2 * distance * Math.tan(camera.fov * RAD / 2));
+      const textFraction = object.userData.textFraction as number;
+      const spriteHeight = THREE.MathUtils.clamp(naturalHeight, (object.userData.minimumTextPixels as number) / textFraction, 23 / textFraction);
+      const aspect = object.scale.x / object.scale.y;
+      const worldHeight = spriteHeight * 2 * distance * Math.tan(camera.fov * RAD / 2) / height;
+      object.scale.set(worldHeight * aspect, worldHeight, 1);
+      const spriteWidth = spriteHeight * object.scale.x / object.scale.y;
+      const x = (projected.x + 1) * width / 2, y = (1 - projected.y) * height / 2;
+      const id = object.userData.entityId as string | undefined;
+      const priority = id === presentation.selectedId ? 100 : id === hoveredId ? 90 : object.userData.labelPriority as number || 10;
+      candidates.push({ sprite: object, priority, rectangle: [x - spriteWidth / 2 - 3, y - spriteHeight / 2 - 3, x + spriteWidth / 2 + 3, y + spriteHeight / 2 + 3] });
+    });
+    candidates.sort((a, b) => b.priority - a.priority);
+    const occupied: number[][] = [];
+    for (const candidate of candidates) {
+      const a = candidate.rectangle;
+      if (candidate.priority < 90 && occupied.some(b => a[0]! < b[2]! && a[2]! > b[0]! && a[1]! < b[3]! && a[3]! > b[1]!)) continue;
+      candidate.sprite.visible = true; occupied.push(a);
+    }
   }
   function resize(): void {
     if (disposed) return;
     const width = Math.max(1, container.clientWidth);
     const height = Math.max(1, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    stars.material.uniforms.pixelRatio!.value = renderer.getPixelRatio();
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
@@ -383,15 +528,69 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     compass.visible = horizon.visible;
     horizonPlane.visible = horizon.visible && presentation.viewpoint !== 'observer';
     ecliptic.visible = hasData && presentation.layers.ecliptic && !picking;
-    equator.visible = hasData && !picking;
+    equator.visible = hasData && !!presentation.layers.equator && !picking;
     bodies.visible = hasData && presentation.layers.bodies && !picking;
-    canvas.style.cursor = picking ? 'crosshair' : 'grab';
+    stars.visible = hasData && presentation.layers.stars && !picking;
+    signs.visible = hasData && !!presentation.layers.signs && !picking;
+    constellationGroup.visible = hasData && !!presentation.layers.constellations && !picking;
+    canvas.style.cursor = picking ? 'crosshair' : hoveredId ? 'pointer' : 'grab';
     canvas.setAttribute('aria-label', picking
       ? 'Choose an observer on Earth. Drag to rotate the globe, then click a location. Coordinates remain a draft until Apply; numeric fields are available in the location form.'
       : 'Interactive schematic sky. Drag to orbit or look; scroll to zoom. Arrow keys move the view, plus and minus zoom, F focuses selection, and Home returns to observer sky.');
-    const selected = presentation.selectedId?.startsWith('body:') ? markerMap.get(presentation.selectedId.slice(5) as BodyId) : undefined;
-    selection.visible = !!selected && bodies.visible;
-    if (selected) selection.position.copy(selected.position);
+    const linkedSign = selectedBody() ? `sign:${SIGNS[Math.floor(selectedBody()!.longitudeDeg / 30)]}` : null;
+    for (const entity of entities.values()) {
+      const earthReference = entity.id === 'reference:earth' || entity.id === 'reference:observer';
+      const enabled = hasData && (earthReference ? earth.visible : !picking) && entity.valid && entityLayerEnabled(entity);
+      const selected = entity.id === presentation.selectedId || entity.id === linkedSign;
+      const hovered = entity.id === hoveredId;
+      for (const object of entity.objects) {
+        object.visible = enabled;
+        if (object instanceof THREE.Sprite) object.userData.labelEnabled = enabled;
+      }
+      for (const target of entity.lines) {
+        const material = target.material as THREE.LineBasicMaterial;
+        material.color.setHex(selected ? 0xf2d79b : hovered ? 0xb1e5df : target.userData.baseColor as number);
+        material.opacity = selected ? 0.95 : hovered ? 0.85 : target.userData.baseOpacity as number;
+      }
+      if (entity.kind === 'sign') {
+        const band = entity.objects[0] as THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
+        band.material.opacity = selected ? 0.16 : hovered ? 0.1 : 0.045;
+      }
+      if (entity.marker) {
+        entity.marker.scale.setScalar((entity.id === 'reference:observer' && picking ? 0.35 : 1) * (hovered && !selected ? 1.4 : 1));
+        const material = entity.marker.material as THREE.MeshBasicMaterial;
+        material.color.setHex(selected ? 0xf2d79b : hovered ? 0xb1e5df : entity.marker.userData.baseColor as number);
+      }
+    }
+    for (const caption of compassLabels) caption.userData.labelEnabled = compass.visible;
+    const selected = presentation.selectedId ? entities.get(presentation.selectedId) : undefined;
+    selection.visible = !!selected && selected.id !== 'reference:earth' && hasData && !picking && selected.valid && entityLayerEnabled(selected);
+    if (selected) selection.position.copy(selected.anchor);
+    const earthMaterial = (earth.children[0] as THREE.Mesh<THREE.SphereGeometry, THREE.MeshStandardMaterial>).material;
+    earthMaterial.color.setHex(presentation.selectedId === 'reference:earth' ? 0x29535a : hoveredId === 'reference:earth' ? 0x234752 : 0x183847);
+    updateLongitudeProjection();
+    if (hoveredId && (!entities.get(hoveredId)?.valid || !entityLayerEnabled(entities.get(hoveredId)!))) setHover(null);
+  }
+  function selectedBody() { return snapshot?.bodies.find(body => `body:${body.id}` === presentation.selectedId); }
+  function entityLayerEnabled(entity: SceneEntity): boolean {
+    if (entity.kind === 'body') return presentation.layers.bodies;
+    if (entity.kind === 'sign') return !!presentation.layers.signs;
+    if (entity.kind === 'angle') return !!presentation.layers.angles;
+    if (entity.kind === 'constellation') return !!presentation.layers.constellations;
+    const key = entity.id.slice(10);
+    if (key === 'earth' || key === 'observer') return presentation.globePickMode === true || presentation.viewpoint !== 'observer';
+    return key === 'horizon' || key === 'zenith' || key === 'nadir' ? presentation.layers.horizon
+      : key === 'ecliptic' ? presentation.layers.ecliptic
+      : key === 'meridian' ? !!presentation.layers.meridian
+      : key === 'prime-vertical' ? !!presentation.layers.primeVertical
+      : !!presentation.layers.equator;
+  }
+  function updateLongitudeProjection(): void {
+    const body = selectedBody();
+    longitudeProjection.visible = longitudeAnchor.visible = !!body && bodies.visible && !presentation.globePickMode;
+    if (!body || !snapshot) return;
+    setPoints(longitudeProjection, Array.from({ length: 24 }, (_, index) => vector(eclipticDirection(snapshot!, body.longitudeDeg, body.latitudeDeg * index / 23), SKY_RADIUS * 1.004)));
+    longitudeAnchor.position.copy(vector(eclipticDirection(snapshot, body.longitudeDeg), SKY_RADIUS * 1.004));
   }
   function updateSnapshot(next: EphemerisSnapshot): void {
     const direction = (east: number, north: number, up: number) => vector(equatorialOfDateToFixed(
@@ -424,29 +623,130 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     ), SKY_RADIUS)));
     for (const body of next.bodies) {
       const position = vector(equatorialToVector(body.fixedEquatorial), SKY_RADIUS);
-      markerMap.get(body.id)!.position.copy(position);
+      const marker = markerMap.get(body.id)!;
+      marker.position.copy(position);
+      const below = body.horizon.altitudeDeg < 0;
+      marker.material.color.setHex(BODY_STYLE[body.id].color).multiplyScalar(below ? 0.52 : 1);
+      marker.userData.baseColor = marker.material.color.getHex();
+      marker.material.wireframe = below;
       const caption = textMap.get(body.id)!;
       caption.position.copy(position).addScaledVector(observerUp, 0.2);
+      caption.material.opacity = below ? 0.53 : 0.95;
+      entities.get(`body:${body.id}`)!.name = `${body.id[0]!.toUpperCase()}${body.id.slice(1)}${below ? ' · below horizon' : ' · above horizon'}`;
       if (body.id === 'sun') sunlight.position.copy(position).multiplyScalar(3);
     }
+    for (const reference of getSkyReferences(next)) {
+      let entity = entities.get(reference.id);
+      if (!entity) {
+        const isAngle = reference.id.startsWith('angle:');
+        const objects: THREE.Object3D[] = [];
+        const lines: THREE.Line[] = [];
+        let marker: THREE.Mesh | undefined;
+        let caption: THREE.Sprite | undefined;
+        if (reference.line) {
+          const circle = line([], reference.id === 'reference:meridian' ? 0x8c91be : 0x7a9dac, 0.42, true);
+          lines.push(circle); objects.push(circle);
+        } else {
+          marker = new THREE.Mesh(new THREE.OctahedronGeometry(isAngle ? 0.065 : 0.036), new THREE.MeshBasicMaterial({ color: isAngle ? 0xf0cd92 : 0x8fafbf }));
+          const short = reference.id === 'reference:north-pole' ? 'NCP' : reference.id === 'reference:south-pole' ? 'SCP'
+            : reference.id === 'reference:zenith' ? 'Zenith' : reference.id === 'reference:nadir' ? 'Nadir' : reference.id.slice(6).toUpperCase();
+          caption = label(short, isAngle ? '#e6c68e' : '#89aabb', isAngle ? 0.2 : 0.18);
+          objects.push(marker, caption);
+        }
+        referenceGroup.add(...objects);
+        entity = { id: reference.id, name: reference.name, kind: isAngle ? 'angle' : 'reference', objects, anchor: new THREE.Vector3(), valid: false, lines, ...(marker ? { marker } : {}), ...(caption ? { label: caption } : {}) };
+        register(entity);
+      }
+      entity.valid = reference.status === 'valid';
+      if (reference.line) {
+        for (const target of entity.lines) setPoints(target, reference.line.map(point => vector(point, SKY_RADIUS)));
+        entity.anchor.copy(vector(reference.line[0]!, SKY_RADIUS));
+      } else if (reference.point) {
+        entity.anchor.copy(vector(reference.point, SKY_RADIUS));
+        entity.marker?.position.copy(entity.anchor);
+        const labelUp = Math.abs(entity.anchor.clone().normalize().dot(observerUp)) > 0.9 ? observerNorth : observerUp;
+        entity.label?.position.copy(entity.anchor).addScaledVector(labelUp, 0.2);
+      }
+    }
+    for (const [index, id] of SIGNS.entries()) {
+      const entity = entities.get(`sign:${id}`)!;
+      const vertices: number[] = [];
+      for (let segment = 0; segment < 16; segment++) {
+        const lambda0 = index * 30 + segment * 30 / 16;
+        const lambda1 = index * 30 + (segment + 1) * 30 / 16;
+        const a = vector(eclipticDirection(next, lambda0, -3), SKY_RADIUS * 0.998);
+        const b = vector(eclipticDirection(next, lambda1, -3), SKY_RADIUS * 0.998);
+        const c = vector(eclipticDirection(next, lambda1, 3), SKY_RADIUS * 0.998);
+        const d = vector(eclipticDirection(next, lambda0, 3), SKY_RADIUS * 0.998);
+        vertices.push(...a.toArray(), ...b.toArray(), ...d.toArray(), ...b.toArray(), ...c.toArray(), ...d.toArray());
+      }
+      const band = signBands[index]!;
+      const attribute = band.geometry.getAttribute('position');
+      if (attribute) { (attribute.array as Float32Array).set(vertices); attribute.needsUpdate = true; }
+      else band.geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+      band.geometry.computeBoundingSphere();
+      setPoints(entity.lines[0]!, Array.from({ length: 13 }, (_, step) => vector(eclipticDirection(next, index * 30, -3 + step * 0.5), SKY_RADIUS * 1.001)));
+      entity.anchor.copy(vector(eclipticDirection(next, index * 30 + 15, 5), SKY_RADIUS));
+    }
+    const positions = stars.geometry.getAttribute('position');
+    for (const [index, star] of CATALOGUE_STARS.entries()) {
+      const point = vector(catalogueStarDirection(star, next.time.julianDateTt), SKY_RADIUS * 1.004);
+      positions.setXYZ(index, point.x, point.y, point.z);
+    }
+    positions.needsUpdate = true; stars.geometry.computeBoundingSphere();
     if (presentation.viewpoint === 'observer') aimObserver();
   }
-  function selectAt(event: PointerEvent): void {
-    if (!snapshot || (!bodies.visible && !presentation.globePickMode)) return;
+  function pointRay(event: PointerEvent): void {
     const rect = canvas.getBoundingClientRect();
     pointerNdc.set((event.clientX - rect.left) / rect.width * 2 - 1, -((event.clientY - rect.top) / rect.height * 2 - 1));
     camera.updateMatrixWorld();
     scene.updateMatrixWorld(true);
     raycaster.setFromCamera(pointerNdc, camera);
+    const distance = camera.position.length() > SKY_RADIUS ? Math.max(1, camera.position.length() - SKY_RADIUS) : SKY_RADIUS;
+    raycaster.params.Line.threshold = THREE.MathUtils.clamp(distance * Math.tan(camera.fov * RAD / 2) * 8 / Math.max(1, rect.height), 0.016, 0.1);
+  }
+  function isVisible(object: THREE.Object3D): boolean {
+    for (let target: THREE.Object3D | null = object; target; target = target.parent) if (!target.visible) return false;
+    return true;
+  }
+  function entityAt(event: PointerEvent): SceneEntity | undefined {
+    if (!snapshot || presentation.globePickMode) return;
+    pointRay(event);
+    const targets = [...entities.values()].flatMap(entity => entity.objects).filter(isVisible);
+    const globeIntersection = earth.visible ? raycaster.intersectObject(earth.children[0]!, false)[0] : undefined;
+    const pointDistance = (object: THREE.Object3D): number => {
+      const id = object.userData.entityId as string;
+      const pointLike = object instanceof THREE.Sprite || object instanceof THREE.Mesh && id !== 'reference:earth' && object.userData.entityKind !== 'sign';
+      if (!pointLike) return Infinity;
+      const projected = object.getWorldPosition(new THREE.Vector3()).project(camera);
+      return Math.hypot((projected.x - pointerNdc.x) * canvas.clientWidth / 2, (projected.y - pointerNdc.y) * canvas.clientHeight / 2);
+    };
+    const priority = (object: THREE.Object3D) => Number.isFinite(pointDistance(object)) ? 0
+      : object instanceof THREE.Line ? 1 : object.userData.entityKind === 'sign' ? 2 : 3;
+    const hits = raycaster.intersectObjects(targets, false).filter(hit => !globeIntersection || hit.distance < globeIntersection.distance + (hit.object.userData.entityId === 'reference:earth' ? 1e-6 : 0));
+    // Nearby body/angle markers can overlap (ASC and Jupiter in the example).
+    // Resolve actual point/glyph centres before broad reference lines or belts.
+    hits.sort((a, b) => priority(a.object) - priority(b.object) || (Number.isFinite(pointDistance(a.object)) ? pointDistance(a.object) - pointDistance(b.object) : 0) || a.distance - b.distance);
+    return hits[0] ? entities.get(hits[0].object.userData.entityId as string) : undefined;
+  }
+  function setHover(id: string | null): void {
+    if (id === hoveredId) return;
+    hoveredId = id;
+    const entity = id ? entities.get(id) : undefined;
+    options.onHover?.(entity ? { id: entity.id, name: entity.name } : null);
+    canvas.style.cursor = presentation.globePickMode ? 'crosshair' : entity ? 'pointer' : 'grab';
+    updateVisibility(); requestRender();
+  }
+  function clearHover(): void { setHover(null); }
+  function selectAt(event: PointerEvent): void {
+    if (!snapshot) return;
     if (presentation.globePickMode) {
+      pointRay(event);
       const picked = raycaster.intersectObject(earth.children[0]!, false)[0];
       if (picked) options.onObserverPick?.(globeWorldPointToCoordinates(picked.point, snapshot));
       return;
     }
-    const intersection = raycaster.intersectObjects(bodies.children, false)[0];
-    const globeIntersection = earth.visible ? raycaster.intersectObject(earth.children[0]!, false)[0] : undefined;
-    const visibleIntersection = intersection && (!globeIntersection || intersection.distance < globeIntersection.distance) ? intersection : undefined;
-    options.onSelect?.(visibleIntersection ? visibleIntersection.object.userData.entityId as string : null);
+    options.onSelect?.(entityAt(event)?.id ?? null);
   }
   function pointerDown(event: PointerEvent): void {
     if (disposed || contextLost) return;
@@ -456,9 +756,11 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     if (presentation.viewpoint === 'observer') canvas.setPointerCapture(event.pointerId);
   }
   function pointerMove(event: PointerEvent): void {
-    if (!pointer || pointer.id !== event.pointerId) return;
+    if (!pointer) { setHover(entityAt(event)?.id ?? null); return; }
+    if (pointer.id !== event.pointerId) return;
     if (Math.hypot(event.clientX - pointer.x, event.clientY - pointer.y) > 4) pointer.dragged = true;
     if (pointer.dragged) defaultFraming = false;
+    if (pointer.dragged) clearHover();
     if (presentation.viewpoint === 'observer' && pointer.dragged) {
       azimuth -= (event.clientX - pointer.lastX) * 0.004;
       altitude = THREE.MathUtils.clamp(altitude + (event.clientY - pointer.lastY) * 0.004, -Math.PI / 2 + 0.005, Math.PI / 2 - 0.005);
@@ -485,20 +787,31 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   }
   function focusSelection(): void {
     if (disposed || contextLost || presentation.globePickMode) return;
-    const id = presentation.selectedId?.startsWith('body:') ? presentation.selectedId.slice(5) as BodyId : null;
-    const target = id ? markerMap.get(id) : undefined;
-    if (!snapshot || !target) return;
-    const direction = target.position.clone().normalize();
+    const target = presentation.selectedId ? entities.get(presentation.selectedId) : undefined;
+    if (!snapshot || !target?.valid) return;
+    if (target.id === 'reference:earth' || target.id === 'reference:observer') {
+      const viewpointChanged = presentation.viewpoint !== 'overview';
+      presentation = { ...presentation, viewpoint: 'overview' };
+      applyViewpoint('overview'); defaultFraming = false;
+      settleControls();
+      controls.target.copy(target.id === 'reference:observer' ? observerMarker.position : new THREE.Vector3());
+      camera.position.copy(observerUp).multiplyScalar(viewingDistance(EARTH_RADIUS, 1.4));
+      camera.up.copy(observerNorth); controls.update(); updateVisibility();
+      if (viewpointChanged) options.onViewpoint?.('overview');
+      requestRender(); return;
+    }
+    const direction = target.anchor.clone().normalize();
     if (presentation.viewpoint === 'observer') {
       azimuth = Math.atan2(direction.dot(observerEast), direction.dot(observerNorth));
       altitude = Math.asin(THREE.MathUtils.clamp(direction.dot(observerUp), -1, 1));
-      altitude = THREE.MathUtils.clamp(altitude, -Math.PI / 2 + 0.005, Math.PI / 2 - 0.005);
       aimObserver();
     } else {
       defaultFraming = false;
-      const offset = camera.position.clone().sub(controls.target).normalize().multiplyScalar(3.6);
-      controls.target.copy(target.position);
-      camera.position.copy(target.position).add(offset);
+      settleControls();
+      controls.target.copy(target.anchor);
+      const offsetUp = observerUp.clone().addScaledVector(direction, -observerUp.dot(direction)).normalize();
+      if (offsetUp.lengthSq() < 0.01) offsetUp.copy(observerNorth);
+      camera.position.copy(target.anchor).addScaledVector(direction, 3.6).addScaledVector(offsetUp, 1.1);
       controls.update();
     }
     requestRender();
@@ -566,6 +879,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   canvas.addEventListener('pointermove', pointerMove);
   canvas.addEventListener('pointerup', pointerUp);
   canvas.addEventListener('pointercancel', pointerUp);
+  canvas.addEventListener('pointerleave', clearHover);
   canvas.addEventListener('wheel', wheel, { passive: false });
   canvas.addEventListener('keydown', keyDown);
   canvas.addEventListener('contextmenu', preventContextMenu);
@@ -610,6 +924,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       canvas.removeEventListener('pointermove', pointerMove);
       canvas.removeEventListener('pointerup', pointerUp);
       canvas.removeEventListener('pointercancel', pointerUp);
+      canvas.removeEventListener('pointerleave', clearHover);
       canvas.removeEventListener('wheel', wheel);
       canvas.removeEventListener('keydown', keyDown);
       canvas.removeEventListener('contextmenu', preventContextMenu);
