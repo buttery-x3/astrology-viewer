@@ -134,8 +134,7 @@ function setPoints(target: THREE.Line, points: THREE.Vector3[]): void {
   }
 }
 
-function label(text: string, color: string, size = 0.28): THREE.Sprite {
-  const canvas = document.createElement('canvas');
+function paintLabel(canvas: HTMLCanvasElement, text: string, color: string): void {
   canvas.width = text.length > 4 ? 256 : 128;
   canvas.height = 96;
   const context = canvas.getContext('2d');
@@ -153,6 +152,11 @@ function label(text: string, color: string, size = 0.28): THREE.Sprite {
     context.shadowBlur = 8;
     context.fillText(text, canvas.width / 2, 50, canvas.width - 24);
   }
+}
+
+function label(text: string, color: string, size = 0.28): THREE.Sprite {
+  const canvas = document.createElement('canvas');
+  paintLabel(canvas, text, color);
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false }));
@@ -161,7 +165,31 @@ function label(text: string, color: string, size = 0.28): THREE.Sprite {
   sprite.userData.baseHeight = size;
   sprite.userData.textFraction = (text.length === 1 ? 52 : 32) / 96;
   sprite.userData.minimumTextPixels = text.length === 1 ? 16 : 11;
+  sprite.userData.labelText = text;
+  sprite.userData.labelColor = color;
   return sprite;
+}
+
+/** Keep the canvas; replace immutable GPU storage only when its extent changes. */
+function updateLabelText(sprite: THREE.Sprite, text: string): void {
+  if (sprite.userData.labelText === text) return;
+  const texture = sprite.material.map as THREE.CanvasTexture;
+  const canvas = texture.image as HTMLCanvasElement;
+  const width = canvas.width;
+  paintLabel(canvas, text, sprite.userData.labelColor as string);
+  if (canvas.width !== width) {
+    // WebGL2 texture storage is immutable. A resized canvas needs a new texture,
+    // and the old owned allocation must be released before the next render.
+    texture.dispose();
+    const replacement = new THREE.CanvasTexture(canvas);
+    replacement.colorSpace = THREE.SRGBColorSpace;
+    sprite.material.map = replacement;
+  } else texture.needsUpdate = true;
+  const size = sprite.userData.baseHeight as number;
+  sprite.scale.set(size * canvas.width / 96, size, 1);
+  sprite.userData.textFraction = (text.length === 1 ? 52 : 32) / 96;
+  sprite.userData.minimumTextPixels = text.length === 1 ? 16 : 11;
+  sprite.userData.labelText = text;
 }
 
 /** A quiet fixed-J2000 coordinate graticule, distinct from catalogue stars. */
@@ -360,7 +388,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     const style = BODY_STYLE[id];
     const marker = new THREE.Mesh(bodyGeometry, new THREE.MeshBasicMaterial({ color: style.color }));
     marker.userData.entityId = `body:${id}`;
-    const caption = label(style.glyph, `#${style.color.toString(16).padStart(6, '0')}`);
+    const caption = label(`${style.glyph} ${id[0]!.toUpperCase()}${id.slice(1)}`, `#${style.color.toString(16).padStart(6, '0')}`);
     caption.userData.entityId = `body:${id}`;
     markerMap.set(id, marker);
     textMap.set(id, caption);
@@ -499,7 +527,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       const point = object.getWorldPosition(new THREE.Vector3());
       const id = object.userData.entityId as string | undefined;
       const entity = id ? entities.get(id) : undefined;
-      const foreground = id === presentation.selectedId || id === hoveredId || id === linkedSign || !earthOccludes(presentation.display.earthOpacity) && !!entity?.marker;
+      const foreground = entity?.kind === 'body' || id === presentation.selectedId || id === hoveredId || id === linkedSign || !earthOccludes(presentation.display.earthOpacity) && !!entity?.marker;
       if (outside && !foreground && point.dot(camera.position) < point.lengthSq()) return;
       const toward = point.clone().sub(camera.position), distance = toward.length();
       if (earth.visible && earthOccludes(presentation.display.earthOpacity, presentation.globePickMode)) {
@@ -520,7 +548,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       const guideId = object.userData.constructionId as string | undefined;
       const priority = object.userData.trailLabel ? object.userData.labelPriority as number || 20
         : guideId ? guideId === hoveredGuideId ? 95 : object.userData.labelPriority as number || 18
-        : id === presentation.selectedId ? 100 : id === linkedSign ? 98 : id === hoveredId ? 90 : object.userData.labelPriority as number || 10;
+        : id === presentation.selectedId ? 100 : id === linkedSign ? 98 : id === hoveredId ? 90 : id === 'body:sun' ? 75 : entity?.kind === 'body' ? 55 : object.userData.labelPriority as number || 10;
       const movable = !!entity?.marker && entity.label === object;
       candidates.push({ sprite: object, priority, x, y, width: spriteWidth, height: spriteHeight, depth: projected.z, movable, anchor: movable ? entity.marker!.getWorldPosition(new THREE.Vector3()) : null });
     });
@@ -613,6 +641,16 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   function updateVisibility(): void {
     const hasData = snapshot !== null;
     const picking = presentation.globePickMode === true;
+    for (const body of snapshot?.bodies ?? []) {
+      const name = `${body.id[0]!.toUpperCase()}${body.id.slice(1)}`;
+      const placement = zodiacSign(body.longitudeDeg);
+      const detailed = body.id === 'sun' || presentation.selectedId === `body:${body.id}`;
+      updateLabelText(textMap.get(body.id)!, `${BODY_STYLE[body.id].glyph} ${name}${detailed ? ` · ${placement.name} ${placement.degree.toFixed(2)}°` : ''}`);
+    }
+    for (const [index, sign] of SIGNS.entries()) {
+      const entity = entities.get(`sign:${sign}`)!;
+      updateLabelText(entity.label!, presentation.selectedId === entity.id ? `${SIGN_GLYPHS[index]} ${sign[0]!.toUpperCase()}${sign.slice(1)} · sign` : SIGN_GLYPHS[index]!);
+    }
     houseRenderer.update(snapshot, presentation.houseDisplay, { selectedId: presentation.selectedId, hoveredId, visible: hasData && !picking && presentation.layers.houses, quietComparison: presentation.construction.enabled });
     constructionRenderer.update(snapshot, presentation.construction, { visible: hasData && !picking, hoveredGuideId });
     aspectRenderer.update(snapshot, { ...presentation.aspects, glow: presentation.aspects.glow && presentation.display.quality !== 'low' }, { visible: hasData && !picking, selectedId: presentation.selectedId, hoveredId });
@@ -678,7 +716,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     }
     for (const caption of compassLabels) caption.userData.labelEnabled = compass.visible;
     const selected = presentation.selectedId ? entities.get(presentation.selectedId) : undefined;
-    selection.visible = !!selected && selected.id !== 'reference:earth' && hasData && !picking && selected.valid && entityLayerEnabled(selected);
+    selection.visible = !!selected && selected.kind !== 'sign' && selected.id !== 'reference:earth' && hasData && !picking && selected.valid && entityLayerEnabled(selected);
     if (selected) selection.position.copy(entityAnchor(selected));
     const earthMaterial = (earth.children[0] as THREE.Mesh<THREE.SphereGeometry, THREE.MeshStandardMaterial>).material;
     earthMaterial.color.setHex(presentation.selectedId === 'reference:earth' ? 0x29535a : hoveredId === 'reference:earth' ? 0x234752 : 0x183847);
@@ -760,7 +798,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       marker.material.wireframe = below;
       const caption = textMap.get(body.id)!;
       caption.position.copy(position).addScaledVector(observerUp, 0.2);
-      caption.material.opacity = below ? 0.53 : 0.95;
+      caption.material.opacity = 0.95;
       const placement = zodiacSign(body.longitudeDeg);
       entities.get(`body:${body.id}`)!.name = `${body.id[0]!.toUpperCase()}${body.id.slice(1)} · ${placement.name} ${placement.degree.toFixed(2)}°${below ? ' · below horizon' : ' · above horizon'}`;
       if (body.id === 'sun') sunlight.position.copy(position).multiplyScalar(3);
