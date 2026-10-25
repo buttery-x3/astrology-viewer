@@ -4,6 +4,7 @@ import type { EphemerisSnapshot } from '../astronomy/ephemeris';
 import { classifyLongitude } from '../domain/chart';
 import { buildHouseGeometry, compareHouseAssignments, type HouseAssignmentComparison, type HouseDisplaySettings, type HouseGeometry, type HouseMesh } from '../domain/house-geometry';
 import { eclipticDirection } from '../domain/sky-reference';
+import { writeAstronomicalLine as writeLine } from './line-buffer';
 
 export interface HouseSceneEntity {
   id: string; name: string; kind: 'house' | 'boundary';
@@ -13,7 +14,7 @@ export interface HouseSceneEntity {
 export interface HouseRenderer {
   group: THREE.Group;
   entities: HouseSceneEntity[];
-  update(snapshot: EphemerisSnapshot | null, settings: HouseDisplaySettings, interaction: { selectedId: string | null; hoveredId: string | null; visible: boolean }): void;
+  update(snapshot: EphemerisSnapshot | null, settings: HouseDisplaySettings, interaction: { selectedId: string | null; hoveredId: string | null; visible: boolean; quietComparison?: boolean }): void;
 }
 type CaptionFactory = (text: string, color: string, size: number) => THREE.Sprite;
 type Fill = THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
@@ -48,37 +49,6 @@ function writeMesh(target: Fill, source: HouseMesh): void {
   (indices!.array as Uint32Array).set(source.indices);
   positions.needsUpdate = indices!.needsUpdate = true;
   target.geometry.setDrawRange(0, source.indices.length);
-}
-function writeLine(target: THREE.Line, values: readonly Vector3[]): void {
-  let positions = target.geometry.getAttribute('position');
-  if (!positions || positions.count < values.length) {
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(capacity(values.length) * 3), 3).setUsage(THREE.DynamicDrawUsage));
-    geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 1.001);
-    target.geometry.dispose(); target.geometry = geometry; positions = geometry.getAttribute('position');
-  }
-  for (const [index, value] of values.entries()) {
-    const converted = astronomicalToThree(value);
-    positions.setXYZ(index, converted.x, converted.y, converted.z);
-  }
-  positions.needsUpdate = true; target.geometry.setDrawRange(0, values.length);
-  if (target.material instanceof THREE.LineDashedMaterial) {
-    let distances = target.geometry.getAttribute('lineDistance');
-    if (!distances || distances.count < positions.count) {
-      distances = new THREE.Float32BufferAttribute(new Float32Array(positions.count), 1).setUsage(THREE.DynamicDrawUsage);
-      target.geometry.setAttribute('lineDistance', distances);
-    }
-    let distance = 0;
-    for (let index = 0; index < values.length; index++) {
-      if (target instanceof THREE.LineSegments && index % 2 === 0) distance = 0;
-      else if (index > 0) {
-        const before = values[index - 1]!, after = values[index]!;
-        distance += Math.hypot(after.x - before.x, after.y - before.y, after.z - before.z);
-      }
-      distances.setX(index, distance);
-    }
-    distances.needsUpdate = true;
-  }
 }
 function fill(color: number): Fill {
   const mesh = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({
@@ -253,9 +223,12 @@ export function createHouseRenderer(radius: number, caption: CaptionFactory): Ho
         target.label.visible = target.label.userData.labelEnabled;
         target.picking.visible = true;
       }
-      for (const [index, ghost] of ghosts.entries()) ghost.visible = !settings.comparisonChangesOnly || comparison?.changedBoundaryHouses.includes(index + 1) === true;
+      for (const [index, ghost] of ghosts.entries()) {
+        ghost.visible = !settings.comparisonChangesOnly || comparison?.changedBoundaryHouses.includes(index + 1) === true;
+        (ghost.material as THREE.Material).opacity = interaction.quietComparison ? 0.18 : 0.58;
+      }
       changed.visible = comparison?.status === 'valid' && comparison.changedRegions.length > 0 && opacity > 0;
-      changed.material.opacity = opacity * 0.55;
+      changed.material.opacity = opacity * (interaction.quietComparison ? 0.1 : 0.55);
       group.userData.primaryStatus = geometry?.status ?? 'undefined';
       group.userData.comparisonStatus = comparison?.status ?? 'absent';
       group.userData.mode = settings.mode;

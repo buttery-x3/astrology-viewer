@@ -148,4 +148,15 @@ describe('house renderer presentation invariants', () => {
     display.update(sky(), settings, interaction);
     expect(display.entities.every(entity => entity.valid)).toBe(true);
   });
+
+  it('quiets comparison outlines during construction and restores their normal contrast', () => {
+    const display = renderer(), snapshot = sky([houses(), houses(4)]);
+    display.update(snapshot, settings, interaction);
+    const ghost = named<THREE.Line<THREE.BufferGeometry, THREE.LineDashedMaterial>>(display.group, 'Comparison boundary 2');
+    const normal = ghost.material.opacity;
+    display.update(snapshot, settings, { ...interaction, quietComparison: true });
+    expect(ghost.material.opacity).toBeLessThan(normal / 2);
+    display.update(snapshot, settings, { ...interaction, quietComparison: false });
+    expect(ghost.material.opacity).toBe(normal);
+  });
 });
