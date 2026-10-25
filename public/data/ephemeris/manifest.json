@@ -1,0 +1,23 @@
+{
+  "revision": "f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0",
+  "files": [
+    {
+      "name": "sepl_18.se1",
+      "sha256": "ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+      "bytes": 484061,
+      "gzipBytes": 431501,
+      "source": "https://raw.githubusercontent.com/aloistr/swisseph/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/ephe/sepl_18.se1",
+      "coverage": "1800–2399; product input restricted to1900–2100",
+      "licence": "Swiss Ephemeris AGPL route; see vendor/swisseph/LICENSE"
+    },
+    {
+      "name": "semo_18.se1",
+      "sha256": "1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+      "bytes": 1304771,
+      "gzipBytes": 1226026,
+      "source": "https://raw.githubusercontent.com/aloistr/swisseph/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/ephe/semo_18.se1",
+      "coverage": "1800–2399; product input restricted to1900–2100",
+      "licence": "Swiss Ephemeris AGPL route; see vendor/swisseph/LICENSE"
+    }
+  ]
+}

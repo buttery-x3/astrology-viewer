@@ -1,0 +1,43 @@
+{
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+  "worker": true,
+  "engine": "2.10.03",
+  "coldStartMs": 128.70000004768372,
+  "batchCount": 250,
+  "medianCalculationMs": 0.2999999523162842,
+  "p95CalculationMs": 0.6999999284744263,
+  "wasmHeapBytes": 16777216,
+  "bodyCount": 10,
+  "houseCount": 7,
+  "polarStatuses": [
+    {
+      "system": "W",
+      "status": "valid"
+    },
+    {
+      "system": "E",
+      "status": "valid"
+    },
+    {
+      "system": "O",
+      "status": "valid"
+    },
+    {
+      "system": "P",
+      "status": "undefined"
+    },
+    {
+      "system": "K",
+      "status": "undefined"
+    },
+    {
+      "system": "R",
+      "status": "valid"
+    },
+    {
+      "system": "C",
+      "status": "valid"
+    }
+  ],
+  "memoryMethod": "Allocated WASM linear memory; excludes browser/JS/GPU peak memory."
+}
