@@ -113,6 +113,17 @@ const polarCase = {
     return { ...result.houses, commandArguments: result.args };
   }),
 };
+const knownAnswerInstant='1987-04-26T16:00:00.000Z';
+const knownAnswerNative=runNative(knownAnswerInstant);
+const knownAnswerCases=[{
+  id:'solar-civil-roundtrip-1987',
+  civil:{year:1987,month:4,day:27,hour:2,minute:0,second:0},
+  zoneId:'Australia/Melbourne',offsetMinutes:600,
+  observer:{latitudeDeg:-37.814,longitudeDeg:144.96332},
+  instantIso:knownAnswerInstant,instantMs:Date.parse(knownAnswerInstant),
+  commandArguments:knownAnswerNative.args,
+  sun:knownAnswerNative.bodies.find(body=>body.id==='sun'),expectedSign:'taurus',
+}];
 for (const system of ['P', 'K']) {
   if (polarCase.houses.find((houses) => houses.system === system)?.status !== 'undefined') {
     throw new Error(`Expected a native polar failure for ${system}.`);
@@ -134,7 +145,7 @@ const fixture = {
     rightAscensionNote: `Pinned swetest.c case 'a' prints xequ[0] directly in degrees; its help text incorrectly says hours. Source: https://github.com/aloistr/swisseph/blob/${revision}/swetest.c`,
     polarPolicy: 'Native Porphyry substitute cusps are discarded when the requested construction reports failure.',
   },
-  cases, polarCase,
+  cases, polarCase,knownAnswerCases,
 };
 const output = resolve(root, 'tests/fixtures/native-swiss.json');
 mkdirSync(dirname(output), { recursive: true });

@@ -20,8 +20,8 @@ The approved plan is [IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md); the so
 | M4 House displays and comparison | Complete and merged | [PR #6](https://github.com/buttery-x3/astrology-viewer/pull/6), [M4 evidence](reports/M4.md): 165 tests, 14 browser workflows; remote CI passed |
 | M5 Actual house constructions | Complete and merged | [PR #7](https://github.com/buttery-x3/astrology-viewer/pull/7), [M5 evidence](reports/M5.md): 277 tests, 16 browser workflows; independently reconstructed guides validated against 644 native results; remote CI passed |
 | M6 Aspects and complete inspector | Complete and merged | [PR #8](https://github.com/buttery-x3/astrology-viewer/pull/8), [M6 evidence](reports/M6.md): 315 tests, 18 browser workflows, 305 sourced cards and CI content gates; remote CI passed |
-| M7 Timeline and history | Complete; review and integration pending | [M7 evidence](reports/M7.md): 365 tests, 23 browser workflows, two trail frames and discrete bounded history |
-| M8 Accessibility, visual quality, recovery | Pending | |
+| M7 Timeline and history | Complete and merged | [PR #9](https://github.com/buttery-x3/astrology-viewer/pull/9), [M7 evidence](reports/M7.md): 365 tests, 23 browser workflows, two trail frames and discrete bounded history; remote CI passed |
+| M8 Accessibility, visual quality, recovery | Engineering complete; review and integration pending | [M8 evidence](reports/M8.md): 404 tests, accessibility/keyboard/recovery workflows and measured software-renderer resource stability; external manual/device validation tracked for release |
 | M9 Release validation | Pending | |
 
 ## Verified environment and current decisions

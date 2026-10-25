@@ -1,8 +1,9 @@
+import {openControlGroups} from './helpers';
 import {expect,test,type Page} from '@playwright/test';
 
 async function example(page:Page){
   await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();
-  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);
 }
 test('measures a pair, retains outside-orb selection, and preserves body coordinates',async({page})=>{
   const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));

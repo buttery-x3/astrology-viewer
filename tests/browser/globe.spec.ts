@@ -1,9 +1,10 @@
+import {openControlGroups} from './helpers';
 import { expect, test, type Page } from '@playwright/test';
 
 async function loadExample(page: Page) {
   await page.goto('/');
   await page.getByRole('button', { name: /Explore example/ }).click();
-  await expect(page.getByText('Moment calculated', { exact: true })).toBeVisible({ timeout: 20000 });
+  await expect(page.getByText('Moment calculated', { exact: true })).toBeVisible({ timeout: 20000 });await openControlGroups(page);
 }
 
 async function enterGlobePicker(page: Page) {

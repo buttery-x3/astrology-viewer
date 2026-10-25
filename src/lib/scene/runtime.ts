@@ -8,16 +8,19 @@ import {
 } from '../astronomy/coordinates';
 import { BODY_IDS, type BodyId, type EphemerisSnapshot } from '../astronomy/ephemeris';
 import { eclipticDirection, getSkyReferences } from '../domain/sky-reference';
-import { classifyLongitude } from '../domain/chart';
+import { classifyLongitude, zodiacSign } from '../domain/chart';
 import { DEFAULT_HOUSE_DISPLAY, isHouseDirectionPickable, type HouseDisplaySettings } from '../domain/house-geometry';
 import { DEFAULT_CONSTRUCTION, type ConstructionSettings } from '../domain/house-construction';
 import { DEFAULT_ASPECT_DISPLAY, getAspectDetails, type AspectDisplaySettings } from '../domain/aspect-presentation';
 import { DEFAULT_TRAIL_DISPLAY, DEFAULT_BOUNDARY_HISTORY, type TrailDisplaySettings, type TrailResult, type BoundaryHistorySettings, type BoundaryHistoryResult } from '../domain/trails';
+import { DEFAULT_SCENE_DISPLAY, type SceneDisplaySettings } from '../domain/display-settings';
 import { CATALOGUE_STARS, CONSTELLATION_REGIONS, catalogueStarDirection } from './sky-data';
 import { createHouseRenderer } from './house-renderer';
 import { createConstructionRenderer } from './construction-renderer';
 import { createAspectRenderer } from './aspect-renderer';
 import { createTrailRenderer } from './trail-renderer';
+import { earthOccludes, nearbyPointCandidates, scenePixelRatio, type ScreenCandidate } from './display-policy';
+import { placeLabels } from './label-layout';
 import coastline from './data/natural-earth-coastline.json';
 
 export interface ScenePresentation {
@@ -30,6 +33,7 @@ export interface ScenePresentation {
   trailResult: TrailResult | null;
   history: BoundaryHistorySettings;
   historyResult: BoundaryHistoryResult | null;
+  display: SceneDisplaySettings;
   layers: { bodies: boolean; horizon: boolean; ecliptic: boolean; houses: boolean; stars: boolean;
     signs?: boolean; equator?: boolean; meridian?: boolean; primeVertical?: boolean;
     angles?: boolean; constellations?: boolean };
@@ -44,12 +48,25 @@ export interface SceneOptions {
   onViewpoint?: (viewpoint: ScenePresentation['viewpoint']) => void;
   onObserverPick?: (observer: ObserverCoordinates) => void;
   onHover?: (entity: { id: string; name: string } | null) => void;
+  onOverlap?: (candidates: { id: string; name: string }[] | null) => void;
+  onOrientation?: (orientation: SceneOrientation) => void;
+}
+export interface SceneOrientation { viewpoint: ScenePresentation['viewpoint']; azimuthDeg: number; altitudeDeg: number }
+export interface SceneDiagnostics {
+  disposed: boolean; contextLost: boolean; renderCount: number; cpuRenderP95Ms: number;
+  geometries: number; textures: number; programs: number; drawCalls: number;
+  triangles: number; lines: number; points: number; pixelRatio: number;
+  camera: { position: number[]; up: number[]; target: number[]; fov: number; aspect: number };
+  visibleLabelIds: string[]; labelLeaders: number;
 }
 
 export interface SceneRuntime {
   update(snapshot: EphemerisSnapshot | null, presentation: ScenePresentation): void;
   focusSelection(): void;
   returnToObserver(): void;
+  zoom(direction: 1 | -1): void;
+  focusCanvas(): void;
+  getDiagnostics(): SceneDiagnostics;
   dispose(): void;
 }
 
@@ -281,12 +298,13 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     canvas.hidden = true;
     canvas.style.display = 'none';
     options.onStatus?.(message);
-    return { update() {}, focusSelection() {}, returnToObserver() {}, dispose() { canvas.remove(); fallback.remove(); } };
+    let closed = false;
+    return { update() {}, focusSelection() {}, returnToObserver() {}, zoom() {}, focusCanvas() {}, getDiagnostics() { return { disposed: closed, contextLost: false, renderCount: 0, cpuRenderP95Ms: 0, geometries: 0, textures: 0, programs: 0, drawCalls: 0, triangles: 0, lines: 0, points: 0, pixelRatio: 0, camera: { position: [], up: [], target: [], fov: 0, aspect: 0 }, visibleLabelIds: [], labelLeaders: 0 }; }, dispose() { closed = true; canvas.remove(); fallback.remove(); } };
   }
 
   renderer.setClearColor(0x070d17, 1);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setPixelRatio(scenePixelRatio(window.devicePixelRatio, DEFAULT_SCENE_DISPLAY.quality));
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(43, 1, 0.015, 100);
   camera.position.set(7.2, 4.8, 9.4);
@@ -396,13 +414,18 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   scene.add(aspectRenderer.group);
   const trailRenderer = createTrailRenderer(SKY_RADIUS, label);
   scene.add(trailRenderer.group);
+  const labelLeaders = Array.from({ length: 24 }, () => {
+    const target = line([new THREE.Vector3(), new THREE.Vector3()], 0x97bbc6, 0.52);
+    target.name = 'Label identity leader'; target.visible = false; target.renderOrder = 4; scene.add(target); return target;
+  });
+  const labelPositions = new WeakMap<THREE.Sprite, { authored: THREE.Vector3; placed: THREE.Vector3 }>();
   const selection = new THREE.Mesh(new THREE.RingGeometry(0.105, 0.119, 48), new THREE.MeshBasicMaterial({ color: 0xf5e0ac, transparent: true, opacity: 0.9, side: THREE.DoubleSide, depthWrite: false }));
   selection.renderOrder = 5;
   selection.visible = false;
   scene.add(selection);
 
   let snapshot: EphemerisSnapshot | null = null;
-  let presentation: ScenePresentation = { viewpoint: 'overview', selectedId: null, houseDisplay: { ...DEFAULT_HOUSE_DISPLAY }, construction: { ...DEFAULT_CONSTRUCTION }, aspects: { ...DEFAULT_ASPECT_DISPLAY }, trails: { ...DEFAULT_TRAIL_DISPLAY }, trailResult: null, history: { ...DEFAULT_BOUNDARY_HISTORY }, historyResult: null, layers: { bodies: true, horizon: true, ecliptic: true, houses: false, stars: true, signs: true, angles: true } };
+  let presentation: ScenePresentation = { viewpoint: 'overview', selectedId: null, houseDisplay: { ...DEFAULT_HOUSE_DISPLAY }, construction: { ...DEFAULT_CONSTRUCTION }, aspects: { ...DEFAULT_ASPECT_DISPLAY }, trails: { ...DEFAULT_TRAIL_DISPLAY }, trailResult: null, history: { ...DEFAULT_BOUNDARY_HISTORY }, historyResult: null, display: { ...DEFAULT_SCENE_DISPLAY }, layers: { bodies: true, horizon: true, ecliptic: true, houses: false, stars: true, signs: true, angles: true } };
   let observerEast = new THREE.Vector3(0, 0, -1);
   let observerNorth = new THREE.Vector3(0, 1, 0);
   let observerUp = new THREE.Vector3(1, 0, 0);
@@ -416,8 +439,12 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   let hoveredId: string | null = null;
   let hoveredGuideId: string | null = null;
   let hoveredName: string | null = null;
+  let lastHoverPosition: { clientX: number; clientY: number } | null = null;
+  let recentCandidates: ScreenCandidate[] = [];
   const raycaster = new THREE.Raycaster();
   const pointerNdc = new THREE.Vector2();
+  const renderTimes: number[] = [];
+  let renderCount = 0, lastOrientation = '';
 
   function requestRender(): void {
     if (!animationFrame && !disposed && !contextLost) animationFrame = requestAnimationFrame(render);
@@ -435,18 +462,29 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   function render(): void {
     animationFrame = 0;
     if (disposed || contextLost) return;
+    const started = performance.now();
     if (controls.enabled) controls.update();
     if (selection.visible) selection.quaternion.copy(camera.quaternion);
     if (longitudeAnchor.visible) longitudeAnchor.quaternion.copy(camera.quaternion);
     aspectRenderer.faceCamera(camera.quaternion);
     updateLabelLayout();
     renderer.render(scene, camera);
+    renderCount++;
+    renderTimes.push(performance.now() - started);
+    if (renderTimes.length > 120) renderTimes.shift();
+    const look = camera.getWorldDirection(new THREE.Vector3());
+    const orientation: SceneOrientation = { viewpoint: presentation.viewpoint, azimuthDeg: Math.round(normalizeDegrees(Math.atan2(look.dot(observerEast), look.dot(observerNorth)) / RAD) * 10) / 10, altitudeDeg: Math.round(Math.asin(THREE.MathUtils.clamp(look.dot(observerUp), -1, 1)) / RAD * 10) / 10 };
+    const key = `${orientation.viewpoint}:${orientation.azimuthDeg}:${orientation.altitudeDeg}`;
+    if (key !== lastOrientation) { lastOrientation = key; options.onOrientation?.(orientation); }
   }
   function updateLabelLayout(): void {
     camera.updateMatrixWorld(); scene.updateMatrixWorld(true);
     const outside = camera.position.length() > SKY_RADIUS * 1.04;
     const width = Math.max(1, container.clientWidth), height = Math.max(1, container.clientHeight);
-    const candidates: { sprite: THREE.Sprite; priority: number; rectangle: number[] }[] = [];
+    const body = selectedBody();
+    const linkedSign = body ? `sign:${zodiacSign(body.longitudeDeg).id}` : null;
+    const candidates: { sprite: THREE.Sprite; priority: number; x: number; y: number; width: number; height: number; depth: number; movable: boolean; anchor: THREE.Vector3 | null }[] = [];
+    for (const target of labelLeaders) target.visible = false;
     const sightline = new THREE.Ray();
     const earthSphere = new THREE.Sphere(new THREE.Vector3(), EARTH_RADIUS);
     const earthHit = new THREE.Vector3();
@@ -454,10 +492,17 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       if (!(object instanceof THREE.Sprite)) return;
       object.visible = false;
       if (!object.userData.labelEnabled) return;
+      let state = labelPositions.get(object);
+      if (!state) { state = { authored: object.position.clone(), placed: object.position.clone() }; labelPositions.set(object, state); }
+      else if (!state.placed.equals(object.position)) state.authored.copy(object.position);
+      object.position.copy(state.authored); object.updateWorldMatrix(true, false);
       const point = object.getWorldPosition(new THREE.Vector3());
-      if (outside && point.dot(camera.position) < point.lengthSq()) return;
+      const id = object.userData.entityId as string | undefined;
+      const entity = id ? entities.get(id) : undefined;
+      const foreground = id === presentation.selectedId || id === hoveredId || id === linkedSign || !earthOccludes(presentation.display.earthOpacity) && !!entity?.marker;
+      if (outside && !foreground && point.dot(camera.position) < point.lengthSq()) return;
       const toward = point.clone().sub(camera.position), distance = toward.length();
-      if (earth.visible) {
+      if (earth.visible && earthOccludes(presentation.display.earthOpacity, presentation.globePickMode)) {
         sightline.set(camera.position, toward.clone().normalize());
         if (sightline.intersectSphere(earthSphere, earthHit) && earthHit.distanceTo(camera.position) < distance - 0.025) return;
       }
@@ -465,32 +510,43 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       if (projected.z < -1 || projected.z > 1 || Math.abs(projected.x) > 1.04 || Math.abs(projected.y) > 1.04) return;
       const naturalHeight = (object.userData.baseHeight as number) * height / (2 * distance * Math.tan(camera.fov * RAD / 2));
       const textFraction = object.userData.textFraction as number;
-      const spriteHeight = THREE.MathUtils.clamp(naturalHeight, (object.userData.minimumTextPixels as number) / textFraction, 23 / textFraction);
+      const scale = presentation.display.labelScale;
+      const spriteHeight = THREE.MathUtils.clamp(naturalHeight * scale, (object.userData.minimumTextPixels as number) * scale / textFraction, 23 * scale / textFraction);
       const aspect = object.scale.x / object.scale.y;
       const worldHeight = spriteHeight * 2 * distance * Math.tan(camera.fov * RAD / 2) / height;
       object.scale.set(worldHeight * aspect, worldHeight, 1);
       const spriteWidth = spriteHeight * object.scale.x / object.scale.y;
       const x = (projected.x + 1) * width / 2, y = (1 - projected.y) * height / 2;
-      const id = object.userData.entityId as string | undefined;
       const guideId = object.userData.constructionId as string | undefined;
       const priority = object.userData.trailLabel ? object.userData.labelPriority as number || 20
         : guideId ? guideId === hoveredGuideId ? 95 : object.userData.labelPriority as number || 18
-        : id === presentation.selectedId ? 100 : id === hoveredId ? 90 : object.userData.labelPriority as number || 10;
-      candidates.push({ sprite: object, priority, rectangle: [x - spriteWidth / 2 - 3, y - spriteHeight / 2 - 3, x + spriteWidth / 2 + 3, y + spriteHeight / 2 + 3] });
+        : id === presentation.selectedId ? 100 : id === linkedSign ? 98 : id === hoveredId ? 90 : object.userData.labelPriority as number || 10;
+      const movable = !!entity?.marker && entity.label === object;
+      candidates.push({ sprite: object, priority, x, y, width: spriteWidth, height: spriteHeight, depth: projected.z, movable, anchor: movable ? entity.marker!.getWorldPosition(new THREE.Vector3()) : null });
     });
-    candidates.sort((a, b) => b.priority - a.priority);
-    const occupied: number[][] = [];
-    for (const candidate of candidates) {
-      const a = candidate.rectangle;
-      if (candidate.priority < 90 && occupied.some(b => a[0]! < b[2]! && a[2]! > b[0]! && a[1]! < b[3]! && a[3]! > b[1]!)) continue;
-      candidate.sprite.visible = true; occupied.push(a);
+    let leaderIndex = 0;
+    for (const placed of placeLabels(candidates.map((candidate, id) => ({ id, ...candidate })), width, height)) {
+      const candidate = candidates[placed.id]!;
+      if (candidate.movable && (Math.abs(candidate.x - placed.x) > 0.1 || Math.abs(candidate.y - placed.y) > 0.1)) {
+        const world = new THREE.Vector3(placed.x / width * 2 - 1, 1 - placed.y / height * 2, candidate.depth).unproject(camera);
+        candidate.sprite.position.copy(candidate.sprite.parent ? candidate.sprite.parent.worldToLocal(world) : world);
+      }
+      candidate.sprite.visible = true; candidate.sprite.updateWorldMatrix(true, false);
+      const state = labelPositions.get(candidate.sprite)!; state.placed.copy(candidate.sprite.position);
+      if (candidate.anchor && leaderIndex < labelLeaders.length) {
+        const end = candidate.sprite.getWorldPosition(new THREE.Vector3());
+        if (candidate.anchor.distanceTo(end) > 0.03) {
+          const target = labelLeaders[leaderIndex++]!;
+          setPoints(target, [candidate.anchor, end]); target.visible = true;
+        }
+      }
     }
   }
   function resize(): void {
     if (disposed) return;
     const width = Math.max(1, container.clientWidth);
     const height = Math.max(1, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(scenePixelRatio(window.devicePixelRatio, presentation.display.quality));
     stars.material.uniforms.pixelRatio!.value = renderer.getPixelRatio();
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
@@ -559,7 +615,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     const picking = presentation.globePickMode === true;
     houseRenderer.update(snapshot, presentation.houseDisplay, { selectedId: presentation.selectedId, hoveredId, visible: hasData && !picking && presentation.layers.houses, quietComparison: presentation.construction.enabled });
     constructionRenderer.update(snapshot, presentation.construction, { visible: hasData && !picking, hoveredGuideId });
-    aspectRenderer.update(snapshot, presentation.aspects, { visible: hasData && !picking, selectedId: presentation.selectedId, hoveredId });
+    aspectRenderer.update(snapshot, { ...presentation.aspects, glow: presentation.aspects.glow && presentation.display.quality !== 'low' }, { visible: hasData && !picking, selectedId: presentation.selectedId, hoveredId });
     trailRenderer.update(snapshot, presentation.trails, presentation.trailResult, presentation.history, presentation.historyResult, { visible: hasData && !picking, selectedId: presentation.selectedId });
     // The bounded render pool can represent a different eligible pair after a
     // chart/orb change. Rebind stable IDs without retaining Three object identity.
@@ -569,7 +625,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       const cuspCaption = entities.get(`boundary:${presentation.construction.boundaryHouse}`)?.label;
       if (cuspCaption) { cuspCaption.visible = false; cuspCaption.userData.labelEnabled = false; }
     }
-    sky.visible = !picking;
+    sky.visible = !picking && presentation.display.quality !== 'low';
     earth.visible = picking || presentation.viewpoint !== 'observer';
     observerMarker.visible = hasData && earth.visible;
     observerMarker.scale.setScalar(picking ? 0.35 : 1);
@@ -626,9 +682,16 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     if (selected) selection.position.copy(entityAnchor(selected));
     const earthMaterial = (earth.children[0] as THREE.Mesh<THREE.SphereGeometry, THREE.MeshStandardMaterial>).material;
     earthMaterial.color.setHex(presentation.selectedId === 'reference:earth' ? 0x29535a : hoveredId === 'reference:earth' ? 0x234752 : 0x183847);
+    const opacity = picking ? 1 : presentation.display.earthOpacity;
+    if (earthMaterial.transparent !== (opacity < 1)) { earthMaterial.transparent = opacity < 1; earthMaterial.needsUpdate = true; }
+    earthMaterial.opacity = opacity; earthMaterial.depthWrite = earthOccludes(opacity);
+    earth.children[0]!.visible = earth.visible && opacity > 0;
+    for (const child of earth.children.slice(1)) if (child instanceof THREE.LineSegments) {
+      (child.material as THREE.LineBasicMaterial).opacity = 0.78 * opacity; child.visible = opacity > 0;
+    }
     updateLongitudeProjection();
-    if (hoveredId && (!entities.get(hoveredId)?.valid || !entityLayerEnabled(entities.get(hoveredId)!))) setHover(null);
-    if (hoveredGuideId && !constructionRenderer.hitTargets.some(object => object.visible && object.userData.constructionId === hoveredGuideId && isVisible(object))) setHover(null);
+    if (hoveredId && (!entities.get(hoveredId)?.valid || !entityLayerEnabled(entities.get(hoveredId)!))) updateHoverState(null);
+    if (hoveredGuideId && !constructionRenderer.hitTargets.some(object => object.visible && object.userData.constructionId === hoveredGuideId && isVisible(object))) updateHoverState(null);
   }
   function entityAnchor(entity: SceneEntity): THREE.Vector3 {
     return presentation.construction.enabled && entity.id === `boundary:${presentation.construction.boundaryHouse}` && constructionRenderer.focusAnchor
@@ -698,7 +761,8 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       const caption = textMap.get(body.id)!;
       caption.position.copy(position).addScaledVector(observerUp, 0.2);
       caption.material.opacity = below ? 0.53 : 0.95;
-      entities.get(`body:${body.id}`)!.name = `${body.id[0]!.toUpperCase()}${body.id.slice(1)}${below ? ' · below horizon' : ' · above horizon'}`;
+      const placement = zodiacSign(body.longitudeDeg);
+      entities.get(`body:${body.id}`)!.name = `${body.id[0]!.toUpperCase()}${body.id.slice(1)} · ${placement.name} ${placement.degree.toFixed(2)}°${below ? ' · below horizon' : ' · above horizon'}`;
       if (body.id === 'sun') sunlight.position.copy(position).multiplyScalar(3);
     }
     for (const reference of getSkyReferences(next)) {
@@ -762,7 +826,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     positions.needsUpdate = true; stars.geometry.computeBoundingSphere();
     if (presentation.viewpoint === 'observer') aimObserver();
   }
-  function pointRay(event: PointerEvent): void {
+  function pointRay(event: Pick<PointerEvent, 'clientX' | 'clientY'>): void {
     const rect = canvas.getBoundingClientRect();
     pointerNdc.set((event.clientX - rect.left) / rect.width * 2 - 1, -((event.clientY - rect.top) / rect.height * 2 - 1));
     camera.updateMatrixWorld();
@@ -776,11 +840,12 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     for (let target: THREE.Object3D | null = object; target; target = target.parent) if (!target.visible) return false;
     return true;
   }
-  function entityAt(event: PointerEvent): (SceneEntity & { guideId?: string }) | undefined {
+  function entityAt(event: Pick<PointerEvent, 'clientX' | 'clientY'>): (SceneEntity & { guideId?: string }) | undefined {
+    recentCandidates = [];
     if (!snapshot || presentation.globePickMode) return;
     pointRay(event);
     const targets = [...[...entities.values()].flatMap(entity => entity.objects), ...constructionRenderer.hitTargets, ...trailRenderer.hitTargets].filter(object => object.userData.pickable !== false && isVisible(object));
-    const globeIntersection = earth.visible ? raycaster.intersectObject(earth.children[0]!, false)[0] : undefined;
+    const globeIntersection = earth.visible && earthOccludes(presentation.display.earthOpacity, presentation.globePickMode) ? raycaster.intersectObject(earth.children[0]!, false)[0] : undefined;
     const pointDistance = (object: THREE.Object3D): number => {
       const id = object.userData.entityId as string;
       const pointLike = object instanceof THREE.Sprite || object instanceof THREE.Mesh && (object.userData.aspectEndpoint || object.userData.constructionId || id !== 'reference:earth' && ['body', 'angle', 'reference'].includes(object.userData.entityKind as string));
@@ -796,19 +861,30 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     // Nearby body/angle markers can overlap (ASC and Jupiter in the example).
     // Resolve actual point/glyph centres before broad reference lines or belts.
     hits.sort((a, b) => priority(a.object) - priority(b.object) || (Number.isFinite(pointDistance(a.object)) ? pointDistance(a.object) - pointDistance(b.object) : 0) || a.distance - b.distance);
+    recentCandidates = hits.flatMap(hit => {
+      const object = hit.object, entity = entities.get(object.userData.entityId as string);
+      if (!entity) return [];
+      const physical = object instanceof THREE.Mesh && (object.userData.aspectEndpoint || object.userData.constructionId || entity.marker === object)
+        || object instanceof THREE.Sprite && entity.label === object && !!entity.marker;
+      const center = (entity.marker && (object === entity.marker || object === entity.label) ? entity.marker : object).getWorldPosition(new THREE.Vector3()).project(camera);
+      return [{ id: entity.id, name: object.userData.hoverName as string || entity.name, x: (center.x + 1) * canvas.clientWidth / 2, y: (1 - center.y) * canvas.clientHeight / 2, pointLike: Boolean(physical) }];
+    });
     const object = hits[0]?.object;
     const entity = object ? entities.get(object.userData.entityId as string) : undefined;
     return entity && object?.userData.hoverName ? { ...entity, name: object.userData.hoverName as string, ...(object.userData.constructionId ? { guideId: object.userData.constructionId as string } : {}) } : entity;
   }
-  function setHover(id: string | null, name: string | null = null, guideId: string | null = null): void {
-    if (id === hoveredId && name === hoveredName && guideId === hoveredGuideId) return;
+  function updateHoverState(id: string | null, name: string | null = null, guideId: string | null = null): boolean {
+    if (id === hoveredId && name === hoveredName && guideId === hoveredGuideId) return false;
     hoveredId = id; hoveredName = name; hoveredGuideId = guideId;
     const entity = id ? entities.get(id) : undefined;
     options.onHover?.(entity ? { id: entity.id, name: name ?? entity.name } : null);
     canvas.style.cursor = presentation.globePickMode ? 'crosshair' : entity ? 'pointer' : 'grab';
-    updateVisibility(); requestRender();
+    return true;
   }
-  function clearHover(): void { setHover(null); }
+  function setHover(id: string | null, name: string | null = null, guideId: string | null = null): void {
+    if (updateHoverState(id, name, guideId)) { updateVisibility(); requestRender(); }
+  }
+  function clearHover(): void { lastHoverPosition = null; setHover(null); }
   function selectAt(event: PointerEvent): void {
     if (!snapshot) return;
     if (presentation.globePickMode) {
@@ -817,17 +893,20 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       if (picked) options.onObserverPick?.(globeWorldPointToCoordinates(picked.point, snapshot));
       return;
     }
-    options.onSelect?.(entityAt(event)?.id ?? null);
+    const target = entityAt(event), candidates = nearbyPointCandidates(recentCandidates);
+    if (candidates.length > 1 && options.onOverlap) { options.onOverlap(candidates); return; }
+    options.onOverlap?.(null); options.onSelect?.(target?.id ?? null);
   }
   function pointerDown(event: PointerEvent): void {
     if (disposed || contextLost) return;
+    options.onOverlap?.(null);
     if (event.button !== 0) { defaultFraming = false; return; }
     canvas.focus({ preventScroll: true });
     pointer = { id: event.pointerId, x: event.clientX, y: event.clientY, lastX: event.clientX, lastY: event.clientY, dragged: false };
     if (presentation.viewpoint === 'observer') canvas.setPointerCapture(event.pointerId);
   }
   function pointerMove(event: PointerEvent): void {
-    if (!pointer) { const entity = entityAt(event); setHover(entity?.id ?? null, entity?.name ?? null, entity?.guideId ?? null); return; }
+    if (!pointer) { lastHoverPosition = { clientX: event.clientX, clientY: event.clientY }; const entity = entityAt(event); setHover(entity?.id ?? null, entity?.name ?? null, entity?.guideId ?? null); return; }
     if (pointer.id !== event.pointerId) return;
     if (Math.hypot(event.clientX - pointer.x, event.clientY - pointer.y) > 4) pointer.dragged = true;
     if (pointer.dragged) defaultFraming = false;
@@ -858,6 +937,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   }
   function focusSelection(): void {
     if (disposed || contextLost || presentation.globePickMode) return;
+    options.onOverlap?.(null);
     const target = presentation.selectedId ? entities.get(presentation.selectedId) : undefined;
     if (!snapshot || !target?.valid) return;
     if (target.id === 'reference:earth' || target.id === 'reference:observer') {
@@ -891,12 +971,27 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   }
   function returnToObserver(): void {
     if (disposed || contextLost || presentation.globePickMode) return;
+    options.onOverlap?.(null);
     azimuth = 0;
     altitude = 25 * RAD;
     presentation = { ...presentation, viewpoint: 'observer' };
     applyViewpoint('observer');
     updateVisibility();
     options.onViewpoint?.('observer');
+    requestRender();
+  }
+  function zoom(direction: 1 | -1): void {
+    if (disposed || contextLost) return;
+    options.onOverlap?.(null); defaultFraming = false;
+    if (presentation.viewpoint === 'observer') {
+      camera.fov = THREE.MathUtils.clamp(camera.fov * (direction === 1 ? 0.88 : 1.14), 25, 105);
+      camera.updateProjectionMatrix(); aimObserver();
+    } else {
+      settleControls();
+      const offset = camera.position.clone().sub(controls.target);
+      offset.setLength(THREE.MathUtils.clamp(offset.length() * (direction === 1 ? 0.88 : 1.14), controls.minDistance, controls.maxDistance));
+      camera.position.copy(controls.target).add(offset); controls.update();
+    }
     requestRender();
   }
   function keyDown(event: KeyboardEvent): void {
@@ -944,7 +1039,8 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   }
   function preventContextMenu(event: Event): void { event.preventDefault(); }
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  function motionPreference(): void { controls.enableDamping = !reducedMotion.matches; requestRender(); }
+  // The application resolves System/Reduced/Full into this explicit boolean.
+  function motionPreference(): void { controls.enableDamping = !presentation.display.reducedMotion; requestRender(); }
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(container);
   controls.addEventListener('change', requestRender);
@@ -970,10 +1066,18 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       const changedViewpoint = nextPresentation.viewpoint !== presentation.viewpoint;
       const wasPicking = presentation.globePickMode === true;
       const changedSnapshot = nextSnapshot !== snapshot;
+      const nextDisplay = { ...(nextPresentation.display ?? { ...DEFAULT_SCENE_DISPLAY, reducedMotion: reducedMotion.matches }) };
+      nextDisplay.labelScale = THREE.MathUtils.clamp(nextDisplay.labelScale, 0.85, 1.6);
+      nextDisplay.earthOpacity = THREE.MathUtils.clamp(nextDisplay.earthOpacity, 0, 1);
+      const qualityChanged = nextDisplay.quality !== presentation.display.quality;
+      const motionChanged = nextDisplay.reducedMotion !== presentation.display.reducedMotion;
+      if (changedSnapshot || nextPresentation.selectedId !== presentation.selectedId || changedViewpoint) options.onOverlap?.(null);
       const aspectSettings = nextPresentation.aspects ?? DEFAULT_ASPECT_DISPLAY;
-      presentation = { ...nextPresentation, houseDisplay: { ...(nextPresentation.houseDisplay ?? DEFAULT_HOUSE_DISPLAY) }, construction: { ...(nextPresentation.construction ?? DEFAULT_CONSTRUCTION) }, aspects: { ...aspectSettings, types: { ...aspectSettings.types }, orbs: { ...aspectSettings.orbs } }, trails: { ...(nextPresentation.trails ?? DEFAULT_TRAIL_DISPLAY) }, trailResult: nextPresentation.trailResult ?? null, history: { ...(nextPresentation.history ?? DEFAULT_BOUNDARY_HISTORY) }, historyResult: nextPresentation.historyResult ?? null, layers: { ...nextPresentation.layers } };
+      presentation = { ...nextPresentation, houseDisplay: { ...(nextPresentation.houseDisplay ?? DEFAULT_HOUSE_DISPLAY) }, construction: { ...(nextPresentation.construction ?? DEFAULT_CONSTRUCTION) }, aspects: { ...aspectSettings, types: { ...aspectSettings.types }, orbs: { ...aspectSettings.orbs } }, trails: { ...(nextPresentation.trails ?? DEFAULT_TRAIL_DISPLAY) }, trailResult: nextPresentation.trailResult ?? null, history: { ...(nextPresentation.history ?? DEFAULT_BOUNDARY_HISTORY) }, historyResult: nextPresentation.historyResult ?? null, display: nextDisplay, layers: { ...nextPresentation.layers } };
       snapshot = nextSnapshot;
-      if (changedSnapshot && snapshot) updateSnapshot(snapshot);
+      if (changedSnapshot) {
+        if (snapshot) updateSnapshot(snapshot);
+      }
       if (presentation.globePickMode) {
         if (!wasPicking) {
           defaultFraming = true;
@@ -983,10 +1087,30 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
         }
       } else if (changedViewpoint || wasPicking) applyViewpoint(presentation.viewpoint);
       updateVisibility();
+      if (changedSnapshot && lastHoverPosition && !pointer && !presentation.globePickMode) {
+        // Re-test the stationary pointer against the actual new geometry. Update
+        // identity text directly; this does not recursively call visibility.
+        updateLabelLayout();
+        const entity = entityAt(lastHoverPosition);
+        if (updateHoverState(entity?.id ?? null, entity?.name ?? null, entity?.guideId ?? null)) updateVisibility();
+      }
+      if (qualityChanged) resize();
+      if (motionChanged) motionPreference();
       requestRender();
     },
     focusSelection,
     returnToObserver,
+    zoom,
+    focusCanvas() { if (!disposed && !canvas.hidden) canvas.focus({ preventScroll: true }); },
+    getDiagnostics() {
+      const sorted = [...renderTimes].sort((a, b) => a - b);
+      const visibleLabels = new Set<string>(); scene.traverse(object => { if (object instanceof THREE.Sprite && object.visible && isVisible(object) && object.userData.entityId) visibleLabels.add(object.userData.entityId as string); });
+      return { disposed, contextLost, renderCount, cpuRenderP95Ms: sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95))] ?? 0,
+        geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures, programs: renderer.info.programs?.length ?? 0,
+        drawCalls: renderer.info.render.calls, triangles: renderer.info.render.triangles, lines: renderer.info.render.lines, points: renderer.info.render.points, pixelRatio: renderer.getPixelRatio(),
+        camera: { position: camera.position.toArray(), up: camera.up.toArray(), target: controls.target.toArray(), fov: camera.fov, aspect: camera.aspect },
+        visibleLabelIds: [...visibleLabels], labelLeaders: labelLeaders.filter(target => target.visible).length };
+    },
     dispose() {
       if (disposed) return;
       disposed = true;

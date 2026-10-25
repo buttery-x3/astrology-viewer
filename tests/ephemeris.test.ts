@@ -3,6 +3,10 @@ import { readFile } from 'node:fs/promises';
 import { EphemerisEngine, EPHEMERIS_FILES, type EngineAssets, type HouseSystemId } from '../src/lib/astronomy/ephemeris';
 import { equatorialOfDateToFixed, sphericalToVector } from '../src/lib/astronomy/coordinates';
 import reference from './fixtures/native-swiss.json';
+import { resolveCivilTime } from '../src/lib/time/civil-time';
+import { civilAtInstant } from '../src/lib/state/birth-context';
+import { zodiacSign } from '../src/lib/domain/chart';
+import { resolveBodyContent } from '../src/lib/content';
 
 let engine: EphemerisEngine;
 let assets: EngineAssets;
@@ -16,6 +20,25 @@ beforeAll(async () => {
 afterAll(() => engine?.close());
 
 describe('owned WASM against pinned native Swiss reference', () => {
+  it('preserves the exact civil-to-native solar known answer through interleaved date/observer/system cache edits',()=>{
+    for(const known of reference.knownAnswerCases){
+      const resolution=resolveCivilTime({civil:known.civil,zoneId:known.zoneId});
+      expect(resolution.status).toBe('unique');if(resolution.status!=='unique')throw new Error('Expected the unambiguous native known-answer civil time.');
+      expect(resolution.candidate.utcMs).toBe(known.instantMs);expect(resolution.candidate.utcIso).toBe(known.instantIso);expect(resolution.candidate.offsetMinutes).toBe(known.offsetMinutes);
+      expect(civilAtInstant(known.instantMs,{zoneId:known.zoneId,manualOffsetMinutes:null})).toEqual({civil:known.civil,offsetMinutes:known.offsetMinutes});
+      for(const other of [reference.cases[1]!,reference.cases[2]!,reference.cases[0]!]){
+        engine.calculate(other.instantMs,{latitudeDeg:51.5,longitudeDeg:0},['P']);
+        const snapshot=engine.calculate(resolution.candidate.utcMs,known.observer,['W']),sun=snapshot.bodies.find(body=>body.id==='sun')!;
+        expect(Math.abs(sun.longitudeDeg-known.sun!.longitudeDeg)).toBeLessThan(1e-6);
+        expect(zodiacSign(sun.longitudeDeg).id).toBe(known.expectedSign);
+        expect(resolveBodyContent(sun,snapshot.houses[0]).bodyInSign.id).toBe('body-in-sign:sun:taurus');
+        // Returned observer/cusp edits must not poison the retained geocentric date.
+        sun.longitudeDeg=255;
+        const again=engine.calculate(known.instantMs,{latitudeDeg:0,longitudeDeg:0},['E']);
+        expect(zodiacSign(again.bodies[0]!.longitudeDeg).id).toBe(known.expectedSign);
+      }
+    }
+  });
   for (const fixture of reference.cases) {
     it(`matches all ten bodies and seven house systems at ${fixture.instantIso}`, () => {
       for (const observer of fixture.observers) {

@@ -130,27 +130,27 @@
 
 <style>
   .house-controls{flex-shrink:0;color:var(--text)}
-  .control-group-title{margin:0 0 8px;color:var(--gold);font-size:10px;letter-spacing:.35px}
-  .control-label{display:block;font-size:11px;line-height:1.5;color:#bdcce2;margin:0 0 7px}
-  select{width:100%;min-width:0;font-size:11px}
-  .house-note{font-size:10px;line-height:1.65;color:#99abc3;margin:8px 0}
-  .pending-note{font-size:10px;line-height:1.6;color:#ddc493;margin:8px 0}
-  .show-construction{font-size:11px;line-height:1.6;color:var(--cyan);margin:2px 0 5px}
-  .house-warning{border:1px solid #6d5941;background:#302835;border-radius:5px;padding:10px;margin:12px 0;font-size:10px;line-height:1.6;color:#c9b7a3}
-  .house-warning strong{font-size:11px;color:#ebcea1}.house-warning p{margin:5px 0 0}
+  .control-group-title{margin:0 0 8px;color:var(--gold);font-size:0.75rem;letter-spacing:.35px}
+  .control-label{display:block;font-size:0.8125rem;line-height:1.5;color:#bdcce2;margin:0 0 7px}
+  select{width:100%;min-width:0;font-size:0.8125rem}
+  .house-note{font-size:0.75rem;line-height:1.65;color:#99abc3;margin:8px 0}
+  .pending-note{font-size:0.75rem;line-height:1.6;color:#ddc493;margin:8px 0}
+  .show-construction{font-size:0.8125rem;line-height:1.6;color:var(--cyan);margin:2px 0 5px}
+  .house-warning{border:1px solid #6d5941;background:#302835;border-radius:5px;padding:10px;margin:12px 0;font-size:0.75rem;line-height:1.6;color:#c9b7a3}
+  .house-warning strong{font-size:0.8125rem;color:#ebcea1}.house-warning p{margin:5px 0 0}
   .display-choices{border:0;border-top:1px solid #2b3a51;margin:16px 0 14px;padding:12px 0 0;min-width:0}
-  .display-choices legend{font-size:11px;color:#cbd8ea;padding:0 6px 0 0}
-  .display-choices>.house-note{margin-top:0}.display-choices label{display:flex;gap:9px;align-items:flex-start;cursor:pointer;border:1px solid transparent;border-radius:5px;padding:8px 7px;font-size:11px;line-height:1.5}
+  .display-choices legend{font-size:0.8125rem;color:#cbd8ea;padding:0 6px 0 0}
+  .display-choices>.house-note{margin-top:0}.display-choices label{display:flex;gap:9px;align-items:flex-start;cursor:pointer;border:1px solid transparent;border-radius:5px;padding:8px 7px;font-size:0.8125rem;line-height:1.5}
   .display-choices label:hover{background:#1b2a41}.display-choices label.active{border-color:#3d536f;background:#1a2a40;color:#cbe5e6}
-  .display-choices small{display:block;color:#91a3bd;font-size:9px;margin-top:2px}
+  .display-choices small{display:block;color:#91a3bd;font-size:0.6875rem;margin-top:2px}
   input[type=radio],input[type=checkbox]{accent-color:var(--cyan);width:13px;height:13px;margin:2px 0 0;flex-shrink:0}
-  .range-label{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:#bbcbe1;margin:12px 0 7px}.range-label output{font-variant-numeric:tabular-nums;color:var(--cyan)}
+  .range-label{display:flex;justify-content:space-between;gap:10px;font-size:0.8125rem;color:#bbcbe1;margin:12px 0 7px}.range-label output{font-variant-numeric:tabular-nums;color:var(--cyan)}
   .house-range{display:block;width:100%;padding:0;height:22px;accent-color:var(--cyan);cursor:pointer}
-  .house-check{display:flex;align-items:flex-start;gap:9px;cursor:pointer;font-size:10px;line-height:1.65;color:#aebeD4;margin:10px 0}
-  .reset-shell{font-size:10px;margin-top:2px;color:var(--cyan)}
+  .house-check{display:flex;align-items:flex-start;gap:9px;cursor:pointer;font-size:0.75rem;line-height:1.65;color:#aebeD4;margin:10px 0}
+  .reset-shell{font-size:0.75rem;margin-top:2px;color:var(--cyan)}
   .comparison-controls{margin-top:18px;padding-top:16px;border-top:1px solid #2b3a51}
-  .assignment-changes{margin-top:13px}.assignment-changes h3{font-size:10px;font-weight:500;color:#c2d1e5;line-height:1.6;margin:0}.comparison-warning{font-size:10px;color:#e0bf98;line-height:1.65;margin:8px 0}
-  .assignment-links{display:grid;gap:2px;margin-top:6px}.assignment-links button{display:flex;justify-content:space-between;gap:10px;text-align:left;font-size:11px;padding:6px;color:#bad5dc;border:1px solid transparent;border-radius:4px}.assignment-links button:hover{background:#1c3045;border-color:#3b526c}.assignment-links small{font-size:10px;color:#d8c49f;font-variant-numeric:tabular-nums}
-  .house-object-list{margin-top:17px;border-top:1px solid #2b3a51;padding-top:13px}.house-object-list summary{cursor:pointer;font-size:11px;line-height:1.6;color:#c7d6ea}.house-object-list summary>span{float:right;color:#92a3bc;font-size:10px}
-  .house-rows{display:grid;gap:3px;margin-top:9px}.house-rows>div{display:grid;grid-template-columns:1fr 1fr;gap:4px}.house-rows button{display:flex;align-items:baseline;justify-content:space-between;gap:5px;border:1px solid transparent;border-radius:4px;padding:7px 6px;color:#c6d2e4;font-size:11px;text-align:left}.house-rows button:hover,.house-rows button.chosen{background:#22324a;border-color:#486282;color:#f0dcac}.house-rows small{font-size:9px;color:#9aadc7;font-variant-numeric:tabular-nums}
+  .assignment-changes{margin-top:13px}.assignment-changes h3{font-size:0.75rem;font-weight:500;color:#c2d1e5;line-height:1.6;margin:0}.comparison-warning{font-size:0.75rem;color:#e0bf98;line-height:1.65;margin:8px 0}
+  .assignment-links{display:grid;gap:2px;margin-top:6px}.assignment-links button{display:flex;justify-content:space-between;gap:10px;text-align:left;font-size:0.8125rem;padding:6px;color:#bad5dc;border:1px solid transparent;border-radius:4px}.assignment-links button:hover{background:#1c3045;border-color:#3b526c}.assignment-links small{font-size:0.75rem;color:#d8c49f;font-variant-numeric:tabular-nums}
+  .house-object-list{margin-top:17px;border-top:1px solid #2b3a51;padding-top:13px}.house-object-list summary{cursor:pointer;font-size:0.8125rem;line-height:1.6;color:#c7d6ea}.house-object-list summary>span{float:right;color:#92a3bc;font-size:0.75rem}
+  .house-rows{display:grid;gap:3px;margin-top:9px}.house-rows>div{display:grid;grid-template-columns:1fr 1fr;gap:4px}.house-rows button{display:flex;align-items:baseline;justify-content:space-between;gap:5px;border:1px solid transparent;border-radius:4px;padding:7px 6px;color:#c6d2e4;font-size:0.8125rem;text-align:left}.house-rows button:hover,.house-rows button.chosen{background:#22324a;border-color:#486282;color:#f0dcac}.house-rows small{font-size:0.6875rem;color:#9aadc7;font-variant-numeric:tabular-nums}
 </style>

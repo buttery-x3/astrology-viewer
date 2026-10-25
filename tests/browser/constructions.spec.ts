@@ -1,6 +1,7 @@
+import {openControlGroups} from './helpers';
 import {expect,test,type Page} from '@playwright/test';
 
-async function example(page:Page){await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();}
+async function example(page:Page){await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);}
 async function coordinates(page:Page){await page.getByRole('button',{name:/^Moon/}).click();return page.locator('#inspector .data-list').first().locator('dd').allTextContents().then(v=>v.slice(0,2));}
 
 test('all seven methods expose validated actual constructions without changing the chart',async({page})=>{
@@ -8,7 +9,7 @@ test('all seven methods expose validated actual constructions without changing t
   const initial=await coordinates(page),context=await page.locator('.context-details > span > strong').innerText();
   for(const system of ['W','E','O','P','K','R','C']){
     await page.getByLabel('House system',{exact:true}).selectOption(system);
-    await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+    await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);
     await page.locator('.house-controls').getByRole('button',{name:'Show construction →',exact:true}).click();
     await page.getByLabel('Construction boundary',{exact:true}).selectOption('11');
     const guide=page.locator('.construction-guide');
@@ -39,11 +40,11 @@ test('a time-based construction becomes honestly undefined at a polar input',asy
   await page.getByLabel('Latitude · north positive').fill('80');await page.getByLabel('Longitude · east positive').fill('0');
   await page.getByLabel('Override with an explicit UTC offset').check();await page.getByLabel('Offset minutes east of UTC').fill('0');
   await page.getByRole('button',{name:/Apply exploration/}).click();
-  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);
   await expect(page.locator('.construction-guide')).toContainText('Construction undefined here');
   await expect(page.getByLabel('Construction sweep',{exact:true})).not.toBeVisible();
   await page.getByLabel('House system',{exact:true}).selectOption('C');
-  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);
   await expect(page.locator('.construction-guide')).not.toContainText('Construction undefined here');
   await expect(page.getByLabel('Construction sweep',{exact:true})).toBeVisible();
 });

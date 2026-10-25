@@ -1,5 +1,6 @@
+import {openControlGroups} from './helpers';
 import {expect,test,type Page} from '@playwright/test';
-async function example(page:Page){await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();}
+async function example(page:Page){await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);}
 
 test('window zoom preserves time and anchor; keyboard steps use configured units',async({page})=>{
   await example(page);const anchor=await page.locator('.birth-anchor-section').innerText();
@@ -14,6 +15,9 @@ test('window zoom preserves time and anchor; keyboard steps use configured units
   await page.getByLabel('Exploration time',{exact:true}).focus();await page.keyboard.press('ArrowRight');
   await expect(page.locator('.context-details')).toContainText('13:00:00');
   await expect(page.locator('.exploration-badge')).toContainText('Exploring: +1 hour');
+  await page.keyboard.press('Shift+ArrowRight');
+  await expect(page.locator('.context-details')).toContainText('23:00:00');
+  await expect(page.locator('.exploration-badge')).toContainText('Exploring: +11 hours');
   expect(await page.locator('.birth-anchor-section').innerText()).toBe(anchor);
   await page.getByRole('button',{name:/Return to birth instant/}).click();
   await expect(page.locator('.exploration-badge')).toContainText('Birth moment');

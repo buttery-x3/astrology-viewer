@@ -1,4 +1,5 @@
 import createSpatialEphemeris, { type EmscriptenModule } from './generated/spatial-ephemeris.js';
+import { boundedFetch } from '../net/bounded-fetch';
 import {
   createEquatorialFrameTransform, equatorialToHorizon,
   type EquatorialFrameTransform, type ObserverCoordinates, type Matrix3,
@@ -56,17 +57,19 @@ export async function verifyEphemerisFile(name: string, bytes: Uint8Array): Prom
   if (actual !== expected.sha256) throw new Error(`Ephemeris checksum mismatch: ${name}`);
 }
 
-export async function fetchEngineAssets(base = ''): Promise<EngineAssets> {
-  const read = async (url: string) => {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`Unable to load calculation data (${response.status}): ${url}`);
-    return new Uint8Array(await response.arrayBuffer());
-  };
-  const [wasmBinary, ...files] = await Promise.all([
-    read(new URL('./generated/spatial-ephemeris.wasm', import.meta.url).href),
-    ...EPHEMERIS_FILES.map(file => read(`${base}/data/ephemeris/${file.name}`)),
-  ]);
-  return { wasmBinary: wasmBinary!, files: new Map(EPHEMERIS_FILES.map((file,i) => [file.name, files[i]!])) };
+export interface EngineAssetFetchOptions{signal?:AbortSignal;fetch?:typeof fetch;timeoutMs?:number}
+export async function fetchEngineAssets(base = '',options:EngineAssetFetchOptions={}): Promise<EngineAssets> {
+  const controller=new AbortController(),abort=()=>controller.abort();
+  options.signal?.addEventListener('abort',abort,{once:true});if(options.signal?.aborted)abort();
+  const read=(url:string)=>boundedFetch(url,{maxBytes:2*1024*1024,timeoutMs:options.timeoutMs??20000,signal:controller.signal,fetch:options.fetch});
+  try{
+    const [wasmBinary, ...files] = await Promise.all([
+      read(new URL('./generated/spatial-ephemeris.wasm', import.meta.url).href),
+      ...EPHEMERIS_FILES.map(file => read(`${base}/data/ephemeris/${file.name}`)),
+    ]);
+    return { wasmBinary: wasmBinary!, files: new Map(EPHEMERIS_FILES.map((file,i) => [file.name, files[i]!])) };
+  }catch(error){controller.abort();throw error;}
+  finally{options.signal?.removeEventListener('abort',abort);}
 }
 
 /** One worker owns one instance; all C calls are synchronous and serial. */

@@ -114,6 +114,12 @@
     void findZones();
   }
   function manualCoordinates() { zoneController?.abort(); zonePending = false; zoneCandidates = []; source = 'manual'; label = 'Custom location'; clearChoice(); zoneStatus = 'Coordinates changed. Find the geographic zone or explicitly confirm your own zone below.'; zoneOverride = true; zoneConfirmed = false; }
+  function manualZone() {
+    zoneController?.abort(); zoneController = undefined;
+    zonePending = false; zoneCandidates = [];
+    zoneOverride = true; zoneConfirmed = false; clearChoice();
+    zoneStatus = 'Manual time zone entered. Confirm it for these coordinates.';
+  }
   function submit(event: SubmitEvent) {
     event.preventDefault();
     if (!latitude.trim() || !longitude.trim() || !Number.isFinite(observer.latitudeDeg) || Math.abs(observer.latitudeDeg) > 90 || !Number.isFinite(observer.longitudeDeg) || Math.abs(observer.longitudeDeg) > 180) { error = 'Enter latitude from −90 to 90 and longitude from −180 to 180.'; return; }
@@ -147,7 +153,7 @@
   <div class="zone-find-row"><span>{label}</span><button type="button" class="text-button" onclick={findZones} disabled={zonePending}>{zonePending ? 'Finding zone…' : 'Find zone for coordinates'}</button></div>
   <p class="lookup-status" role="status">{zoneStatus}</p>
   {#if zoneCandidates.length > 1}<label class="standalone-label">Geographic time-zone choices<select bind:value={zoneId} onchange={() => { zoneOverride = false; zoneConfirmed = true; clearChoice(); }} required={!manualOffset} disabled={manualOffset}><option value="" disabled>Choose a time zone</option>{#each zoneCandidates as zone (zone)}<option value={zone}>{zone}</option>{/each}</select></label>{/if}
-  <label class="standalone-label">IANA time zone<input list="iana-zone-options" bind:value={zoneId} placeholder="Europe/London" disabled={manualOffset} oninput={() => { zoneOverride = true; zoneConfirmed = false; clearChoice(); }} required={!manualOffset} /></label>
+  <label class="standalone-label">IANA time zone<input list="iana-zone-options" bind:value={zoneId} placeholder="Europe/London" disabled={manualOffset} oninput={manualZone} required={!manualOffset} /></label>
   {#if zoneOverride && !manualOffset}<label class="form-checkbox"><input type="checkbox" bind:checked={zoneConfirmed} /><span>Confirm this time zone for the entered coordinates</span></label>{/if}
   <datalist id="iana-zone-options">{#each zoneNames as zone (zone)}<option value={zone}></option>{/each}</datalist>
   <label class="form-checkbox"><input type="checkbox" checked={manualOffset} onchange={(event) => { manualOffset = event.currentTarget.checked; if (manualOffset) { zoneController?.abort(); zonePending = false; } clearChoice(); }} /><span>Override with an explicit UTC offset</span></label>
