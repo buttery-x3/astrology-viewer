@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '../schema';
 import { validateRotationMatrix, type Matrix3 } from '../astronomy/coordinates';
 import type { EphemerisSnapshot } from '../astronomy/ephemeris';
 

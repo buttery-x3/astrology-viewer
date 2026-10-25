@@ -32,6 +32,7 @@
   import ControlGroup from './lib/ui/ControlGroup.svelte';
   import DisplayControls from './lib/ui/DisplayControls.svelte';
   import {DEFAULT_PREFERENCES,readPreferences,writePreferences,type DisplayPreferences} from './lib/state/preferences';
+  import {SOURCE_HREF,BUILD_REVISION} from './lib/source-access';
 
   const explorer = createExplorerStore();
   const trailService=createTrailService();
@@ -407,7 +408,7 @@
   </main>
 
   <Timeline displayedInstantMs={shownInstant} requestedInstantMs={$explorer.input.instantMs} birthInstantMs={birthContext.instantMs} window={timeWindow} preset={timelinePreset} {stepUnit} direction={playbackDirection} speed={playbackSpeed} {playing} {busy} {pauseReason} onSeek={seekInstant} onStep={stepTime} onPresetChange={changeWindow} onZoom={zoomWindow} onPlayPause={togglePlayback} onDirectionChange={direction=>changePlayback({direction})} onSpeedChange={speed=>changePlayback({speed})} onStepUnitChange={unit=>stepUnit=unit} onReturnBirth={returnBirthInstant} onEditMoment={()=>openForm('moment')} />
-  <div class="app-status"><span role="status" aria-live={playing?'off':'polite'} aria-atomic="true"><span class:working={busy} class="status-dot"></span>{statusLabel}{busy && $explorer.snapshot ? ' · previous moment shown' : ''}</span><span class="status-links"><button onclick={()=>evidenceOpen=true}>Evidence & sources</button><span>M8 · Display & access</span><a href="https://github.com/buttery-x3/astrology-viewer/tree/codex/development" target="_blank" rel="noreferrer">Source & licences ↗</a></span></div>
+  <div class="app-status"><span role="status" aria-live={playing?'off':'polite'} aria-atomic="true"><span class:working={busy} class="status-dot"></span>{statusLabel}{busy && $explorer.snapshot ? ' · previous moment shown' : ''}</span><span class="status-links"><button onclick={()=>evidenceOpen=true}>Evidence & sources</button><span>Build {BUILD_REVISION.slice(0,7)}</span><a href={SOURCE_HREF} target="_blank" rel="noreferrer">Source & licences ↗</a></span></div>
   {#if $explorer.error}<div class="error-toast" role="alert"><span>{$explorer.error}</span><button class="text-button" onclick={() => explorer.retry()}>Retry calculation</button></div>{/if}
 </div>
 

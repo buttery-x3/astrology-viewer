@@ -5,6 +5,9 @@ async function example(page:Page){await page.goto('/');await page.getByRole('but
 async function coordinates(page:Page){await page.getByRole('button',{name:/^Moon/}).click();return page.locator('#inspector .data-list').first().locator('dd').allTextContents().then(v=>v.slice(0,2));}
 
 test('all seven methods expose validated actual constructions without changing the chart',async({page})=>{
+  // Seven independent systems and their staged range-key interactions form one
+  // aggregate workflow; software WebKit needs more than a single-case budget.
+  test.setTimeout(120_000);
   const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));await example(page);
   const initial=await coordinates(page),context=await page.locator('.context-details > span > strong').innerText();
   for(const system of ['W','E','O','P','K','R','C']){

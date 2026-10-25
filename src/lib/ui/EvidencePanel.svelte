@@ -1,5 +1,6 @@
 <script lang="ts">
   import ContentCard from './ContentCard.svelte';
+  import { BUILD_REVISION } from '../source-access';
   let { onClose }: { onClose?: () => void } = $props();
 </script>
 
@@ -8,7 +9,7 @@
   <p class="evidence-intro">This explorer combines calculated sky geometry with attributed astrological symbolism. Each claim is labelled so its source and purpose remain clear.</p>
   <ContentCard id="concept:evidence" heading={false} />
   <section class="reading-roles"><h3>What the labels mean</h3><dl><div><dt>Astronomy</dt><dd>Physical identities and descriptions of the sky.</dd></div><div><dt>Calculation method</dt><dd>A documented rule used to construct a numerical or geometric result.</dd></div><div><dt>Explorer convention</dt><dd>A choice this application makes, such as longitude-only house assignment.</dd></div><div><dt>Traditional interpretation</dt><dd>A named practitioner’s symbolic reading within the stated tradition.</dd></div><div><dt>Scientific evidence</dt><dd>A reported empirical test, with its specific scope and conditions.</dd></div></dl></section>
-  <footer><p>The interpretation catalogue contains fixed, reviewed text and claim-level citations. Different practitioners and traditions may read the same feature differently.</p><a href="https://github.com/buttery-x3/astrology-viewer/tree/codex/development/src/lib/content" target="_blank" rel="noreferrer">Read the catalogue and source records ↗</a></footer>
+  <footer><p>The interpretation catalogue contains fixed, reviewed text and claim-level citations. Different practitioners and traditions may read the same feature differently.</p><a href={`https://github.com/buttery-x3/astrology-viewer/tree/${BUILD_REVISION}/src/lib/content`} target="_blank" rel="noreferrer">Read the catalogue and source records ↗</a></footer>
 </div>
 
 <style>

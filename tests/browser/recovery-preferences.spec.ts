@@ -3,12 +3,12 @@ import {openControlGroup} from './helpers';
 async function example(page:Page){await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();}
 
 test('cold data failure is actionable and a fresh worker recovers after retry',async({page})=>{
-  await page.route('**/data/ephemeris/semo_18.se1',route=>route.abort('failed'));
+  await page.route('**/data/ephemeris/semo_18.se1*',route=>route.abort('failed'));
   await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();
   await expect(page.locator('.error-toast')).toBeVisible({timeout:20000});
   await expect(page.locator('.error-toast')).not.toContainText('2000-01-01');
   await expect(page.locator('.object-list').getByRole('button',{name:/^Moon/})).toBeEnabled();
-  await page.unroute('**/data/ephemeris/semo_18.se1');
+  await page.unroute('**/data/ephemeris/semo_18.se1*');
   await page.getByRole('button',{name:'Retry calculation',exact:true}).click();
   await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible({timeout:20000});
   await expect(page.locator('.error-toast')).toHaveCount(0);

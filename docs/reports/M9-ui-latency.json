@@ -1,0 +1,109 @@
+{
+  "generatedAt": "2026-10-25T14:34:38.813Z",
+  "url": "http://127.0.0.1:49652",
+  "artifact": {
+    "revision": "e39a1f03c0f847d198ef59ba336789c12e015548",
+    "tree": "09f492260da8f3d2bbe26a3afdaeebbeddc4e82f",
+    "sourceArchiveSha256": "25861275cccf48c07436235528cf305f9a4a9b2e86d090d593388876a07f7ae9",
+    "servedManifestSha256": "8d909a2f189ee88f08a32751eb3986119a11e685ecb0468290ac082657c06f86"
+  },
+  "browserVersion": "156.0.8078.4",
+  "launchArgs": [
+    "--use-angle=d3d11",
+    "--enable-gpu",
+    "--disable-software-rasterizer"
+  ],
+  "driver": {
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendor": "Google Inc. (NVIDIA)",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "devicePixelRatio": 1
+  },
+  "selection": {
+    "count": 30,
+    "medianMs": 15,
+    "p95Ms": 18.699999928474426,
+    "maxMs": 36.59999990463257,
+    "samples": [
+      36.59999990463257,
+      17.5,
+      10.5,
+      13.799999952316284,
+      12.700000047683716,
+      16.800000071525574,
+      11.5,
+      15.200000047683716,
+      16.600000023841858,
+      14.299999952316284,
+      15.5,
+      14.5,
+      14.600000023841858,
+      14.699999928474426,
+      15.399999976158142,
+      15.400000095367432,
+      14,
+      16.199999928474426,
+      15,
+      13.600000023841858,
+      17.299999952316284,
+      16,
+      13.5,
+      15.899999976158142,
+      14.399999976158142,
+      13.200000047683716,
+      18.699999928474426,
+      13.600000023841858,
+      14.300000071525574,
+      16.100000023841858
+    ]
+  },
+  "warmChart": {
+    "count": 30,
+    "medianMs": 21.299999952316284,
+    "p95Ms": 27.600000023841858,
+    "maxMs": 32.89999997615814,
+    "samples": [
+      27.600000023841858,
+      25.700000047683716,
+      20.600000023841858,
+      22.100000023841858,
+      21.100000023841858,
+      21.700000047683716,
+      23.700000047683716,
+      19.200000047683716,
+      20.600000023841858,
+      18,
+      17,
+      20.100000023841858,
+      18.799999952316284,
+      21.5,
+      18.799999952316284,
+      19.199999928474426,
+      17.899999976158142,
+      19.399999976158142,
+      19,
+      19.799999952316284,
+      21.799999952316284,
+      23.399999976158142,
+      23.59999990463257,
+      21.299999952316284,
+      21.59999990463257,
+      18.799999952316284,
+      25.199999928474426,
+      32.89999997615814,
+      21.5,
+      21.600000023841858
+    ]
+  },
+  "trail": {
+    "feedbackMs": 2.700000047683716,
+    "firstUsableMs": 80.89999997615814,
+    "status": "Trail ready Relative to the stars   Sampled points5Point budget2,000 Shown sampled interval2000-01-02 06:00:00 UTC2000-01-03 06:00:00 UTC  ",
+    "points": "5"
+  },
+  "errors": [],
+  "method": "Page-local button activation to matching committed UI plus next requestAnimationFrame. Warm chart includes worker, Svelte and scene scheduling. No network/Playwright protocol in measured interval. UI-ready callback does not establish physical display presentation. Default example, one-day Moon trail."
+}

@@ -35,12 +35,25 @@ async function birth(page: Page, date: string, time: string, latitude = 51.5, lo
   await page.getByRole('button', { name: /Set birth anchor/ }).click(); await expect(page.getByText('Moment calculated', { exact: true })).toBeVisible();
 }
 
-test('native view controls, orientation, quality and restored context preserve the chart', async ({ page }) => {
+test('native view controls, orientation, quality and restored context preserve the chart', async ({ page,browserName },info) => {
   const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
+  await page.addInitScript(()=>{(window as any).qualityDocumentStartDpr=window.devicePixelRatio;});
   await example(page); await page.locator('.object-list').getByRole('button', { name: /^Mars/ }).click();
   const coordinates = await page.locator('#inspector .data-list').first().locator('dd').allTextContents();
   const canvas = page.locator('.scene-canvas canvas');
-  await expect.poll(() => canvas.evaluate(element => (element as HTMLCanvasElement).width / element.clientWidth)).toBeCloseTo(1.5, 1);
+  const device=await page.evaluate(()=>({documentStartDpr:(window as any).qualityDocumentStartDpr as number,actualDpr:window.devicePixelRatio}));
+  await info.attach('rendering-quality-device',{body:JSON.stringify({browserName,requestedDpr:2,...device}),contentType:'application/json'});
+  expect(Number.isFinite(device.actualDpr)&&device.actualDpr>0).toBe(true);
+  // Windows Firefox can expose DPR1 despite Playwright requesting2. Verify the
+  // renderer against what the document actually reports; retain real HiDPI coverage.
+  if(browserName==='chromium'){expect(device.documentStartDpr).toBe(2);expect(device.actualDpr).toBe(2);}
+  const samples:{quality:string;actualDpr:number;backingWidth:number;clientWidth:number;ratio:number;expected:number}[]=[];
+  async function qualityRatio(quality:string,cap:number){
+    const actualDpr=await page.evaluate(()=>window.devicePixelRatio),expected=Math.min(actualDpr,cap);
+    await expect.poll(() => canvas.evaluate(element => (element as HTMLCanvasElement).width / element.clientWidth)).toBeCloseTo(expected, 1);
+    const dimensions=await canvas.evaluate(element=>({backingWidth:(element as HTMLCanvasElement).width,clientWidth:element.clientWidth,ratio:(element as HTMLCanvasElement).width/element.clientWidth}));samples.push({quality,actualDpr,...dimensions,expected});
+  }
+  await qualityRatio('auto',1.5);
   await page.getByRole('button', { name: 'Return to observer', exact: true }).click();
   await expect(page.getByRole('group', { name: 'Camera orientation', exact: true })).toContainText('Observer sky');
   const before = await page.locator('.orientation-hud').innerText();
@@ -49,9 +62,14 @@ test('native view controls, orientation, quality and restored context preserve t
   await page.getByRole('button', { name: 'Zoom in', exact: true }).focus(); await page.keyboard.press('Enter');
   await page.getByRole('button', { name: 'Zoom out', exact: true }).click();
   await page.getByText('View controls', { exact: true }).click(); await expect(page.locator('.scene-help p')).toBeVisible();
-  await openControlGroup(page, 'display'); await page.getByLabel('Rendering quality', { exact: true }).selectOption('low');
+  await openControlGroup(page, 'display');
+  const quality=page.getByLabel('Rendering quality', { exact: true });
+  await quality.selectOption('high');await qualityRatio('high',2);
+  await quality.selectOption('auto');await qualityRatio('auto',1.5);
+  await quality.selectOption('low');await qualityRatio('low',1);
+  await info.attach('rendering-quality-samples',{body:JSON.stringify({browserName,requestedDpr:2,...device,samples}),contentType:'application/json'});
   await range(page, 'Scene label size', '1.5'); await range(page, 'Earth opacity', '0.4');
-  await expect.poll(() => canvas.evaluate(element => (element as HTMLCanvasElement).width / element.clientWidth)).toBeCloseTo(1, 1);
+  await qualityRatio('low-after-display-controls',1);
   expect(await page.locator('#inspector .data-list').first().locator('dd').allTextContents()).toEqual(coordinates);
   const supported = await canvas.evaluate(element => {
     const extension = (element as HTMLCanvasElement).getContext('webgl2')?.getExtension('WEBGL_lose_context');
@@ -64,7 +82,7 @@ test('native view controls, orientation, quality and restored context preserve t
   await expect(page.getByText(/paused while the browser restores its graphics context/)).not.toBeVisible();
   await expect(page.getByRole('button', { name: 'Zoom in', exact: true })).toBeEnabled();
   await expect(canvas).toHaveCount(1);
-  await expect.poll(() => canvas.evaluate(element => (element as HTMLCanvasElement).width / element.clientWidth)).toBeCloseTo(1, 1);
+  await qualityRatio('low-after-context-restoration',1);
   expect(errors).toEqual([]);
 });
 
@@ -82,16 +100,18 @@ test('an actual eclipse overlap offers keyboard choices without changing the cur
     const value = astronomicalToThree(equatorialToVector(snapshot.bodies.find(body => body.id === id)!.fixedEquatorial));
     return new THREE.Vector3(value.x, value.y, value.z).multiplyScalar(5.8).project(camera);
   });
-  // Both markers physically intersect this ray; the small Sun bias gives a
-  // deterministic first candidate for the ArrowDown navigation assertion.
+  // Both markers physically intersect this ray. Their near-coincident sorting
+  // can differ with browser floating-point projection; navigate the real order.
   const middle = points[0]!.clone().lerp(points[1]!, 0.45);
   await page.mouse.click(box.x + (middle.x + 1) * box.width / 2, box.y + (1 - middle.y) * box.height / 2);
   const chooser = page.getByRole('dialog', { name: 'Choose a nearby feature', exact: true });
   await expect(chooser).toBeVisible(); await expect(chooser.getByRole('button', { name: /^Sun/ })).toBeVisible(); await expect(chooser.getByRole('button', { name: /^Moon/ })).toBeVisible();
-  await expect(chooser.getByRole('button', { name: /^Sun/ })).toBeFocused();
-  await page.keyboard.press('ArrowDown'); await expect(chooser.getByRole('button', { name: /^Moon/ })).toBeFocused();
+  const choices = chooser.getByRole('button');
+  await expect(choices.nth(0)).toBeFocused();
+  const nextBody = (await choices.nth(1).innerText()).split(' · ')[0]!;
+  await page.keyboard.press('ArrowDown'); await expect(choices.nth(1)).toBeFocused();
   await page.keyboard.press('Enter');
-  await expect(chooser).not.toBeVisible(); await expect(page.locator('#inspector').getByRole('heading', { name: 'Moon', exact: true })).toBeVisible();
+  await expect(chooser).not.toBeVisible(); await expect(page.locator('#inspector').getByRole('heading', { name: nextBody, exact: true })).toBeVisible();
   await expect(page.locator('.scene-canvas canvas')).toBeFocused(); await expect(page.locator('.context-details')).toContainText('08 Apr 2024');
 });
 

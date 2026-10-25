@@ -10,15 +10,22 @@
   "scripts": {
     "test": "vitest run",
     "validate:content": "tsx scripts/validate-content.ts",
+    "validate:horizons": "tsx scripts/validate-horizons.ts",
+    "validate:notices": "node scripts/prepare-third-party-notices.mjs --check",
     "test:watch": "vitest",
     "check": "svelte-check --tsconfig ./tsconfig.json && tsc --noEmit",
     "m0": "tsx scripts/m0-feasibility.ts",
     "dev": "vite",
     "build": "vite build",
+    "release:build": "tsx scripts/build-release.ts",
+    "release:verify": "node scripts/verify-release.mjs",
+    "start": "node scripts/start-release.mjs",
     "preview": "vite preview",
-    "lint": "eslint src api scripts tests *.ts *.js",
+    "lint": "eslint src api server scripts tests *.ts *.js",
     "format": "prettier --write src scripts tests *.ts *.js *.json *.html .github",
-    "test:browser": "npm run build && node scripts/run-browser-tests.mjs"
+    "test:browser": "npm run build && node scripts/run-browser-tests.mjs",
+    "test:browser:cross": "npm run build && node scripts/run-browser-tests.mjs --config playwright.cross-browser.config.ts",
+    "test:browser:matrix": "npm run build && node scripts/run-browser-tests.mjs --config playwright.cross-browser.config.ts --grep \"63 system\""
   },
   "dependencies": {
     "geo-tz": "8.1.10",

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import WikipediaLinks from './WikipediaLinks.svelte';
   import type {EphemerisSnapshot} from '../astronomy/ephemeris';
   import {SIGNS} from '../domain/chart';
   import {getSkyReferences} from '../domain/sky-reference';
@@ -8,7 +9,7 @@
   const reference=$derived(snapshot?getSkyReferences(snapshot).find(item=>item.id===selectedId):undefined);
   const signIndex=$derived(SIGNS.findIndex(name=>selectedId===`sign:${name.toLowerCase()}`));
   const region=$derived(CONSTELLATIONS.find(item=>item.id===selectedId));
-  const projectSource='https://github.com/buttery-x3/astrology-viewer/blob/8e6f7fac3697e258e178ebe5197417a7c6fd0a17';
+  const projectSource='https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477';
 </script>
 
 {#if selectedId==='reference:earth'||selectedId==='reference:observer'}
@@ -28,4 +29,5 @@
 {:else}
   <section class="inspector-section"><h2>Selection unavailable</h2><p>This feature is not defined in the current snapshot.</p></section>
 {/if}
+{#if selectedId==='reference:earth'||selectedId==='reference:observer'||selectedId.startsWith('constellation:')}<WikipediaLinks id={selectedId} />{/if}
 <button class="button secondary focus-button" onclick={onFocus}>Focus in the scene <kbd>F</kbd></button>

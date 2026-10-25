@@ -14,6 +14,20 @@ and review method. These historical cache paths identify the reviewed inputs;
 the ignored research cache is not needed to run, build or validate the release.
 `manifest.json` freezes catalogue version, coverage, review date and SHA256 hashes.
 
+`wikipedia-links.json` is a separate, navigation-only map for all 65 concepts plus
+Earth, observer location and constellation regions. It adds general concept
+entry points without importing article prose/images, claiming placement-specific
+support, or changing the 89 claim sources and canonical-page word budgets.
+`getWikipediaOverviews` exposes these fixed links; the inspector labels them
+"Wikipedia concept overview" separately from each claim's primary/practitioner
+citation. The manifest hashes the navigation file independently.
+
+Historical project-rule citations use reviewed M8 commit
+`0ea709fdff33ac11aed696fcb0b60f17e0fad477`, after checking every target path at
+that revision. The application's source footer and catalogue-record link instead
+identify the actual build revision; historical citation pins do not substitute
+for the corresponding source of a later release.
+
 ## Claim roles and attribution
 
 Each substantive card paragraph has its own text, role, source IDs and exact
@@ -33,6 +47,13 @@ task and its tested-condition limit, without claiming one experiment decides
 every possible astrological proposition. Short original paraphrases and source
 links are used; no source article or image is bundled. Project and data licences
 do not relicense the referenced publishers' original articles.
+
+The catalogue's `reviewed` status records agent source curation and engineering
+checks. It does not establish a completed human editorial review. The approved
+plan separately requires a human to check each cited passage against its claim;
+that claim-to-passage review remains a release gate. The recorded Skyscript
+publisher outages and indexed-text review cases must remain visible to that
+reviewer and receive direct passage verification when available.
 
 ## Runtime interface and undefined placements
 

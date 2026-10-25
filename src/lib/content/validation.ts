@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '../schema';
 
 export const CONTENT_ROLES = ['astronomy','tradition','method','evidence','time-data','project-convention'] as const;
 const roleSchema=z.enum(CONTENT_ROLES);

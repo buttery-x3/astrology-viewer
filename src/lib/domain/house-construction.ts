@@ -164,7 +164,7 @@ export function buildHouseConstruction(sky: EphemerisSnapshot, result: HouseResu
     status: 'undefined', system: result.system, house,
     name: `${HOUSE_SYSTEMS.find((item) => item.id === result.system)!.name} · C${house}`,
     steps: STEP_TEXT[result.system].map((explanation, index) => ({ title: ['Reference', 'Division / timing', 'Ecliptic intersection'][index]!, explanation, source: { ...citation } })),
-    sources: [citation, { title: 'Construction guide coordinate contract', url: 'https://github.com/buttery-x3/astrology-viewer/blob/codex/development/docs/house-construction-contract.md', section: 'Timing-circle display convention; Sweep and validation' }], lines: [], markers: [], nativeCuspDeg: result.status === 'valid' ? result.cusps[house - 1]! : null,
+    sources: [citation, { title: 'Construction guide coordinate contract', url: 'https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/house-construction-contract.md', section: 'Timing-circle display convention; Sweep and validation' }], lines: [], markers: [], nativeCuspDeg: result.status === 'valid' ? result.cusps[house - 1]! : null,
     computedCuspDeg: null, residualDeg: null, maxResidualDeg: null, cuspChecks: [], notes: [],
   };
   const partition = housePartition(result);

@@ -1,0 +1,495 @@
+{
+  "artifact": {
+    "revision": "e39a1f03c0f847d198ef59ba336789c12e015548",
+    "tree": "09f492260da8f3d2bbe26a3afdaeebbeddc4e82f",
+    "sourceArchiveSha256": "25861275cccf48c07436235528cf305f9a4a9b2e86d090d593388876a07f7ae9",
+    "manifestFileSha256": "b0a84ac401fb849520735226ec06e4e2d179b975b499d9bd965b1744c0f7aca0",
+    "servedManifestSha256": "8d909a2f189ee88f08a32751eb3986119a11e685ecb0468290ac082657c06f86"
+  },
+  "host": "Windows 10.0.26300 desktop; Playwright browsers and already installed Chrome/Edge; exact versions below.",
+  "scope": "Initial full147 workflow run plus focused replacements for two proved browser-test assumptions; installed channels cover21 representative workflows each. No skipped workflows in these runs.",
+  "runs": {
+    "initialFull": {
+      "path": ".cache/browser-cross-results.json",
+      "sha256": "6e4a5aa07494d1d0dcf225a78d654236f077f4dfda414387ed63a37481eb3ae9",
+      "stats": {
+        "startTime": "2026-10-25T14:06:59.388Z",
+        "duration": 878257.13,
+        "expected": 145,
+        "skipped": 0,
+        "unexpected": 2,
+        "flaky": 0
+      },
+      "projects": {
+        "chromium": {
+          "passed": 49,
+          "failed": 0,
+          "skipped": 0,
+          "failures": [],
+          "browserVersion": "156.0.8078.4",
+          "matrix": {
+            "cases": 63,
+            "graphics": {
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "vendor": "Google Inc. (Google)",
+              "devicePixelRatio": 1
+            }
+          }
+        },
+        "firefox": {
+          "passed": 48,
+          "failed": 1,
+          "skipped": 0,
+          "failures": [
+            {
+              "title": "native view controls, orientation, quality and restored context preserve the chart",
+              "status": "failed",
+              "message": "Error: expect(received).toBeCloseTo(expected, precision)\n\nExpected: 1.5\nReceived: 1\n\nExpected precision:    1\nExpected difference: < 0.05\nReceived difference:   0.5\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate"
+            }
+          ],
+          "browserVersion": "157.0",
+          "matrix": {
+            "cases": 63,
+            "graphics": {
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+              "vendor": "Google Inc. (NVIDIA)",
+              "devicePixelRatio": 1
+            }
+          }
+        },
+        "webkit": {
+          "passed": 48,
+          "failed": 1,
+          "skipped": 0,
+          "failures": [
+            {
+              "title": "63 system, house display and viewpoint combinations retain the same sky",
+              "status": "failed",
+              "message": "Error: W: three actual house presentations\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 3\nReceived: 1"
+            }
+          ],
+          "browserVersion": null
+        }
+      },
+      "errors": []
+    },
+    "correctedQuality": {
+      "path": ".cache/release-quality-results.json",
+      "sha256": "343f729a846a006ff26341e60213a471d14d27b9a45363f71c2ea896bf67b082",
+      "stats": {
+        "startTime": "2026-10-25T14:25:58.357Z",
+        "duration": 18748.952,
+        "expected": 3,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "projects": {
+        "chromium": {
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0,
+          "failures": [],
+          "browserVersion": null
+        },
+        "firefox": {
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0,
+          "failures": [],
+          "browserVersion": null
+        },
+        "webkit": {
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0,
+          "failures": [],
+          "browserVersion": null
+        }
+      },
+      "quality": [
+        {
+          "project": "chromium",
+          "browserName": "chromium",
+          "requestedDpr": 2,
+          "documentStartDpr": 2,
+          "actualDpr": 2,
+          "samples": [
+            {
+              "quality": "auto",
+              "actualDpr": 2,
+              "backingWidth": 1260,
+              "clientWidth": 840,
+              "ratio": 1.5,
+              "expected": 1.5
+            },
+            {
+              "quality": "high",
+              "actualDpr": 2,
+              "backingWidth": 1680,
+              "clientWidth": 840,
+              "ratio": 2,
+              "expected": 2
+            },
+            {
+              "quality": "auto",
+              "actualDpr": 2,
+              "backingWidth": 1260,
+              "clientWidth": 840,
+              "ratio": 1.5,
+              "expected": 1.5
+            },
+            {
+              "quality": "low",
+              "actualDpr": 2,
+              "backingWidth": 840,
+              "clientWidth": 840,
+              "ratio": 1,
+              "expected": 1
+            }
+          ]
+        },
+        {
+          "project": "firefox",
+          "browserName": "firefox",
+          "requestedDpr": 2,
+          "documentStartDpr": 1,
+          "actualDpr": 1,
+          "samples": [
+            {
+              "quality": "auto",
+              "actualDpr": 1,
+              "backingWidth": 840,
+              "clientWidth": 840,
+              "ratio": 1,
+              "expected": 1
+            },
+            {
+              "quality": "high",
+              "actualDpr": 1,
+              "backingWidth": 840,
+              "clientWidth": 840,
+              "ratio": 1,
+              "expected": 1
+            },
+            {
+              "quality": "auto",
+              "actualDpr": 1,
+              "backingWidth": 840,
+              "clientWidth": 840,
+              "ratio": 1,
+              "expected": 1
+            },
+            {
+              "quality": "low",
+              "actualDpr": 1,
+              "backingWidth": 840,
+              "clientWidth": 840,
+              "ratio": 1,
+              "expected": 1
+            }
+          ]
+        },
+        {
+          "project": "webkit",
+          "browserName": "webkit",
+          "requestedDpr": 2,
+          "documentStartDpr": 2,
+          "actualDpr": 2,
+          "samples": [
+            {
+              "quality": "auto",
+              "actualDpr": 2,
+              "backingWidth": 1260,
+              "clientWidth": 840,
+              "ratio": 1.5,
+              "expected": 1.5
+            },
+            {
+              "quality": "high",
+              "actualDpr": 2,
+              "backingWidth": 1680,
+              "clientWidth": 840,
+              "ratio": 2,
+              "expected": 2
+            },
+            {
+              "quality": "auto",
+              "actualDpr": 2,
+              "backingWidth": 1260,
+              "clientWidth": 840,
+              "ratio": 1.5,
+              "expected": 1.5
+            },
+            {
+              "quality": "low",
+              "actualDpr": 2,
+              "backingWidth": 840,
+              "clientWidth": 840,
+              "ratio": 1,
+              "expected": 1
+            }
+          ]
+        }
+      ],
+      "errors": []
+    },
+    "correctedMatrix": {
+      "path": ".cache/release-matrix-final.json",
+      "sha256": "3cad3e08b2e0d11c89f3515fd51ed22966d19e4805077f36ea9a4d22f3d73b1f",
+      "stats": {
+        "startTime": "2026-10-25T14:30:35.053Z",
+        "duration": 142920.592,
+        "expected": 3,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "projects": {
+        "chromium": {
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0,
+          "failures": [],
+          "browserVersion": "156.0.8078.4",
+          "matrix": {
+            "cases": 63,
+            "graphics": {
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "vendor": "Google Inc. (Google)",
+              "devicePixelRatio": 1
+            },
+            "captureMethod": "canvas.toDataURL synchronously after actual render, before the native requestAnimationFrame callback returns; decoded PNG pixels checked",
+            "minimumUniqueColours": 54,
+            "minimumNonBackgroundSamples": 417
+          }
+        },
+        "firefox": {
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0,
+          "failures": [],
+          "browserVersion": "157.0",
+          "matrix": {
+            "cases": 63,
+            "graphics": {
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GTX 980 Direct3D11 vs_5_0 ps_5_0), or similar",
+              "vendor": "Google Inc. (NVIDIA)",
+              "devicePixelRatio": 1
+            },
+            "captureMethod": "canvas.toDataURL synchronously after actual render, before the native requestAnimationFrame callback returns; decoded PNG pixels checked",
+            "minimumUniqueColours": 54,
+            "minimumNonBackgroundSamples": 519
+          }
+        },
+        "webkit": {
+          "passed": 1,
+          "failed": 0,
+          "skipped": 0,
+          "failures": [],
+          "browserVersion": "27.2",
+          "matrix": {
+            "cases": 63,
+            "graphics": {
+              "renderer": "Apple GPU",
+              "vendor": "Apple Inc.",
+              "devicePixelRatio": 1
+            },
+            "captureMethod": "canvas.toDataURL synchronously after actual render, before the native requestAnimationFrame callback returns; decoded PNG pixels checked",
+            "minimumUniqueColours": 54,
+            "minimumNonBackgroundSamples": 519
+          }
+        }
+      },
+      "errors": []
+    },
+    "installedRepresentative": {
+      "path": ".cache/release-installed-final.json",
+      "sha256": "e317c66fbef1ffa39d41178d57716fccdbea3167a77b3ee8dbf2609517cccb74",
+      "stats": {
+        "startTime": "2026-10-25T14:36:45.958Z",
+        "duration": 204088.31,
+        "expected": 42,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "projects": {
+        "chrome": {
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0,
+          "failures": [],
+          "browserVersion": "156.0.8078.47",
+          "matrix": {
+            "cases": 63,
+            "graphics": {
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "vendor": "Google Inc. (NVIDIA)",
+              "devicePixelRatio": 1
+            },
+            "captureMethod": "canvas.toDataURL synchronously after actual render, before the native requestAnimationFrame callback returns; decoded PNG pixels checked",
+            "minimumUniqueColours": 54,
+            "minimumNonBackgroundSamples": 519
+          }
+        },
+        "edge": {
+          "passed": 21,
+          "failed": 0,
+          "skipped": 0,
+          "failures": [],
+          "browserVersion": "142.0.3595.94",
+          "matrix": {
+            "cases": 63,
+            "graphics": {
+              "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+              "vendor": "Google Inc. (NVIDIA)",
+              "devicePixelRatio": 1
+            },
+            "captureMethod": "canvas.toDataURL synchronously after actual render, before the native requestAnimationFrame callback returns; decoded PNG pixels checked",
+            "minimumUniqueColours": 54,
+            "minimumNonBackgroundSamples": 519
+          }
+        }
+      },
+      "quality": [
+        {
+          "project": "chrome",
+          "browserName": "chromium",
+          "requestedDpr": 2,
+          "documentStartDpr": 2,
+          "actualDpr": 2,
+          "samples": [
+            {
+              "quality": "auto",
+              "actualDpr": 2,
+              "backingWidth": 1260,
+              "clientWidth": 840,
+              "ratio": 1.5,
+              "expected": 1.5
+            },
+            {
+              "quality": "high",
+              "actualDpr": 2,
+              "backingWidth": 1680,
+              "clientWidth": 840,
+              "ratio": 2,
+              "expected": 2
+            },
+            {
+              "quality": "auto",
+              "actualDpr": 2,
+              "backingWidth": 1260,
+              "clientWidth": 840,
+              "ratio": 1.5,
+              "expected": 1.5
+            },
+            {
+              "quality": "low",
+              "actualDpr": 2,
+              "backingWidth": 840,
+              "clientWidth": 840,
+              "ratio": 1,
+              "expected": 1
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "browserName": "chromium",
+          "requestedDpr": 2,
+          "documentStartDpr": 2,
+          "actualDpr": 2,
+          "samples": [
+            {
+              "quality": "auto",
+              "actualDpr": 2,
+              "backingWidth": 1260,
+              "clientWidth": 840,
+              "ratio": 1.5,
+              "expected": 1.5
+            },
+            {
+              "quality": "high",
+              "actualDpr": 2,
+              "backingWidth": 1680,
+              "clientWidth": 840,
+              "ratio": 2,
+              "expected": 2
+            },
+            {
+              "quality": "auto",
+              "actualDpr": 2,
+              "backingWidth": 1260,
+              "clientWidth": 840,
+              "ratio": 1.5,
+              "expected": 1.5
+            },
+            {
+              "quality": "low",
+              "actualDpr": 2,
+              "backingWidth": 840,
+              "clientWidth": 840,
+              "ratio": 1,
+              "expected": 1
+            }
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  "resolutions": {
+    "firefoxDpr": "Windows Firefox exposes actual DPR1 despite requested2. Corrected quality assertions use min(actualDPR, quality cap), attach document-start/current DPR and backing dimensions, and keep explicit Chromium DPR2 Auto1.5/Low1 assertions. Corrected workflow passes all3 engines.",
+    "webkitCapture": "Windows Playwright WebKit compositor screenshots omit the accelerated WebGL layer. Synchronous readPixels and direct frame PNGs prove actual correct, distinct renders. Matrix now captures canvas PNG synchronously after real rendering before native rAF return; decoded pixels and three distinct Outside mode hashes are required. Compositor limitation retained, no product preserveDrawingBuffer change."
+  },
+  "matrixEvidence": {
+    "path": "docs/reports/M9-view-matrix.json",
+    "sha256": "a12ffd08441540d2b23ce368a7ead9ab59b225437c24810995d9f7d737b8c1c6",
+    "sampleImage": "docs/reports/M9-matrix-samples.png",
+    "sampleImageSha256": "9106eb83d9f5db4a93eccbf77fbafd270a5b0a4e8f65291aa87e7278cbb89b3f",
+    "webkitCompositorImage": "docs/reports/M9-webkit-compositor.png",
+    "webkitCompositorImageSha256": "00c89c8cd5ff617c71641c14e96abb9175c64def9795818f092dd63b98980048"
+  },
+  "visualReview": {
+    "fullContactSheets": [
+      {
+        "browser": "chromium",
+        "views": 63,
+        "path": ".cache/m9-final-matrix/chromium-contact.png"
+      },
+      {
+        "browser": "firefox",
+        "views": 63,
+        "path": ".cache/m9-final-matrix/firefox-contact.png"
+      },
+      {
+        "browser": "webkit",
+        "views": 63,
+        "path": ".cache/m9-final-matrix/webkit-contact.png"
+      },
+      {
+        "browser": "chrome",
+        "views": 63,
+        "path": ".cache/m9-final-matrix/chrome-contact.png"
+      },
+      {
+        "browser": "edge",
+        "views": 63,
+        "path": ".cache/m9-final-matrix/edge-contact.png"
+      }
+    ],
+    "fullSizeSamples": [
+      "Chromium/W/Volumes/Outside",
+      "Firefox/P/Shells/Observer",
+      "WebKit/C/Shells/Outside"
+    ],
+    "findings": "No blocking scene issue found. All matrix contact sheets show real geometry, distinct modes, horizon-centred observer views, stable body placements and named Sun/selected-body captions. Full-size samples confirm text and leader placement; this is reviewer evidence, not participant usability validation. Installed Chrome/Edge contact sheets were also reviewed; all315 frames have matching retained hashes."
+  },
+  "remainingLimits": [
+    "No manual Safari on macOS or previous-major browser matrix.",
+    "Installed Edge142 is an older available version; it is not claimed current.",
+    "Browser privacy/generic renderer strings do not establish physical GPU model; RTX hardware evidence is separate.",
+    "No integrated-GPU laptop, manual screen-reader or participant acceptance evidence."
+  ]
+}

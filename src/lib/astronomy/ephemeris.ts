@@ -65,7 +65,7 @@ export async function fetchEngineAssets(base = '',options:EngineAssetFetchOption
   try{
     const [wasmBinary, ...files] = await Promise.all([
       read(new URL('./generated/spatial-ephemeris.wasm', import.meta.url).href),
-      ...EPHEMERIS_FILES.map(file => read(`${base}/data/ephemeris/${file.name}`)),
+      ...EPHEMERIS_FILES.map(file => read(`${base}/data/ephemeris/${file.name}?sha256=${file.sha256}`)),
     ]);
     return { wasmBinary: wasmBinary!, files: new Map(EPHEMERIS_FILES.map((file,i) => [file.name, files[i]!])) };
   }catch(error){controller.abort();throw error;}

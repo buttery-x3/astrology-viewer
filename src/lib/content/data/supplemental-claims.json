@@ -234,7 +234,7 @@
     "text": "Independent construction differs from the returned cusps by more than 0.01°. Geometry is withheld until the discrepancy is resolved.",
     "role": "project-convention",
     "sourceUrls": [
-      "https://github.com/buttery-x3/astrology-viewer/blob/8e6f7fac3697e258e178ebe5197417a7c6fd0a17/docs/house-construction-contract.md"
+      "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/house-construction-contract.md"
     ],
     "section": "Timing-circle display convention; Sweep and validation",
     "sourceCode": "src/lib/domain/house-construction.ts"
@@ -244,7 +244,7 @@
     "text": "Timing-circle markers illustrate Earth’s rotation relative to a held horizon; the fixed ecliptic degree does not move against the stars.",
     "role": "project-convention",
     "sourceUrls": [
-      "https://github.com/buttery-x3/astrology-viewer/blob/8e6f7fac3697e258e178ebe5197417a7c6fd0a17/docs/house-construction-contract.md"
+      "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/house-construction-contract.md"
     ],
     "section": "Timing-circle display convention; Sweep and validation",
     "sourceCode": "src/lib/domain/house-construction.ts"
@@ -254,7 +254,7 @@
     "text": "Shifted horizon planes show past/future orientations in fixed axes; the MC arc is a separate local-timing reference.",
     "role": "project-convention",
     "sourceUrls": [
-      "https://github.com/buttery-x3/astrology-viewer/blob/8e6f7fac3697e258e178ebe5197417a7c6fd0a17/docs/house-construction-contract.md"
+      "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/house-construction-contract.md"
     ],
     "section": "Timing-circle display convention; Sweep and validation",
     "sourceCode": "src/lib/domain/house-construction.ts"
@@ -264,7 +264,7 @@
     "text": "Construction sweep illustrates the rule; chart values stay fixed.",
     "role": "project-convention",
     "sourceUrls": [
-      "https://github.com/buttery-x3/astrology-viewer/blob/8e6f7fac3697e258e178ebe5197417a7c6fd0a17/docs/house-construction-contract.md"
+      "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/house-construction-contract.md"
     ],
     "section": "Timing-circle display convention; Sweep and validation",
     "sourceCode": "src/lib/domain/house-construction.ts"
