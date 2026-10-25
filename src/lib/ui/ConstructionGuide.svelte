@@ -1,6 +1,7 @@
 <script lang="ts">
   import { HOUSE_SYSTEMS, type EphemerisSnapshot } from '../astronomy/ephemeris';
   import { buildHouseConstruction, type ConstructionSettings } from '../domain/house-construction';
+  import ContentCard from './ContentCard.svelte';
 
   let { snapshot, settings, onChange, onSelect, onFocus }: {
     snapshot: EphemerisSnapshot | null;
@@ -97,6 +98,7 @@
         {#each sources as source (`${source.url}|${source.section}`)}<a href={source.url} target="_blank" rel="noreferrer"><span>{source.title} ↗</span><small>{source.section}</small></a>{/each}
       </details>
     {/if}
+    <ContentCard id={`system:${guide.system}`} compact />
   {:else}
     <p class="guide-note">A calculated chart is needed to inspect this method’s rule and cusp agreement.</p>
   {/if}

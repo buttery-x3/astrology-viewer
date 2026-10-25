@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "vitest run",
+    "validate:content": "tsx scripts/validate-content.ts",
     "test:watch": "vitest",
     "check": "svelte-check --tsconfig ./tsconfig.json && tsc --noEmit",
     "m0": "tsx scripts/m0-feasibility.ts",

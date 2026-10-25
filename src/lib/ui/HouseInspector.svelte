@@ -2,6 +2,7 @@
   import { ENGINE_REVISION, HOUSE_SYSTEMS, type EphemerisSnapshot, type HouseSystemId } from '../astronomy/ephemeris';
   import { classifyLongitude, housePartition, zodiacSign } from '../domain/chart';
   import { compareHouseAssignments, type HouseDisplaySettings } from '../domain/house-geometry';
+  import ContentCard from './ContentCard.svelte';
 
   let { snapshot, selectedId, display, onFocus, onSelect, onShowConstruction }: {
     snapshot: EphemerisSnapshot | null;
@@ -26,6 +27,8 @@
   const comparison = $derived(snapshot && primary && secondary ? compareHouseAssignments(snapshot.bodies, primary, secondary) : null);
   const changedBodies = $derived(comparison?.status === 'valid' ? comparison.rows.filter(row => row.changed && (row.primaryHouse === houseNumber || row.secondaryHouse === houseNumber)) : []);
   const cuspSource = `https://github.com/aloistr/swisseph/blob/${ENGINE_REVISION}/swehouse.c`;
+  const displaySource = 'https://github.com/buttery-x3/astrology-viewer/blob/8e6f7fac3697e258e178ebe5197417a7c6fd0a17/src/lib/domain/house-geometry.ts';
+  const membershipSource = 'https://github.com/buttery-x3/astrology-viewer/blob/8e6f7fac3697e258e178ebe5197417a7c6fd0a17/src/lib/domain/chart.ts';
   const name = (id: HouseSystemId) => HOUSE_SYSTEMS.find(item => item.id === id)?.name ?? id;
   const bodyName = (id: string) => id[0]!.toUpperCase() + id.slice(1);
   const degrees = (value: number) => `${value.toFixed(3)}°`;
@@ -49,8 +52,10 @@
         <div><dt>Indexed direction</dt><dd>{interval.direction === 1 ? 'Increasing longitude' : 'Decreasing longitude'}</dd></div>
         <div><dt>Sign at cusp C{houseNumber}</dt><dd>{zodiacSign(interval.startDeg).name} {degrees(zodiacSign(interval.startDeg).degree)}</dd></div>
       </dl>
+      <a class="source-link" href={cuspSource} target="_blank" rel="noreferrer">Numerical source: Swiss Ephemeris — swe_houses_ex2, indexed cusps and CalcH ↗</a>
       <p class="field-note">C{houseNumber} begins H{houseNumber}; C{nextHouse} begins the next house. A body exactly on the starting cusp belongs to H{houseNumber}.{interval.direction === -1 ? ' This polar result preserves the system’s reversed indexed order.' : ''}</p>
       {#if isBoundary}<button class="text-button related-house" onclick={() => onSelect(`house:${houseNumber}`)}>Inspect house {houseNumber} →</button>{/if}
+      <a class="source-link" href={membershipSource} target="_blank" rel="noreferrer">Explorer convention — indexed longitude membership ↗</a>
     </section>
     <section class="inspector-section assigned-bodies">
       <h3>Bodies assigned to house {houseNumber}</h3>
@@ -91,8 +96,10 @@
     <p>These regions extend calculated longitude intervals into the sky for inspection. The fill, boundary arcs and shell lift are schematic display choices; they do not change house membership.</p>
     <p class="field-note">This extension is separate from each house system’s actual construction. A body’s above/below-horizon state is calculated independently of its longitude house.</p>
     {#if interval && primary?.status === 'valid' && !isBoundary && display.mode === 'shells' && display.shellSeparation > 0}<p class="field-note">The selected shell is lifted by {Math.round(display.shellSeparation * 100)}% of the schematic sky radius. Its leaders identify the original region.</p>{/if}
-    <a class="source-link" href={cuspSource} target="_blank" rel="noreferrer">Numerical source: Swiss Ephemeris — swe_houses_ex2, indexed cusps and CalcH ↗</a>
+    <a class="source-link" href={displaySource} target="_blank" rel="noreferrer">Explorer convention — longitude extension and shell geometry ↗</a>
   </section>
+  <ContentCard id={`house:${houseNumber}`} heading={false} />
+  {#if primary}<ContentCard id={`system:${primary.system}`} />{/if}
 {:else}
   <section class="inspector-section"><h2>House selection unavailable</h2><p>Select an indexed house or cusp from the house list.</p></section>
 {/if}

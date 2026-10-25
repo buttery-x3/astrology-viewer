@@ -11,9 +11,11 @@ import { eclipticDirection, getSkyReferences } from '../domain/sky-reference';
 import { classifyLongitude } from '../domain/chart';
 import { DEFAULT_HOUSE_DISPLAY, isHouseDirectionPickable, type HouseDisplaySettings } from '../domain/house-geometry';
 import { DEFAULT_CONSTRUCTION, type ConstructionSettings } from '../domain/house-construction';
+import { DEFAULT_ASPECT_DISPLAY, getAspectDetails, type AspectDisplaySettings } from '../domain/aspect-presentation';
 import { CATALOGUE_STARS, CONSTELLATION_REGIONS, catalogueStarDirection } from './sky-data';
 import { createHouseRenderer } from './house-renderer';
 import { createConstructionRenderer } from './construction-renderer';
+import { createAspectRenderer } from './aspect-renderer';
 import coastline from './data/natural-earth-coastline.json';
 
 export interface ScenePresentation {
@@ -21,6 +23,7 @@ export interface ScenePresentation {
   selectedId: string | null;
   houseDisplay: HouseDisplaySettings;
   construction: ConstructionSettings;
+  aspects: AspectDisplaySettings;
   layers: { bodies: boolean; horizon: boolean; ecliptic: boolean; houses: boolean; stars: boolean;
     signs?: boolean; equator?: boolean; meridian?: boolean; primeVertical?: boolean;
     angles?: boolean; constellations?: boolean };
@@ -212,9 +215,10 @@ function releaseScene(scene: THREE.Scene): void {
 }
 
 interface SceneEntity {
-  id: string; name: string; kind: 'body' | 'sign' | 'angle' | 'reference' | 'constellation' | 'house' | 'boundary';
+  id: string; name: string; kind: 'body' | 'sign' | 'angle' | 'reference' | 'constellation' | 'house' | 'boundary' | 'aspect';
   objects: THREE.Object3D[]; anchor: THREE.Vector3; valid: boolean;
   lines: THREE.Line[]; label?: THREE.Sprite; marker?: THREE.Mesh;
+  focusRadius?: number;
 }
 
 /** Magnitude controls only the restrained display encoding, never star position. */
@@ -314,7 +318,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       }
       if (object instanceof THREE.Mesh && object.material instanceof THREE.MeshBasicMaterial) object.userData.baseColor = object.material.color.getHex();
     }
-    if (entity.label) entity.label.userData.labelPriority = entity.kind === 'body' ? 30 : entity.kind === 'angle' ? 25 : entity.kind === 'constellation' ? 1 : entity.kind === 'house' ? 14 : entity.kind === 'boundary' ? 16 : 10;
+    if (entity.label) entity.label.userData.labelPriority = entity.kind === 'body' ? 30 : entity.kind === 'angle' ? 25 : entity.kind === 'constellation' ? 1 : entity.kind === 'house' ? 14 : entity.kind === 'boundary' ? 16 : entity.kind === 'aspect' ? 23 : 10;
     entities.set(entity.id, entity);
   }
   register({ id: 'reference:earth', name: 'Earth · geographic reference', kind: 'reference', objects: [earth.children[0]!], anchor: new THREE.Vector3(), valid: true, lines: [] });
@@ -377,13 +381,15 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   for (const entity of houseRenderer.entities) register(entity);
   const constructionRenderer = createConstructionRenderer(SKY_RADIUS, label);
   scene.add(constructionRenderer.group);
+  const aspectRenderer = createAspectRenderer(SKY_RADIUS, label);
+  scene.add(aspectRenderer.group);
   const selection = new THREE.Mesh(new THREE.RingGeometry(0.105, 0.119, 48), new THREE.MeshBasicMaterial({ color: 0xf5e0ac, transparent: true, opacity: 0.9, side: THREE.DoubleSide, depthWrite: false }));
   selection.renderOrder = 5;
   selection.visible = false;
   scene.add(selection);
 
   let snapshot: EphemerisSnapshot | null = null;
-  let presentation: ScenePresentation = { viewpoint: 'overview', selectedId: null, houseDisplay: { ...DEFAULT_HOUSE_DISPLAY }, construction: { ...DEFAULT_CONSTRUCTION }, layers: { bodies: true, horizon: true, ecliptic: true, houses: false, stars: true, signs: true, angles: true } };
+  let presentation: ScenePresentation = { viewpoint: 'overview', selectedId: null, houseDisplay: { ...DEFAULT_HOUSE_DISPLAY }, construction: { ...DEFAULT_CONSTRUCTION }, aspects: { ...DEFAULT_ASPECT_DISPLAY }, layers: { bodies: true, horizon: true, ecliptic: true, houses: false, stars: true, signs: true, angles: true } };
   let observerEast = new THREE.Vector3(0, 0, -1);
   let observerNorth = new THREE.Vector3(0, 1, 0);
   let observerUp = new THREE.Vector3(1, 0, 0);
@@ -419,6 +425,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     if (controls.enabled) controls.update();
     if (selection.visible) selection.quaternion.copy(camera.quaternion);
     if (longitudeAnchor.visible) longitudeAnchor.quaternion.copy(camera.quaternion);
+    aspectRenderer.faceCamera(camera.quaternion);
     updateLabelLayout();
     renderer.render(scene, camera);
   }
@@ -473,6 +480,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     stars.material.uniforms.pixelRatio!.value = renderer.getPixelRatio();
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
+    aspectRenderer.resize(width, height);
     camera.updateProjectionMatrix();
     if (defaultFraming && presentation.viewpoint !== 'observer') {
       if (presentation.globePickMode) frameEarthForPicking();
@@ -536,6 +544,11 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     const picking = presentation.globePickMode === true;
     houseRenderer.update(snapshot, presentation.houseDisplay, { selectedId: presentation.selectedId, hoveredId, visible: hasData && !picking && presentation.layers.houses, quietComparison: presentation.construction.enabled });
     constructionRenderer.update(snapshot, presentation.construction, { visible: hasData && !picking, hoveredGuideId });
+    aspectRenderer.update(snapshot, presentation.aspects, { visible: hasData && !picking, selectedId: presentation.selectedId, hoveredId });
+    // The bounded render pool can represent a different eligible pair after a
+    // chart/orb change. Rebind stable IDs without retaining Three object identity.
+    for (const [id, entity] of entities) if (entity.kind === 'aspect') entities.delete(id);
+    for (const entity of aspectRenderer.entities) register(entity);
     if (constructionRenderer.group.visible) {
       const cuspCaption = entities.get(`boundary:${presentation.construction.boundaryHouse}`)?.label;
       if (cuspCaption) { cuspCaption.visible = false; cuspCaption.userData.labelEnabled = false; }
@@ -561,14 +574,17 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       : 'Interactive schematic sky. Drag to orbit or look; scroll to zoom. Arrow keys move the view, plus and minus zoom, F focuses selection, and Home returns to observer sky.');
     const linkedSign = selectedBody() ? `sign:${SIGNS[Math.floor(selectedBody()!.longitudeDeg / 30)]}` : null;
     const selectedHouseNumber = presentation.selectedId?.startsWith('house:') ? Number(presentation.selectedId.slice(6)) : null;
+    const selectedAspect = snapshot && presentation.selectedId ? getAspectDetails(snapshot.bodies, presentation.selectedId, presentation.aspects.orbs) : null;
+    const hoveredAspect = snapshot && hoveredId ? getAspectDetails(snapshot.bodies, hoveredId, presentation.aspects.orbs) : null;
     for (const entity of entities.values()) {
-      if (entity.kind === 'house' || entity.kind === 'boundary') continue;
+      if (entity.kind === 'house' || entity.kind === 'boundary' || entity.kind === 'aspect') continue;
       const earthReference = entity.id === 'reference:earth' || entity.id === 'reference:observer';
       const enabled = hasData && (earthReference ? earth.visible : !picking) && entity.valid && entityLayerEnabled(entity);
       const body = entity.kind === 'body' && selectedHouseNumber ? snapshot?.bodies.find(item => `body:${item.id}` === entity.id) : undefined;
       const membership = body && snapshot?.houses[0] ? classifyLongitude(snapshot.houses[0], body.longitudeDeg) : null;
-      const selected = entity.id === presentation.selectedId || entity.id === linkedSign || membership?.status === 'valid' && membership.house === selectedHouseNumber;
-      const hovered = entity.id === hoveredId;
+      const selected = entity.id === presentation.selectedId || entity.id === linkedSign || membership?.status === 'valid' && membership.house === selectedHouseNumber
+        || entity.id === `body:${selectedAspect?.bodyA}` || entity.id === `body:${selectedAspect?.bodyB}`;
+      const hovered = entity.id === hoveredId || entity.id === `body:${hoveredAspect?.bodyA}` || entity.id === `body:${hoveredAspect?.bodyB}`;
       for (const object of entity.objects) {
         object.visible = enabled;
         if (object instanceof THREE.Sprite) object.userData.labelEnabled = enabled;
@@ -604,6 +620,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   }
   function selectedBody() { return snapshot?.bodies.find(body => `body:${body.id}` === presentation.selectedId); }
   function entityLayerEnabled(entity: SceneEntity): boolean {
+    if (entity.kind === 'aspect') return presentation.aspects.enabled;
     if (entity.kind === 'house' || entity.kind === 'boundary') return presentation.layers.houses
       || entity.kind === 'boundary' && constructionRenderer.group.visible && entity.id === `boundary:${presentation.construction.boundaryHouse}`;
     if (entity.kind === 'body') return presentation.layers.bodies;
@@ -737,6 +754,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     raycaster.setFromCamera(pointerNdc, camera);
     const distance = camera.position.length() > SKY_RADIUS ? Math.max(1, camera.position.length() - SKY_RADIUS) : SKY_RADIUS;
     raycaster.params.Line.threshold = THREE.MathUtils.clamp(distance * Math.tan(camera.fov * RAD / 2) * 8 / Math.max(1, rect.height), 0.016, 0.1);
+    raycaster.params.Line2 = { threshold: 6 };
   }
   function isVisible(object: THREE.Object3D): boolean {
     for (let target: THREE.Object3D | null = object; target; target = target.parent) if (!target.visible) return false;
@@ -749,22 +767,22 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     const globeIntersection = earth.visible ? raycaster.intersectObject(earth.children[0]!, false)[0] : undefined;
     const pointDistance = (object: THREE.Object3D): number => {
       const id = object.userData.entityId as string;
-      const pointLike = object instanceof THREE.Sprite || object instanceof THREE.Mesh && (object.userData.constructionId || id !== 'reference:earth' && ['body', 'angle', 'reference'].includes(object.userData.entityKind as string));
+      const pointLike = object instanceof THREE.Sprite || object instanceof THREE.Mesh && (object.userData.aspectEndpoint || object.userData.constructionId || id !== 'reference:earth' && ['body', 'angle', 'reference'].includes(object.userData.entityKind as string));
       if (!pointLike) return Infinity;
       const projected = object.getWorldPosition(new THREE.Vector3()).project(camera);
       return Math.hypot((projected.x - pointerNdc.x) * canvas.clientWidth / 2, (projected.y - pointerNdc.y) * canvas.clientHeight / 2);
     };
-    const priority = (object: THREE.Object3D) => object.userData.constructionIntersection ? -1 : object.userData.constructionId && object instanceof THREE.Line ? 0.5 : Number.isFinite(pointDistance(object)) ? 0
+    const priority = (object: THREE.Object3D) => object.userData.constructionIntersection ? -1 : object.userData.constructionId && object instanceof THREE.Line ? 0.5 : Number.isFinite(pointDistance(object)) ? 0 : object.userData.wideLine ? 0.75
       : object instanceof THREE.Line ? 1 : object.userData.entityKind === 'sign' ? 2 : object.userData.entityKind === 'house' ? 4 : 3;
     const hits = raycaster.intersectObjects(targets, false).filter(hit =>
-      (!globeIntersection || hit.distance < globeIntersection.distance + (hit.object.userData.entityId === 'reference:earth' ? 1e-6 : 0))
+      (hit.object.userData.ignoreEarthOcclusion || !globeIntersection || hit.distance < globeIntersection.distance + (hit.object.userData.entityId === 'reference:earth' ? 1e-6 : 0))
       && (hit.object.userData.entityKind !== 'house' || isHouseDirectionPickable(snapshot!, threeToAstronomical(hit.point))));
     // Nearby body/angle markers can overlap (ASC and Jupiter in the example).
     // Resolve actual point/glyph centres before broad reference lines or belts.
     hits.sort((a, b) => priority(a.object) - priority(b.object) || (Number.isFinite(pointDistance(a.object)) ? pointDistance(a.object) - pointDistance(b.object) : 0) || a.distance - b.distance);
     const object = hits[0]?.object;
     const entity = object ? entities.get(object.userData.entityId as string) : undefined;
-    return entity && object?.userData.constructionId ? { ...entity, name: object.userData.hoverName as string, guideId: object.userData.constructionId as string } : entity;
+    return entity && object?.userData.hoverName ? { ...entity, name: object.userData.hoverName as string, ...(object.userData.constructionId ? { guideId: object.userData.constructionId as string } : {}) } : entity;
   }
   function setHover(id: string | null, name: string | null = null, guideId: string | null = null): void {
     if (id === hoveredId && name === hoveredName && guideId === hoveredGuideId) return;
@@ -849,7 +867,8 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       controls.target.copy(anchor);
       const offsetUp = observerUp.clone().addScaledVector(direction, -observerUp.dot(direction)).normalize();
       if (offsetUp.lengthSq() < 0.01) offsetUp.copy(observerNorth);
-      camera.position.copy(anchor).addScaledVector(direction, 3.6).addScaledVector(offsetUp, 1.1);
+      const distance = target.focusRadius ? viewingDistance(target.focusRadius, 1.18) : 3.6;
+      camera.position.copy(anchor).addScaledVector(direction, distance).addScaledVector(offsetUp, target.focusRadius ? distance * 0.12 : 1.1);
       controls.update();
     }
     requestRender();
@@ -935,7 +954,8 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       const changedViewpoint = nextPresentation.viewpoint !== presentation.viewpoint;
       const wasPicking = presentation.globePickMode === true;
       const changedSnapshot = nextSnapshot !== snapshot;
-      presentation = { ...nextPresentation, houseDisplay: { ...(nextPresentation.houseDisplay ?? DEFAULT_HOUSE_DISPLAY) }, construction: { ...(nextPresentation.construction ?? DEFAULT_CONSTRUCTION) }, layers: { ...nextPresentation.layers } };
+      const aspectSettings = nextPresentation.aspects ?? DEFAULT_ASPECT_DISPLAY;
+      presentation = { ...nextPresentation, houseDisplay: { ...(nextPresentation.houseDisplay ?? DEFAULT_HOUSE_DISPLAY) }, construction: { ...(nextPresentation.construction ?? DEFAULT_CONSTRUCTION) }, aspects: { ...aspectSettings, types: { ...aspectSettings.types }, orbs: { ...aspectSettings.orbs } }, layers: { ...nextPresentation.layers } };
       snapshot = nextSnapshot;
       if (changedSnapshot && snapshot) updateSnapshot(snapshot);
       if (presentation.globePickMode) {

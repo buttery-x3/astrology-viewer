@@ -1,0 +1,30 @@
+{
+  "reviewedAt": "2026-10-25",
+  "method": "Original concise primary-source summaries; claim paragraphs reviewed during milestone development. Static reviewed catalogue; no runtime generation.",
+  "inputs": [
+    {
+      "path": ".cache/m6-content/placements.json",
+      "sha256": "7c75caef2b5a60ed223e9095934f6dbb3b1652a4a3b8c4258cb07c4bc613fd34"
+    },
+    {
+      "path": ".cache/m6-content/placement-sources.json",
+      "sha256": "a2af6f6fbc69c9b53cbf90e03a776bd0d6088f615c1f6429265730221548ac5c"
+    },
+    {
+      "path": ".cache/m6-content/concepts/concepts.json",
+      "sha256": "68788dc52d63cb84df8e04deccf486c7a3668c0353ea9901098893f487f4cd6e"
+    },
+    {
+      "path": ".cache/m6-content/concepts/concept-sources.json",
+      "sha256": "aed400a2f209f142685bc6a85f61d108fc76deed8f2001cf9d75869ad5742219"
+    }
+  ],
+  "reviewNotes": [
+    "Cafe authorship records site authorship where individual pages are unbylined.",
+    "Skyscript Main Rulerships passages were read through indexed primary-page text when direct fetch returned502.",
+    "Evidence card reports the specific Carlson matching task; practitioner interpretation does not establish predictive effects.",
+    "All13 M3 reference claims are reused by stable existingClaimId and counted once.",
+    "M5 method prose is supplementary budget accounting, not additional catalogue entries.",
+    "Product-rule source links are pinned to project commit 8e6f7fac3697e258e178ebe5197417a7c6fd0a17; external source review dates remain recorded."
+  ]
+}
