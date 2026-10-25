@@ -4,7 +4,7 @@ import { calculationResponseSchema, chartInputSchema, explorerInputPatchSchema, 
 
 export type { ExplorerInput } from '../workers/protocol';
 export type Viewpoint = 'overview' | 'observer' | 'outside';
-export type LayerKey = 'bodies' | 'horizon' | 'ecliptic' | 'houses' | 'stars';
+export type LayerKey = 'bodies' | 'horizon' | 'ecliptic' | 'houses' | 'stars' | 'signs' | 'equator' | 'meridian' | 'primeVertical' | 'angles' | 'constellations';
 export type ExplorerInputPatch = Partial<Omit<ExplorerInput, 'observer'>> & { observer?: Partial<ExplorerInput['observer']> };
 export interface ExplorerState {
   status: 'loading' | 'ready' | 'pending' | 'error';
@@ -67,7 +67,7 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
   const initial = chartInputSchema.parse(mergeInput({ ...DEFAULT_EXPLORER_INPUT }, options.initialInput ?? {}));
   let state: ExplorerState = {
     status: 'loading', error: null, revision: 0, input: initial, snapshot: null, selectedId: null,
-    viewpoint: 'overview', layers: { bodies: true, horizon: true, ecliptic: true, houses: true, stars: true },
+    viewpoint: 'overview', layers: { bodies: true, horizon: true, ecliptic: true, houses: true, stars: true, signs: true, equator: false, meridian: false, primeVertical: false, angles: true, constellations: false },
   };
   const store = writable(freeze(state));
   let destroyed = false;
