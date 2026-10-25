@@ -496,7 +496,7 @@
   },
   {
     "id": "concept-project-plan",
-    "url": "https://github.com/buttery-x3/astrology-viewer/blob/8e6f7fac3697e258e178ebe5197417a7c6fd0a17/IMPLEMENTATION_PLAN.md",
+    "url": "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/IMPLEMENTATION_PLAN.md",
     "title": "Spatial Astrology Explorer — approved implementation plan",
     "author": "Spatial Astrology Explorer contributors",
     "publisher": "Spatial Astrology Explorer",
@@ -507,11 +507,11 @@
     "editorialBudget": 180,
     "reviewedAt": "2026-10-25",
     "reviewStatus": "reviewed",
-    "reviewMethod": "Read the corresponding approved local document; product-rule source pinned to project commit 8e6f7fac3697e258e178ebe5197417a7c6fd0a17."
+    "reviewMethod": "Read the corresponding approved local document; product-rule source pinned to project commit 0ea709fdff33ac11aed696fcb0b60f17e0fad477."
   },
   {
     "id": "concept-project-contract",
-    "url": "https://github.com/buttery-x3/astrology-viewer/blob/8e6f7fac3697e258e178ebe5197417a7c6fd0a17/docs/coordinate-contract.md",
+    "url": "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/coordinate-contract.md",
     "title": "Coordinate and civil-time contract",
     "author": "Spatial Astrology Explorer contributors",
     "publisher": "Spatial Astrology Explorer",
@@ -522,7 +522,7 @@
     "editorialBudget": 180,
     "reviewedAt": "2026-10-25",
     "reviewStatus": "reviewed",
-    "reviewMethod": "Read the corresponding approved local document; product-rule source pinned to project commit 8e6f7fac3697e258e178ebe5197417a7c6fd0a17."
+    "reviewMethod": "Read the corresponding approved local document; product-rule source pinned to project commit 0ea709fdff33ac11aed696fcb0b60f17e0fad477."
   },
   {
     "id": "concept-swiss-manual",

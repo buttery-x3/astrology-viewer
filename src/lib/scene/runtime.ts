@@ -337,6 +337,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   const camera = new THREE.PerspectiveCamera(43, 1, 0.015, 100);
   camera.position.set(7.2, 4.8, 9.4);
   const controls = new OrbitControls(camera, canvas);
+  controls.enablePan = false;
   controls.enableDamping = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   controls.dampingFactor = 0.09;
   controls.minDistance = 1.4;
@@ -464,6 +465,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   let defaultFraming = true;
   let animationFrame = 0;
   let pointer: { id: number; x: number; y: number; lastX: number; lastY: number; dragged: boolean } | null = null;
+  let activeGesturePointerId:number|null=null;
   let hoveredId: string | null = null;
   let hoveredGuideId: string | null = null;
   let hoveredName: string | null = null;
@@ -627,7 +629,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   function applyViewpoint(viewpoint: ScenePresentation['viewpoint']): void {
     defaultFraming = true;
     controls.enabled = !contextLost && viewpoint !== 'observer';
-    controls.enablePan = true;
+    controls.enablePan = false;
     controls.minDistance = 1.4;
     camera.fov = viewpoint === 'observer' ? 65 : 43;
     camera.updateProjectionMatrix();
@@ -937,6 +939,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   }
   function pointerDown(event: PointerEvent): void {
     if (disposed || contextLost) return;
+    activeGesturePointerId=event.pointerId;
     options.onOverlap?.(null);
     if (event.button !== 0) { defaultFraming = false; return; }
     canvas.focus({ preventScroll: true });
@@ -959,12 +962,35 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     pointer.lastY = event.clientY;
   }
   function pointerUp(event: PointerEvent): void {
+    if(activeGesturePointerId===event.pointerId)activeGesturePointerId=null;
     if (!pointer || pointer.id !== event.pointerId) return;
     const shouldSelect = !pointer.dragged && event.type === 'pointerup';
     pointer = null;
     if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
     if (shouldSelect) selectAt(event);
   }
+  function cancelGesture(): void {
+    if(disposed)return;
+    const captured=activeGesturePointerId??pointer?.id;
+    activeGesturePointerId=null;
+    pointer=null;
+    if(captured!==undefined&&canvas.hasPointerCapture(captured))canvas.releasePointerCapture(captured);
+    // Public disconnect/connect clears OrbitControls' document gesture state
+    // without resetting the current camera or changing astronomical inputs.
+    controls.disconnect();controls.connect(canvas);
+    controls.enabled=!contextLost&&(presentation.globePickMode===true||presentation.viewpoint!=='observer');
+    if(presentation.globePickMode||presentation.viewpoint!=='observer'){
+      const position=camera.position.clone(),quaternion=camera.quaternion.clone(),up=camera.up.clone(),target=controls.target.clone();
+      const damping=controls.enableDamping;
+      controls.enableDamping=false;controls.update();
+      camera.position.copy(position);camera.quaternion.copy(quaternion);camera.up.copy(up);controls.target.copy(target);
+      controls.update();camera.quaternion.copy(quaternion);camera.updateMatrixWorld();controls.enableDamping=damping;
+    }
+    clearHover();options.onOverlap?.(null);
+    canvas.style.cursor=presentation.globePickMode?'crosshair':'grab';
+    requestRender();
+  }
+  function lostCapture(event: PointerEvent): void {if(activeGesturePointerId===event.pointerId)cancelGesture();}
   function wheel(event: WheelEvent): void {
     defaultFraming = false;
     if (presentation.viewpoint !== 'observer') return;
@@ -1062,6 +1088,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   function loseContext(event: Event): void {
     event.preventDefault();
     contextLost = true;
+    cancelGesture();
     controls.enabled = false;
     if (animationFrame) cancelAnimationFrame(animationFrame);
     animationFrame = 0;
@@ -1086,6 +1113,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   canvas.addEventListener('pointermove', pointerMove);
   canvas.addEventListener('pointerup', pointerUp);
   canvas.addEventListener('pointercancel', pointerUp);
+  canvas.addEventListener('lostpointercapture', lostCapture);
   canvas.addEventListener('pointerleave', clearHover);
   canvas.addEventListener('wheel', wheel, { passive: false });
   canvas.addEventListener('keydown', keyDown);
@@ -1093,6 +1121,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   canvas.addEventListener('webglcontextlost', loseContext);
   canvas.addEventListener('webglcontextrestored', restoreContext);
   window.addEventListener('resize', resize);
+  window.addEventListener('blur', cancelGesture);
   reducedMotion.addEventListener('change', motionPreference);
   updateVisibility();
   resize();
@@ -1160,6 +1189,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       canvas.removeEventListener('pointermove', pointerMove);
       canvas.removeEventListener('pointerup', pointerUp);
       canvas.removeEventListener('pointercancel', pointerUp);
+      canvas.removeEventListener('lostpointercapture', lostCapture);
       canvas.removeEventListener('pointerleave', clearHover);
       canvas.removeEventListener('wheel', wheel);
       canvas.removeEventListener('keydown', keyDown);
@@ -1167,12 +1197,14 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       canvas.removeEventListener('webglcontextlost', loseContext);
       canvas.removeEventListener('webglcontextrestored', restoreContext);
       window.removeEventListener('resize', resize);
+      window.removeEventListener('blur', cancelGesture);
       reducedMotion.removeEventListener('change', motionPreference);
       releaseScene(scene);
       renderer.dispose();
       renderer.forceContextLoss();
       canvas.remove();
       pointer = null;
+      activeGesturePointerId=null;
     },
   };
 }

@@ -17,7 +17,8 @@ class BoundedMap<K,V> extends Map<K,V>{
 setCache({store:new BoundedMap<string,unknown>(24)});
 const upstreamSchema=z.object({results:z.array(z.object({id:z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),name:z.string().min(1).max(200),latitude:z.number().finite().min(-90).max(90),longitude:z.number().finite().min(-180).max(180),timezone:zoneIdentifierSchema.optional(),admin1:z.string().max(200).optional(),country:z.string().max(200).optional()})).max(8).optional()});
 export interface LookupReply{status:number;body:unknown}
-export function createLocationRouter(options:{fetch?:typeof fetch;find?:(latitude:number,longitude:number)=>string[]}={}){
+export interface LocationRouterOptions{fetch?:typeof fetch;find?:(latitude:number,longitude:number)=>string[];geocoding?:{mode:'free'|'customer'|'disabled';apiKey?:string}}
+export function createLocationRouter(options:LocationRouterOptions={}){
   const cached=new BoundedMap<string,{expires:number;body:unknown}>(256);
   const searchFetch=options.fetch??fetch,zoneFind=options.find??find;
   return async(url:URL,method='GET'):Promise<LookupReply|null>=>{
@@ -33,11 +34,17 @@ export function createLocationRouter(options:{fetch?:typeof fetch;find?:(latitud
     try{
       let body:unknown;
       if('q' in parsed.data){
-        const upstream=new URL('https://geocoding-api.open-meteo.com/v1/search');
+        const mode=options.geocoding?.mode??'free';
+        if(mode==='disabled')return{status:503,body:{error:'Place search is disabled on this host. Use manual coordinates and a zone or UTC offset.'}};
+        const upstream=new URL(mode==='customer'?'https://customer-geocoding-api.open-meteo.com/v1/search':'https://geocoding-api.open-meteo.com/v1/search');
         upstream.search=new URLSearchParams({name:parsed.data.q,count:'8',language:'en',format:'json'}).toString();
+        if(mode==='customer'){
+          if(!options.geocoding?.apiKey)throw new Error('Customer geocoding is not configured.');
+          upstream.searchParams.set('apikey',options.geocoding.apiKey);
+        }
         const data=upstreamSchema.parse(await boundedJsonFetch(upstream,{fetch:searchFetch,maxBytes:64*1024,timeoutMs:6000,cache:'no-store'}));
         const results:PlaceResult[]=(data.results??[]).slice(0,8).map(p=>({id:String(p.id),name:p.name,label:[p.name,p.admin1,p.country].filter(Boolean).join(', '),latitudeDeg:p.latitude,longitudeDeg:p.longitude,timezone:p.timezone??null}));
-        body=placeResponseSchema.parse({results,provider:'Open-Meteo / GeoNames',attribution:'Place search: Open-Meteo; geographic names: GeoNames (CC BY 4.0). Free endpoint is for noncommercial use.'});
+        body=placeResponseSchema.parse({results,provider:'Open-Meteo / GeoNames',attribution:'Place search: Open-Meteo; geographic names: GeoNames (CC BY 4.0). '+(mode==='free'?'Free endpoint is for noncommercial use.':'Customer endpoint configured by this host.')});
       }else{
         const zones=zoneFind(parsed.data.latitude,parsed.data.longitude);
         body=timezoneResponseSchema.parse({zones,dataset:'geo-tz/all@8.1.10',attribution:'Timezone boundaries © OpenStreetMap contributors, ODbL-1.0; timezone-boundary-builder comprehensive product via geo-tz.'});

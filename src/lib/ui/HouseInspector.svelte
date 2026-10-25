@@ -27,8 +27,8 @@
   const comparison = $derived(snapshot && primary && secondary ? compareHouseAssignments(snapshot.bodies, primary, secondary) : null);
   const changedBodies = $derived(comparison?.status === 'valid' ? comparison.rows.filter(row => row.changed && (row.primaryHouse === houseNumber || row.secondaryHouse === houseNumber)) : []);
   const cuspSource = `https://github.com/aloistr/swisseph/blob/${ENGINE_REVISION}/swehouse.c`;
-  const displaySource = 'https://github.com/buttery-x3/astrology-viewer/blob/8e6f7fac3697e258e178ebe5197417a7c6fd0a17/src/lib/domain/house-geometry.ts';
-  const membershipSource = 'https://github.com/buttery-x3/astrology-viewer/blob/8e6f7fac3697e258e178ebe5197417a7c6fd0a17/src/lib/domain/chart.ts';
+  const displaySource = 'https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/src/lib/domain/house-geometry.ts';
+  const membershipSource = 'https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/src/lib/domain/chart.ts';
   const name = (id: HouseSystemId) => HOUSE_SYSTEMS.find(item => item.id === id)?.name ?? id;
   const bodyName = (id: string) => id[0]!.toUpperCase() + id.slice(1);
   const degrees = (value: number) => `${value.toFixed(3)}°`;

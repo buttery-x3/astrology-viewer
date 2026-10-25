@@ -1,4 +1,5 @@
 <script lang="ts">
+  import WikipediaLinks from './WikipediaLinks.svelte';
   import { getContent, getClaimSources, type ContentClaim } from '../content';
 
   let { id, role, heading = true, compact = false }: {
@@ -39,6 +40,7 @@
         </div>
       </div>
     {/each}
+    <WikipediaLinks {id} compact />
   </section>
 {:else if !entry}
   <section class="content-card content-unavailable" class:compact><h3>Reviewed content unavailable</h3><p>A reviewed source card is unavailable for this feature.</p></section>

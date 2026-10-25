@@ -1,4 +1,4 @@
-import {z} from 'zod';
+import {z} from '../schema';
 export const PREFERENCES_KEY='spatial.display-preferences.v1';
 export const preferencesSchema=z.object({
   version:z.literal(1),quality:z.enum(['auto','low','high']),labelScale:z.number().min(1).max(1.5),

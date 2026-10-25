@@ -11,19 +11,23 @@
       "bytes": 229107
     },
     "sources.json": {
-      "sha256": "30d60fe4a4832c5c653d725643bbeac47852d403e15f49bcc107133cba37804b",
+      "sha256": "11a2f011036e840e081136c4fdfb2bfc2cbb28f0d486be2caae8ef5f3c19b199",
       "bytes": 66102
     },
     "supplemental-claims.json": {
-      "sha256": "aba34a3db2ceab9ec4d569f0b55ee614f89479a92d704e6670e06a397c6c8a63",
+      "sha256": "c5ad4440082864b9b1a8aab780ed6434abf37f687cf9b71152be4091bb247ed6",
       "bytes": 12100
     },
     "curation-provenance.json": {
-      "sha256": "3ad23145f49327fdd54a8ffa93e96860159e04b5cc5ef09993a02dfecf3a6926",
-      "bytes": 1519
+      "sha256": "d55cd4558a1c0821a744518ef8d46358e6cdd18de4cc9c8ea0b21296ba9bdd8f",
+      "bytes": 1754
+    },
+    "wikipedia-links.json": {
+      "sha256": "fda083baad1118caf58b0e3642129eb9dd15a07d8f488e4acd1a0a537163168a",
+      "bytes": 12048
     },
     "word-budgets.json": {
-      "sha256": "ee2019b0f729481bd7869a9582e7b033e05637bdd54f28edf5b05c321e18659f",
+      "sha256": "2a941192590d15d4da86e49badd440d6f4b908016e52222008af72903f27a5fd",
       "bytes": 31186
     }
   },

@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '../schema';
 import { bodyIdSchema,houseSystemSchema,instantSchema,observerSchema } from './protocol';
 import { TRAIL_VERSION_KEY,type TrailResult,type BoundaryHistoryResult } from '../domain/trails';
 

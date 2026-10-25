@@ -28,7 +28,7 @@ for(const text of [...stepText,...notes])if(!supplemental.some((claim)=>claim.te
 const provenance=await code('src/lib/ui/CalculationProvenance.svelte');
 for(const match of provenance.matchAll(/<p(?:\s[^>]*)?>([^<{}]+)<\/p>/g))if(!supplemental.some((claim)=>claim.sourceCode==='src/lib/ui/CalculationProvenance.svelte'&&claim.text===match[1]))throw new Error(`Provenance prose missing from source budget: ${match[1]}`);
 const sha256=(value:string|Uint8Array)=>createHash('sha256').update(value).digest('hex');
-const files=['catalogue.json','sources.json','supplemental-claims.json','curation-provenance.json'];
+const files=['catalogue.json','sources.json','supplemental-claims.json','curation-provenance.json','wikipedia-links.json'];
 const dataFiles=Object.fromEntries(await Promise.all(files.map(async(name)=>{
   const bytes=await readFile(`src/lib/content/data/${name}`);return [name,{sha256:sha256(bytes),bytes:bytes.length}];
 })));

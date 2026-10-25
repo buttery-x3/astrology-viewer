@@ -82,16 +82,18 @@ test('an actual eclipse overlap offers keyboard choices without changing the cur
     const value = astronomicalToThree(equatorialToVector(snapshot.bodies.find(body => body.id === id)!.fixedEquatorial));
     return new THREE.Vector3(value.x, value.y, value.z).multiplyScalar(5.8).project(camera);
   });
-  // Both markers physically intersect this ray; the small Sun bias gives a
-  // deterministic first candidate for the ArrowDown navigation assertion.
+  // Both markers physically intersect this ray. Their near-coincident sorting
+  // can differ with browser floating-point projection; navigate the real order.
   const middle = points[0]!.clone().lerp(points[1]!, 0.45);
   await page.mouse.click(box.x + (middle.x + 1) * box.width / 2, box.y + (1 - middle.y) * box.height / 2);
   const chooser = page.getByRole('dialog', { name: 'Choose a nearby feature', exact: true });
   await expect(chooser).toBeVisible(); await expect(chooser.getByRole('button', { name: /^Sun/ })).toBeVisible(); await expect(chooser.getByRole('button', { name: /^Moon/ })).toBeVisible();
-  await expect(chooser.getByRole('button', { name: /^Sun/ })).toBeFocused();
-  await page.keyboard.press('ArrowDown'); await expect(chooser.getByRole('button', { name: /^Moon/ })).toBeFocused();
+  const choices = chooser.getByRole('button');
+  await expect(choices.nth(0)).toBeFocused();
+  const nextBody = (await choices.nth(1).innerText()).split(' · ')[0]!;
+  await page.keyboard.press('ArrowDown'); await expect(choices.nth(1)).toBeFocused();
   await page.keyboard.press('Enter');
-  await expect(chooser).not.toBeVisible(); await expect(page.locator('#inspector').getByRole('heading', { name: 'Moon', exact: true })).toBeVisible();
+  await expect(chooser).not.toBeVisible(); await expect(page.locator('#inspector').getByRole('heading', { name: nextBody, exact: true })).toBeVisible();
   await expect(page.locator('.scene-canvas canvas')).toBeFocused(); await expect(page.locator('.context-details')).toContainText('08 Apr 2024');
 });
 

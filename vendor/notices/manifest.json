@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-26",
+  "emscriptenVersion": "4.0.23",
+  "ianaArchiveSha256": "b26882805f26aac59d5b222978e6580484b834ccdc98be89df2f05a6dc53a652",
+  "files": [
+    {
+      "file": "vendor/emscripten/LICENSE",
+      "url": "https://github.com/emscripten-core/emscripten/blob/4.0.23/LICENSE",
+      "title": "Emscripten MIT and University of Illinois/NCSA",
+      "bytes": 5093,
+      "sha256": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86",
+      "changes": "None; retained original bytes."
+    },
+    {
+      "file": "vendor/emscripten/AUTHORS",
+      "url": "https://github.com/emscripten-core/emscripten/blob/4.0.23/AUTHORS",
+      "title": "Emscripten authors",
+      "bytes": 29004,
+      "sha256": "8585fa1b981f576f52806833481323007ccac5c00f31a873215e31c0f42820f0",
+      "changes": "None; retained original bytes."
+    },
+    {
+      "file": "vendor/emscripten/musl-COPYRIGHT",
+      "url": "https://github.com/emscripten-core/emscripten/blob/4.0.23/system/lib/libc/musl/COPYRIGHT",
+      "title": "musl runtime notices",
+      "bytes": 6204,
+      "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+      "changes": "None; retained original bytes."
+    },
+    {
+      "file": "vendor/emscripten/compiler-rt-LICENSE.TXT",
+      "url": "https://github.com/emscripten-core/emscripten/blob/4.0.23/system/lib/compiler-rt/LICENSE.TXT",
+      "title": "compiler-rt runtime notice",
+      "bytes": 16708,
+      "sha256": "1a8f1058753f1ba890de984e48f0242a3a5c29a6a8f2ed9fd813f36985387e8d",
+      "changes": "None; retained original bytes."
+    },
+    {
+      "file": "vendor/notices/ODbL-1.0.txt",
+      "url": "https://opendatacommons.org/licenses/odbl/odbl-10.txt",
+      "title": "Open Database License 1.0",
+      "bytes": 25278,
+      "sha256": "607680718977f6f6c9607972afd98f208573f19251315ed1362a8589b51beaf5",
+      "changes": "None; retained original bytes."
+    },
+    {
+      "file": "vendor/notices/CC-BY-SA-4.0.txt",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt",
+      "title": "Creative Commons Attribution ShareAlike 4.0 International",
+      "bytes": 20138,
+      "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5",
+      "changes": "None; retained original bytes."
+    },
+    {
+      "file": "vendor/notices/IANA-tz-2026e-LICENSE",
+      "url": "https://data.iana.org/time-zones/releases/tzdata2026e.tar.gz",
+      "title": "IANA 2026e LICENSE archive member",
+      "bytes": 252,
+      "sha256": "0613408568889f5739e5ae252b722a2659c02002839ad970a63dc5e9174b27cf",
+      "changes": "None; retained original bytes."
+    }
+  ]
+}

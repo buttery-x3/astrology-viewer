@@ -1,4 +1,4 @@
-import {z} from 'zod';
+import {z} from '../schema';
 const visibleText=(maximum:number)=>z.string().min(1).max(maximum).refine(value=>[...value].every(character=>character.charCodeAt(0)>=32&&character.charCodeAt(0)!==127),'Control characters are not accepted.');
 export const zoneIdentifierSchema=visibleText(100).regex(/^(?:[A-Za-z0-9_+.-]+\/)*[A-Za-z0-9_+.-]+$/);
 /** These are the only values allowed across the geographic lookup boundary. */

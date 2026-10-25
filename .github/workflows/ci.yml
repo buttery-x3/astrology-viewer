@@ -20,12 +20,25 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run validate:content
+      - run: npm run validate:notices
       - run: node scripts/verify-assets.mjs
-      - run: node scripts/install-browsers.mjs chromium --with-deps
-      - run: npm run test:browser
+      - run: node scripts/install-browsers.mjs chromium firefox webkit --with-deps
+      - run: npm run release:build
+      - run: npm run release:verify -- --config playwright.cross-browser.config.ts
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: verified-release-candidate
+          path: |
+            .cache/releases/
+            !.cache/releases/build-*/**
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: browser-failure-evidence
-          path: test-results/
+          path: |
+            test-results/
+            .cache/browser-cross-results/
+            .cache/browser-cross-results.json
           if-no-files-found: ignore
