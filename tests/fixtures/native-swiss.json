@@ -2811,5 +2811,51 @@
         ]
       }
     ]
-  }
+  },
+  "knownAnswerCases": [
+    {
+      "id": "solar-civil-roundtrip-1987",
+      "civil": {
+        "year": 1987,
+        "month": 4,
+        "day": 27,
+        "hour": 2,
+        "minute": 0,
+        "second": 0
+      },
+      "zoneId": "Australia/Melbourne",
+      "offsetMinutes": 600,
+      "observer": {
+        "latitudeDeg": -37.814,
+        "longitudeDeg": 144.96332
+      },
+      "instantIso": "1987-04-26T16:00:00.000Z",
+      "instantMs": 546451200000,
+      "commandArguments": [
+        "-b26.4.1987greg",
+        "-utc16:00:00",
+        "-ep",
+        "-eswe",
+        "-speed",
+        "-tidacc-25.8",
+        "-p0123456789",
+        "-fPlbRsad",
+        "-g,",
+        "-head",
+        "-edirpublic/data/ephemeris"
+      ],
+      "sun": {
+        "id": "sun",
+        "longitudeDeg": 35.89199283139,
+        "latitudeDeg": -0.0000292087,
+        "distanceAu": 1.00633861889587,
+        "longitudeSpeedDegPerDay": 0.9735267852351699,
+        "equatorial": {
+          "rightAscensionDeg": 33.58137584415,
+          "declinationDeg": 13.48787171818
+        }
+      },
+      "expectedSign": "taurus"
+    }
+  ]
 }

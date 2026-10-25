@@ -1,8 +1,9 @@
+import {openControlGroups} from './helpers';
 import {expect,test,type Page} from '@playwright/test';
 
 async function example(page:Page){
   await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();
-  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);
 }
 async function bodyCoordinates(page:Page){
   return page.locator('#inspector .data-list').first().locator('dd').allTextContents().then(values=>values.slice(0,2));
@@ -14,7 +15,7 @@ test('all 21 house system/display combinations preserve membership and body dire
   await page.getByRole('button',{name:/^Moon/}).click();const coordinates=await bodyCoordinates(page);
   for(const system of ['W','E','O','P','K','R','C']){
     await page.getByLabel('House system',{exact:true}).selectOption(system);
-    await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+    await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);
     await page.getByRole('button',{name:/^Moon/}).click();
     const assignment=await page.locator('#inspector .data-list').first().innerText();
     for(const mode of ['Volumes / wedges','Boundary arcs','Layered shells']){
@@ -38,7 +39,7 @@ test('comparison changes classifications while keeping one moment and geocentric
   await example(page);
   await page.getByRole('button',{name:/^Moon/}).click();const before=await bodyCoordinates(page);
   await page.getByLabel('Compare house system',{exact:true}).selectOption('P');
-  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);
   const change=page.getByRole('button',{name:'Moon, house 8 in Whole Sign, house 7 in Placidus',exact:true});
   await expect(change).toBeVisible();await change.click();
   expect(await bodyCoordinates(page)).toEqual(before);
@@ -47,7 +48,7 @@ test('comparison changes classifications while keeping one moment and geocentric
   await page.getByLabel('Show changed regions and assignments only').uncheck();
   await expect(page.locator('.assignment-links button')).toHaveCount(10);
   await page.getByLabel('Compare house system',{exact:true}).selectOption('');
-  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);
   await expect(page.locator('#inspector .data-list').first()).not.toContainText('Placidus');
 });
 
@@ -60,7 +61,7 @@ test('undefined polar houses retain bodies and literal reference angles without 
   await page.getByLabel('Offset minutes east of UTC').fill('0');
   await page.getByRole('button',{name:/Apply exploration/}).click();
   await page.getByLabel('House system',{exact:true}).selectOption('P');
-  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);
   await expect(page.locator('.house-warning')).toContainText('Placidus unavailable');
   await page.getByRole('radio',{name:'Volumes / wedges',exact:true}).check();
   await page.getByRole('button',{name:'House 1',exact:true}).click();
@@ -68,7 +69,7 @@ test('undefined polar houses retain bodies and literal reference angles without 
   await page.getByRole('button',{name:/^Moon/}).click();
   await expect(page.locator('#inspector').getByRole('heading',{name:'Moon',exact:true})).toBeVisible();
   await expect(page.locator('#inspector .data-list').first()).toContainText('Unavailable');
-  await page.getByLabel('Find a sign, angle or region').fill('Ascendant');
+  await page.getByLabel('Find a body, sign, angle or region').fill('Ascendant');
   await page.getByRole('button',{name:/^Ascendant/}).click();
   await expect(page.locator('#inspector').getByRole('heading',{name:'Ascendant · ASC',exact:true})).toBeVisible();
   await expect(page.locator('#inspector')).not.toContainText('Undefined at this input');

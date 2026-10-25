@@ -1,3 +1,4 @@
+import {openControlGroups} from './helpers';
 import { expect, test } from '@playwright/test';
 
 test('loads the real example, selects a body, changes viewpoint and returns to its anchor',async({page})=>{
@@ -6,7 +7,7 @@ test('loads the real example, selects a body, changes viewpoint and returns to i
   await page.goto('/');
   await expect(page.getByRole('heading',{name:/See the chart/})).toBeVisible();
   await page.getByRole('button',{name:/Explore example/}).click();
-  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible({timeout:20000});
+  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible({timeout:20000});await openControlGroups(page);
   await expect(page.locator('.scene-canvas canvas')).toHaveCount(1);
   await page.getByRole('button',{name:/^Mars/}).click();
   await expect(page.locator('#inspector').getByRole('heading',{name:'Mars',exact:true})).toBeVisible();
@@ -23,7 +24,7 @@ test('loads the real example, selects a body, changes viewpoint and returns to i
 test('preserves numerical exploration while the graphics context recovers',async({page})=>{
   await page.goto('/');
   await page.getByRole('button',{name:/Explore example/}).click();
-  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible({timeout:20000});
+  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible({timeout:20000});await openControlGroups(page);
   const supported=await page.evaluate(()=>{
     const canvas=document.querySelector('.scene-canvas canvas') as HTMLCanvasElement;
     const extension=canvas.getContext('webgl2')?.getExtension('WEBGL_lose_context');
@@ -54,7 +55,7 @@ test('commits an explicit offset and coordinates through the birth form',async({
   await expect(page.getByRole('dialog')).not.toBeVisible();
   await expect(page.locator('.context-details')).toContainText('14 Jun 2000');
   await expect(page.locator('.context-details')).toContainText('33.87° S');
-  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible({timeout:20000});
+  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible({timeout:20000});await openControlGroups(page);
 });
 
 test('requires a fold choice and keeps the birth anchor when exploring another moment',async({page})=>{

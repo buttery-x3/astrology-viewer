@@ -2,7 +2,8 @@ import {find,setCache} from 'geo-tz/all';
 import {z} from 'zod';
 import type {IncomingMessage,ServerResponse} from 'node:http';
 import type {Plugin} from 'vite';
-import {placeResponseSchema,timezoneResponseSchema,type PlaceResult} from '../src/lib/services/location-schema';
+import {placeResponseSchema,timezoneResponseSchema,placeQuerySchema,coordinateQuerySchema,zoneIdentifierSchema,type PlaceResult} from '../src/lib/services/location-schema';
+import { boundedJsonFetch } from '../src/lib/net/bounded-fetch';
 
 class BoundedMap<K,V> extends Map<K,V>{
   constructor(private readonly limit:number){super();}
@@ -14,9 +15,7 @@ class BoundedMap<K,V> extends Map<K,V>{
   }
 }
 setCache({store:new BoundedMap<string,unknown>(24)});
-const searchQuery=z.object({q:z.string().trim().min(2).max(100)}).strict();
-const coordinateQuery=z.object({latitude:z.string().trim().min(1).transform(Number).pipe(z.number().finite().min(-90).max(90)),longitude:z.string().trim().min(1).transform(Number).pipe(z.number().finite().min(-180).max(180))}).strict();
-const upstreamSchema=z.object({results:z.array(z.object({id:z.number(),name:z.string(),latitude:z.number().finite().min(-90).max(90),longitude:z.number().finite().min(-180).max(180),timezone:z.string().optional(),admin1:z.string().optional(),country:z.string().optional()})).optional()});
+const upstreamSchema=z.object({results:z.array(z.object({id:z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),name:z.string().min(1).max(200),latitude:z.number().finite().min(-90).max(90),longitude:z.number().finite().min(-180).max(180),timezone:zoneIdentifierSchema.optional(),admin1:z.string().max(200).optional(),country:z.string().max(200).optional()})).max(8).optional()});
 export interface LookupReply{status:number;body:unknown}
 export function createLocationRouter(options:{fetch?:typeof fetch;find?:(latitude:number,longitude:number)=>string[]}={}){
   const cached=new BoundedMap<string,{expires:number;body:unknown}>(256);
@@ -25,7 +24,7 @@ export function createLocationRouter(options:{fetch?:typeof fetch;find?:(latitud
     if(!['/api/places','/api/timezone'].includes(url.pathname))return null;
     if(method!=='GET')return {status:405,body:{error:'Use a GET location request.'}};
     const query=Object.fromEntries(url.searchParams);
-    const schema=url.pathname==='/api/places'?searchQuery:coordinateQuery;
+    const schema=url.pathname==='/api/places'?placeQuerySchema:coordinateQuerySchema;
     const parsed=schema.safeParse(query);
     if(!parsed.success||[...url.searchParams.keys()].length!==Object.keys(query).length)
       return {status:400,body:{error:'Invalid location query. Only place text or coordinates are accepted.'}};
@@ -36,9 +35,7 @@ export function createLocationRouter(options:{fetch?:typeof fetch;find?:(latitud
       if('q' in parsed.data){
         const upstream=new URL('https://geocoding-api.open-meteo.com/v1/search');
         upstream.search=new URLSearchParams({name:parsed.data.q,count:'8',language:'en',format:'json'}).toString();
-        const response=await searchFetch(upstream,{signal:AbortSignal.timeout(6000)});
-        if(!response.ok)throw new Error('Upstream location search unavailable.');
-        const data=upstreamSchema.parse(await response.json());
+        const data=upstreamSchema.parse(await boundedJsonFetch(upstream,{fetch:searchFetch,maxBytes:64*1024,timeoutMs:6000,cache:'no-store'}));
         const results:PlaceResult[]=(data.results??[]).slice(0,8).map(p=>({id:String(p.id),name:p.name,label:[p.name,p.admin1,p.country].filter(Boolean).join(', '),latitudeDeg:p.latitude,longitudeDeg:p.longitude,timezone:p.timezone??null}));
         body=placeResponseSchema.parse({results,provider:'Open-Meteo / GeoNames',attribution:'Place search: Open-Meteo; geographic names: GeoNames (CC BY 4.0). Free endpoint is for noncommercial use.'});
       }else{
@@ -56,7 +53,7 @@ export function locationLookupPlugin():Plugin{
     void router(new URL(req.url??'/','http://localhost'),req.method).then(reply=>{
       if(!reply){next();return;}
       res.statusCode=reply.status;res.setHeader('Content-Type','application/json; charset=utf-8');
-      res.setHeader('Cache-Control',reply.status===200?'private, max-age=300':'no-store');
+      res.setHeader('Cache-Control','no-store');
       res.end(JSON.stringify(reply.body));
     }).catch(()=>{res.statusCode=500;res.end(JSON.stringify({error:'Location lookup failed.'}));});
   };

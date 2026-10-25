@@ -27,6 +27,8 @@ export interface CalculationWorker {
 export interface ExplorerStoreOptions {
   workerFactory?: () => CalculationWorker;
   initialInput?: ExplorerInputPatch;
+  startupTimeoutMs?:number;
+  calculationTimeoutMs?:number;
 }
 export interface ExplorerStore extends Readable<ExplorerState> {
   init(): void;
@@ -65,6 +67,8 @@ function freeze<T>(value: T): T {
 
 /** A single worker plus revision/generation guards owns atomic snapshot updates. */
 export function createExplorerStore(options: ExplorerStoreOptions = {}): ExplorerStore {
+  const startupTimeoutMs=options.startupTimeoutMs??30000,calculationTimeoutMs=options.calculationTimeoutMs??5000;
+  if(![startupTimeoutMs,calculationTimeoutMs].every(value=>Number.isFinite(value)&&value>=1&&value<=120000))throw new RangeError('Worker deadlines must be from1 to120000ms.');
   const initial = chartInputSchema.parse(mergeInput({ ...DEFAULT_EXPLORER_INPUT }, options.initialInput ?? {}));
   let state: ExplorerState = {
     status: 'loading', error: null, revision: 0, input: initial, snapshot: null, selectedId: null,
@@ -79,11 +83,13 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
   let initialized = false;
   let lastCompletedRevision = -1;
   let errorOrigin: 'validation' | 'worker' | null = null;
+  let startupTimer:ReturnType<typeof setTimeout>|undefined,calculationTimer:ReturnType<typeof setTimeout>|undefined;
   const publish = (patch: Partial<ExplorerState>) => { state = freeze({ ...state, ...patch }); store.set(state); };
   const currentStatus = (): ExplorerState['status'] => lastCompletedRevision === state.revision ? 'ready' : state.snapshot ? 'pending' : 'loading';
 
   function stopWorker(): void {
     generation += 1;
+    clearTimeout(startupTimer);clearTimeout(calculationTimer);startupTimer=undefined;calculationTimer=undefined;
     detach?.();
     detach = null;
     worker?.terminate();
@@ -98,6 +104,9 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
   }
   function calculate(): void {
     if (!workerReady || !worker || destroyed) return;
+    clearTimeout(calculationTimer);
+    const requestedGeneration=generation,requestedRevision=state.revision,requestedWorker=worker;
+    calculationTimer=setTimeout(()=>{if(!destroyed&&generation===requestedGeneration&&worker===requestedWorker&&state.revision===requestedRevision&&lastCompletedRevision!==requestedRevision)fail('The chart calculation timed out. Retry to restart the calculation worker.');},calculationTimeoutMs);
     try {
       worker.postMessage({ type: 'calculate', revision: state.revision, instantMs: state.input.instantMs, observer: { ...state.input.observer }, systems: state.input.comparisonSystem ? [state.input.system,state.input.comparisonSystem] : [state.input.system] });
     } catch { fail('Unable to send the chart calculation. Retry to restart the calculation worker.'); }
@@ -125,6 +134,7 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
         if (message.type === 'ready') {
           if (workerReady) return;
           if (message.revision !== startedRevision) { fail('The calculation worker returned an unexpected initialization response. Retry to restart it.'); return; }
+          clearTimeout(startupTimer);startupTimer=undefined;
           workerReady = true;
           calculate();
         } else if (message.type === 'error') {
@@ -140,6 +150,7 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
             return;
           }
           lastCompletedRevision = state.revision;
+          clearTimeout(calculationTimer);calculationTimer=undefined;
           publish({ snapshot, status: errorOrigin === 'validation' ? 'error' : 'ready', error: errorOrigin === 'validation' ? state.error : null });
         }
       };
@@ -160,6 +171,7 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
         active.removeEventListener('error', onError);
         active.removeEventListener('messageerror', onMessageError);
       };
+      startupTimer=setTimeout(()=>{if(!destroyed&&generation===startedGeneration&&worker===active&&!workerReady)fail('The calculation engine took too long to start. Retry to load its data again.');},startupTimeoutMs);
       active.postMessage({ type: 'init', revision: startedRevision });
     } catch { fail('The calculation worker could not start. Retry to load the calculation engine.'); }
   }

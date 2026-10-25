@@ -106,10 +106,10 @@
 
 <style>
   .house-heading h2{font-variant-numeric:tabular-nums}
-  .show-construction{font-size:11px;line-height:1.7;color:var(--cyan);margin-top:12px}
+  .show-construction{font-size:0.8125rem;line-height:1.7;color:var(--cyan);margin-top:12px}
   .house-numerical .data-list>div{align-items:start;gap:10px}.house-numerical .data-list dd{max-width:55%;text-align:right;line-height:1.6}.house-numerical .data-list dt{line-height:1.6}
   .value-link{font:inherit;color:#a9dfe0;text-decoration:underline;text-underline-offset:3px;padding:0}.value-link:hover{color:#e6d7aa}
-  .related-house{margin-top:6px;font-size:11px;color:var(--cyan)}
-  .body-links{display:grid;gap:4px;margin-top:10px}.body-links button{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:8px 9px;border:1px solid #30475f;border-radius:5px;color:#c2dce4;font-size:12px;text-align:left;background:#142337}.body-links button:hover{background:#21364d;border-color:#6e879b}.body-links small{font-size:10px;color:#d7c7a6;font-variant-numeric:tabular-nums}
-  .house-unavailable p,.comparison-warning{color:#dfc398}.house-comparison .data-list dd{font-size:10px}.house-comparison .data-list dt{font-size:10px;line-height:1.6}
+  .related-house{margin-top:6px;font-size:0.8125rem;color:var(--cyan)}
+  .body-links{display:grid;gap:4px;margin-top:10px}.body-links button{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:8px 9px;border:1px solid #30475f;border-radius:5px;color:#c2dce4;font-size:0.875rem;text-align:left;background:#142337}.body-links button:hover{background:#21364d;border-color:#6e879b}.body-links small{font-size:0.75rem;color:#d7c7a6;font-variant-numeric:tabular-nums}
+  .house-unavailable p,.comparison-warning{color:#dfc398}.house-comparison .data-list dd{font-size:0.75rem}.house-comparison .data-list dt{font-size:0.75rem;line-height:1.6}
 </style>

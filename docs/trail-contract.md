@@ -28,6 +28,8 @@ When current time is inside the requested interval but outside a limited sampled
 
 The shared LRU defaults to eight final results and permits a configured size0–32. Its keys include the algorithm version, pinned native-source/data identities, observer, selected target, requested interval, frame and sampling settings. Body-trail keys intentionally exclude the changing anchor/current instant. A cache hit retains `anchorMs` as the **original sampling origin**, then projection inserts the latest exact body position. Limited results are reused only while a new anchor remains inside their actual sampled bounds; an exhausted result cannot trap playback in an endlessly reused interval. Boundary-history keys also include their exact anchor, because those discrete indexed cusp samples cannot be replaced by body-trail projection.
 
+M8 adds generation/channel-bound startup and hard job watchdogs. Partial progress does not extend a hard deadline; a hung worker is replaced on retry while completed numerical results remain valid. See [recovery and privacy](recovery-privacy.md) for deadlines, bounded network loading and failure tests.
+
 ## Indexed boundary ghosts
 
 `sampleBoundaryHistory` independently calculates one selected indexed cusp for at most seven times within a maximum24-hour window, defaulting to seven samples over six hours. The exact requested anchor is among the samples. Longer intervals and unsupported dates are explicitly clipped; low sample counts still describe discrete samples, not a continuous history.

@@ -1,5 +1,6 @@
+import {openControlGroups} from './helpers';
 import {expect,test,type Page} from '@playwright/test';
-async function example(page:Page){await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();}
+async function example(page:Page){await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);}
 
 test('rebuilds selected trails in both frames, reports budget limits and leaves the birth anchor fixed',async({page})=>{
   const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));
