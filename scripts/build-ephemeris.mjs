@@ -36,6 +36,10 @@ if (compilerVersion.status !== 0 || !compilerVersion.stdout.includes('4.0.23'))
   throw new Error('This reproducible build requires Emscripten 4.0.23.');
 const result = spawnSync(python, args, { stdio: 'inherit', env: compilerEnvironment });
 if (result.status !== 0) process.exit(result.status ?? 1);
+// Emscripten emits platform newlines in JS. Canonicalise before hashing so Git
+// checkouts and rebuilds on other platforms preserve the published checksum.
+const generatedJs = `${output}/spatial-ephemeris.js`;
+writeFileSync(generatedJs,readFileSync(generatedJs,'utf8').replace(/\r\n/g,'\n'));
 const files = ['spatial-ephemeris.js','spatial-ephemeris.wasm'].map(name => {
   const data = readFileSync(`${output}/${name}`);
   return { name, bytes: data.length, sha256: createHash('sha256').update(data).digest('hex') };
