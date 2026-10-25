@@ -14,7 +14,7 @@ The approved plan is [IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md); the so
 | Milestone | Status | Evidence / review |
 |---|---|---|
 | M0 Feasibility and conventions | Complete and merged | [PR #1](https://github.com/buttery-x3/astrology-viewer/pull/1), [checksum follow-up #2](https://github.com/buttery-x3/astrology-viewer/pull/2), [M0 evidence](reports/M0.md), 37 tests and real browser worker |
-| M1 Application foundation | Complete; review and integration pending | [M1 evidence](reports/M1.md): Svelte shell, scene lifecycle, immutable coordinator, validated commands, CI; 52 tests and 3 production browser workflows |
+| M1 Application foundation | Complete; review and integration pending | [M1 evidence](reports/M1.md): Svelte shell, scene lifecycle, immutable coordinator, validated commands, CI; 53 tests and 3 production browser workflows |
 | M2 Numerical chart and input | Pending | |
 | M3 Spatial vertical slice | Pending | |
 | M4 House displays and comparison | Pending | |

@@ -124,6 +124,26 @@ describe('exploration state and worker coordination', () => {
     store.destroy();
   });
 
+  it('prevents subscribers from mutating committed input or computed snapshot fields', () => {
+    const { store, start } = setup();
+    start();
+    const published = get(store);
+    expect(Object.isFrozen(published)).toBe(true);
+    expect(Object.isFrozen(published.input.observer)).toBe(true);
+    expect(Object.isFrozen(published.layers)).toBe(true);
+    expect(Object.isFrozen(published.snapshot?.bodies[0]?.equatorial)).toBe(true);
+    const originalLongitude = published.snapshot!.bodies[0]!.longitudeDeg;
+    expect(() => { published.input.observer.latitudeDeg = -80; }).toThrow(TypeError);
+    expect(() => { published.snapshot!.bodies[0]!.longitudeDeg = 123; }).toThrow(TypeError);
+    expect(() => { published.snapshot!.houses.length = 0; }).toThrow(TypeError);
+    expect(get(store).input.observer.latitudeDeg).toBe(51.5);
+    expect(get(store).snapshot!.bodies[0]!.longitudeDeg).toBe(originalLongitude);
+    expect(get(store).snapshot!.houses).toHaveLength(1);
+    store.requestChart({ observer: { latitudeDeg: -33.8688 } });
+    expect(get(store).input.observer.latitudeDeg).toBe(-33.8688);
+    store.destroy();
+  });
+
   it('replaces a failed worker on retry and rejects the old worker generation', () => {
     const { store, workers, start } = setup();
     const first = start();
