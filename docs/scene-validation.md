@@ -13,12 +13,16 @@ The cross-browser configuration runs the same workflows in all three desktop eng
 
 To test the packaged server, start its `server.mjs` as documented in the release guide and set `RELEASE_BASE_URL` to its loopback URL. This skips Vite preview. Use `BROWSER_OUTPUT_DIR` and `BROWSER_REPORT_FILE` for separate concurrent artifacts. Browser version, release revision and server invocation belong in the resulting report.
 
-The 63-view workflow checks all seven systems, all three house displays, and all three viewpoints. It verifies committed body measurements and moment invariance, actual WebGL draw submissions and absence of GL/page errors. Set `MATRIX_SCREENSHOTS=1` to retain all 63 canvas images per browser. They are review artifacts, not unreviewed pixel-golden acceptance baselines.
+The 63-view workflow checks all seven systems, all three house displays, and all three viewpoints. It verifies committed body measurements and moment invariance, actual WebGL draw submissions and absence of GL/page errors. A test-only animation callback wrapper captures the canvas PNG synchronously after the app renders, before the native callback returns. Every decoded PNG must contain real non-background sky pixels; the three Outside house displays must produce distinct frames for every system. Production keeps `preserveDrawingBuffer=false`.
+
+Set `MATRIX_SCREENSHOTS=1` to retain all 63 actual frame PNGs per browser, plus three separate compositor screenshots. Windows Playwright WebKit's compositor capture can omit a correctly rendered accelerated canvas; retain that limitation alongside the direct frame evidence. These images are reviewed artifacts, not pixel-golden acceptance baselines. Playwright WebKit's version and reported graphics strings do not establish a Safari or Apple hardware test.
 
 ```powershell
 $env:MATRIX_SCREENSHOTS='1'
-node scripts/run-browser-tests.mjs --config playwright.cross-browser.config.ts --grep '63 system'
+npm run release:verify -- --config playwright.cross-browser.config.ts tests/browser/view-matrix.spec.ts
 ```
+
+The standalone verifier copies the exact packaged artifact outside repository ancestors, installs only its locked production dependencies and starts an isolated loopback server. It cleans up that server afterwards. The installed-channel configuration accepts the same test file argument. The quality workflow records requested and actual device pixel ratio: Windows Firefox may expose DPR1 despite a request for DPR2. Assertions follow actual device DPR and each quality cap, while Chromium retains explicit DPR2 and Auto1.5/Low1 coverage.
 
 The isolated scene performance harness imports the actual scene modules from a running Vite development server. It substitutes a blank same-origin document, so neither App nor Vite's HMR client creates another renderer. It records source hashes and verifies that isolation. The normal orbit workloads use 120 consecutive animation frames; a separate three-pass stress workload switches every system, display, viewpoint, construction, comparison and sampled-history overlay.
 

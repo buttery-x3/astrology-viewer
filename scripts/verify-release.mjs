@@ -18,13 +18,13 @@ const manifest=JSON.parse(await readFile(path.join(artifact,'release-manifest.js
 if(!/^[a-f0-9]{40}$/.test(manifest.revision))throw new Error('Release revision is invalid.');
 const tempBase=await realpath(tmpdir()),temporary=await mkdtemp(path.join(tempBase,'spatial-astrology-release-')),isolated=path.join(temporary,'artifact');
 let server,browser,installer;
-function execute(executable,arguments_,options,timeoutMs){return new Promise((resolve,reject)=>{
+function execute(executable,arguments_,options,timeoutMs,label='Standalone dependency installation'){return new Promise((resolve,reject)=>{
   const child=spawn(executable,arguments_,options);installer=child;let bytes=0,settled=false;
   const finish=(error,code)=>{if(settled)return;settled=true;installer=undefined;clearTimeout(timer);if(error)reject(error);else resolve(code);};
   // Do not echo package-manager diagnostics which can include host registry/proxy details.
   for(const stream of [child.stdout,child.stderr])stream?.on('data',chunk=>{bytes+=chunk.length;if(bytes>1024*1024)child.kill('SIGKILL');});
-  const timer=setTimeout(()=>{child.kill('SIGKILL');finish(new Error('Standalone dependency installation exceeded its time bound.'));},timeoutMs);
-  child.once('error',()=>finish(new Error('Standalone dependency installer could not start.')));child.once('exit',code=>finish(null,code));
+  const timer=setTimeout(()=>{child.kill('SIGKILL');finish(new Error(label+' exceeded its time bound.'));},timeoutMs);
+  child.once('error',()=>finish(new Error(label+' could not start.')));child.once('exit',code=>finish(null,code));
 });}
 async function stop(child){if(!child||child.exitCode!==null||child.signalCode!==null)return;await new Promise(resolve=>{const timer=setTimeout(()=>{child.kill('SIGKILL');resolve();},6000);child.once('exit',()=>{clearTimeout(timer);resolve();});child.kill('SIGTERM');});}
 async function cleanTemporary(){const resolved=await realpath(temporary),relative=path.relative(tempBase,resolved);if(path.isAbsolute(relative)||relative.startsWith('..')||path.dirname(resolved)!==tempBase||!path.basename(resolved).startsWith('spatial-astrology-release-'))throw new Error('Refusing unsafe standalone verification cleanup.');await rm(resolved,{recursive:true,force:true,maxRetries:4,retryDelay:100});}
@@ -39,9 +39,13 @@ try{
   server.stdout.resume();server.stderr.resume();
   const port=await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('Standalone release startup timed out.')),30000);const done=(error,value)=>{clearTimeout(timer);server.off('exit',exit);server.off('error',errorHandler);server.off('message',message);if(error)reject(error);else resolve(value);};const exit=()=>done(new Error('Standalone release failed its startup integrity/configuration checks.'));const errorHandler=()=>done(new Error('Standalone release process could not start.'));const message=value=>{if(value?.type==='ready'&&Number.isInteger(value.port)&&value.port>0&&value.port<=65535&&value.revision===manifest.revision)done(null,value.port);};server.once('exit',exit);server.once('error',errorHandler);server.on('message',message);});
   console.log('Running browser verification against the independently installed production artifact.');
-  const testEnv=Object.fromEntries(Object.entries(process.env).filter(([name])=>/^(?:CI|PLAYWRIGHT_.*|BROWSER_.*|MATRIX_SCREENSHOTS)$/.test(name))),baseUrl=`http://127.0.0.1:${port}`;
+  const testEnv=Object.fromEntries(Object.entries(process.env).filter(([name])=>/^(?:CI|PLAYWRIGHT_.*|BROWSER_.*|MATRIX_SCREENSHOTS|DISPLAY|XAUTHORITY|LIBGL_ALWAYS_SOFTWARE|GALLIUM_DRIVER|GDK_BACKEND|MOZ_ENABLE_WAYLAND)$/.test(name))),baseUrl=`http://127.0.0.1:${port}`;
+  const browserEnv={...runtimeEnv,...testEnv,PLAYWRIGHT_BROWSERS_PATH:process.env.PLAYWRIGHT_BROWSERS_PATH??path.resolve('.cache/playwright'),RELEASE_BASE_URL:baseUrl};
+  if(process.platform==='linux'&&testEnv.BROWSER_SOFTWARE_WEBGL==='1'){
+    const preflight=await execute(process.execPath,['scripts/firefox-webgl-preflight.mjs','--output',path.resolve('.cache/browser-environment/firefox-webgl-environment.json')],{cwd:root,env:browserEnv,stdio:'inherit'},45000,'Firefox WebGL2 preflight');if(preflight!==0)throw new Error('Firefox WebGL2 environment preflight failed; rendering workflows were not skipped.');
+  }
   const runArgs=probe?[probe==='--latency-probe'?'scripts/release-performance.mjs':'scripts/cold-load-performance.mjs','--url',baseUrl,'--output',path.resolve(process.env.BROWSER_OUTPUT_DIR??'.cache/release-probes',probe==='--latency-probe'?'latency.json':'cold-load.json'),'--hardware']:['node_modules/playwright/cli.js','test',...args];
-  const code=await new Promise((resolve,reject)=>{browser=spawn(process.execPath,runArgs,{cwd:root,env:{...runtimeEnv,...testEnv,PLAYWRIGHT_BROWSERS_PATH:process.env.PLAYWRIGHT_BROWSERS_PATH??path.resolve('.cache/playwright'),RELEASE_BASE_URL:baseUrl},stdio:'inherit'});browser.once('error',()=>reject(new Error('Browser verification process could not start.')));browser.once('exit',status=>resolve(status??1));});process.exitCode=code;
+  const code=await new Promise((resolve,reject)=>{browser=spawn(process.execPath,runArgs,{cwd:root,env:browserEnv,stdio:'inherit'});browser.once('error',()=>reject(new Error('Browser verification process could not start.')));browser.once('exit',status=>resolve(status??1));});process.exitCode=code;
 }finally{
   await stop(browser);await stop(server);process.off('SIGINT',interrupt);process.off('SIGTERM',interrupt);
   await cleanTemporary();

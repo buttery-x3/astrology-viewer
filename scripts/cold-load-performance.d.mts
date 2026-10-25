@@ -1,5 +1,6 @@
 export const COLD_PROFILE:Readonly<{downloadBytesPerSecond:number;responseLatencyMs:number;runs:number;timeoutMs:number;maxResponseBytes:number;maxRunBytes:number}>;
 export function validateArtifactOrigin(value:string):string;
+export function artifactIdentity(origin:string):Promise<{revision:string;tree:string;sourceArchiveSha256:string;servedManifestSha256:string}>;
 export class AggregatePacer{
   constructor(options?:{bytesPerSecond?:number;now?:()=>number;schedule?:typeof setTimeout;cancel?:typeof clearTimeout});
   send(bytes:number,write:()=>unknown):Promise<void>;

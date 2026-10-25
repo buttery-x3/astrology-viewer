@@ -550,5 +550,22 @@
         "modifiedAt": "2026-10-25T12:02:19.826Z"
       }
     ]
+  },
+  "coreCommitBinding": {
+    "revision": "e39a1f03c0f847d198ef59ba336789c12e015548",
+    "verifiedAt": "2026-10-25T14:06:11.193Z",
+    "allMatch": true,
+    "counts": {
+      "committed-bytes-match": 34,
+      "committed-LF-equivalent": 0,
+      "installed-bytes-match": 5,
+      "mismatch": 0
+    },
+    "method": "SHA256 of actual git show <revision>:<path> blobs compared with measured dependency hashes; installed Three files compared with measured bytes and the matching committed lockfile.",
+    "lineEndingOnlyEquivalences": 0,
+    "rawVerification": {
+      "path": ".cache/m9-scene-staging/core-source-verification.json",
+      "sha256": "4d28cb487816425aff8fb2d7f8f6778d5f497a1d5e13f2cb1472576632a0e369"
+    }
   }
 }

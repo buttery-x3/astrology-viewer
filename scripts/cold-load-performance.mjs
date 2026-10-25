@@ -72,7 +72,7 @@ export function summarizeColdRuns(runs){
   return{count:values.length,medianMs:values[Math.floor(values.length/2)],p95Ms:values[Math.ceil(values.length*0.95)-1],maxMs:values.at(-1),p95Method:'Nearest-rank; with3 runs p95 equals the maximum. This small sample does not establish a population percentile.',underFiveSeconds:values.every(value=>value<5000)};
 }
 
-async function artifactIdentity(origin){
+export async function artifactIdentity(origin){
   const transport=new URL(origin).protocol==='https:'?httpsRequest:httpRequest;
   return new Promise((resolve,reject)=>{const request=transport(new URL('/release-manifest.json',origin),{headers:{'Accept-Encoding':'identity'},signal:globalThis.AbortSignal.timeout(5000)},async response=>{try{if(response.statusCode!==200)throw new Error('A production release manifest is required.');const chunks=[];let size=0;for await(const chunk of response){size+=chunk.length;if(size>2*1024*1024)throw new Error('Production manifest exceeded its bound.');chunks.push(chunk);}const bytes=Buffer.concat(chunks),value=JSON.parse(bytes.toString());if(value.application!=='Spatial Astrology Explorer'||!/^[a-f0-9]{40}$/.test(value.revision)||!/^[a-f0-9]{64}$/.test(value.source?.sha256))throw new Error('Production release identity is invalid.');resolve({revision:value.revision,tree:value.tree,sourceArchiveSha256:value.source.sha256,servedManifestSha256:createHash('sha256').update(bytes).digest('hex')});}catch(error){response.destroy();reject(error);}});request.once('error',()=>reject(new Error('Production artifact identity could not be read.')));request.end();});
 }

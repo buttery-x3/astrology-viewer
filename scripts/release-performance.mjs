@@ -1,21 +1,24 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
+import { artifactIdentity, validateArtifactOrigin } from './cold-load-performance.mjs';
 
 const { values } = parseArgs({ options: {
   url: { type: 'string', default: 'http://127.0.0.1:8080' },
   output: { type: 'string', default: '.cache/release-performance/report.json' },
   hardware: { type: 'boolean', default: false },
 } });
+const origin = validateArtifactOrigin(values.url);
+const artifact = await artifactIdentity(origin);
 process.env.PLAYWRIGHT_BROWSERS_PATH ??= resolve('.cache/playwright');
 const { chromium } = await import('playwright');
-const args = values.hardware ? ['--use-angle=d3d11', '--enable-gpu', '--disable-software-rasterizer'] : [];
+const args = values.hardware ? process.platform === 'win32' ? ['--use-angle=d3d11', '--enable-gpu', '--disable-software-rasterizer'] : ['--enable-gpu', '--disable-software-rasterizer'] : [];
 const browser = await chromium.launch({ headless: true, args });
 const output = resolve(values.output); await mkdir(dirname(output), { recursive: true });
 try {
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
   const errors = []; page.on('pageerror', error => errors.push(error.message));
-  await page.goto(values.url); await page.getByRole('button', { name: /Explore example/ }).click();
+  await page.goto(origin); await page.getByRole('button', { name: /Explore example/ }).click();
   await page.getByText('Moment calculated', { exact: true }).waitFor();
   const glDriver = await page.locator('.scene-canvas canvas').evaluate(canvas => {
     const gl = canvas.getContext('webgl2'), debug = gl.getExtension('WEBGL_debug_renderer_info');
@@ -68,6 +71,6 @@ try {
     input.click(); check();
   }));
   const summarize = samples => { const sorted = samples.slice().sort((a,b) => a-b); return { count: sorted.length, medianMs: sorted[Math.floor(sorted.length / 2)], p95Ms: sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95))], maxMs: sorted.at(-1), samples }; };
-  const report = { generatedAt: new Date().toISOString(), url: values.url, browserVersion: browser.version(), launchArgs: args, driver: glDriver, selection: summarize(selection), warmChart: summarize(warmChart), trail, errors, method: 'Page-local button activation to matching committed UI plus next requestAnimationFrame. Warm chart includes worker, Svelte and scene scheduling. No network/Playwright protocol in measured interval. UI-ready callback does not establish physical display presentation. Default example, one-day Moon trail.' };
+  const report = { generatedAt: new Date().toISOString(), url: origin, artifact, browserVersion: browser.version(), launchArgs: args, driver: glDriver, selection: summarize(selection), warmChart: summarize(warmChart), trail, errors, method: 'Page-local button activation to matching committed UI plus next requestAnimationFrame. Warm chart includes worker, Svelte and scene scheduling. No network/Playwright protocol in measured interval. UI-ready callback does not establish physical display presentation. Default example, one-day Moon trail.' };
   await writeFile(output, JSON.stringify(report, null, 2) + '\n'); console.log(JSON.stringify(report));
 } finally { await browser.close(); }

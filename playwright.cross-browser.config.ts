@@ -1,5 +1,6 @@
 import { defineConfig } from '@playwright/test';
 import base from './playwright.config';
+import { firefoxSoftwareLaunchOptions } from './scripts/browser-launch.mjs';
 
 /** Keep the full desktop engines suite opt-in and its artifacts separate. */
 export default defineConfig({
@@ -14,7 +15,7 @@ export default defineConfig({
   },
   projects: [
     { name: 'chromium', use: { browserName: 'chromium' } },
-    { name: 'firefox', use: { browserName: 'firefox' } },
+    { name: 'firefox', use: { browserName: 'firefox',launchOptions:firefoxSoftwareLaunchOptions() } },
     { name: 'webkit', use: { browserName: 'webkit' } },
   ],
 });

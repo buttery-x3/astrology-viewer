@@ -23,8 +23,14 @@ jobs:
       - run: npm run validate:notices
       - run: node scripts/verify-assets.mjs
       - run: node scripts/install-browsers.mjs chromium firefox webkit --with-deps
+      - run: sudo apt-get install -y --no-install-recommends xvfb xauth libgl1-mesa-dri libegl-mesa0 mesa-utils
       - run: npm run release:build
-      - run: npm run release:verify -- --config playwright.cross-browser.config.ts
+      - run: xvfb-run -a -s '-screen 0 1920x1080x24 -nolisten tcp +extension GLX' npm run release:verify -- --config playwright.cross-browser.config.ts --max-failures=1
+        env:
+          MATRIX_SCREENSHOTS: '1'
+          BROWSER_SOFTWARE_WEBGL: '1'
+          LIBGL_ALWAYS_SOFTWARE: 'true'
+          GALLIUM_DRIVER: llvmpipe
       - uses: actions/upload-artifact@v4
         if: success()
         with:
@@ -34,6 +40,14 @@ jobs:
             !.cache/releases/build-*/**
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: verified-browser-evidence
+          path: |
+            .cache/browser-cross-results.json
+            .cache/browser-environment/firefox-webgl-environment.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: browser-failure-evidence
@@ -41,4 +55,5 @@ jobs:
             test-results/
             .cache/browser-cross-results/
             .cache/browser-cross-results.json
+            .cache/browser-environment/
           if-no-files-found: ignore
