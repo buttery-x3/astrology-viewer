@@ -19,6 +19,7 @@ jobs:
       - run: npm run check
       - run: npm run lint
       - run: npm test
+      - run: npm run validate:content
       - run: node scripts/verify-assets.mjs
       - run: node scripts/install-browsers.mjs chromium --with-deps
       - run: npm run test:browser

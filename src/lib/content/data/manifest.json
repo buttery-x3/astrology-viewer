@@ -1,0 +1,59 @@
+{
+  "catalogueVersion": "1.0.0",
+  "reviewedAt": "2026-10-25",
+  "status": "reviewed",
+  "entryCount": 305,
+  "sourceCount": 89,
+  "requiredContentIdsSha256": "10f0eaf0a8d2f2eb44171031adbda2be1cdf2ca4b596b11de52133bd021f5d52",
+  "files": {
+    "catalogue.json": {
+      "sha256": "e78a7017142b54ab5bb494582b3e53d2fdf19adf53e5c92bc82a40d0bafd8573",
+      "bytes": 229107
+    },
+    "sources.json": {
+      "sha256": "30d60fe4a4832c5c653d725643bbeac47852d403e15f49bcc107133cba37804b",
+      "bytes": 66102
+    },
+    "supplemental-claims.json": {
+      "sha256": "aba34a3db2ceab9ec4d569f0b55ee614f89479a92d704e6670e06a397c6c8a63",
+      "bytes": 12100
+    },
+    "curation-provenance.json": {
+      "sha256": "3ad23145f49327fdd54a8ffa93e96860159e04b5cc5ef09993a02dfecf3a6926",
+      "bytes": 1519
+    },
+    "word-budgets.json": {
+      "sha256": "ee2019b0f729481bd7869a9582e7b033e05637bdd54f28edf5b05c321e18659f",
+      "bytes": 31186
+    }
+  },
+  "byKind": {
+    "body": 10,
+    "sign": 12,
+    "house": 12,
+    "aspect": 5,
+    "house-system": 7,
+    "reference": 12,
+    "angle": 4,
+    "evidence": 1,
+    "time": 1,
+    "trail": 1,
+    "body-in-house": 120,
+    "body-in-sign": 120
+  },
+  "claimsByRole": {
+    "astronomy": 21,
+    "tradition": 279,
+    "project-convention": 22,
+    "method": 11,
+    "evidence": 1,
+    "time-data": 1
+  },
+  "reviewScope": "Primary-source paragraph support, original summaries and attribution reviewed during M6 authoring; integration validates exact coverage, roles, source references, source-code reuse and combined canonical-page word budgets. No runtime interpretation generation.",
+  "limitations": [
+    "Practitioner sources establish attributed traditions, not predictive effects.",
+    "Historical civil time and birth time can remain uncertain despite precise calculation.",
+    "Some house definitions were reviewed via indexed primary-page text during publisher outages.",
+    "Product-rule sources are pinned to a reviewed project commit; external publisher pages can change after the recorded review date."
+  ]
+}

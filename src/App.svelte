@@ -16,6 +16,13 @@
   import type { CivilDateTime } from './lib/time/civil-time';
   import MomentForm from './lib/ui/MomentForm.svelte';
   import SceneCanvas from './lib/ui/SceneCanvas.svelte';
+  import AspectControls from './lib/ui/AspectControls.svelte';
+  import AspectInspector from './lib/ui/AspectInspector.svelte';
+  import BodyInterpretation from './lib/ui/BodyInterpretation.svelte';
+  import EvidencePanel from './lib/ui/EvidencePanel.svelte';
+  import ContentCard from './lib/ui/ContentCard.svelte';
+  import {DEFAULT_ASPECT_DISPLAY,getAspectDetails,getVisibleAspects,type AspectDisplaySettings} from './lib/domain/aspect-presentation';
+  import {ASPECT_LEGEND} from './lib/scene/aspect-style';
 
   const explorer = createExplorerStore();
   const bodies = [
@@ -65,6 +72,9 @@
   let sceneStatus = $state<string | null>(null);
   let houseDisplay=$state<HouseDisplaySettings>({...DEFAULT_HOUSE_DISPLAY});
   let construction=$state<ConstructionSettings>({...DEFAULT_CONSTRUCTION});
+  let aspects=$state<AspectDisplaySettings>({...DEFAULT_ASPECT_DISPLAY,types:{...DEFAULT_ASPECT_DISPLAY.types},orbs:{...DEFAULT_ASPECT_DISPLAY.orbs}});
+  let evidenceOpen=$state(false);
+  let evidenceDialog:HTMLDialogElement;
   let formDialog: HTMLDialogElement;
   let sceneCanvas: { focusSelection(): void; returnToObserver(): void } | undefined = $state();
   let observedSnapshot: EphemerisSnapshot | null = null;
@@ -79,6 +89,8 @@
   const busy = $derived($explorer.status === 'loading' || $explorer.status === 'pending');
   const statusLabel = $derived($explorer.error ? 'Calculation needs attention' : busy ? 'Calculating requested moment…' : $explorer.snapshot ? 'Moment calculated' : 'Preparing observatory…');
   const localContext = $derived(civilAtInstant(shownInstant, displayedObserver));
+  const visibleAspects=$derived(($explorer.snapshot?getVisibleAspects($explorer.snapshot.bodies,aspects,$explorer.selectedId):[]).filter(aspect=>!$explorer.selectedId?.startsWith('aspect:')||aspect.id===$explorer.selectedId));
+  const aspectLegend=$derived(ASPECT_LEGEND.filter(type=>visibleAspects.some(aspect=>aspect.type===type.id)));
 
   $effect(() => {
     const snapshot = $explorer.snapshot;
@@ -116,6 +128,10 @@
     const referenceLayer:Record<string,LayerKey>={'reference:horizon':'horizon','reference:ecliptic':'ecliptic','reference:equator':'equator','reference:meridian':'meridian','reference:prime-vertical':'primeVertical','reference:zenith':'horizon','reference:nadir':'horizon','reference:north-pole':'equator','reference:south-pole':'equator'};
     const layer:LayerKey|undefined=kind==='sign'?'signs':kind==='constellation'?'constellations':kind==='angle'?'angles':kind==='house'||kind==='boundary'?'houses':kind==='body'?'bodies':referenceLayer[id];
     if(layer)explorer.setLayer(layer,true);
+    if(kind==='aspect'&&$explorer.snapshot){
+      const detail=getAspectDetails($explorer.snapshot.bodies,id,aspects.orbs);
+      if(detail)aspects={...aspects,enabled:true,types:{...aspects.types,[detail.type]:true}};
+    }
   }
   function showConstruction(house?:number){
     const selected=/^(?:house|boundary):([1-9]|1[0-2])$/.exec($explorer.selectedId??'');
@@ -138,6 +154,7 @@
     if (formOpen && !formDialog.open) formDialog.showModal();
     if (!formOpen && formDialog.open) formDialog.close();
   });
+  $effect(()=>{if(!evidenceDialog)return;if(evidenceOpen&&!evidenceDialog.open)evidenceDialog.showModal();if(!evidenceOpen&&evidenceDialog.open)evidenceDialog.close();});
   function commitMoment(commit: MomentCommit) {
     if (formMode === 'birth') birthContext = makeBirthContext(commit);
     explorationObserver = commit.observer;
@@ -175,7 +192,7 @@
   function onKey(event: KeyboardEvent) {
     if(event.altKey||event.ctrlKey||event.metaKey)return;
     const target = event.target;
-    if (formOpen || target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) return;
+    if (formOpen || evidenceOpen || target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) return;
     if (event.key === 'Escape') { explorer.select(null); leftOpen = false; rightOpen = false; globePickMode = false; }
     if (event.key.toLowerCase() === 'f') sceneCanvas?.focusSelection();
     if (event.key.toLowerCase() === 'o') { explorer.setViewpoint('observer'); sceneCanvas?.returnToObserver(); }
@@ -223,6 +240,7 @@
       </section>
       <HouseControls system={$explorer.input.system} comparisonSystem={$explorer.input.comparisonSystem} display={houseDisplay} snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} {busy} onSystemChange={(system)=>explorer.requestChart({system,comparisonSystem:$explorer.input.comparisonSystem===system?null:$explorer.input.comparisonSystem})} onComparisonChange={(comparisonSystem)=>explorer.requestChart({comparisonSystem})} onDisplayChange={(patch)=>houseDisplay={...houseDisplay,...patch}} onSelect={selectFeature} onShowConstruction={showConstruction} />
       {#if construction.enabled}<ConstructionGuide snapshot={$explorer.snapshot} settings={construction} onChange={(patch)=>construction={...construction,...patch}} onSelect={selectFeature} onFocus={focusConstruction} />{/if}
+      <AspectControls snapshot={$explorer.snapshot} settings={aspects} selectedId={$explorer.selectedId} onChange={patch=>aspects={...aspects,...patch}} onSelect={selectFeature} />
       <section class="dock-section object-section">
         <div class="section-title"><h2 id="object-list" tabindex="-1">Celestial objects</h2><span class="count">10</span></div>
         <div class="object-list" aria-label="Select celestial body">
@@ -239,7 +257,7 @@
     <section class="scene-stage" aria-label="Spatial exploration">
       <div class="scene-topline"><span class="scene-tag"><span class="status-dot"></span> CELESTIAL SPHERE</span><span class="scene-mode">{views.find((view) => view.id === $explorer.viewpoint)?.label}</span></div>
       <span class="schematic-label">Schematic sky · distances not to scale</span>
-      <SceneCanvas bind:this={sceneCanvas} snapshot={$explorer.snapshot} presentation={{ viewpoint: $explorer.viewpoint, selectedId: $explorer.selectedId, layers: $explorer.layers,houseDisplay,construction }} {globePickMode} onObserverPick={observerPicked} onSelect={(id) => { if(id)selectFeature(id);else explorer.select(null); }} onViewpoint={(viewpoint) => explorer.setViewpoint(viewpoint)} onStatus={(message) => sceneStatus = message} />
+      <SceneCanvas bind:this={sceneCanvas} snapshot={$explorer.snapshot} presentation={{ viewpoint: $explorer.viewpoint, selectedId: $explorer.selectedId, layers: $explorer.layers,houseDisplay,construction,aspects }} {globePickMode} onObserverPick={observerPicked} onSelect={(id) => { if(id)selectFeature(id);else explorer.select(null); }} onViewpoint={(viewpoint) => explorer.setViewpoint(viewpoint)} onStatus={(message) => sceneStatus = message} />
       {#if globePickMode}<div class="globe-pick-banner" role="status"><span>Click Earth to choose observer coordinates. Drag to rotate.</span><button class="text-button" onclick={() => globePickMode = false}>Cancel</button></div>{/if}
       {#if welcome}
         <div class="welcome-card">
@@ -255,6 +273,7 @@
       <div class="scene-legend" aria-label="Active layer legend">{#each layerOptions.filter(layer=>$explorer.layers[layer.id]) as layer (layer.id)}<span><i class="legend-line" style:background={layer.color}></i>{layer.label}</span>{/each}{#if $explorer.selectedId}<span><i class="legend-line" style:background="#f1d79d"></i>Selected feature</span>{/if}{#if $explorer.layers.houses && houseComparison?.status==='valid'}<span><i class="legend-line" style:background="transparent" style:border-top="1px dashed #b0a4d7"></i>Comparison boundaries</span>{#if houseComparison.changedRegions.length}<span><i class="legend-line" style:background="#b0a4d7"></i>Changed assignments</span>{/if}{/if}{#if $explorer.layers.houses && selectedHouses?.status==='valid' && houseDisplay.mode==='shells' && houseDisplay.shellSeparation>0 && ($explorer.selectedId?.startsWith('house:')||selectedBody)}<span>Radial leaders: shell lift</span>{/if}<span class="legend-convention">Below horizon: dimmed body · distances schematic</span></div>
       <div class="interaction-hint"><span>Drag to orbit</span><i>·</i><span>Scroll to zoom</span><i>·</i><kbd>F</kbd><span>focus</span></div>
       {#if construction.enabled}<div class="construction-key" aria-label="Construction legend">{#each constructionLegend as item (item.kind)}<span><i style:border-top={`1px ${item.dashed?'dashed':'solid'} ${item.color}`}></i>{item.label}</span>{/each}<small>C{construction.boundaryHouse} · {activeConstruction?.status==='valid'?`stage ${construction.stage+1} · sweep ${Math.round(construction.progress*100)}%`:'construction unavailable'}</small></div>{/if}
+      {#if aspectLegend.length}<div class="aspect-key" aria-label="Aspect legend">{#each aspectLegend as type (type.id)}<span><i style:border-top={`2px ${type.dashed?'dashed':'solid'} ${type.color}`}></i>{type.glyph} {type.label}</span>{/each}<small>Brighter core: closer to exact · curved strand: connection{aspects.glow?' · glow: emphasis':''}</small>{#if $explorer.selectedId?.startsWith('aspect:')&&aspects.measurement}<small>Gold arc: longitude separation · dashed leaders: latitude projection</small>{/if}</div>{/if}
     </section>
 
     <button class="mobile-panel-toggle right-toggle" aria-expanded={rightOpen} aria-controls="inspector" onclick={() => { rightOpen = !rightOpen; leftOpen = false; }}>ⓘ Inspector</button>
@@ -265,7 +284,10 @@
         <div class="inspector-section"><h3>Position in the chart</h3><dl class="data-list"><div><dt>Ecliptic longitude</dt><dd>{deg(selectedBody.longitudeDeg)}</dd></div><div><dt>Ecliptic latitude</dt><dd>{deg(selectedBody.latitudeDeg)}</dd></div><div><dt>House · {HOUSE_SYSTEMS.find(s=>s.id===selectedHouses?.system)?.name??'Primary'}</dt><dd>{houseFor(selectedBody)}</dd></div>{#if $explorer.snapshot?.houses[1]}<div><dt>House · {HOUSE_SYSTEMS.find(s=>s.id===$explorer.snapshot?.houses[1]?.system)?.name}</dt><dd>{houseFor(selectedBody,$explorer.snapshot.houses[1])}</dd></div>{/if}<div><dt>Motion</dt><dd>{selectedBody.longitudeSpeedDegPerDay < 0 ? 'Retrograde' : 'Direct'}</dd></div></dl></div>
         <div class="inspector-section"><h3>From the observer</h3><dl class="data-list"><div><dt>Altitude</dt><dd>{deg(selectedBody.horizon.altitudeDeg)}</dd></div><div><dt>Azimuth</dt><dd>{selectedBody.horizon.azimuthDeg === null ? 'Undefined' : deg(selectedBody.horizon.azimuthDeg)}</dd></div><div><dt>Horizon</dt><dd class:above={selectedBody.horizon.altitudeDeg >= 0}>{selectedBody.horizon.altitudeDeg >= 0 ? 'Above' : 'Below'}</dd></div></dl><p class="field-note">Geometric horizon; atmospheric refraction is excluded.</p></div>
         <button class="button secondary focus-button" onclick={() => sceneCanvas?.focusSelection()}>Focus in the scene <kbd>F</kbd></button>
-        <section class="inspector-section numerical-sources"><h3>How these values are defined</h3><p>Apparent geocentric positions use the tropical ecliptic of date. Latitude is retained in the 3D position. Houses and aspects use longitude alone. The horizon is geometric, with no atmospheric refraction.</p><p class="field-note">Swiss Ephemeris {$explorer.snapshot?.provenance.engine} · {selectedHouses?.system} houses · TT for body positions, UT1 for Earth rotation.</p><a class="source-link" href="https://www.astro.com/swisseph/swephprg.htm" target="_blank" rel="noreferrer">Swiss Ephemeris — swe_calc, coordinate flags and swe_houses_ex2 ↗</a></section>
+        <BodyInterpretation body={selectedBody} houses={selectedHouses} provisional={!displayedTimeKnown} onSelect={selectFeature} />
+        <ContentCard id="concept:conventions" />
+      {:else if $explorer.selectedId?.startsWith('aspect:')}
+        <AspectInspector snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} settings={aspects} onSelect={selectFeature} onFocus={()=>sceneCanvas?.focusSelection()} />
       {:else if $explorer.selectedId?.startsWith('house:')||$explorer.selectedId?.startsWith('boundary:')}
         <HouseInspector snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} display={houseDisplay} onFocus={()=>sceneCanvas?.focusSelection()} onSelect={selectFeature} onShowConstruction={showConstruction} />
       {:else if $explorer.selectedId}
@@ -273,7 +295,7 @@
       {:else}
         <div class="inspector-empty"><div class="empty-orbit" aria-hidden="true"><span>✦</span></div><span class="eyebrow">FOLLOW YOUR CURIOSITY</span><h2>A sky full of connections.</h2><p>Select a body in the sphere or celestial objects list to inspect its position.</p><div class="empty-rule"></div><small>The same moment.<br />A new point of view.</small></div>
       {/if}
-      {#if !displayedTimeKnown}<div class="warning-note"><strong>Provisional birth time</strong><p>Local noon is an example when the birth time is unknown. Houses and angles depend on the actual time.</p></div>{/if}
+      {#if !displayedTimeKnown && !selectedBody}<div class="warning-note"><strong>Provisional birth time</strong><p>Local noon is an example when the birth time is unknown. Houses and angles depend on the actual time.</p></div>{/if}
       {#if selectedHouses?.status === 'undefined'}<div class="warning-note"><strong>House system unavailable</strong><p>{selectedHouses.reason}</p></div>{/if}
       {#if $explorer.snapshot}<CalculationProvenance snapshot={$explorer.snapshot} />{/if}
       <div class="inspector-footer"><span class="tiny-cross" aria-hidden="true">✦</span><span>Astronomical positions<br />with explicit chart conventions.</span></div>
@@ -286,10 +308,11 @@
     <div class="timeline-track" aria-hidden="true"><span class="timeline-tick"></span><span></span><span></span><span></span><span></span><i></i><span></span><span></span><span></span><span></span><span></span><b>1 day / step</b></div>
     <button class="anchor-button" onclick={returnBirthInstant} title="Return to the birth instant at the current observer location"><span aria-hidden="true">↺</span> Return to birth instant</button>
   </footer>
-  <div class="app-status"><span role="status" aria-live="polite" aria-atomic="true"><span class:working={busy} class="status-dot"></span>{statusLabel}{busy && $explorer.snapshot ? ' · previous moment shown' : ''}</span><span class="status-links"><span>M5 · Construction guides</span><a href="https://github.com/buttery-x3/astrology-viewer/tree/codex/development" target="_blank" rel="noreferrer">Source & licences ↗</a></span></div>
+  <div class="app-status"><span role="status" aria-live="polite" aria-atomic="true"><span class:working={busy} class="status-dot"></span>{statusLabel}{busy && $explorer.snapshot ? ' · previous moment shown' : ''}</span><span class="status-links"><button onclick={()=>evidenceOpen=true}>Evidence & sources</button><span>M6 · Aspects & interpretations</span><a href="https://github.com/buttery-x3/astrology-viewer/tree/codex/development" target="_blank" rel="noreferrer">Source & licences ↗</a></span></div>
   {#if $explorer.error}<div class="error-toast" role="alert"><span>{$explorer.error}</span><button class="text-button" onclick={() => explorer.retry()}>Retry calculation</button></div>{/if}
 </div>
 
 <dialog bind:this={formDialog} class="moment-dialog" onclose={() => formOpen = false} oncancel={() => formOpen = false} aria-labelledby="moment-title">
   {#if formOpen}{#key formSession}<MomentForm mode={formMode} initialInstantMs={formInstant} initialObserver={formObserver} initialTimeKnown={formTimeKnown} initialCivil={formCivil} initialKeepLocal={formKeepLocal} onCommit={commitMoment} onCancel={() => formOpen = false} onGlobePick={beginGlobePick} />{/key}{/if}
 </dialog>
+<dialog bind:this={evidenceDialog} class="evidence-dialog" aria-labelledby="evidence-title" onclose={()=>evidenceOpen=false} oncancel={()=>evidenceOpen=false}>{#if evidenceOpen}<EvidencePanel onClose={()=>evidenceOpen=false} />{/if}</dialog>
