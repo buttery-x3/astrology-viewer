@@ -5,7 +5,7 @@
 
   let {
     system, comparisonSystem, display, snapshot, busy, selectedId = null,
-    onSystemChange, onComparisonChange, onDisplayChange, onSelect,
+    onSystemChange, onComparisonChange, onDisplayChange, onSelect, onShowConstruction,
   }: {
     system: HouseSystemId;
     comparisonSystem: HouseSystemId | null;
@@ -17,6 +17,7 @@
     onComparisonChange: (id: HouseSystemId | null) => void;
     onDisplayChange: (patch: Partial<HouseDisplaySettings>) => void;
     onSelect: (id: string) => void;
+    onShowConstruction?: (house?: number) => void;
   } = $props();
 
   const uid = $props.id();
@@ -32,6 +33,7 @@
   const comparison = $derived(snapshot && primary && secondary ? compareHouseAssignments(snapshot.bodies, primary, secondary) : null);
   const comparisonRows = $derived(comparison?.status === 'valid' ? comparison.rows.filter(row => !display.comparisonChangesOnly || row.changed) : []);
   const changedCount = $derived(comparison?.rows.filter(row => row.changed).length ?? 0);
+  const selectedHouse = $derived(Number(/^(?:house|boundary):([1-9]|1[0-2])$/.exec(selectedId ?? '')?.[1]) || undefined);
   const name = (id: HouseSystemId) => HOUSE_SYSTEMS.find(item => item.id === id)?.name ?? id;
   const bodyName = (id: string) => id[0]!.toUpperCase() + id.slice(1);
   function cusp(house: number): string {
@@ -47,6 +49,7 @@
     {#each HOUSE_SYSTEMS as item (item.id)}<option value={item.id}>{item.name}</option>{/each}
   </select>
   <p class="house-note">Changing system recalculates boundaries and assignments. Body directions stay fixed.</p>
+  {#if onShowConstruction}<button class="text-button show-construction" onclick={() => onShowConstruction?.(selectedHouse)}>Show construction →</button>{/if}
   {#if primary && (busy || primary.system !== system || (secondary?.system ?? null) !== comparisonSystem)}
     <p class="pending-note">{busy ? `Previous ${name(primary.system)} result shown while calculating.` : `Last calculated ${name(primary.system)} result retained. Requested settings have not been applied.`}</p>
   {/if}
@@ -132,6 +135,7 @@
   select{width:100%;min-width:0;font-size:11px}
   .house-note{font-size:10px;line-height:1.65;color:#99abc3;margin:8px 0}
   .pending-note{font-size:10px;line-height:1.6;color:#ddc493;margin:8px 0}
+  .show-construction{font-size:11px;line-height:1.6;color:var(--cyan);margin:2px 0 5px}
   .house-warning{border:1px solid #6d5941;background:#302835;border-radius:5px;padding:10px;margin:12px 0;font-size:10px;line-height:1.6;color:#c9b7a3}
   .house-warning strong{font-size:11px;color:#ebcea1}.house-warning p{margin:5px 0 0}
   .display-choices{border:0;border-top:1px solid #2b3a51;margin:16px 0 14px;padding:12px 0 0;min-width:0}

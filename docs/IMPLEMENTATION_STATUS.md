@@ -17,8 +17,8 @@ The approved plan is [IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md); the so
 | M1 Application foundation | Complete and merged | [PR #3](https://github.com/buttery-x3/astrology-viewer/pull/3), [M1 evidence](reports/M1.md): 53 tests and 3 production browser workflows; remote CI passed |
 | M2 Numerical chart and input | Complete and merged | [PR #4](https://github.com/buttery-x3/astrology-viewer/pull/4), [M2 evidence](reports/M2.md): 87 tests and 8 browser workflows; remote CI passed |
 | M3 Spatial vertical slice | Complete and merged | [PR #5](https://github.com/buttery-x3/astrology-viewer/pull/5), [M3 evidence](reports/M3.md): 105 tests, 11 browser workflows; remote CI passed |
-| M4 House displays and comparison | Complete; review and integration pending | [M4 evidence](reports/M4.md): 165 tests, 14 browser workflows; three displays and atomic ghost comparisons |
-| M5 Actual house constructions | Pending | |
+| M4 House displays and comparison | Complete and merged | [PR #6](https://github.com/buttery-x3/astrology-viewer/pull/6), [M4 evidence](reports/M4.md): 165 tests, 14 browser workflows; remote CI passed |
+| M5 Actual house constructions | Complete; review and integration pending | [M5 evidence](reports/M5.md): 277 tests, 16 browser workflows; independently reconstructed guides validated against 644 native results |
 | M6 Aspects and complete inspector | Pending | |
 | M7 Timeline and history | Pending | |
 | M8 Accessibility, visual quality, recovery | Pending | |

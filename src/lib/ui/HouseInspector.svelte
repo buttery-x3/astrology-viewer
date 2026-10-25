@@ -3,12 +3,13 @@
   import { classifyLongitude, housePartition, zodiacSign } from '../domain/chart';
   import { compareHouseAssignments, type HouseDisplaySettings } from '../domain/house-geometry';
 
-  let { snapshot, selectedId, display, onFocus, onSelect }: {
+  let { snapshot, selectedId, display, onFocus, onSelect, onShowConstruction }: {
     snapshot: EphemerisSnapshot | null;
     selectedId: string;
     display: HouseDisplaySettings;
     onFocus: () => void;
     onSelect: (id: string) => void;
+    onShowConstruction?: (house?: number) => void;
   } = $props();
   const parsedSelection = $derived(/^(house|boundary):([1-9]|1[0-2])$/.exec(selectedId));
   const houseNumber = $derived(Number(parsedSelection?.[2] ?? 0));
@@ -36,6 +37,7 @@
     <span class="eyebrow">{isBoundary ? 'INDEXED HOUSE CUSP' : 'LONGITUDE HOUSE REGION'}</span>
     <h2>{isBoundary ? 'Boundary' : 'House'} {houseNumber}</h2>
     <p>{primary ? name(primary.system) : 'Awaiting calculation'}{primary ? ` · ${styleName(display.mode)}` : ''}</p>
+    {#if onShowConstruction}<button class="text-button show-construction" onclick={() => onShowConstruction?.(houseNumber)}>Show construction of C{houseNumber} →</button>{/if}
   </div>
   {#if interval && primary?.status === 'valid'}
     <section class="inspector-section house-numerical">
@@ -97,6 +99,7 @@
 
 <style>
   .house-heading h2{font-variant-numeric:tabular-nums}
+  .show-construction{font-size:11px;line-height:1.7;color:var(--cyan);margin-top:12px}
   .house-numerical .data-list>div{align-items:start;gap:10px}.house-numerical .data-list dd{max-width:55%;text-align:right;line-height:1.6}.house-numerical .data-list dt{line-height:1.6}
   .value-link{font:inherit;color:#a9dfe0;text-decoration:underline;text-underline-offset:3px;padding:0}.value-link:hover{color:#e6d7aa}
   .related-house{margin-top:6px;font-size:11px;color:var(--cyan)}
