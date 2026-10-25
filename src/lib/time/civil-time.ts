@@ -1,4 +1,13 @@
-import moment from 'moment-timezone';
+import moment from 'moment-timezone/moment-timezone.js';
+import packedTimezones from './data/tzdata-2026e-backzone.json';
+import timezoneManifest from './data/manifest.json';
+
+// Import the no-data entry point so the ordinary package bundle cannot merge
+// historically distinct backzone identities or add a second dataset to the app.
+moment.tz.load(packedTimezones);
+export const timeZoneDatabase = moment.tz;
+export const TZDATA_VERSION = timezoneManifest.ianaVersion;
+export const TZDATA_MANIFEST = timezoneManifest;
 
 export const MIN_SUPPORTED_UTC_MS = Date.UTC(1900, 0, 1);
 export const MAX_SUPPORTED_UTC_MS_EXCLUSIVE = Date.UTC(2101, 0, 1);
@@ -74,7 +83,7 @@ export interface CivilTimeResolutionOptions {
 }
 
 const MINUTE_MS = 60_000;
-const HISTORICAL_LIMITATION = 'IANA data is an approximation of historical civil time. The packaged dataset may merge pre-1970 zone histories and aliases; it does not establish historical zone identity or the accuracy of a recorded birth time.';
+const HISTORICAL_LIMITATION = 'The IANA dataset includes backzone histories for zone.tab identities. Historical civil-time records and geographic boundaries remain approximate, and backzone entries can be uncertain; these rules do not establish the accuracy of a recorded birth time.';
 
 function isSupported(utcMs: number): boolean {
   return utcMs >= MIN_SUPPORTED_UTC_MS && utcMs < MAX_SUPPORTED_UTC_MS_EXCLUSIVE;
@@ -85,7 +94,7 @@ function provenance(input: CivilTimeInput): CivilTimeProvenance {
     source: input.manualOffsetMinutes !== undefined ? 'manual-offset' : input.zoneId ? 'iana-tzdata' : 'unresolved',
     zoneId: input.zoneId ?? null,
     tzdataVersion: moment.tz.dataVersion,
-    adapterVersion: 'civil-time-v1',
+    adapterVersion: 'civil-time-v2-backzone',
     calendar: 'proleptic-gregorian',
     historicalLimitation: HISTORICAL_LIMITATION,
   };

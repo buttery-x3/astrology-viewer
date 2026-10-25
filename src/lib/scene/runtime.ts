@@ -2,15 +2,19 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import {
   astronomicalToThree, eclipticToEquatorial, equatorialOfDateToFixed,
-  equatorialToVector, horizonToEquatorial, sphericalToVector,
-  type Vector3,
+  equatorialToVector, horizonToEquatorial, normalizeDegrees, rotateVector,
+  sphericalToVector, threeToAstronomical, transposeMatrix, vectorToSpherical,
+  type Matrix3, type ObserverCoordinates, type Vector3,
 } from '../astronomy/coordinates';
 import { BODY_IDS, type BodyId, type EphemerisSnapshot } from '../astronomy/ephemeris';
+import coastline from './data/natural-earth-coastline.json';
 
 export interface ScenePresentation {
   viewpoint: 'overview' | 'observer' | 'outside';
   selectedId: string | null;
   layers: { bodies: boolean; horizon: boolean; ecliptic: boolean; houses: boolean; stars: boolean };
+  /** Only this explicit mode permits a globe click to propose an observer. */
+  globePickMode?: boolean;
 }
 
 export interface SceneOptions {
@@ -18,6 +22,7 @@ export interface SceneOptions {
   onStatus?: (message: string | null) => void;
   /** Keeps the application picker in sync with the canvas Home command. */
   onViewpoint?: (viewpoint: ScenePresentation['viewpoint']) => void;
+  onObserverPick?: (observer: ObserverCoordinates) => void;
 }
 
 export interface SceneRuntime {
@@ -37,6 +42,33 @@ const BODY_STYLE: Record<BodyId, { color: number; glyph: string }> = {
   saturn: { color: 0xc4bfa1, glyph: '♄' }, uranus: { color: 0x8cc4c4, glyph: '♅' },
   neptune: { color: 0x8fa9d8, glyph: '♆' }, pluto: { color: 0xb8a8ca, glyph: '♇' },
 };
+
+type GlobeOrientationInput = Pick<EphemerisSnapshot, 'frame' | 'greenwichSiderealTimeDeg'>;
+
+/** Unit geographic direction in the globe's authored Three.js local axes. */
+export function geographicToGlobePoint(observer: ObserverCoordinates): Vector3 {
+  return astronomicalToThree(sphericalToVector({ longitudeDeg: observer.longitudeDeg, latitudeDeg: observer.latitudeDeg }));
+}
+
+/** Inverse geographic mapping, including the conventional zero longitude at a pole. */
+export function globeLocalPointToCoordinates(point: Vector3): ObserverCoordinates {
+  const coordinates = vectorToSpherical(threeToAstronomical(point));
+  return { latitudeDeg: coordinates.latitudeDeg, longitudeDeg: normalizeDegrees(coordinates.longitudeDeg + 180) - 180 };
+}
+
+/** Row-major Earth-fixed -> world rotation, with the engine's full date frame. */
+export function globeOrientationMatrix(input: GlobeOrientationInput): Matrix3 {
+  const angle = input.greenwichSiderealTimeDeg * RAD;
+  const x = astronomicalToThree(equatorialOfDateToFixed({ x: Math.cos(angle), y: Math.sin(angle), z: 0 }, input.frame));
+  const y = astronomicalToThree(equatorialOfDateToFixed({ x: 0, y: 0, z: 1 }, input.frame));
+  const z = { x: x.y * y.z - x.z * y.y, y: x.z * y.x - x.x * y.z, z: x.x * y.y - x.y * y.x };
+  return [x.x, y.x, z.x, x.y, y.y, z.y, x.z, y.z, z.z];
+}
+
+/** A picked world position is unrotated before any geographic classification. */
+export function globeWorldPointToCoordinates(point: Vector3, input: GlobeOrientationInput): ObserverCoordinates {
+  return globeLocalPointToCoordinates(rotateVector(point, transposeMatrix(globeOrientationMatrix(input))));
+}
 
 function vector(value: Vector3, radius = 1): THREE.Vector3 {
   const converted = astronomicalToThree(value);
@@ -105,6 +137,29 @@ function globe(): THREE.Group {
   group.add(new THREE.Mesh(
     new THREE.SphereGeometry(EARTH_RADIUS, 48, 32),
     new THREE.MeshStandardMaterial({ color: 0x183847, roughness: 0.95, metalness: 0.03 }),
+  ));
+  const coastSegments: THREE.Vector3[] = [];
+  for (const feature of coastline.features) {
+    const coordinates = feature.geometry.coordinates;
+    for (let index = 1; index < coordinates.length; index++) {
+      const before = coordinates[index - 1]!;
+      const after = coordinates[index]!;
+      const start = geographicToGlobePoint({ longitudeDeg: before[0]!, latitudeDeg: before[1]! });
+      const end = geographicToGlobePoint({ longitudeDeg: after[0]!, latitudeDeg: after[1]! });
+      const a = new THREE.Vector3(start.x, start.y, start.z);
+      const b = new THREE.Vector3(end.x, end.y, end.z);
+      const subdivisions = Math.max(1, Math.ceil(Math.acos(THREE.MathUtils.clamp(a.dot(b), -1, 1)) / (2 * RAD)));
+      for (let segment = 0; segment < subdivisions; segment++) {
+        coastSegments.push(
+          a.clone().lerp(b, segment / subdivisions).normalize().multiplyScalar(EARTH_RADIUS * 1.008),
+          a.clone().lerp(b, (segment + 1) / subdivisions).normalize().multiplyScalar(EARTH_RADIUS * 1.008),
+        );
+      }
+    }
+  }
+  group.add(new THREE.LineSegments(
+    new THREE.BufferGeometry().setFromPoints(coastSegments),
+    new THREE.LineBasicMaterial({ color: 0x8aaba4, transparent: true, opacity: 0.78 }),
   ));
   for (const latitude of [-60, -30, 0, 30, 60]) {
     group.add(line(Array.from({ length: 96 }, (_, index) => vector(sphericalToVector({ longitudeDeg: index * 360 / 96, latitudeDeg: latitude }), EARTH_RADIUS * 1.005)), 0x4b737d, latitude === 0 ? 0.5 : 0.25, true));
@@ -225,6 +280,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   let altitude = 25 * RAD;
   let disposed = false;
   let contextLost = false;
+  let defaultFraming = true;
   let animationFrame = 0;
   let pointer: { id: number; x: number; y: number; lastX: number; lastY: number; dragged: boolean } | null = null;
   const raycaster = new THREE.Raycaster();
@@ -257,33 +313,82 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+    if (defaultFraming && presentation.viewpoint !== 'observer') {
+      if (presentation.globePickMode) frameEarthForPicking();
+      else fitSky(presentation.viewpoint);
+    }
     requestRender();
   }
+  function viewingDistance(radius: number, margin: number): number {
+    const vertical = camera.fov * RAD;
+    const horizontal = 2 * Math.atan(Math.tan(vertical / 2) * camera.aspect);
+    return radius * margin / Math.sin(Math.min(vertical, horizontal) / 2);
+  }
+  function settleControls(): void {
+    // Drain an old gesture before a deliberate camera command; otherwise its
+    // damping could move the freshly framed globe away from the requested point.
+    const damping = controls.enableDamping;
+    controls.enableDamping = false;
+    controls.update();
+    controls.enableDamping = damping;
+  }
+  function fitSky(viewpoint: ScenePresentation['viewpoint']): void {
+    settleControls();
+    const distance = viewingDistance(SKY_RADIUS, viewpoint === 'outside' ? 1.24 : 1.08);
+    camera.position.copy(new THREE.Vector3(7.2, 4.8, 9.4).normalize().multiplyScalar(distance));
+    controls.target.set(0, 0, 0);
+    controls.maxDistance = Math.max(32, distance * 2);
+    camera.far = Math.max(100, distance * 2.5);
+    camera.updateProjectionMatrix();
+    controls.update();
+  }
+  function frameEarthForPicking(): void {
+    settleControls();
+    controls.enabled = !contextLost;
+    controls.enablePan = false;
+    controls.minDistance = EARTH_RADIUS * 1.15;
+    controls.maxDistance = EARTH_RADIUS * 15;
+    camera.fov = 43;
+    camera.updateProjectionMatrix();
+    camera.up.copy(new THREE.Vector3(0, 1, 0).applyQuaternion(earth.quaternion));
+    if (Math.abs(camera.up.dot(observerUp)) > 0.98) camera.up.copy(observerNorth);
+    camera.position.copy(observerUp).multiplyScalar(viewingDistance(EARTH_RADIUS, 1.2));
+    controls.target.set(0, 0, 0);
+    controls.update();
+  }
   function applyViewpoint(viewpoint: ScenePresentation['viewpoint']): void {
+    defaultFraming = true;
     controls.enabled = !contextLost && viewpoint !== 'observer';
+    controls.enablePan = true;
+    controls.minDistance = 1.4;
     camera.fov = viewpoint === 'observer' ? 65 : 43;
     camera.updateProjectionMatrix();
     if (viewpoint === 'observer') {
       aimObserver();
     } else {
       camera.up.set(0, 1, 0);
-      controls.target.set(0, 0, 0);
-      camera.position.set(...(viewpoint === 'outside' ? [10.8, 7.2, 13.8] : [7.2, 4.8, 9.4]) as [number, number, number]);
-      controls.update();
+      fitSky(viewpoint);
     }
   }
   function updateVisibility(): void {
     const hasData = snapshot !== null;
-    earth.visible = presentation.viewpoint !== 'observer';
+    const picking = presentation.globePickMode === true;
+    sky.visible = !picking;
+    earth.visible = picking || presentation.viewpoint !== 'observer';
     observerMarker.visible = hasData && earth.visible;
-    tangentRing.visible = hasData && earth.visible && presentation.layers.horizon;
-    observerConnector.visible = hasData && earth.visible && presentation.layers.horizon;
-    horizon.visible = hasData && presentation.layers.horizon;
+    observerMarker.scale.setScalar(picking ? 0.35 : 1);
+    tangentRing.visible = hasData && earth.visible && presentation.layers.horizon && !picking;
+    observerConnector.visible = hasData && earth.visible && presentation.layers.horizon && !picking;
+    horizon.visible = hasData && presentation.layers.horizon && !picking;
     compass.visible = horizon.visible;
     horizonPlane.visible = horizon.visible && presentation.viewpoint !== 'observer';
-    ecliptic.visible = hasData && presentation.layers.ecliptic;
-    equator.visible = hasData;
-    bodies.visible = hasData && presentation.layers.bodies;
+    ecliptic.visible = hasData && presentation.layers.ecliptic && !picking;
+    equator.visible = hasData && !picking;
+    bodies.visible = hasData && presentation.layers.bodies && !picking;
+    canvas.style.cursor = picking ? 'crosshair' : 'grab';
+    canvas.setAttribute('aria-label', picking
+      ? 'Choose an observer on Earth. Drag to rotate the globe, then click a location. Coordinates remain a draft until Apply; numeric fields are available in the location form.'
+      : 'Interactive schematic sky. Drag to orbit or look; scroll to zoom. Arrow keys move the view, plus and minus zoom, F focuses selection, and Home returns to observer sky.');
     const selected = presentation.selectedId?.startsWith('body:') ? markerMap.get(presentation.selectedId.slice(5) as BodyId) : undefined;
     selection.visible = !!selected && bodies.visible;
     if (selected) selection.position.copy(selected.position);
@@ -297,10 +402,13 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     observerUp = direction(0, 0, 1);
     // Earth is authored in Three's +Y-north axes. Form its Greenwich, pole, and
     // westward axes explicitly rather than mixing precession with Euler order.
-    const earthX = vector(equatorialOfDateToFixed({ x: Math.cos(next.greenwichSiderealTimeDeg * RAD), y: Math.sin(next.greenwichSiderealTimeDeg * RAD), z: 0 }, next.frame));
-    const earthY = vector(equatorialOfDateToFixed({ x: 0, y: 0, z: 1 }, next.frame));
-    const earthZ = earthX.clone().cross(earthY);
-    earth.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(earthX, earthY, earthZ));
+    const rotation = globeOrientationMatrix(next);
+    earth.quaternion.setFromRotationMatrix(new THREE.Matrix4().set(
+      rotation[0], rotation[1], rotation[2], 0,
+      rotation[3], rotation[4], rotation[5], 0,
+      rotation[6], rotation[7], rotation[8], 0,
+      0, 0, 0, 1,
+    ));
     observerMarker.position.copy(observerUp).multiplyScalar(EARTH_RADIUS * 1.025);
     tangentRing.position.copy(observerUp).multiplyScalar(EARTH_RADIUS * 1.012);
     tangentRing.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), observerUp);
@@ -324,19 +432,25 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     if (presentation.viewpoint === 'observer') aimObserver();
   }
   function selectAt(event: PointerEvent): void {
-    if (!snapshot || !bodies.visible) return;
+    if (!snapshot || (!bodies.visible && !presentation.globePickMode)) return;
     const rect = canvas.getBoundingClientRect();
     pointerNdc.set((event.clientX - rect.left) / rect.width * 2 - 1, -((event.clientY - rect.top) / rect.height * 2 - 1));
     camera.updateMatrixWorld();
     scene.updateMatrixWorld(true);
     raycaster.setFromCamera(pointerNdc, camera);
+    if (presentation.globePickMode) {
+      const picked = raycaster.intersectObject(earth.children[0]!, false)[0];
+      if (picked) options.onObserverPick?.(globeWorldPointToCoordinates(picked.point, snapshot));
+      return;
+    }
     const intersection = raycaster.intersectObjects(bodies.children, false)[0];
     const globeIntersection = earth.visible ? raycaster.intersectObject(earth.children[0]!, false)[0] : undefined;
     const visibleIntersection = intersection && (!globeIntersection || intersection.distance < globeIntersection.distance) ? intersection : undefined;
     options.onSelect?.(visibleIntersection ? visibleIntersection.object.userData.entityId as string : null);
   }
   function pointerDown(event: PointerEvent): void {
-    if (event.button !== 0 || disposed || contextLost) return;
+    if (disposed || contextLost) return;
+    if (event.button !== 0) { defaultFraming = false; return; }
     canvas.focus({ preventScroll: true });
     pointer = { id: event.pointerId, x: event.clientX, y: event.clientY, lastX: event.clientX, lastY: event.clientY, dragged: false };
     if (presentation.viewpoint === 'observer') canvas.setPointerCapture(event.pointerId);
@@ -344,6 +458,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   function pointerMove(event: PointerEvent): void {
     if (!pointer || pointer.id !== event.pointerId) return;
     if (Math.hypot(event.clientX - pointer.x, event.clientY - pointer.y) > 4) pointer.dragged = true;
+    if (pointer.dragged) defaultFraming = false;
     if (presentation.viewpoint === 'observer' && pointer.dragged) {
       azimuth -= (event.clientX - pointer.lastX) * 0.004;
       altitude = THREE.MathUtils.clamp(altitude + (event.clientY - pointer.lastY) * 0.004, -Math.PI / 2 + 0.005, Math.PI / 2 - 0.005);
@@ -361,6 +476,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     if (shouldSelect) selectAt(event);
   }
   function wheel(event: WheelEvent): void {
+    defaultFraming = false;
     if (presentation.viewpoint !== 'observer') return;
     event.preventDefault();
     camera.fov = THREE.MathUtils.clamp(camera.fov + Math.sign(event.deltaY) * 3, 25, 105);
@@ -368,7 +484,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     requestRender();
   }
   function focusSelection(): void {
-    if (disposed || contextLost) return;
+    if (disposed || contextLost || presentation.globePickMode) return;
     const id = presentation.selectedId?.startsWith('body:') ? presentation.selectedId.slice(5) as BodyId : null;
     const target = id ? markerMap.get(id) : undefined;
     if (!snapshot || !target) return;
@@ -379,6 +495,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       altitude = THREE.MathUtils.clamp(altitude, -Math.PI / 2 + 0.005, Math.PI / 2 - 0.005);
       aimObserver();
     } else {
+      defaultFraming = false;
       const offset = camera.position.clone().sub(controls.target).normalize().multiplyScalar(3.6);
       controls.target.copy(target.position);
       camera.position.copy(target.position).add(offset);
@@ -387,7 +504,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     requestRender();
   }
   function returnToObserver(): void {
-    if (disposed || contextLost) return;
+    if (disposed || contextLost || presentation.globePickMode) return;
     azimuth = 0;
     altitude = 25 * RAD;
     presentation = { ...presentation, viewpoint: 'observer' };
@@ -412,6 +529,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       camera.updateProjectionMatrix();
       aimObserver();
     } else {
+      defaultFraming = false;
       const spherical = new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target));
       spherical.theta += key === 'ArrowRight' ? -0.08 : key === 'ArrowLeft' ? 0.08 : 0;
       spherical.phi += key === 'ArrowUp' ? -0.06 : key === 'ArrowDown' ? 0.06 : 0;
@@ -463,11 +581,19 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     update(nextSnapshot, nextPresentation) {
       if (disposed) return;
       const changedViewpoint = nextPresentation.viewpoint !== presentation.viewpoint;
+      const wasPicking = presentation.globePickMode === true;
       const changedSnapshot = nextSnapshot !== snapshot;
       presentation = { ...nextPresentation, layers: { ...nextPresentation.layers } };
       snapshot = nextSnapshot;
       if (changedSnapshot && snapshot) updateSnapshot(snapshot);
-      if (changedViewpoint) applyViewpoint(presentation.viewpoint);
+      if (presentation.globePickMode) {
+        if (!wasPicking) {
+          defaultFraming = true;
+          presentation.viewpoint = 'overview';
+          frameEarthForPicking();
+          options.onViewpoint?.('overview');
+        }
+      } else if (changedViewpoint || wasPicking) applyViewpoint(presentation.viewpoint);
       updateVisibility();
       requestRender();
     },

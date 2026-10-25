@@ -88,10 +88,14 @@ browser-dependent date-string parsing. Invalid calendar dates, overflowed clock
 fields, fractional fields, and literal second 60 are rejected rather than
 normalized. Minute precision is preserved by omitting the optional seconds field.
 
-The adapter imports the complete `moment-timezone` dataset pinned in the lockfile,
-not its short date-range browser builds. It enumerates every distinct offset in
-the zone's rule table, constructs a UTC candidate for each offset, and checks
-that candidate against the offset actually active at that instant. Results are:
+The adapter loads the committed custom **IANA 2026e** dataset through Moment's
+no-data entry point. The reproducible M2 build uses the upstream
+`PACKRATDATA=backzone PACKRATLIST=zone.tab` policy, preserves 598 explicit
+identities, and expands rules from 1899 through 2101 to guard the supported UTC
+boundaries. The manifest records source/output hashes and build options; see
+[the timezone build](timezone-build.md). The adapter enumerates every distinct
+offset in each complete rule table, constructs a UTC candidate for that offset,
+and checks the candidate against the rule active at that instant. Results are:
 
 | Status | Meaning |
 | --- | --- |
@@ -114,14 +118,15 @@ override zone rules, including gaps and folds. Packaged IANA offsets retain
 historical seconds even though the manual-entry interface uses whole minutes.
 
 Every result records the tzdata version, adapter version, calendar, and source.
-Dates before 1970 carry a historical-data warning. The upstream packaged data can
-merge some pre-1970 zone histories and aliases; a complete rule-table search does
-not make those histories comprehensive or establish which jurisdiction used an
-old birth record. Before 1960, the UTC label is a computational reference, not a
-claim that a historical UTC clock existed. Future zone rules are marked as
-projections relative to an injectable clock. These limitations are separate from
-birth-time uncertainty and from numerical precision. Manual override remains
-available when a reliable historical offset is known.
+Dates before 1970 carry a historical-data warning. M2 preserves additional
+backzone histories that the ordinary Moment dataset merges, including Amsterdam,
+Aden, and Accra. These histories can still be uncertain and do not establish
+which jurisdiction used an old birth record or supply dated political boundaries.
+Before 1960, the UTC label is a computational reference, not a claim that a
+historical UTC clock existed. Future zone rules are marked as projections
+relative to an injectable clock. These limitations are separate from birth-time
+uncertainty and from numerical precision. Manual override remains available when
+a reliable historical offset is known.
 
 UTC, UT1, and TT stay distinct at the ephemeris boundary. This module resolves a
 civil input to its UTC-labelled reference and never substitutes that timestamp
@@ -133,8 +138,12 @@ The domain suite checks cardinal directions, both hemispheres, geographic
 longitude sign, equinoxes and solstices, off-ecliptic latitude, pole singularities,
 angular normalization, frame round trips, horizon-plane consistency, Sydney and
 New York folds/gaps, Lord Howe's half-hour transitions, Apia's skipped civil day,
-historical second-resolution offsets, Gregorian century leap rules, UTC range
-boundaries, and manual overrides.
+historical second-resolution offsets and transitions, additional backzone
+identities, Gregorian century leap rules, UTC range boundaries, and manual
+overrides. The custom data build independently verifies every period with
+Python's public `ZoneInfo.from_file` API before checking Moment packing round
+trips; this validates integration with the selected source, not the historical
+accuracy of every source record.
 
 - [Moment Timezone: zone object, offset sign, and data loading](https://momentjs.com/timezone/docs/).
 - [Moment Timezone: data and historical accuracy limitations](https://momentjs.com/timezone/guides/).

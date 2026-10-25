@@ -1,7 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { HOUSE_SYSTEMS, type BodyPosition } from './lib/astronomy/ephemeris';
+  import { HOUSE_SYSTEMS, type BodyPosition, type EphemerisSnapshot } from './lib/astronomy/ephemeris';
+  import { classifyLongitude, zodiacSign } from './lib/domain/chart';
   import { createExplorerStore } from './lib/state/explorer';
+  import { civilAtInstant, civilDateValue, civilTimeValue, exampleBirthContext, formatOffset, makeBirthContext, type GlobeDraft, type MomentCommit, type ObserverContext } from './lib/state/birth-context';
+  import type { CivilDateTime } from './lib/time/civil-time';
+  import MomentForm from './lib/ui/MomentForm.svelte';
   import SceneCanvas from './lib/ui/SceneCanvas.svelte';
 
   const explorer = createExplorerStore();
@@ -17,23 +21,30 @@
     { id: 'neptune', name: 'Neptune', glyph: '♆', color: '#92a8ee' },
     { id: 'pluto', name: 'Pluto', glyph: '♇', color: '#c8ade6' },
   ];
-  const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
   const views = [{ id: 'overview', label: 'Earth overview' }, { id: 'observer', label: 'Observer sky' }, { id: 'outside', label: 'Outside sphere' }] as const;
-  const layerOptions = [{ id: 'bodies', label: 'Celestial bodies' }, { id: 'horizon', label: 'Horizon & compass' }, { id: 'ecliptic', label: 'Ecliptic & zodiac' }] as const;
-  const anchorMs = Date.UTC(2000, 0, 1, 12);
+  const layerOptions = [{ id: 'bodies', label: 'Celestial bodies' }, { id: 'horizon', label: 'Horizon & compass' }, { id: 'ecliptic', label: 'Ecliptic' }] as const;
+  const initialBirthContext = exampleBirthContext();
+  let birthContext = $state.raw(initialBirthContext);
+  let explorationObserver = $state<ObserverContext>(initialBirthContext.observer);
+  let displayedObserver = $state<ObserverContext>(initialBirthContext.observer);
+  let explorationTimeKnown = $state(true);
+  let displayedTimeKnown = $state(true);
   let welcome = $state(true);
   let formOpen = $state(false);
   let leftOpen = $state(false);
   let rightOpen = $state(false);
-  let draftDate = $state('2000-01-01');
-  let draftTime = $state('12:00:00');
-  let draftLat = $state('51.5');
-  let draftLon = $state('0');
-  let formError = $state('');
+  let formMode = $state<'birth' | 'moment' | 'location'>('birth');
+  let formInstant = $state(initialBirthContext.instantMs);
+  let formObserver = $state<ObserverContext>(initialBirthContext.observer);
+  let formTimeKnown = $state(true);
+  let formSession = $state(0);
+  let formCivil = $state<CivilDateTime | undefined>();
+  let formKeepLocal = $state(false);
+  let globePickMode = $state(false);
   let sceneStatus = $state<string | null>(null);
   let formDialog: HTMLDialogElement;
   let sceneCanvas: { focusSelection(): void; returnToObserver(): void } | undefined = $state();
-  let personalAnchor = $state(anchorMs);
+  let observedSnapshot: EphemerisSnapshot | null = null;
 
   const selectedBody = $derived($explorer.snapshot?.bodies.find((body) => `body:${body.id}` === $explorer.selectedId));
   const selectedMeta = $derived(bodies.find((body) => body.id === selectedBody?.id));
@@ -41,6 +52,18 @@
   const selectedHouses = $derived($explorer.snapshot?.houses[0]);
   const busy = $derived($explorer.status === 'loading' || $explorer.status === 'pending');
   const statusLabel = $derived($explorer.error ? 'Calculation needs attention' : busy ? 'Calculating requested moment…' : $explorer.snapshot ? 'Moment calculated' : 'Preparing observatory…');
+  const localContext = $derived(civilAtInstant(shownInstant, displayedObserver));
+
+  $effect(() => {
+    const snapshot = $explorer.snapshot;
+    if (snapshot && snapshot !== observedSnapshot) {
+      observedSnapshot = snapshot;
+      if (snapshot.observer.latitudeDeg === explorationObserver.latitudeDeg && snapshot.observer.longitudeDeg === explorationObserver.longitudeDeg) {
+        displayedObserver = explorationObserver;
+        displayedTimeKnown = explorationTimeKnown;
+      }
+    }
+  });
 
   onMount(() => {
     explorer.init();
@@ -52,41 +75,56 @@
   }
   function coordinate(value: number, positive: string, negative: string) { return `${Math.abs(value).toFixed(2)}° ${value < 0 ? negative : positive}`; }
   function deg(value: number, digits = 2) { return `${value.toFixed(digits)}°`; }
-  function sign(body: BodyPosition) { return signs[Math.floor(body.longitudeDeg / 30)] ?? 'Unknown'; }
+  function sign(body: BodyPosition) { return zodiacSign(body.longitudeDeg).name; }
   function houseFor(body: BodyPosition): string {
-    if (!selectedHouses || selectedHouses.status !== 'valid') return 'Unavailable';
-    const winding = selectedHouses.cusps.reduce((sum, cusp, index, cusps) => sum + (cusps[(index + 1) % 12]! - cusp + 360) % 360, 0);
-    if (Math.abs(winding - 360) > 0.0001) return 'Unavailable';
-    for (let i = 0; i < 12; i++) {
-      const start = selectedHouses.cusps[i]!;
-      const end = selectedHouses.cusps[(i + 1) % 12]!;
-      const span = (end - start + 360) % 360;
-      const distance = (body.longitudeDeg - start + 360) % 360;
-      if (distance < span) return String(i + 1);
-    }
-    return 'Unavailable';
+    if (!selectedHouses) return 'Unavailable';
+    const result = classifyLongitude(selectedHouses, body.longitudeDeg);
+    return result.status === 'valid' ? String(result.house) : 'Unavailable';
   }
   function selectBody(id: string) { explorer.select(`body:${id}`); rightOpen = true; }
-  function openForm() {
-    const date = new Date($explorer.input.instantMs).toISOString();
-    draftDate = date.slice(0, 10); draftTime = date.slice(11, 19);
-    draftLat = String($explorer.input.observer.latitudeDeg); draftLon = String($explorer.input.observer.longitudeDeg);
-    formError = ''; formOpen = true;
+  function openForm(mode: 'birth' | 'moment' | 'location' = 'moment', observer?: ObserverContext) {
+    formMode = mode;
+    formInstant = mode === 'birth' ? birthContext.instantMs : $explorer.input.instantMs;
+    formObserver = observer ?? (mode === 'birth' ? birthContext.observer : explorationObserver);
+    formTimeKnown = mode === 'birth' ? birthContext.timeKnown : explorationTimeKnown;
+    formCivil = mode === 'birth' ? birthContext.civil : undefined;
+    formKeepLocal = false;
+    formSession += 1; formOpen = true;
   }
   $effect(() => {
     if (!formDialog) return;
     if (formOpen && !formDialog.open) formDialog.showModal();
     if (!formOpen && formDialog.open) formDialog.close();
   });
-  function commitMoment(event: SubmitEvent) {
-    event.preventDefault();
-    const instantMs = Date.parse(`${draftDate}T${draftTime || '00:00:00'}Z`);
-    const latitudeDeg = Number(draftLat), longitudeDeg = Number(draftLon);
-    if (!Number.isFinite(instantMs) || instantMs < Date.UTC(1900, 0, 1) || instantMs >= Date.UTC(2101, 0, 1)) { formError = 'Enter a UTC date and time between 1900 and 2100.'; return; }
-    if (draftLat.trim() === '' || draftLon.trim() === '' || !Number.isFinite(latitudeDeg) || Math.abs(latitudeDeg) > 90 || !Number.isFinite(longitudeDeg) || Math.abs(longitudeDeg) > 180) { formError = 'Enter latitude from −90 to 90 and longitude from −180 to 180.'; return; }
-    personalAnchor = instantMs;
-    explorer.requestChart({ instantMs, observer: { latitudeDeg, longitudeDeg } });
+  function commitMoment(commit: MomentCommit) {
+    if (formMode === 'birth') birthContext = makeBirthContext(commit);
+    explorationObserver = commit.observer;
+    explorationTimeKnown = commit.timeKnown;
+    const snapshot = $explorer.snapshot;
+    if (snapshot?.instantMs === commit.instantMs && snapshot.observer.latitudeDeg === commit.observer.latitudeDeg && snapshot.observer.longitudeDeg === commit.observer.longitudeDeg) {
+      displayedObserver = commit.observer; displayedTimeKnown = commit.timeKnown;
+    }
+    explorer.requestChart({ instantMs: commit.instantMs, observer: { latitudeDeg: commit.observer.latitudeDeg, longitudeDeg: commit.observer.longitudeDeg } });
     formOpen = false; welcome = false;
+  }
+  function restoreBirthContext() {
+    explorationObserver = birthContext.observer;
+    explorationTimeKnown = birthContext.timeKnown;
+    explorer.requestChart({ instantMs: birthContext.instantMs, observer: { latitudeDeg: birthContext.observer.latitudeDeg, longitudeDeg: birthContext.observer.longitudeDeg } });
+    if ($explorer.snapshot?.instantMs === birthContext.instantMs && $explorer.snapshot.observer.latitudeDeg === birthContext.observer.latitudeDeg && $explorer.snapshot.observer.longitudeDeg === birthContext.observer.longitudeDeg) {
+      displayedObserver = birthContext.observer; displayedTimeKnown = birthContext.timeKnown;
+    }
+  }
+  function returnBirthInstant() {
+    explorationTimeKnown = birthContext.timeKnown;
+    if ($explorer.snapshot?.instantMs === birthContext.instantMs) displayedTimeKnown = birthContext.timeKnown;
+    explorer.requestChart({ instantMs: birthContext.instantMs });
+  }
+  function beginGlobePick(draft: GlobeDraft) { formInstant = draft.instantMs; formCivil = draft.civil; formObserver = draft.observer; formTimeKnown = draft.timeKnown; formKeepLocal = draft.keepLocal; formOpen = false; welcome = false; globePickMode = true; explorer.setViewpoint('overview'); }
+  function observerPicked(coordinates: { latitudeDeg: number; longitudeDeg: number }) {
+    globePickMode = false;
+    formObserver = { ...formObserver, ...coordinates, label: 'Globe selection', source: 'globe', zoneOverride: true };
+    formSession += 1; formOpen = true;
   }
   function step(days: number) {
     const instantMs = $explorer.input.instantMs + days * 86400000;
@@ -95,7 +133,7 @@
   function onKey(event: KeyboardEvent) {
     const target = event.target;
     if (formOpen || target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) return;
-    if (event.key === 'Escape') { explorer.select(null); leftOpen = false; rightOpen = false; }
+    if (event.key === 'Escape') { explorer.select(null); leftOpen = false; rightOpen = false; globePickMode = false; }
     if (event.key.toLowerCase() === 'f') sceneCanvas?.focusSelection();
     if (event.key.toLowerCase() === 'o') { explorer.setViewpoint('observer'); sceneCanvas?.returnToObserver(); }
   }
@@ -112,17 +150,18 @@
     </button>
     <div class="context-details">
       <span class="context-symbol" aria-hidden="true">◷</span>
-      <span><strong>{formatInstant(shownInstant)}</strong><small>UTC · Gregorian calendar</small></span>
+      <span><strong>{formatInstant(shownInstant)} UTC</strong><small>{civilDateValue(localContext.civil)} · {civilTimeValue(localContext.civil)} local · {formatOffset(localContext.offsetMinutes)}</small>{#if !displayedTimeKnown}<small class="provisional-badge">Provisional time · local noon anchor</small>{/if}</span>
       <span class="context-divider"></span>
-      <span class="context-location"><strong>{coordinate($explorer.snapshot?.observer.latitudeDeg ?? $explorer.input.observer.latitudeDeg, 'N', 'S')} <span class="dot">·</span> {coordinate($explorer.snapshot?.observer.longitudeDeg ?? $explorer.input.observer.longitudeDeg, 'E', 'W')}</strong><small>Observer location</small></span>
+      <button class="context-location context-location-button" onclick={() => openForm('location')} title="Change observer location"><strong>{coordinate($explorer.snapshot?.observer.latitudeDeg ?? $explorer.input.observer.latitudeDeg, 'N', 'S')} <span class="dot">·</span> {coordinate($explorer.snapshot?.observer.longitudeDeg ?? $explorer.input.observer.longitudeDeg, 'E', 'W')}</strong><small>{displayedObserver.manualOffsetMinutes === null ? displayedObserver.zoneId : 'Explicit UTC offset'} · Change location ↗</small></button>
     </div>
-    <button class="button secondary compact" onclick={openForm}><span aria-hidden="true">⌖</span> Edit moment</button>
+    <button class="button secondary compact" onclick={() => openForm('moment')}><span aria-hidden="true">⌖</span> Edit moment</button>
   </header>
 
   <main class="workspace">
     <button class="mobile-panel-toggle left-toggle" aria-expanded={leftOpen} aria-controls="explorer-dock" onclick={() => { leftOpen = !leftOpen; rightOpen = false; }}>☷ Explore</button>
     <aside id="explorer-dock" class:drawer-open={leftOpen} class="explorer-dock panel">
       <div class="panel-heading"><span class="eyebrow">YOUR OBSERVATORY</span><button class="drawer-close icon-button" onclick={() => leftOpen = false} aria-label="Close explorer panel">×</button></div>
+      <section class="dock-section birth-anchor-section"><div class="section-title"><h2>Birth anchor</h2><button class="text-button" onclick={() => openForm('birth')}>Birth details</button></div><p>{formatInstant(birthContext.instantMs)} UTC</p><small>{birthContext.observer.label}{birthContext.timeKnown ? '' : ' · provisional noon'}</small><div class="birth-context-actions"><button class="text-button" onclick={restoreBirthContext}>Restore birth context ↺</button><button class="text-button" onclick={() => openForm('location')}>Change observer ↗</button></div></section>
       <section class="dock-section">
         <h2>Point of view</h2>
         <div class="view-options" role="group" aria-label="Camera viewpoint">
@@ -162,13 +201,14 @@
     <section class="scene-stage" aria-label="Spatial exploration">
       <div class="scene-topline"><span class="scene-tag"><span class="status-dot"></span> CELESTIAL SPHERE</span><span class="scene-mode">{views.find((view) => view.id === $explorer.viewpoint)?.label}</span></div>
       <span class="schematic-label">Schematic sky · distances not to scale</span>
-      <SceneCanvas bind:this={sceneCanvas} snapshot={$explorer.snapshot} presentation={{ viewpoint: $explorer.viewpoint, selectedId: $explorer.selectedId, layers: $explorer.layers }} onSelect={(id) => { explorer.select(id); if (id) rightOpen = true; }} onViewpoint={(viewpoint) => explorer.setViewpoint(viewpoint)} onStatus={(message) => sceneStatus = message} />
+      <SceneCanvas bind:this={sceneCanvas} snapshot={$explorer.snapshot} presentation={{ viewpoint: $explorer.viewpoint, selectedId: $explorer.selectedId, layers: $explorer.layers }} {globePickMode} onObserverPick={observerPicked} onSelect={(id) => { explorer.select(id); if (id) rightOpen = true; }} onViewpoint={(viewpoint) => explorer.setViewpoint(viewpoint)} onStatus={(message) => sceneStatus = message} />
+      {#if globePickMode}<div class="globe-pick-banner" role="status"><span>Click Earth to choose observer coordinates. Drag to rotate.</span><button class="text-button" onclick={() => globePickMode = false}>Cancel</button></div>{/if}
       {#if welcome}
         <div class="welcome-card">
           <span class="eyebrow">A DIFFERENT PERSPECTIVE</span>
           <h1>See the chart.<br /><em>Understand the space.</em></h1>
           <p>Explore how the sky, your horizon, and the zodiac fit together in one celestial sphere.</p>
-          <div class="welcome-actions"><button class="button primary" onclick={() => welcome = false}>Explore example <span aria-hidden="true">↗</span></button><button class="text-button" onclick={openForm}>Enter a birth moment <span aria-hidden="true">→</span></button></div>
+          <div class="welcome-actions"><button class="button primary" onclick={() => welcome = false}>Explore example <span aria-hidden="true">↗</span></button><button class="text-button" onclick={() => openForm('birth')}>Enter a birth moment <span aria-hidden="true">→</span></button></div>
           <small>Example: 1 January 2000 · 12:00 UTC · Greenwich</small>
         </div>
       {/if}
@@ -189,6 +229,7 @@
       {:else}
         <div class="inspector-empty"><div class="empty-orbit" aria-hidden="true"><span>✦</span></div><span class="eyebrow">FOLLOW YOUR CURIOSITY</span><h2>A sky full of connections.</h2><p>Select a body in the sphere or celestial objects list to inspect its position.</p><div class="empty-rule"></div><small>The same moment.<br />A new point of view.</small></div>
       {/if}
+      {#if !displayedTimeKnown}<div class="warning-note"><strong>Provisional birth time</strong><p>Local noon is an example when the birth time is unknown. Houses and angles depend on the actual time.</p></div>{/if}
       {#if selectedHouses?.status === 'undefined'}<div class="warning-note"><strong>House system unavailable</strong><p>{selectedHouses.reason}</p></div>{/if}
       <div class="inspector-footer"><span class="tiny-cross" aria-hidden="true">✦</span><span>Astronomical positions<br />with explicit chart conventions.</span></div>
     </aside>
@@ -198,18 +239,12 @@
     <div class="timeline-label"><span class="eyebrow">EXPLORE TIME</span><strong>One moment, in motion</strong></div>
     <div class="time-step-controls"><button class="icon-button" onclick={() => step(-1)} aria-label="Previous day" title="Previous day">‹</button><span class="paused-indicator"><span></span> PAUSED</span><button class="icon-button" onclick={() => step(1)} aria-label="Next day" title="Next day">›</button></div>
     <div class="timeline-track" aria-hidden="true"><span class="timeline-tick"></span><span></span><span></span><span></span><span></span><i></i><span></span><span></span><span></span><span></span><span></span><b>1 day / step</b></div>
-    <button class="anchor-button" onclick={() => explorer.requestChart({ instantMs: personalAnchor })}><span aria-hidden="true">↺</span> Return to anchor</button>
+    <button class="anchor-button" onclick={returnBirthInstant} title="Return to the birth instant at the current observer location"><span aria-hidden="true">↺</span> Return to birth instant</button>
   </footer>
-  <div class="app-status"><span role="status" aria-live="polite" aria-atomic="true"><span class:working={busy} class="status-dot"></span>{statusLabel}{busy && $explorer.snapshot ? ' · previous moment shown' : ''}</span><span class="status-links"><span>M1 · Application foundation</span><a href="https://github.com/buttery-x3/astrology-viewer/tree/codex/development" target="_blank" rel="noreferrer">Source & licences ↗</a></span></div>
+  <div class="app-status"><span role="status" aria-live="polite" aria-atomic="true"><span class:working={busy} class="status-dot"></span>{statusLabel}{busy && $explorer.snapshot ? ' · previous moment shown' : ''}</span><span class="status-links"><span>M2 · Time & observer context</span><a href="https://github.com/buttery-x3/astrology-viewer/tree/codex/development" target="_blank" rel="noreferrer">Source & licences ↗</a></span></div>
   {#if $explorer.error}<div class="error-toast" role="alert"><span>{$explorer.error}</span><button class="text-button" onclick={() => explorer.retry()}>Retry calculation</button></div>{/if}
 </div>
 
 <dialog bind:this={formDialog} class="moment-dialog" onclose={() => formOpen = false} oncancel={() => formOpen = false} aria-labelledby="moment-title">
-  <form onsubmit={commitMoment}>
-    <div class="dialog-heading"><span class="eyebrow">SET YOUR CONTEXT</span><button type="button" class="icon-button" onclick={() => formOpen = false} aria-label="Close moment form">×</button></div>
-    <h2 id="moment-title">Enter a moment</h2><p class="dialog-intro">Set an exact UTC moment and observer coordinates. Local civil time and place search arrive in the next milestone.</p>
-    <div class="form-grid"><label>Gregorian date (UTC)<input type="date" bind:value={draftDate} min="1900-01-01" max="2100-12-31" required /></label><label>Time (UTC)<input type="time" bind:value={draftTime} step="1" required /></label><label>Latitude · north positive<input type="text" inputmode="decimal" bind:value={draftLat} required /></label><label>Longitude · east positive<input type="text" inputmode="decimal" bind:value={draftLon} required /></label></div>
-    {#if formError}<p class="form-error" role="alert">{formError}</p>{/if}
-    <div class="dialog-actions"><button type="button" class="button secondary" onclick={() => formOpen = false}>Cancel</button><button type="submit" class="button primary">Explore moment <span aria-hidden="true">→</span></button></div>
-  </form>
+  {#if formOpen}{#key formSession}<MomentForm mode={formMode} initialInstantMs={formInstant} initialObserver={formObserver} initialTimeKnown={formTimeKnown} initialCivil={formCivil} initialKeepLocal={formKeepLocal} onCommit={commitMoment} onCancel={() => formOpen = false} onGlobePick={beginGlobePick} />{/key}{/if}
 </dialog>

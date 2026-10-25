@@ -1,0 +1,16 @@
+{
+  "package": "geo-tz",
+  "version": "8.1.10",
+  "entryPoint": "geo-tz/all",
+  "source": "https://www.npmjs.com/package/geo-tz/v/8.1.10",
+  "upstreamBoundaryRelease": "Not recorded in the npm asset metadata; identify this exact packaged database by hashes below.",
+  "codeLicense": "MIT",
+  "dataLicense": "ODbL-1.0",
+  "dataLicenseUrl": "https://github.com/evansiroky/timezone-boundary-builder/blob/master/DATA_LICENSE",
+  "attribution": "Timezone boundaries © OpenStreetMap contributors, timezone-boundary-builder.",
+  "files": [
+    { "name": "timezones.geojson.geo.dat", "bytes": 30196840, "sha256": "f6ee7fb72fe804998c0b0542c2c0e6a36397c26ba26a485765c22c1cd175ea74" },
+    { "name": "timezones.geojson.index.json", "bytes": 938298, "sha256": "21e347d90dc388e8028eb461c34af61ce8f65d75216fc0bb8f2b98fe0079aad9" }
+  ],
+  "limitation": "Current comprehensive geography retains historical zone identities but is not a historical boundary atlas. Multiple candidates and user overrides remain supported. These files are server-only and excluded from the browser build."
+}
