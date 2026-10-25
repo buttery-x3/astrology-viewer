@@ -119,7 +119,7 @@ test('a translucent Earth permits choosing the actual body behind it', async ({ 
 test('Melbourne1987 renders the linked Taurus label at its native-frame anchor and identifies the unselected Sun', async ({ page }) => {
   // Observe real WebGL sprite submissions, without adding a production test API.
   await page.addInitScript(() => {
-    const probe = (window as any).tropicalLabelProbe = { draws: [] as number[][] };
+    const probe = (window as any).tropicalLabelProbe = { draws: [] as number[][], labels: [] as string[] };
     const text = new WeakMap<HTMLCanvasElement, string>();
     const fillText = CanvasRenderingContext2D.prototype.fillText;
     CanvasRenderingContext2D.prototype.fillText = function (...args: any[]) {
@@ -155,17 +155,34 @@ test('Melbourne1987 renders the linked Taurus label at its native-frame anchor a
       if (!current.samplers.has(current.program)) return;
       const texture = current.textures.get(current.samplers.get(current.program));
       const matrix = current.matrices.get(current.program);
+      const caption = texture && current.text.get(texture);
+      if (caption && matrix) { probe.labels.push(caption); if (probe.labels.length > 128) probe.labels.shift(); }
       if (texture && current.text.get(texture) === '♉' && matrix) { probe.draws.push(matrix); if (probe.draws.length > 32) probe.draws.shift(); }
     });
   });
   await birth(page, '1987-04-27', '02:00:00', -37.814, 144.96332, 'Australia/Melbourne');
   await expect(page.locator('.context-details')).toContainText('26 Apr 1987');
   await expect(page.locator('.context-details')).toContainText('16:00:00 UTC');
+  await expect(page.getByTestId('displayed-local-moment')).toHaveText('1987-04-27 · 02:00:00 local');
+  await expect.poll(() => page.evaluate(() => (window as any).tropicalLabelProbe.labels.includes('☉ Sun · Taurus 5.89°'))).toBe(true);
+  await openControlGroup(page, 'references');
+  await page.getByRole('button', {name:'Sagittarius 30° sector',exact:true}).click();
+  await expect(page.locator('#inspector .selected-heading')).toContainText('Sagittarius');
+  await expect.poll(() => page.evaluate(() => (window as any).tropicalLabelProbe.labels.includes('♐ Sagittarius · sign'))).toBe(true);
+  expect(await page.locator('.scene-canvas canvas').evaluate(async element=>{
+    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    return (element as HTMLCanvasElement).getContext('webgl2')!.getError();
+  })).toBe(0);
+  await expect.poll(() => page.evaluate(() => (window as any).tropicalLabelProbe.labels.includes('☉ Sun · Taurus 5.89°'))).toBe(true);
   await page.evaluate(() => { (window as any).tropicalLabelProbe.draws = []; });
   await page.locator('.object-list').getByRole('button', { name: /^Sun/ }).click();
   await expect(page.locator('#inspector .selected-heading')).toContainText('Taurus');
   // The old exterior-hemisphere culling never submitted this linked glyph.
   await expect.poll(() => page.evaluate(() => (window as any).tropicalLabelProbe.draws.length)).toBeGreaterThan(0);
+  expect(await page.locator('.scene-canvas canvas').evaluate(async element=>{
+    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    return (element as HTMLCanvasElement).getContext('webgl2')!.getError();
+  })).toBe(0);
   const matrix = await page.evaluate(() => (window as any).tropicalLabelProbe.draws.at(-1) as number[]);
   const box = await page.locator('.scene-canvas canvas').boundingBox(); if (!box) throw new Error('Missing canvas.');
   const camera = new THREE.PerspectiveCamera(43, box.width / box.height, 0.015, 100);
@@ -196,4 +213,24 @@ test('Melbourne1987 renders the linked Taurus label at its native-frame anchor a
   await page.locator('details[data-control-group="layers"] > summary').focus(); await page.keyboard.press('Enter');
   await page.getByLabel('Celestial bodies', { exact: true }).focus(); await page.keyboard.press('Space');
   await expect(page.getByTestId('scene-hover')).toHaveCount(0);
+});
+
+test('Melbourne local birth date remains prominent when its UTC date is the previous day',async({page})=>{
+  await page.goto('/');await page.getByRole('button',{name:/Enter a birth moment/}).click();
+  await page.getByLabel('Gregorian date (local)').fill('1987-04-27');
+  await page.getByLabel('Time (local)',{exact:true}).fill('02:00:00');
+  await page.getByLabel('Latitude · north positive').fill('-37.814');
+  await page.getByLabel('Longitude · east positive').fill('144.96332');
+  await page.getByLabel('IANA time zone',{exact:true}).fill('Australia/Melbourne');
+  await page.getByLabel('Confirm this time zone for the entered coordinates').check();
+  const preview=page.locator('.resolved-moment');
+  await expect(preview).toContainText('1987-04-27 · 02:00:00 local');
+  await expect(preview).toContainText('1987-04-26 · 16:00:00 UTC');
+  await expect(preview).toContainText('same moment on a different UTC calendar date');
+  await page.getByRole('button',{name:/Set birth anchor/}).click();
+  await expect(page.getByTestId('displayed-local-moment')).toHaveText('1987-04-27 · 02:00:00 local');
+  await expect(page.getByTestId('displayed-utc-moment')).toHaveText('26 Apr 1987 · 16:00:00 UTC · UTC+10:00');
+  await expect(page.locator('.birth-anchor-section')).toContainText('1987-04-27 · 02:00:00 local');
+  await page.locator('.object-list').getByRole('button',{name:/^Sun/}).click();
+  await expect(page.locator('#inspector .selected-heading')).toContainText('Taurus');
 });

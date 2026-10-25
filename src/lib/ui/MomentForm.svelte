@@ -131,6 +131,8 @@
     if (resolution?.status !== 'nonexistent' || !resolution.gap) return;
     date = resolution.gap.endCivilIso.slice(0, 10); clock = resolution.gap.endCivilIso.slice(11, 19); clearChoice();
   }
+  const resolvedLocalDate=$derived(candidate ? civilDateValue(enteredCivil()) : null);
+  const resolvedUtcDate=$derived(candidate ? new Date(candidate.utcMs).toISOString().slice(0,10) : null);
   function pickGlobe() {
     let civil: CivilDateTime;
     try { civil = enteredCivil(); } catch { civil = initialLocal.civil; }
@@ -166,7 +168,7 @@
   {#if resolution?.status === 'ambiguous' && !preserveInstant}<fieldset class="fold-choice"><legend>This local time occurred twice. Choose an occurrence.</legend>{#each resolution.candidates as occurrence, index (occurrence.utcMs)}<label><input type="radio" name="fold" value={occurrence.utcMs} checked={chosenFold === occurrence.utcMs} onchange={() => { chosenFold = occurrence.utcMs; error = ''; }} disabled={!occurrence.withinSupportedRange} /><span><strong>{index === 0 ? 'Earlier occurrence' : 'Later occurrence'} · {formatOffset(occurrence.offsetMinutes)}</strong><small>{occurrence.utcIso} · {occurrence.abbreviation}</small></span></label>{/each}</fieldset>{/if}
   {#if resolution?.status === 'nonexistent'}<div class="resolution-warning" role="alert"><strong>This local time did not occur.</strong><p>{resolution.message}</p>{#if resolution.gap}<p>The clock skipped {resolution.gap.startCivilIso.slice(11, 19)} to {resolution.gap.endCivilIso.slice(11, 19)} ({resolution.gap.durationMinutes} minutes).</p><button type="button" class="text-button" onclick={useGapEnd}>Use the first valid local time →</button>{/if}</div>{/if}
   {#if resolution?.status === 'invalid'}<p class="form-error">{resolution.message}</p>{/if}
-  {#if candidate}<div class="resolved-moment"><span class="eyebrow">RESOLVED INSTANT</span><strong>{candidate.utcIso.replace('T', ' · ').replace('.000Z', ' UTC')}</strong><small>{formatOffset(candidate.offsetMinutes)} · {manualOffset ? 'Explicit manual offset' : zoneId} · Gregorian calendar</small></div>{/if}
+  {#if candidate}<div class="resolved-moment"><span class="eyebrow">LOCAL & UTC · SAME INSTANT</span><strong>{resolvedLocalDate} · {civilTimeValue(enteredCivil())} local</strong><strong>{candidate.utcIso.replace('T', ' · ').replace('.000Z', ' UTC')}</strong><small>{formatOffset(candidate.offsetMinutes)} · {manualOffset ? 'Explicit manual offset' : zoneId} · Gregorian calendar</small>{#if resolvedLocalDate !== resolvedUtcDate}<small>The time-zone offset places this same moment on a different UTC calendar date.</small>{/if}</div>{/if}
   {#if resolution?.warnings.length}<div class="civil-warnings">{#each resolution.warnings as warning (warning.code)}<p>{warning.message}</p>{/each}</div>{/if}
   {#if error}<p class="form-error" role="alert">{error}</p>{/if}
   <p class="lookup-attribution">Place search: <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a> / <a href="https://www.geonames.org/" target="_blank" rel="noreferrer">GeoNames</a>. Only the place query or coordinates go to lookup services.</p>
