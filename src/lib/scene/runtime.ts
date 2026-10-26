@@ -997,13 +997,25 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
     const rawHits=raycaster.intersectObjects(targets,false);
     const earthHouseHit=earthRenderer.intersectHouse(raycaster.ray,snapshot);
     if(earthHouseHit)rawHits.push(earthHouseHit);
-    const hits = rawHits.filter(hit =>
+    let hits = rawHits.filter(hit =>
       starFacing(hit)
       &&
       (hit.object.userData.ignoreEarthOcclusion || !globeIntersection || hit.distance < globeIntersection.distance + (hit.object.userData.entityId === 'reference:earth' ? 1e-6 : 0))
       && (hit.object.userData.entityKind !== 'house' || isHouseDirectionPickable(snapshot!, threeToAstronomical(hit.point)))
       && (!hit.object.userData.earthSurface || earthRenderer.isSurfaceHitVisible(hit.point))
       && (hit.object.userData.entityKind!=='earth-house' || classifyEarthHouse(snapshot!,threeToAstronomical(earthRenderer.group.worldToLocal(hit.point.clone()))).status==='valid'));
+    // Repeated geographic labels have transparent rectangular margins. When
+    // the pointer is on a curve's visible core, keep that curve representation
+    // ahead of its own label rectangle; badges remain selectable away from it.
+    const preciseGeographicCurves = new Set(hits.flatMap(hit => {
+      const feature = hit.object.userData.featureHit as FeatureHit | undefined;
+      const pointOnLine = (hit as THREE.Intersection & { pointOnLine?: THREE.Vector3 }).pointOnLine;
+      if (feature?.kind !== 'astro-line' || feature.role !== 'line' || !pointOnLine) return [];
+      const projected = pointOnLine.clone().project(camera);
+      const distance = Math.hypot((projected.x - pointerNdc.x) * canvas.clientWidth / 2, (projected.y - pointerNdc.y) * canvas.clientHeight / 2);
+      return distance <= 2 ? [feature.id] : [];
+    }));
+    hits = hits.filter(hit => !hit.object.userData.geographicMarker || !preciseGeographicCurves.has(hit.object.userData.featureHit?.id));
     const hitEntity = (hit: THREE.Intersection) => hit.index !== undefined && hit.object instanceof THREE.Points
       ? catalogueEntity(hit.object===stars?CATALOGUE_STARS[hit.index]?.[0]??-1:(hit.object.userData.hygIds as number[]|undefined)?.[hit.index]??-1)
       : entities.get(hit.object.userData.entityId as string);
