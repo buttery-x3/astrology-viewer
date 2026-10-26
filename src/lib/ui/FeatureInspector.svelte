@@ -7,6 +7,7 @@
   import ContentCard from './ContentCard.svelte';
   let {snapshot,selectedId,onFocus}:{snapshot:EphemerisSnapshot|null;selectedId:string;onFocus:()=>void}=$props();
   const reference=$derived(snapshot?getSkyReferences(snapshot).find(item=>item.id===selectedId):undefined);
+  const angleTheme=$derived(({'angle:asc':'ac','angle:dsc':'dc','angle:mc':'mc','angle:ic':'ic'} as Record<string,string>)[selectedId]);
   const signIndex=$derived(SIGNS.findIndex(name=>selectedId===`sign:${name.toLowerCase()}`));
   const region=$derived(CONSTELLATIONS.find(item=>item.id===selectedId));
   const projectSource='https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477';
@@ -22,6 +23,7 @@
 {:else if reference}
   <div class="selected-heading"><span class="eyebrow">{selectedId.startsWith('angle:')?'CHART ANGLE':'SPATIAL REFERENCE'}</span><h2>{reference.name}</h2>{#if reference.longitudeDeg!==undefined}<p>{reference.longitudeDeg.toFixed(3)}° ecliptic longitude</p>{/if}</div>
   <ContentCard id={selectedId} heading={false} />
+  {#if angleTheme}<ContentCard id={`astro:angle:${angleTheme}`} />{/if}
   <section class="inspector-section">{#if reference.status==='undefined'}<div class="warning-note"><strong>Undefined at this input</strong><p>{reference.reason}</p></div>{/if}<h3>What changes it?</h3><p>{selectedId==='reference:ecliptic'||selectedId==='reference:equator'||selectedId.includes('pole')?'The selected date sets the reference frame. The observer changes how this reference appears against the local horizon.':'The moment and observer location set this local orientation. House-system and display choices do not move it.'}</p></section>
 {:else if region}
   <div class="selected-heading"><span class="eyebrow">CONSTELLATION REGION</span><h2>{region.name}</h2><p>{region.abbreviation} · IAU sky region</p></div>
