@@ -30,6 +30,7 @@
   let x = $state(12),
     y = $state(12);
   let expanded = $state(false);
+  let dense = $state(false);
   let described: HTMLElement | null = null,
     originalDescription: string | null = null;
   let previousResetKey: number | undefined;
@@ -53,6 +54,7 @@
     inside = false;
     focusInside = false;
     expanded = false;
+    dense = false;
     restoreDescription();
   }
   function position() {
@@ -64,6 +66,10 @@
     // Font size and the complete claim text always follow the user's preferences.
     if (!expanded && height > window.innerHeight - 24 && width < window.innerWidth - 25) {
       expanded = true;
+      return;
+    }
+    if (!dense && height > window.innerHeight - 24) {
+      dense = true;
       return;
     }
     x = Math.max(
@@ -86,6 +92,7 @@
     displayed = next;
     candidate = null;
     expanded = false;
+    dense = false;
     const active = document.activeElement;
     if (
       active instanceof HTMLElement &&
@@ -226,7 +233,7 @@
     }}
     onwheel={(event) => event.stopPropagation()}
   >
-    <HoverCard {model} id="feature-preview-card" {motion} {sparkles} />
+    <HoverCard {model} id="feature-preview-card" {motion} {sparkles} {dense} />
   </div>
 {/if}
 

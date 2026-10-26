@@ -9,15 +9,18 @@
     id,
     motion = true,
     sparkles = true,
+    dense = false,
   }: {
     model: HoverCardModel;
     id?: string;
     motion?: boolean;
     sparkles?: boolean;
+    dense?: boolean;
   } = $props();
   const uid = $props.id();
   const preview = $derived(hoverPreview(model));
   const points = $derived(cardSparkles(model.id));
+  let viewportHeight = $state(Infinity);
   let documentVisible = $state(true),
     reducedMotion = $state(false);
   const animate = $derived(motion && sparkles && documentVisible && !reducedMotion);
@@ -37,12 +40,15 @@
   });
 </script>
 
+<svelte:window bind:innerHeight={viewportHeight} />
+
 <article
   id={id ?? uid}
   class="hover-card"
   class:aspect-card={!!preview.aspect}
   class:animate
   class:static-card={!animate}
+  class:dense={dense || viewportHeight <= 500}
   role="tooltip"
   data-testid="hover-card"
   data-feature-kind={preview.kind}
@@ -379,88 +385,87 @@
   .static-card .glint {
     opacity: 0.55;
   }
-  @media (max-height: 500px) {
-    .card-interior {
-      padding: 9px;
-    }
-    .identity {
-      gap: 8px;
-      margin-bottom: 6px;
-    }
-    .feature-emblem {
-      width: 32px;
-      height: 32px;
-      border-radius: 9px;
-    }
-    .identity h2,
-    .relationship-heading .relationship-identity {
-      font-size: 1rem;
-    }
-    .aspect-name {
-      font-size: 1rem;
-    }
-    .identity-line,
-    .geometric-caption {
-      margin-bottom: 5px;
-    }
-    .context-notices {
-      margin-bottom: 5px;
-    }
-    .reading {
-      gap: 5px;
-      border: 1px solid #dce7f21c;
-      border-radius: 9px;
-      padding: 7px 8px;
-      background: #070e1aeb;
-    }
-    .reading-panel {
-      padding: 0;
-      border: 0;
-      border-radius: 0;
-      background: none;
-      box-shadow: none;
-    }
-    .reading-panel h3 {
-      display: inline;
-      margin: 0 0.3em 0 0;
-    }
-    .reading-panel p {
-      display: inline;
-    }
-    .reading-panel p + p:before {
-      content: ' ';
-    }
-    .claim-label {
-      margin: 0;
-      font-size: 0.62rem;
-    }
-    .relationship-reading .planet-identity {
-      display: flex;
-      margin: 0 0 3px;
-    }
-    .relationship-reading {
-      grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
-      gap: 5px 6px;
-    }
-    .relationship-reading .claim-label,
-    .relationship-reading .relationship-lead {
-      grid-column: 1/-1;
-    }
-    .relationship-reading .and-connector {
-      align-self: center;
-      flex-direction: column;
-      gap: 4px;
-      font-size: 0.69rem;
-    }
-    .relationship-reading .and-connector span {
-      width: 1px;
-      height: 10px;
-    }
-    .relationship-reading .reading-panel:not(.relationship-lead) {
-      padding-top: 5px;
-      border-top: 1px solid #dce7f226;
-    }
+  .dense .card-interior {
+    padding: 9px;
   }
+  .dense .identity {
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .dense .feature-emblem {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+  }
+  .dense .identity h2,
+  .dense .relationship-heading .relationship-identity {
+    font-size: 1rem;
+  }
+  .dense .aspect-name {
+    font-size: 1rem;
+  }
+  .dense .identity-line,
+  .dense .geometric-caption {
+    margin-bottom: 5px;
+  }
+  .dense .context-notices {
+    margin-bottom: 5px;
+  }
+  .dense .reading {
+    gap: 5px;
+    border: 1px solid #dce7f21c;
+    border-radius: 9px;
+    padding: 7px 8px;
+    background: #070e1aeb;
+  }
+  .dense .reading-panel {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .dense .reading-panel h3 {
+    display: inline;
+    margin: 0 0.3em 0 0;
+  }
+  .dense .reading-panel p {
+    display: inline;
+  }
+  .dense .reading-panel p + p:before {
+    content: ' ';
+  }
+  .dense .claim-label {
+    margin: 0;
+    font-size: 0.62rem;
+  }
+  .dense .relationship-reading .planet-identity {
+    display: flex;
+    margin: 0 0 3px;
+  }
+  .dense .relationship-reading {
+    grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
+    gap: 5px 6px;
+  }
+  .dense .relationship-reading .claim-label,
+  .dense .relationship-reading .relationship-lead {
+    grid-column: 1/-1;
+  }
+  .dense .relationship-reading .and-connector {
+    align-self: center;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.69rem;
+  }
+  .dense .relationship-reading .and-connector span {
+    width: 1px;
+    height: 10px;
+  }
+  .dense .relationship-reading .reading-panel:not(.relationship-lead) {
+    padding-top: 5px;
+    border-top: 1px solid #dce7f226;
+  }
+
   .and-connector {
     display: flex;
     align-items: center;
