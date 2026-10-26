@@ -16,5 +16,16 @@
     "three post-warmup resource passes identical",
     "exact context-restored camera",
     "canvas removed and owned geometry/program counts zero"
-  ]
+  ],
+  "laterCandidateScope": {
+    "candidate": "6c1a0cbc9632944db7e1a8916c2b9c12befc9cfd",
+    "productionFilesCompared": 111,
+    "unchangedFiles": 110,
+    "changedFile": "src/lib/ui/HoverCard.svelte",
+    "scriptAndTemplateUnchanged": true,
+    "scriptTemplateSha256": "d1984681920b835d0507edf4d4c4d11952327fc6139037c9e5a2eb2a13c2727f",
+    "finalSourceManifestSha256": "72f4c0e94c472fec74e9150c45adc95f1bb501027d2943c9f26a199c2fae4f18",
+    "change": "Only .full-width-placements terminal aspect CSS spacing/line-height; no font-size, template, prose, glyph, controller, picker or ordinary1920 composition changes. Review PR26 and focused three-engine/native headroom amendment establish this later scope; physical timings remain measured at a2ef959.",
+    "diff": "diff --git a/src/lib/ui/HoverCard.svelte b/src/lib/ui/HoverCard.svelte\nindex 2176c26..f0cc28d 100644\n--- a/src/lib/ui/HoverCard.svelte\n+++ b/src/lib/ui/HoverCard.svelte\n@@ -472,18 +472,25 @@\n   }\n \n   .full-width-placements .card-interior {\n-    padding: 6px;\n+    padding: 5px;\n   }\n   .full-width-placements .relationship-reading {\n     display: block;\n-    padding: 5px 8px;\n+    padding: 4px 8px;\n+    line-height: 1.25;\n+  }\n+  /* Reserve room for platform font wrapping without reducing the reading font. */\n+  .full-width-placements .reading-panel,\n+  .full-width-placements .reading-panel p,\n+  .full-width-placements .reading-panel h3 {\n+    line-height: 1.25;\n   }\n   .full-width-placements .relationship-reading .claim-label {\n     margin-bottom: 3px;\n   }\n   .full-width-placements .relationship-reading .relationship-lead {\n     display: block;\n-    margin-bottom: 4px;\n+    margin-bottom: 3px;\n   }\n   .full-width-placements .relationship-reading .reading-panel:not(.relationship-lead) {\n     display: inline;\n@@ -492,7 +499,7 @@\n   }\n   .full-width-placements .relationship-reading .reading-panel:nth-of-type(2) {\n     display: block;\n-    margin-bottom: 4px;\n+    margin-bottom: 3px;\n   }\n   .full-width-placements .relationship-reading .planet-identity {\n     display: inline;\n"
+  }
 }
