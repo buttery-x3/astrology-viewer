@@ -134,6 +134,8 @@ test('complete aspect preview fits without scrolling, and Escape preserves its s
   await leavePreview(page);
   await pair.click();
   await expect(pair).toHaveAttribute('aria-pressed', 'true');
+  // Re-enter after click; hovering at its unchanged centre need not emit a new pointer event.
+  await page.mouse.move(750, 35);
   await pair.hover();
   await expect(card).toBeVisible();
   await page.keyboard.press('Escape');
