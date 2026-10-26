@@ -31,8 +31,10 @@ export function cardSparkles(seed: string) {
     value = (Math.imul(value, 1664525) + 1013904223) >>> 0;
     return {
       index,
-      x: index < 8 ? 7 + index * 12 : index % 2 ? 96 : 4,
-      y: index < 8 ? 9 + (value % 58) : 45 + (value % 45),
+      x: index < 4 ? 7 + index * 12 : index < 8 ? 82 + (index - 4) * 5 : index % 2 ? 96 : 4,
+      // Keep the left glints in the top gutter; the remaining header glints
+      // occupy the empty upper-right corner, clear of the title and metadata.
+      y: index < 4 ? 8 + (value % 8) : index < 8 ? 9 + (value % 58) : 45 + (value % 45),
       size: 3 + (value % 5),
       delay: -(value % 6000) / 1000,
       duration: 3 + (value % 3000) / 1000,

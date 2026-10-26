@@ -59,3 +59,11 @@
   aria-hidden="true"
   focusable="false"><path d={paths[key] ?? paths.reference} /></svg
 >
+
+<style>
+  @media (forced-colors: active) {
+    svg {
+      stroke: CanvasText;
+    }
+  }
+</style>
