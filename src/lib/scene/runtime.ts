@@ -777,7 +777,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       (child.material as THREE.LineBasicMaterial).opacity = 0.78 * opacity; child.visible = opacity > 0;
     }
     updateLongitudeProjection();
-    if (hoveredId && (!entities.get(hoveredId)?.valid || !entityLayerEnabled(entities.get(hoveredId)!))) updateHoverState(null);
+    if (hoveredId && !hoveredRepresentationEnabled()) updateHoverState(null);
     if (hoveredGuideId && !constructionRenderer.hitTargets.some(object => object.visible && object.userData.constructionId === hoveredGuideId && isVisible(object))) updateHoverState(null);
   }
   function entityAnchor(entity: SceneEntity): THREE.Vector3 {
@@ -786,6 +786,23 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
       ? constructionRenderer.focusAnchor : entity.anchor;
   }
   function selectedBody() { return snapshot?.bodies.find(body => `body:${body.id}` === presentation.selectedId); }
+  function hoveredRepresentationEnabled(): boolean {
+    const entity = hoveredId ? entities.get(hoveredId) : undefined;
+    if (!entity) return false;
+    const hit = hoveredHit;
+    const targets = hit?.kind === 'construction' ? constructionRenderer.hitTargets
+      : hit?.kind === 'trail' || hit?.kind === 'history' ? trailRenderer.hitTargets : null;
+    // A historical/guide representation has its own visibility and validity.
+    // Its parent body/house layer may be hidden, or its current cusp undefined.
+    if (targets && hit) return targets.some(object => {
+      const candidate = object.userData.featureHit as Partial<FeatureHit> | undefined;
+      return isVisible(object) && candidate?.id === hit.id && candidate.kind === hit.kind
+        && candidate.entityId === hit.entityId && candidate.system === hit.system
+        && candidate.frame === hit.frame && candidate.sampleInstantMs === hit.sampleInstantMs
+        && candidate.sampleEndInstantMs === hit.sampleEndInstantMs && candidate.constructionId === hit.constructionId;
+    });
+    return entity.valid && entityLayerEnabled(entity);
+  }
   function entityLayerEnabled(entity: SceneEntity): boolean {
     if (entity.kind==='earth-house'||entity.kind==='astro-line') return earthRenderer.group.visible&&entity.valid&&entity.objects.some(isVisible);
     if (entity.kind === 'star') {
