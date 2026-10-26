@@ -2,6 +2,8 @@
 
 26 October 2026. Implements the [approved rectifications](../plans/M10-rectifications.md) on [PR #19](https://github.com/buttery-x3/astrology-viewer/pull/19), based on the unmerged M10 branch. The visual review candidate is `8f86a6b1e0c83f2eda31fa38fa98c22294558369`. Full release validation and M10 integration remain held for the user's visual review.
 
+The user's subsequent correction replaces partial entry presets with [independent per-view layer memory](M10-view-layer-memory.md). That later behavior has its own focused evidence; captures and checks below remain scoped to the candidate recorded above.
+
 ## Visible changes
 
 - Outside sphere starts the application with aspects enabled. Explicit Earth/Observer entry disables aspects; Observer enables constellation asterisms. Internal geographic focus preserves manual overrides.

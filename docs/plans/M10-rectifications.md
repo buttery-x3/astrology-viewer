@@ -4,6 +4,8 @@ Approved 26 October 2026 against `71b7158`, following the user's review of M10. 
 
 This amendment supersedes the conflicting card-density, scrolling, decoration and default-view requirements in [the original M10 plan](M10-hover-and-earth-projections.md). All other calculation, selection, content-provenance and layer-independence requirements remain in force.
 
+**Mode-memory amendment, 26 October 2026:** the user's subsequent request replaces shared/carrying layer choices and reapplying partial presets with independent per-view layer memory. The defaults below initialize each mode once per session; returning or reselecting restores that mode's saved toggles. Asterisms start Off for Outside/Earth and On for Observer. Every reference layer, aspect master and Earth projection master/child toggle belongs to its mode. Appearance values, filters and calculations remain shared. See the [implementation and focused checks](../reports/M10-view-layer-memory.md).
+
 ## 1. Intended result
 
 Hover cards should give an immediate, visually striking explanation of the thing under the pointer. Every feature family receives a deliberate colour theme, luminous border, complementary gradients, dark reading panels and restrained sparkles. Cards present concise meaning without a technical fact table or an internal scrolling interaction.
@@ -19,9 +21,9 @@ Outside sphere becomes the starting view. Relationship strands become easy to di
 | Earth projections master | Off | **On** | Off |
 | Projected house sections | Off in fresh state; master disabled | **Off** | Master disabled |
 | Astrocartography | Master disabled | **On** | Master disabled |
-| Constellation asterisms | Keep current setting; initially Off | Keep current setting; initially Off | **On** |
+| Constellation asterisms | Initially Off; own memory | Initially Off; own memory | Initially **On**; own memory |
 
-Apply the listed preset changes on explicit view selection, including reselecting the current view. Manual layer changes remain effective until the next explicit preset selection. Outside/Earth entry does not turn off asterisms the user already enabled. Star and constellation-region switches remain independent.
+Initialize each mode from the listed defaults. Explicit view selection, including reselecting the current view, restores its saved profile. Manual layer changes remain effective when returning to that mode. Observer asterisms do not carry into Outside/Earth; deliberately enabled Outside/Earth asterisms remain remembered for that mode. Star and constellation-region switches remain independent.
 
 Geographic line opacity starts at **75%**, replacing 55%. Preserve manual opacity and body/angle filter changes across view switches; restore 75% when the relevant appearance settings are reset. House sections start disabled rather than being silently enabled by Earth entry. Retain Layered shells and 0% selected-shell lift.
 
