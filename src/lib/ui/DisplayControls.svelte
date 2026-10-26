@@ -1,10 +1,11 @@
 <script lang="ts">
   import type { SceneDisplaySettings } from '../domain/display-settings';
 
-  let { settings, onChange, motion, onMotionChange, textSize, onTextSizeChange, onReset }: {
+  let { settings, onChange, motion, onMotionChange, textSize, onTextSizeChange, cardSparkles = true, onSparklesChange, onReset }: {
     settings: SceneDisplaySettings; onChange: (patch: Partial<SceneDisplaySettings>) => void;
     motion: 'system' | 'reduced' | 'full'; onMotionChange: (motion: 'system' | 'reduced' | 'full') => void;
     textSize: 'standard' | 'large'; onTextSizeChange: (textSize: 'standard' | 'large') => void;
+    cardSparkles?: boolean; onSparklesChange?: (enabled: boolean) => void;
     onReset?: () => void;
   } = $props();
   const uid = $props.id();
@@ -18,6 +19,8 @@
   <label class="display-field" for={`${uid}-earth`}>Earth opacity <output>{Math.round(settings.earthOpacity * 100)}%</output><input id={`${uid}-earth`} aria-label="Earth opacity" type="range" min="0.15" max="1" step="0.05" value={settings.earthOpacity} aria-valuetext={`${Math.round(settings.earthOpacity * 100)} percent`} oninput={event => onChange({ earthOpacity: Number(event.currentTarget.value) })} /></label>
   <p class="display-note">A translucent Earth reveals the schematic sky behind it. Observer coordinates and calculated positions stay the same.</p>
   <label class="display-field">Motion preference<select aria-label="Motion preference" value={motion} onchange={event => onMotionChange(event.currentTarget.value as 'system' | 'reduced' | 'full')}><option value="system">Use system preference</option><option value="reduced">Reduced motion</option><option value="full">Full motion</option></select></label>
+  <label class="display-field">Card sparkles<select aria-label="Card sparkles" value={cardSparkles ? 'on' : 'off'} onchange={event => onSparklesChange?.(event.currentTarget.value === 'on')}><option value="on">On</option><option value="off">Off</option></select></label>
+  <p class="display-note">Reduced motion and Low quality keep the complete static card design.</p>
   <label class="display-field">Interface text size<select aria-label="Interface text size" value={textSize} onchange={event => onTextSizeChange(event.currentTarget.value as 'standard' | 'large')}><option value="standard">Standard</option><option value="large">Large</option></select></label>
   <p class="display-note">Only display preferences are stored on this device.</p>
   {#if onReset}<button class="text-button reset-display" onclick={onReset}>Reset display preferences</button>{/if}

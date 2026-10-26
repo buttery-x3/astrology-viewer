@@ -105,7 +105,7 @@ test('an actual eclipse overlap offers keyboard choices without changing the cur
   const middle = points[0]!.clone().lerp(points[1]!, 0.45);
   await page.mouse.click(box.x + (middle.x + 1) * box.width / 2, box.y + (1 - middle.y) * box.height / 2);
   const chooser = page.getByRole('dialog', { name: 'Choose a nearby feature', exact: true });
-  await expect(chooser).toBeVisible(); await expect(chooser.getByRole('button', { name: /^Sun/ })).toBeVisible(); await expect(chooser.getByRole('button', { name: /^Moon/ })).toBeVisible();
+  await expect(chooser).toBeVisible(); await expect(chooser.getByRole('button', { name: /^Sun ·/ })).toBeVisible(); await expect(chooser.getByRole('button', { name: /^Moon ·/ })).toBeVisible();
   const choices = chooser.getByRole('button');
   await expect(choices.nth(0)).toBeFocused();
   const nextBody = (await choices.nth(1).innerText()).split(' · ')[0]!;
@@ -131,12 +131,14 @@ test('a translucent Earth permits choosing the actual body behind it', async ({ 
   await openControlGroup(page, 'display'); await range(page, 'Earth opacity', '0.3');
   await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
   const chooser = page.getByRole('dialog', { name: 'Choose a nearby feature', exact: true });
-  await expect(chooser).toBeVisible(); await chooser.getByRole('button', { name: /^Sun/ }).click();
+  await expect(chooser).toBeVisible(); await chooser.getByRole('button', { name: /^Sun ·/ }).click();
   await expect(page.locator('#inspector').getByRole('heading', { name: 'Sun', exact: true })).toBeVisible();
   expect(await page.locator('.context-details').innerText()).toBe(before);
 });
 
-test('Melbourne1987 renders the linked Taurus label at its native-frame anchor and identifies the unselected Sun', async ({ page }) => {
+test('Melbourne1987 renders the linked Taurus label at its native-frame anchor and identifies the unselected Sun', async ({ page }, info) => {
+  const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));
+  info.annotations.push({type:'scene-context',description:'Outside sphere: whole-sky exterior label regression'});
   // Observe real WebGL sprite submissions, without adding a production test API.
   await page.addInitScript(() => {
     const probe = (window as any).tropicalLabelProbe = { draws: [] as number[][], labels: [] as string[] };
@@ -181,6 +183,9 @@ test('Melbourne1987 renders the linked Taurus label at its native-frame anchor a
     });
   });
   await birth(page, '1987-04-27', '02:00:00', -37.814, 144.96332, 'Australia/Melbourne');
+  // This regression concerns the whole-sky exterior, independently of the close
+  // geographic Earth overview preset.
+  await page.getByRole('button', { name: 'Outside sphere', exact: true }).click();
   await expect(page.locator('.context-details')).toContainText('26 Apr 1987');
   await expect(page.locator('.context-details')).toContainText('16:00:00 UTC');
   await expect(page.getByTestId('displayed-local-moment')).toHaveText('1987-04-27 · 02:00:00 local');
@@ -199,6 +204,8 @@ test('Melbourne1987 renders the linked Taurus label at its native-frame anchor a
   await expect(page.locator('#inspector .selected-heading')).toContainText('Taurus');
   // The old exterior-hemisphere culling never submitted this linked glyph.
   await expect.poll(() => page.evaluate(() => (window as any).tropicalLabelProbe.draws.length)).toBeGreaterThan(0);
+  await info.attach('linked-sign-label-state',{body:JSON.stringify(await page.evaluate(() => ({labels:(window as any).tropicalLabelProbe.labels,draws:(window as any).tropicalLabelProbe.draws}))),contentType:'application/json'});
+  expect(errors).toEqual([]);
   expect(await page.locator('.scene-canvas canvas').evaluate(async element=>{
     await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
     return (element as HTMLCanvasElement).getContext('webgl2')!.getError();
@@ -207,7 +214,7 @@ test('Melbourne1987 renders the linked Taurus label at its native-frame anchor a
   const box = await page.locator('.scene-canvas canvas').boundingBox(); if (!box) throw new Error('Missing canvas.');
   const camera = new THREE.PerspectiveCamera(43, box.width / box.height, 0.015, 100);
   const vertical = THREE.MathUtils.degToRad(43), horizontal = 2 * Math.atan(Math.tan(vertical / 2) * camera.aspect);
-  camera.position.copy(new THREE.Vector3(7.2, 4.8, 9.4).normalize().multiplyScalar(5.8 * 1.08 / Math.sin(Math.min(vertical, horizontal) / 2)));
+  camera.position.copy(new THREE.Vector3(7.2, 4.8, 9.4).normalize().multiplyScalar(5.8 * 1.24 / Math.sin(Math.min(vertical, horizontal) / 2)));
   camera.lookAt(0, 0, 0); camera.updateMatrixWorld(); camera.updateProjectionMatrix();
   const snapshot = engine.calculate(Date.UTC(1987, 3, 26, 16), { latitudeDeg: -37.814, longitudeDeg: 144.96332 });
   const direction = astronomicalToThree(eclipticDirection(snapshot, 45, 5));
@@ -216,23 +223,46 @@ test('Melbourne1987 renders the linked Taurus label at its native-frame anchor a
   expect(actual.distanceTo(expected)).toBeLessThan(0.00001);
   const sun = snapshot.bodies.find(body => body.id === 'sun')!;
   expect(sun.longitudeDeg).toBeCloseTo(35.89199283139494, 8);
+  const inspectorFact = (label: RegExp) => page.locator('#inspector .data-list > div').filter({ has: page.locator('dt', { hasText: label }) }).locator('dd');
+  await expect(page.locator('#inspector .selected-heading p')).toContainText(/Taurus\s*·\s*5\.89°/);
+  await expect(inspectorFact(/^Ecliptic longitude$/)).toHaveText(`${sun.longitudeDeg.toFixed(2)}°`);
+  await expect(inspectorFact(/^Altitude$/)).toHaveText(`${sun.horizon.altitudeDeg.toFixed(2)}°`);
+  await expect(inspectorFact(/^Horizon$/)).toHaveText('Below');
   await page.getByRole('button', { name: 'Clear selection', exact: true }).click();
   const clearBox = await page.locator('.scene-canvas canvas').boundingBox(); if (!clearBox) throw new Error('Missing canvas.');
   camera.aspect = clearBox.width / clearBox.height; camera.updateProjectionMatrix();
   const value = astronomicalToThree(equatorialToVector(sun.fixedEquatorial));
   const screen = new THREE.Vector3(value.x, value.y, value.z).multiplyScalar(5.8).project(camera);
   await page.mouse.move(clearBox.x + (screen.x + 1) * clearBox.width / 2, clearBox.y + (1 - screen.y) * clearBox.height / 2);
-  await expect(page.getByTestId('scene-hover')).toContainText('Sun · Taurus 5.89° · below horizon');
+  const hover = page.getByTestId('scene-hover');
+  await expect(hover.getByRole('heading', { name: 'Sun', exact: true })).toBeVisible();
+  await expect(hover.getByTestId('hover-card')).toHaveAttribute('data-snapshot-instant', String(snapshot.instantMs));
+  await expect(hover.locator('.identity-line')).toContainText('Taurus');
+  await expect(hover.locator('[data-claim-section="body-in-sign:sun:taurus"]')).toBeVisible();
+  await expect(hover.locator('dl')).toHaveCount(0);
   // Keyboard activation changes the snapshot while the physical pointer stays
   // over the marker. Its tooltip must describe the new calculation immediately.
   await page.getByLabel('Step unit', { exact: true }).selectOption('hour');
   await page.getByRole('button', { name: 'Next hour', exact: true }).focus(); await page.keyboard.press('Enter');
   await expect(page.locator('.context-details')).toContainText('17:00:00 UTC');
   const nextSun = engine.calculate(snapshot.instantMs + 3600000, snapshot.observer).bodies.find(body => body.id === 'sun')!;
-  await expect(page.getByTestId('scene-hover')).toContainText(`Sun · Taurus ${(nextSun.longitudeDeg % 30).toFixed(2)}°`);
+  await expect(hover.getByRole('heading', { name: 'Sun', exact: true })).toBeVisible();
+  await expect(hover.getByTestId('hover-card')).toHaveAttribute('data-snapshot-instant', String(snapshot.instantMs + 3600000));
+  await expect(hover.locator('[data-claim-section="body-in-sign:sun:taurus"]')).toBeVisible();
+  // Numerical facts remain in the inspector. Select with the keyboard only
+  // after proving that the stationary-pointer preview advanced by exactly an hour.
+  await page.locator('.object-list').getByRole('button', { name: /^Sun/ }).focus(); await page.keyboard.press('Enter');
+  await expect(page.locator('#inspector .selected-heading p')).toContainText(`Taurus · ${(nextSun.longitudeDeg % 30).toFixed(2)}°`);
+  await expect(inspectorFact(/^Ecliptic longitude$/)).toHaveText(`${nextSun.longitudeDeg.toFixed(2)}°`);
+  await expect(inspectorFact(/^Altitude$/)).toHaveText(`${nextSun.horizon.altitudeDeg.toFixed(2)}°`);
+  await expect(inspectorFact(/^Horizon$/)).toHaveText(nextSun.horizon.altitudeDeg >= 0 ? 'Above' : 'Below');
   await page.locator('details[data-control-group="layers"] > summary').focus(); await page.keyboard.press('Enter');
   await page.getByLabel('Celestial bodies', { exact: true }).focus(); await page.keyboard.press('Space');
-  await expect(page.getByTestId('scene-hover')).toHaveCount(0);
+  // The focused control now has its own layer explanation. It must replace the
+  // old body reading rather than leaving a stale Sun placement on screen.
+  await expect(hover.getByRole('heading', { name: 'Sun', exact: true })).not.toBeVisible();
+  await expect(hover.getByRole('heading', { name: 'Celestial bodies', exact: true })).toBeVisible();
+  await expect(hover).toContainText('Disabled');
 });
 
 test('Melbourne local birth date remains prominent when its UTC date is the previous day',async({page})=>{

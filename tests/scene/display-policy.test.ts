@@ -1,8 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { earthOccludes, nearbyPointCandidates, scenePixelRatio } from '../../src/lib/scene/display-policy';
 import { placeLabels } from '../../src/lib/scene/label-layout';
+import { featureHit } from '../../src/lib/domain/scene-hit';
 
 describe('scene display policy', () => {
+  it('preserves construction subfeature identity and context through an overlap choice', () => {
+    const hit=featureHit('construction:e:1:intersection','Cusp intersection',{kind:'construction',entityId:'boundary:1',representation:'guide',system:'E',constructionId:'construction:e:1:intersection',role:'intersection'});
+    const candidates=nearbyPointCandidates([{id:hit.id,name:hit.name,hit,x:100,y:100,pointLike:true},{id:'angle:asc',name:'Ascendant',x:101,y:100,pointLike:true}]);
+    expect(candidates[0]?.hit).toEqual(hit);
+    expect(candidates[0]?.id).not.toBe(hit.entityId);
+    expect(candidates).toHaveLength(2);
+  });
   it('caps Auto/Low/High pixel work while respecting a lower device ratio', () => {
     expect(scenePixelRatio(3, 'auto')).toBe(1.5);
     expect(scenePixelRatio(3, 'low')).toBe(1);

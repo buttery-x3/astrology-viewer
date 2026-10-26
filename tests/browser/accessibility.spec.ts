@@ -159,9 +159,15 @@ test('large text reflows at desktop and 200 percent equivalent widths without hi
   await openControlGroup(page, 'display');
   await page.getByLabel('Interface text size', { exact: true }).selectOption('large');
   await expect.poll(() => page.evaluate(() => getComputedStyle(document.documentElement).fontSize)).toBe('18px');
-  for (const viewport of [{ width: 1440, height: 900 }, { width: 1280, height: 720 }, { width: 900, height: 768 }, { width: 720, height: 450 }]) {
+  for (const viewport of [{ width: 1440, height: 900 }, { width: 1280, height: 720 }, { width: 900, height: 768 }, { width: 720, height: 450 }, {width:504,height:450}]) {
     await page.setViewportSize(viewport);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${viewport.width}px horizontal reflow`).toBe(true);
+    if(viewport.width<=720){
+      await page.getByRole('button',{name:'Expand inspector',exact:true}).scrollIntoViewIfNeeded();
+      const toggle=await page.getByRole('button',{name:'Expand inspector',exact:true}).boundingBox();
+      expect(toggle!.x).toBeGreaterThanOrEqual(0);
+      expect(toggle!.x+toggle!.width).toBeLessThanOrEqual(viewport.width);
+    }
     const play = page.getByRole('button', { name: 'Play playback', exact: true });
     await play.scrollIntoViewIfNeeded();
     await expect(play).toBeInViewport();

@@ -5,15 +5,17 @@ import { classifyLongitude } from '../domain/chart';
 import { buildHouseGeometry, compareHouseAssignments, type HouseAssignmentComparison, type HouseDisplaySettings, type HouseGeometry, type HouseMesh } from '../domain/house-geometry';
 import { eclipticDirection } from '../domain/sky-reference';
 import { writeAstronomicalLine as writeLine } from './line-buffer';
+import { primaryHouseLink } from '../domain/house-links';
 
 export interface HouseSceneEntity {
   id: string; name: string; kind: 'house' | 'boundary';
   objects: THREE.Object3D[]; anchor: THREE.Vector3; valid: boolean;
-  lines: THREE.Line[]; label: THREE.Sprite;
+  lines: THREE.Line[]; label?: THREE.Sprite;
 }
 export interface HouseRenderer {
   group: THREE.Group;
   entities: HouseSceneEntity[];
+  comparisonEntities: HouseSceneEntity[];
   update(snapshot: EphemerisSnapshot | null, settings: HouseDisplaySettings, interaction: { selectedId: string | null; hoveredId: string | null; visible: boolean; quietComparison?: boolean }): void;
 }
 type CaptionFactory = (text: string, color: string, size: number) => THREE.Sprite;
@@ -112,7 +114,12 @@ export function createHouseRenderer(radius: number, caption: CaptionFactory): Ho
     const entity: HouseSceneEntity = { id: `boundary:${index + 1}`, name: `Boundary ${index + 1}`, kind: 'boundary', objects: [picking, label], anchor: new THREE.Vector3(), valid: false, lines: [line], label };
     entities.push(entity); return { line, picking, label, entity };
   });
-  const ghosts = Array.from({ length: 12 }, (_, index) => { const target = curve(GHOST, true); target.name = `Comparison boundary ${index + 1}`; secondary.add(target); return target; });
+  const comparisonEntities:HouseSceneEntity[]=[];
+  const ghosts = Array.from({ length: 12 }, (_, index) => {
+    const target = curve(GHOST, true); target.name = `Comparison boundary ${index + 1}`; secondary.add(target);
+    comparisonEntities.push({id:`boundary:comparison:${index+1}`,name:target.name,kind:'boundary',objects:[target],anchor:new THREE.Vector3(),valid:false,lines:[target]});
+    return target;
+  });
   const changed = fill(GHOST); secondary.add(changed); changed.renderOrder = 1;
   let previousSnapshot: EphemerisSnapshot | null = null;
   let geometry: HouseGeometry | null = null, comparisonGeometry: HouseGeometry | null = null;
@@ -124,6 +131,7 @@ export function createHouseRenderer(radius: number, caption: CaptionFactory): Ho
     comparisonGeometry = second ? buildHouseGeometry(snapshot, second, STEPS) : null;
     comparison = first && second ? compareHouseAssignments(snapshot.bodies, first, second) : null;
     for (const entity of entities) entity.valid = geometry?.status === 'valid';
+    for (const entity of comparisonEntities) entity.valid = comparisonGeometry?.status === 'valid';
     if (geometry?.status === 'valid') {
       for (const [index, region] of geometry.regions.entries()) {
         const target = regions[index]!;
@@ -145,6 +153,11 @@ export function createHouseRenderer(radius: number, caption: CaptionFactory): Ho
     if (comparisonGeometry?.status === 'valid') {
       for (const [index, boundary] of comparisonGeometry.boundaries.entries()) {
         writeLine(ghosts[index]!, boundary.line); ghosts[index]!.scale.setScalar(radius * 1.009);
+        const entity=comparisonEntities[index]!;
+        entity.anchor.copy(point(boundary.anchor).multiplyScalar(radius*1.009));
+        entity.name=`Boundary ${index+1} · comparison ${second!.system}`;
+        ghosts[index]!.userData.featureHit={id:entity.id,entityId:entity.id,kind:'boundary',representation:'comparison',system:second!.system};
+        ghosts[index]!.userData.hoverName=entity.name;
       }
     }
     const ribbon: HouseMesh = { positions: [], indices: [] };
@@ -161,12 +174,12 @@ export function createHouseRenderer(radius: number, caption: CaptionFactory): Ho
   }
 
   return {
-    group, entities,
+    group, entities, comparisonEntities,
     update(snapshot, settings, interaction) {
       if (snapshot !== previousSnapshot) {
         previousSnapshot = snapshot;
         if (snapshot) updateGeometry(snapshot);
-        else { geometry = comparisonGeometry = null; comparison = null; for (const entity of entities) entity.valid = false; }
+        else { geometry = comparisonGeometry = null; comparison = null; for (const entity of [...entities,...comparisonEntities]) entity.valid = false; }
       }
       group.visible = interaction.visible && snapshot !== null;
       primary.visible = geometry?.status === 'valid';
@@ -174,10 +187,11 @@ export function createHouseRenderer(radius: number, caption: CaptionFactory): Ho
       const selectedBody = snapshot?.bodies.find(body => `body:${body.id}` === interaction.selectedId);
       const assignment = selectedBody && snapshot?.houses[0] ? classifyLongitude(snapshot.houses[0], selectedBody.longitudeDeg) : null;
       const linkedHouse = assignment?.status === 'valid' ? `house:${assignment.house}` : null;
-      const selectedHouse = interaction.selectedId?.startsWith('house:') ? interaction.selectedId : linkedHouse;
+      const selectedHouse = primaryHouseLink(interaction.selectedId)?.skyHouseId ?? linkedHouse;
+      const hoveredHouse = primaryHouseLink(interaction.hoveredId)?.skyHouseId;
       const opacity = THREE.MathUtils.clamp(settings.opacity, 0, 1);
       for (const [index, target] of regions.entries()) {
-        const selected = selectedHouse === target.entity.id, hovered = interaction.hoveredId === target.entity.id;
+        const selected = selectedHouse === target.entity.id, hovered = hoveredHouse === target.entity.id;
         const active = selected || hovered;
         const lift = settings.mode === 'shells' && selected ? THREE.MathUtils.clamp(settings.shellSeparation, 0, 0.2) : 0;
         target.surface.scale.setScalar(radius * (1.002 + lift)); target.volume.scale.setScalar(radius * 1.002);
@@ -218,14 +232,15 @@ export function createHouseRenderer(radius: number, caption: CaptionFactory): Ho
         const active = selected || interaction.hoveredId === target.entity.id;
         const start = Number(target.entity.id.slice(9));
         const adjacent = geometry?.status === 'valid' && selectedHouse && (selectedHouse === `house:${start}` || selectedHouse === `house:${start === 1 ? 12 : start - 1}`);
-        styleLine(target.line, selected ? SELECTED : active || adjacent ? HOVERED : PRIMARY, active || adjacent ? 0.92 : 0.44);
+        styleLine(target.line, selected ? SELECTED : active || adjacent ? HOVERED : PRIMARY, active || adjacent ? 0.88 : 0.22);
         target.label.userData.labelEnabled = group.visible && primary.visible && active;
         target.label.visible = target.label.userData.labelEnabled;
         target.picking.visible = true;
       }
       for (const [index, ghost] of ghosts.entries()) {
         ghost.visible = !settings.comparisonChangesOnly || comparison?.changedBoundaryHouses.includes(index + 1) === true;
-        (ghost.material as THREE.Material).opacity = interaction.quietComparison ? 0.18 : 0.58;
+        const active=interaction.selectedId===`boundary:comparison:${index+1}`||interaction.hoveredId===`boundary:comparison:${index+1}`;
+        (ghost.material as THREE.Material).opacity = active?0.88:interaction.quietComparison ? 0.12 : 0.25;
       }
       changed.visible = comparison?.status === 'valid' && comparison.changedRegions.length > 0 && opacity > 0;
       changed.material.opacity = opacity * (interaction.quietComparison ? 0.1 : 0.55);

@@ -34,4 +34,27 @@ export function writeWideLine(geometry: LineGeometry, points: readonly Vector3[]
   }
   positions.data.needsUpdate = distances.data.needsUpdate = true;
   geometry.instanceCount = count;
+  // Capacity is deliberately reused, so Three's attribute-wide bounds would
+  // include stale or zero-filled segments. Bound only the active Float32 data.
+  const box = geometry.boundingBox ??= new THREE.Box3();
+  const sphere = geometry.boundingSphere ??= new THREE.Sphere();
+  box.makeEmpty();
+  if (!count) { sphere.center.set(0, 0, 0); sphere.radius = 0; return; }
+  let magnitude = 1;
+  for (let offset = 0; offset < count * 6; offset += 3) {
+    const x = values[offset]!, y = values[offset + 1]!, z = values[offset + 2]!;
+    box.min.x = Math.min(box.min.x, x); box.max.x = Math.max(box.max.x, x);
+    box.min.y = Math.min(box.min.y, y); box.max.y = Math.max(box.max.y, y);
+    box.min.z = Math.min(box.min.z, z); box.max.z = Math.max(box.max.z, z);
+    magnitude = Math.max(magnitude, Math.abs(x), Math.abs(y), Math.abs(z));
+  }
+  box.getCenter(sphere.center);
+  let squaredRadius = 0;
+  for (let offset = 0; offset < count * 6; offset += 3) squaredRadius = Math.max(squaredRadius,
+    (values[offset]! - sphere.center.x) ** 2 + (values[offset + 1]! - sphere.center.y) ** 2 + (values[offset + 2]! - sphere.center.z) ** 2);
+  // Two Float32 relative epsilons conservatively cover source→buffer rounding.
+  // Line2 adds the camera-dependent stroke/picking margin during raycasting.
+  const padding = magnitude * 2 ** -22;
+  box.expandByScalar(padding);
+  sphere.radius = Math.sqrt(squaredRadius) + Math.sqrt(3) * padding;
 }

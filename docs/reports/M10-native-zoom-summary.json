@@ -1,0 +1,313 @@
+{
+  "browserVersion": "156.0.8078.47",
+  "method": "Actual chrome://settings/appearance Page zoom combobox selectOption(label=200%); native CDP Browser window bounds only, no viewport/device-scale emulation.",
+  "screenshotMethod": "CDP Page.captureScreenshot without clip, captureBeyondViewport:false, no viewport emulation (Playwright page.screenshot incorrectly clips at real native page zoom).",
+  "sourceRevisionAtLaunch": "da1404f27ec1d470e9ff7a763ee26ddeddcdf336",
+  "sourceStatusAtLaunch": "M src/app.css\n M tests/browser/accessibility.spec.ts",
+  "sourceFiles": {
+    "src/App.svelte": "69f6ea8918b92d20d7c11d31d470ab3d6d11fcabdc65c6b9b7d07f9c5aab1dbb",
+    "src/app.css": "b8bfe088f0868fc8f93bef5a5cb3ac2cc8b9eddc3e1328d2d6af77fbb51f2657",
+    "src/lib/ui/HoverCard.svelte": "1c178efcc86b35bca584e989d02038398b79d81d0743c38e32c5c48193a1287d",
+    "src/lib/ui/FeaturePreview.svelte": "b7d0d505b3967bd57e4fbc23df538e6262943d06d2fbfdf7eaa8e39c99b56d90"
+  },
+  "preFixRootRevision": "da1404f27ec1d470e9ff7a763ee26ddeddcdf336",
+  "preFixAppCssSHA256": "5e06482b4a83ee9644461ea751def1fd55e5d5f445826c3f11242663f59ad787",
+  "checks": {
+    "genuineNative200Percent": true,
+    "allEightStatesPass": true,
+    "sourceFilesStillMatch": {
+      "src/App.svelte": true,
+      "src/app.css": true,
+      "src/lib/ui/HoverCard.svelte": true,
+      "src/lib/ui/FeaturePreview.svelte": true
+    },
+    "browserClosedAndProfileRemoved": true
+  },
+  "windows": [
+    {
+      "outer": {
+        "width": 1440,
+        "height": 900
+      },
+      "before": {
+        "dpr": 1,
+        "innerWidth": 1424,
+        "innerHeight": 749,
+        "outerWidth": 1440,
+        "outerHeight": 900
+      },
+      "after": {
+        "dpr": 2,
+        "innerWidth": 712,
+        "innerHeight": 374,
+        "outerWidth": 1440,
+        "outerHeight": 900,
+        "visualViewportScale": 1
+      },
+      "dprRatio": 2,
+      "widthRatio": 2
+    },
+    {
+      "outer": {
+        "width": 1024,
+        "height": 768
+      },
+      "before": {
+        "dpr": 1,
+        "innerWidth": 1008,
+        "innerHeight": 617,
+        "outerWidth": 1024,
+        "outerHeight": 768
+      },
+      "after": {
+        "dpr": 2,
+        "innerWidth": 504,
+        "innerHeight": 308,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "visualViewportScale": 1
+      },
+      "dprRatio": 2,
+      "widthRatio": 2
+    }
+  ],
+  "states": [
+    {
+      "window": {
+        "width": 1440,
+        "height": 900
+      },
+      "text": "standard",
+      "view": "earth",
+      "cardFits": true,
+      "pointerScrolled": true,
+      "keyboardScrolled": true,
+      "endReached": true,
+      "focusRestored": true,
+      "cardFont": "16px",
+      "cardBounds": {
+        "x": 195,
+        "y": 12,
+        "width": 410,
+        "height": 318.3203125,
+        "right": 605,
+        "bottom": 330.3203125
+      },
+      "noHorizontalOverflow": true,
+      "documentWidth": 704,
+      "headerWithin": true,
+      "headerNoOverlap": true,
+      "inspectorToggleWithin": true,
+      "inspectorOpenFits": true
+    },
+    {
+      "window": {
+        "width": 1440,
+        "height": 900
+      },
+      "text": "standard",
+      "view": "outside",
+      "cardFits": true,
+      "pointerScrolled": true,
+      "keyboardScrolled": true,
+      "endReached": true,
+      "focusRestored": true,
+      "cardFont": "16px",
+      "cardBounds": {
+        "x": 195,
+        "y": 12,
+        "width": 410,
+        "height": 318.3203125,
+        "right": 605,
+        "bottom": 330.3203125
+      },
+      "noHorizontalOverflow": true,
+      "documentWidth": 704,
+      "headerWithin": true,
+      "headerNoOverlap": true,
+      "inspectorToggleWithin": true,
+      "inspectorOpenFits": true
+    },
+    {
+      "window": {
+        "width": 1440,
+        "height": 900
+      },
+      "text": "large",
+      "view": "earth",
+      "cardFits": true,
+      "pointerScrolled": true,
+      "keyboardScrolled": true,
+      "endReached": true,
+      "focusRestored": true,
+      "cardFont": "18px",
+      "cardBounds": {
+        "x": 195,
+        "y": 12,
+        "width": 410,
+        "height": 318.3203125,
+        "right": 605,
+        "bottom": 330.3203125
+      },
+      "noHorizontalOverflow": true,
+      "documentWidth": 704,
+      "headerWithin": true,
+      "headerNoOverlap": true,
+      "inspectorToggleWithin": true,
+      "inspectorOpenFits": true
+    },
+    {
+      "window": {
+        "width": 1440,
+        "height": 900
+      },
+      "text": "large",
+      "view": "outside",
+      "cardFits": true,
+      "pointerScrolled": true,
+      "keyboardScrolled": true,
+      "endReached": true,
+      "focusRestored": true,
+      "cardFont": "18px",
+      "cardBounds": {
+        "x": 195,
+        "y": 12,
+        "width": 410,
+        "height": 318.3203125,
+        "right": 605,
+        "bottom": 330.3203125
+      },
+      "noHorizontalOverflow": true,
+      "documentWidth": 704,
+      "headerWithin": true,
+      "headerNoOverlap": true,
+      "inspectorToggleWithin": true,
+      "inspectorOpenFits": true
+    },
+    {
+      "window": {
+        "width": 1024,
+        "height": 768
+      },
+      "text": "standard",
+      "view": "earth",
+      "cardFits": true,
+      "pointerScrolled": true,
+      "keyboardScrolled": true,
+      "endReached": true,
+      "focusRestored": true,
+      "cardFont": "16px",
+      "cardBounds": {
+        "x": 12,
+        "y": 12,
+        "width": 410,
+        "height": 262.21875,
+        "right": 422,
+        "bottom": 274.21875
+      },
+      "noHorizontalOverflow": true,
+      "documentWidth": 496,
+      "headerWithin": true,
+      "headerNoOverlap": true,
+      "inspectorToggleWithin": true,
+      "inspectorOpenFits": true
+    },
+    {
+      "window": {
+        "width": 1024,
+        "height": 768
+      },
+      "text": "standard",
+      "view": "outside",
+      "cardFits": true,
+      "pointerScrolled": true,
+      "keyboardScrolled": true,
+      "endReached": true,
+      "focusRestored": true,
+      "cardFont": "16px",
+      "cardBounds": {
+        "x": 12,
+        "y": 12,
+        "width": 410,
+        "height": 262.21875,
+        "right": 422,
+        "bottom": 274.21875
+      },
+      "noHorizontalOverflow": true,
+      "documentWidth": 496,
+      "headerWithin": true,
+      "headerNoOverlap": true,
+      "inspectorToggleWithin": true,
+      "inspectorOpenFits": true
+    },
+    {
+      "window": {
+        "width": 1024,
+        "height": 768
+      },
+      "text": "large",
+      "view": "earth",
+      "cardFits": true,
+      "pointerScrolled": true,
+      "keyboardScrolled": true,
+      "endReached": true,
+      "focusRestored": true,
+      "cardFont": "18px",
+      "cardBounds": {
+        "x": 12,
+        "y": 12,
+        "width": 410,
+        "height": 262.21875,
+        "right": 422,
+        "bottom": 274.21875
+      },
+      "noHorizontalOverflow": true,
+      "documentWidth": 496,
+      "headerWithin": true,
+      "headerNoOverlap": true,
+      "inspectorToggleWithin": true,
+      "inspectorOpenFits": true
+    },
+    {
+      "window": {
+        "width": 1024,
+        "height": 768
+      },
+      "text": "large",
+      "view": "outside",
+      "cardFits": true,
+      "pointerScrolled": true,
+      "keyboardScrolled": true,
+      "endReached": true,
+      "focusRestored": true,
+      "cardFont": "18px",
+      "cardBounds": {
+        "x": 12,
+        "y": 12,
+        "width": 410,
+        "height": 262.21875,
+        "right": 422,
+        "bottom": 274.21875
+      },
+      "noHorizontalOverflow": true,
+      "documentWidth": 496,
+      "headerWithin": true,
+      "headerNoOverlap": true,
+      "inspectorToggleWithin": true,
+      "inspectorOpenFits": true
+    }
+  ],
+  "browserClosed": true,
+  "cleanup": [
+    {
+      "path": "D:\\dev\\astrology-viewer\\.cache\\m10-native-zoom\\owned-validation-profile-1792989217233",
+      "removed": true
+    },
+    {
+      "path": "D:\\dev\\astrology-viewer\\.cache\\m10-native-zoom\\owned-probe-profile-1792988892135",
+      "alreadyAbsent": true
+    }
+  ],
+  "errors": [],
+  "screenshotCount": 50
+}

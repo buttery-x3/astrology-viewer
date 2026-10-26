@@ -38,7 +38,7 @@
 
 <section class="dock-section trail-controls" aria-labelledby={`${uid}-heading`}>
   <h2 id={`${uid}-heading`}>Trails & boundary history</h2>
-  <label class="trail-check"><input type="checkbox" checked={settings.enabled} onchange={event => toggleTrail(event.currentTarget.checked)} /><span>Show selected body trail</span></label>
+  <label class="trail-check" data-feature-id="layer:trails"><input type="checkbox" checked={settings.enabled} onchange={event => toggleTrail(event.currentTarget.checked)} /><span>Show selected body trail</span></label>
   <p class="target-note">{bodyName ? `Tracing ${bodyName}` : 'Select a celestial body to trace its motion.'}</p>
   <label class="trail-field" for={`${uid}-reference`}>Trail reference<select id={`${uid}-reference`} aria-label="Trail reference" value={settings.frame} onchange={event => onChange({ frame: event.currentTarget.value as TrailDisplaySettings['frame'] })}><option value="stars">Relative to the stars</option><option value="horizon">Relative to the local horizon</option></select></label>
   <label class="trail-field" for={`${uid}-window`}>Trail window<select id={`${uid}-window`} aria-label="Trail window" value={settings.windowMs} onchange={event => onChange({ windowMs: Number(event.currentTarget.value) })}>{#if !windows.some(item => item.ms === settings.windowMs)}<option value={settings.windowMs}>Custom interval</option>{/if}{#each windows as item (item.ms)}<option value={item.ms}>{item.label}</option>{/each}</select></label>
@@ -62,7 +62,7 @@
 
   <div class="boundary-history-controls">
     <h3>Selected boundary history</h3>
-    <label class="trail-check"><input type="checkbox" checked={historySettings.enabled} onchange={event => toggleHistory(event.currentTarget.checked)} /><span>Show selected boundary history</span></label>
+    <label class="trail-check" data-feature-id="layer:history"><input type="checkbox" checked={historySettings.enabled} onchange={event => toggleHistory(event.currentTarget.checked)} /><span>Show selected boundary history</span></label>
     <p class="target-note">{boundaryHouse ? `C${boundaryHouse} · discrete celestial-reference ghosts` : 'Select an indexed house boundary to inspect its history.'}</p>
     <label class="trail-field" for={`${uid}-history-window`}>History window<select id={`${uid}-history-window`} aria-label="History window" value={historySettings.windowMs} onchange={event => onHistoryChange({ windowMs: Number(event.currentTarget.value) })}>{#if !historyWindows.some(item => item.ms === historySettings.windowMs)}<option value={historySettings.windowMs}>Custom short interval</option>{/if}{#each historyWindows as item (item.ms)}<option value={item.ms}>{item.label}</option>{/each}</select></label>
     <label class="trail-field" for={`${uid}-history-count`}>History sample count<select id={`${uid}-history-count`} aria-label="History sample count" value={historySettings.count} onchange={event => onHistoryChange({ count: Number(event.currentTarget.value) })}>{#each counts as count (count)}<option value={count}>{count} {count === 1 ? 'sample' : 'samples'}</option>{/each}</select></label>

@@ -8,7 +8,7 @@ export interface AspectDisplaySettings {
 }
 export const DEFAULT_ASPECT_DISPLAY: Readonly<AspectDisplaySettings> = Object.freeze({
   enabled: true, types: Object.freeze({ conjunction: true, sextile: true, square: true, trine: true, opposition: true }),
-  orbs: Object.freeze({ ...DEFAULT_ORBS }), scope: 'all', backgroundOpacity: 0.18, glow: true, measurement: true,
+  orbs: Object.freeze({ ...DEFAULT_ORBS }), scope: 'all', backgroundOpacity: 0.65, glow: true, measurement: true,
 });
 export type AspectBody = Pick<BodyPosition, 'id' | 'longitudeDeg'> & Partial<Pick<BodyPosition, 'latitudeDeg'>>;
 export interface AspectDetails extends AspectResult {

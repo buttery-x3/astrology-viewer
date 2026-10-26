@@ -3,23 +3,25 @@
   import type { EphemerisSnapshot } from '../astronomy/ephemeris';
   import type { ObserverCoordinates } from '../astronomy/coordinates';
   import { mountScene, type ScenePresentation, type SceneOrientation } from '../scene/runtime';
+  import type { FeatureHit } from '../domain/scene-hit';
 
   interface Props {
     snapshot: EphemerisSnapshot | null;
     presentation: ScenePresentation;
     onSelect?: (id: string | null) => void;
-    onViewpoint?: (viewpoint: 'overview' | 'observer' | 'outside') => void;
+    onSelectHit?: (hit: FeatureHit) => void;
+    onHover?: (hit: FeatureHit | null) => void;
+    onViewpoint?: (viewpoint: 'overview' | 'observer' | 'outside', applyPreset?: boolean) => void;
     onStatus?: (message: string | null) => void;
     globePickMode?: boolean;
     onObserverPick?: (observer: ObserverCoordinates) => void;
   }
 
-  let { snapshot, presentation, onSelect, onViewpoint, onStatus, globePickMode = false, onObserverPick }: Props = $props();
+  let { snapshot, presentation, onSelect, onSelectHit, onHover, onViewpoint, onStatus, globePickMode = false, onObserverPick }: Props = $props();
   let container: HTMLDivElement;
   let runtime = $state.raw<ReturnType<typeof mountScene> | undefined>();
-  let hovered = $state<{ id: string; name: string } | null>(null);
   let orientation = $state<SceneOrientation | null>(null);
-  let overlaps = $state<{ id: string; name: string }[]>([]);
+  let overlaps = $state<{ id: string; name: string; hit?:FeatureHit }[]>([]);
   let chooser = $state<HTMLDivElement>();
   let graphicsReady = $state(false);
   const uid = $props.id();
@@ -29,11 +31,11 @@
     overlaps = [];
     if (restoreFocus) runtime?.focusCanvas();
   }
-  async function showOverlap(candidates: { id: string; name: string }[] | null) {
+  async function showOverlap(candidates: { id: string; name: string; hit?:FeatureHit }[] | null) {
     overlaps = candidates ?? [];
     if (overlaps.length) { await tick(); chooser?.querySelector<HTMLButtonElement>('button')?.focus(); }
   }
-  function choose(id: string) { onSelect?.(id); closeChooser(true); }
+  function choose(candidate:{id:string;hit?:FeatureHit}) { if(candidate.hit&&onSelectHit)onSelectHit(candidate.hit);else onSelect?.(candidate.id); closeChooser(true); }
   function chooserKey(event: KeyboardEvent) {
     if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); closeChooser(true); }
     else if (['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
@@ -52,10 +54,11 @@
     try {
       runtime = mountScene(container, {
         onSelect: (id) => onSelect?.(id),
-        onViewpoint: (viewpoint) => onViewpoint?.(viewpoint),
+        onSelectHit: hit => { if (onSelectHit) onSelectHit(hit); else onSelect?.(hit.id); },
+        onViewpoint: (viewpoint, options) => onViewpoint?.(viewpoint,options?.applyPreset??true),
         onStatus: (message) => { graphicsReady = message === null; onStatus?.(message); },
         onObserverPick: (observer) => onObserverPick?.(observer),
-        onHover: (entity) => { hovered = entity; },
+        onHover: hit => onHover?.(hit),
         onOrientation: (value) => { orientation = value; },
         onOverlap: (candidates) => { void showOverlap(candidates); },
       });
@@ -81,7 +84,6 @@
 </script>
 
 <div class="scene-canvas" bind:this={container} aria-label="Interactive celestial sphere. Use the Objects list to select sky features with the keyboard.">
-  {#if hovered}<span class="hover-identity" data-testid="scene-hover" aria-hidden="true">{hovered.name}</span>{/if}
   {#if orientation}<div class="orientation-hud" role="group" aria-label="Camera orientation"><strong>{orientation.viewpoint === 'observer' ? 'Observer sky' : orientation.viewpoint === 'outside' ? 'Outside sphere' : 'Earth overview'}</strong><span>Look · Az {orientation.azimuthDeg.toFixed(1)}° · Alt {orientation.altitudeDeg.toFixed(1)}°</span></div>{/if}
   <div class="scene-tools" role="group" aria-label="Sky view controls">
     <button disabled={!graphicsReady} onclick={() => runtime?.zoom(1)} aria-label="Zoom in" title="Zoom in (+)">＋</button>
@@ -90,11 +92,10 @@
     <button disabled={!graphicsReady} onclick={() => runtime?.returnToObserver()} aria-label="Return to observer" title="Return to observer (Home)">⌖</button>
   </div>
   <details class="scene-help"><summary>View controls</summary><p id={`${uid}-help`}>Drag to orbit or look; scroll or use + / − to zoom. With the sky focused, arrow keys move the view, F focuses the selection, and Home returns to observer sky. Use the object list for keyboard selection.</p></details>
-  {#if overlaps.length}<div class="overlap-chooser" role="dialog" aria-modal="false" aria-labelledby={`${uid}-overlap-title`} tabindex="-1" bind:this={chooser} onkeydown={chooserKey}><h3 id={`${uid}-overlap-title`}>Choose a nearby feature</h3><p>These points overlap in this view.</p>{#each overlaps as candidate (candidate.id)}<button onclick={() => choose(candidate.id)}>{candidate.name}</button>{/each}<button class="chooser-cancel" onclick={() => closeChooser(true)}>Cancel</button></div>{/if}
+  {#if overlaps.length}<div class="overlap-chooser" role="dialog" aria-modal="false" aria-labelledby={`${uid}-overlap-title`} tabindex="-1" bind:this={chooser} onkeydown={chooserKey}><h3 id={`${uid}-overlap-title`}>Choose a nearby feature</h3><p>These points overlap in this view.</p>{#each overlaps as candidate (candidate.id)}<button data-feature-id={candidate.hit?.id??candidate.id} data-feature-json={candidate.hit?JSON.stringify(candidate.hit):undefined} onclick={() => choose(candidate)}>{candidate.name}</button>{/each}<button class="chooser-cancel" onclick={() => closeChooser(true)}>Cancel</button></div>{/if}
 </div>
 
 <style>
-  .hover-identity { position: absolute; top: 4.6rem; left: 0.85rem; max-width: calc(100% - 1.7rem); z-index: 2; pointer-events: none; padding: 0.45rem 0.65rem; border: 1px solid #55717d; border-radius: 0.35rem; color: #deecee; background: #0b1727e8; font: 0.875rem/1.4 system-ui, sans-serif; }
   .orientation-hud{position:absolute;right:1rem;bottom:6.1rem;z-index:2;display:grid;gap:4px;text-align:right;pointer-events:none;color:#b7cbd9;font:0.75rem/1.5 system-ui,sans-serif;text-shadow:0 1px 3px #07101e}.orientation-hud strong{font-size:0.75rem;font-weight:500;color:#91b7c5}.orientation-hud span{font-variant-numeric:tabular-nums}
   .scene-tools{position:absolute;right:1rem;bottom:3.2rem;z-index:2;display:flex;gap:6px}.scene-tools button{width:35px;height:35px;border:1px solid #526b80;border-radius:5px;background:#14253aef;color:#d3e5ec;font-size:1.5rem;line-height:1;display:grid;place-items:center}.scene-tools button:hover{background:#2a445b}.scene-tools button:focus-visible,.scene-help summary:focus-visible,.overlap-chooser button:focus-visible{outline:2px solid #b5e4e8;outline-offset:3px}.scene-tools button:disabled{opacity:.4;cursor:default}
   .scene-help{position:absolute;right:1rem;bottom:1rem;z-index:3;color:#b4cddd;font:0.75rem/1.6 system-ui,sans-serif}.scene-help summary{cursor:pointer;text-align:right}.scene-help p{position:absolute;right:0;bottom:1.4rem;width:min(300px,65vw);border:1px solid #526b80;border-radius:6px;background:#102035f5;padding:12px;color:#c4d8e7;font-size:0.875rem;line-height:1.8}

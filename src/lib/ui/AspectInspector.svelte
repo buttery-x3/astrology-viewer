@@ -3,6 +3,9 @@
   import { ASPECT_TYPES } from '../domain/chart';
   import { getAspectDetails, type AspectDisplaySettings } from '../domain/aspect-presentation';
   import ContentCard from './ContentCard.svelte';
+  import FeatureReading from './FeatureReading.svelte';
+  import { resolveHoverCard } from '../domain/hover-card';
+  import { featureHit } from '../domain/scene-hit';
 
   let { snapshot, selectedId, settings, onSelect, onFocus }: {
     snapshot: EphemerisSnapshot | null;
@@ -14,6 +17,7 @@
   const aspect = $derived(snapshot ? getAspectDetails(snapshot.bodies, selectedId, settings.orbs) : null);
   const type = $derived(ASPECT_TYPES.find(item => item.id === aspect?.type));
   const visible = $derived(Boolean(aspect?.withinOrb && settings.enabled && settings.types[aspect.type]));
+  const reading=$derived(snapshot?resolveHoverCard(featureHit(selectedId,selectedId),{snapshot,orbs:settings.orbs}):null);
   const name = (bodyId: string) => bodyId[0]!.toUpperCase() + bodyId.slice(1);
   const degrees = (value: number) => `${value.toFixed(3)}°`;
 </script>
@@ -37,7 +41,7 @@
     {#if !aspect.withinOrb}<div class="aspect-warning"><strong>Outside configured orb</strong><p>No active strand is drawn for this pair and type. Its measurements and the type’s general meaning remain available.</p></div>{:else if !visible}<p class="field-note">This aspect is within orb and hidden by the current layer or type filter.</p>{/if}
   </section>
   {#if visible}<button class="button secondary focus-button" onclick={onFocus}>Focus aspect <kbd>F</kbd></button>{/if}
-  <ContentCard id={`aspect-type:${aspect.type}`} />
+  {#if reading}<FeatureReading model={reading} heading={false} facts={false}/>{:else}<ContentCard id={`aspect-type:${aspect.type}`} />{/if}
 {:else}
   <section class="inspector-section"><h2>Aspect unavailable</h2><p>{snapshot ? 'This pair could not be resolved in the current snapshot.' : 'A calculated snapshot is needed to inspect this pair.'}</p></section>
 {/if}

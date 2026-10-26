@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildEarthHouseProjection, classifyEarthHouse, fixedToEarthDirection, earthToFixedDirection, DEFAULT_EARTH_PROJECTIONS } from '../../src/lib/domain/earth-projections';
+import { buildEarthHouseProjection, classifyEarthHouse, fixedToEarthDirection, earthToFixedDirection, earthHouseAvailability, DEFAULT_EARTH_PROJECTIONS } from '../../src/lib/domain/earth-projections';
 import { createEquatorialFrameTransform, IDENTITY_MATRIX3, sphericalToVector, type Matrix3 } from '../../src/lib/astronomy/coordinates';
 import type { EphemerisSnapshot, HouseResult } from '../../src/lib/astronomy/ephemeris';
 import { buildHouseGeometry } from '../../src/lib/domain/house-geometry';
@@ -16,6 +16,14 @@ function sky(result: HouseResult, rotation: Matrix3 = IDENTITY_MATRIX3): Ephemer
 }
 
 describe('radial geographic projection of the primary chart partition', () => {
+  it('reports degenerate valid-status cusps identically to the unavailable renderer partition', () => {
+    const result={system:'E',status:'valid',cusps:Array(12).fill(0),ascendantDeg:0,midheavenDeg:0,armcDeg:0} as const;
+    const availability=earthHouseAvailability(result),projection=buildEarthHouseProjection(sky(result));
+    expect(availability.status).toBe('undefined');
+    expect(projection.status).toBe('undefined');
+    if(availability.status==='undefined'&&projection.status==='undefined') expect(availability.reason).toBe(projection.reason);
+    expect(earthHouseAvailability(undefined)).toMatchObject({status:'undefined',reason:'No primary house result is available.'});
+  });
   for (const result of reference.cases.flatMap(date => date.observers.flatMap(observer => observer.houses))) {
     it(`preserves indexed ${result.system}/${result.status} partition and exact directions`, () => {
       const snapshot = sky(result as HouseResult, [0, -1, 0, 1, 0, 0, 0, 0, 1]);

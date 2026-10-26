@@ -27,7 +27,7 @@
 <section class="dock-section construction-guide" aria-labelledby={`${uid}-heading`}>
   <div class="guide-heading"><h2 id={`${uid}-heading`}>How this cusp is built</h2>{#if systemName}<span>{systemName}</span>{/if}</div>
   <p class="guide-intro">Explore the selected method’s construction for the displayed moment and observer.</p>
-  <label class="guide-check"><input type="checkbox" checked={settings.enabled} onchange={event => onChange({ enabled: event.currentTarget.checked })} /><span>Show construction guide</span></label>
+  <label class="guide-check" data-feature-id="layer:construction"><input type="checkbox" checked={settings.enabled} onchange={event => onChange({ enabled: event.currentTarget.checked })} /><span>Show construction guide</span></label>
   <label class="guide-label" for={`${uid}-boundary`}>Construction boundary</label>
   <select id={`${uid}-boundary`} value={settings.boundaryHouse} onchange={event => chooseBoundary(Number(event.currentTarget.value))}>
     {#each houseNumbers as house (house)}<option value={house}>C{house} · begins house {house}</option>{/each}

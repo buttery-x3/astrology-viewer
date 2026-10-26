@@ -43,6 +43,9 @@ test('an ordinary Earth click inspects the globe and focus does not edit the obs
   await page.getByRole('button',{name:/Explore example/}).click();
   await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();await openControlGroups(page);
   const context=await page.locator('.context-details').innerText();
+  // Inspect the base globe surface, rather than its independently selectable
+  // geographic house/astrocartography overlays.
+  await page.getByLabel('Earth projections',{exact:true}).uncheck();
   await page.getByRole('button',{name:'Earth Direction origin',exact:true}).click();
   await page.locator('#inspector').getByRole('button',{name:/Focus in the scene/}).click();
   const canvas=page.locator('.scene-canvas canvas'),box=await canvas.boundingBox();
