@@ -223,6 +223,11 @@ test('Melbourne1987 renders the linked Taurus label at its native-frame anchor a
   expect(actual.distanceTo(expected)).toBeLessThan(0.00001);
   const sun = snapshot.bodies.find(body => body.id === 'sun')!;
   expect(sun.longitudeDeg).toBeCloseTo(35.89199283139494, 8);
+  const inspectorFact = (label: RegExp) => page.locator('#inspector .data-list > div').filter({ has: page.locator('dt', { hasText: label }) }).locator('dd');
+  await expect(page.locator('#inspector .selected-heading p')).toContainText(/Taurus\s*·\s*5\.89°/);
+  await expect(inspectorFact(/^Ecliptic longitude$/)).toHaveText(`${sun.longitudeDeg.toFixed(2)}°`);
+  await expect(inspectorFact(/^Altitude$/)).toHaveText(`${sun.horizon.altitudeDeg.toFixed(2)}°`);
+  await expect(inspectorFact(/^Horizon$/)).toHaveText('Below');
   await page.getByRole('button', { name: 'Clear selection', exact: true }).click();
   const clearBox = await page.locator('.scene-canvas canvas').boundingBox(); if (!clearBox) throw new Error('Missing canvas.');
   camera.aspect = clearBox.width / clearBox.height; camera.updateProjectionMatrix();
@@ -231,8 +236,10 @@ test('Melbourne1987 renders the linked Taurus label at its native-frame anchor a
   await page.mouse.move(clearBox.x + (screen.x + 1) * clearBox.width / 2, clearBox.y + (1 - screen.y) * clearBox.height / 2);
   const hover = page.getByTestId('scene-hover');
   await expect(hover.getByRole('heading', { name: 'Sun', exact: true })).toBeVisible();
-  await expect(hover.locator('dl > div').filter({ has: page.locator('dt', { hasText: /^Tropical placement$/ }) })).toContainText('Taurus 5.89°');
-  await expect(hover.locator('dl > div').filter({ has: page.locator('dt', { hasText: /^Geometric horizon$/ }) })).toContainText('below');
+  await expect(hover.getByTestId('hover-card')).toHaveAttribute('data-snapshot-instant', String(snapshot.instantMs));
+  await expect(hover.locator('.identity-line')).toContainText('Taurus');
+  await expect(hover.locator('[data-claim-section="body-in-sign:sun:taurus"]')).toBeVisible();
+  await expect(hover.locator('dl')).toHaveCount(0);
   // Keyboard activation changes the snapshot while the physical pointer stays
   // over the marker. Its tooltip must describe the new calculation immediately.
   await page.getByLabel('Step unit', { exact: true }).selectOption('hour');
@@ -240,7 +247,15 @@ test('Melbourne1987 renders the linked Taurus label at its native-frame anchor a
   await expect(page.locator('.context-details')).toContainText('17:00:00 UTC');
   const nextSun = engine.calculate(snapshot.instantMs + 3600000, snapshot.observer).bodies.find(body => body.id === 'sun')!;
   await expect(hover.getByRole('heading', { name: 'Sun', exact: true })).toBeVisible();
-  await expect(hover.locator('dl > div').filter({ has: page.locator('dt', { hasText: /^Tropical placement$/ }) })).toContainText(`Taurus ${(nextSun.longitudeDeg % 30).toFixed(2)}°`);
+  await expect(hover.getByTestId('hover-card')).toHaveAttribute('data-snapshot-instant', String(snapshot.instantMs + 3600000));
+  await expect(hover.locator('[data-claim-section="body-in-sign:sun:taurus"]')).toBeVisible();
+  // Numerical facts remain in the inspector. Select with the keyboard only
+  // after proving that the stationary-pointer preview advanced by exactly an hour.
+  await page.locator('.object-list').getByRole('button', { name: /^Sun/ }).focus(); await page.keyboard.press('Enter');
+  await expect(page.locator('#inspector .selected-heading p')).toContainText(`Taurus · ${(nextSun.longitudeDeg % 30).toFixed(2)}°`);
+  await expect(inspectorFact(/^Ecliptic longitude$/)).toHaveText(`${nextSun.longitudeDeg.toFixed(2)}°`);
+  await expect(inspectorFact(/^Altitude$/)).toHaveText(`${nextSun.horizon.altitudeDeg.toFixed(2)}°`);
+  await expect(inspectorFact(/^Horizon$/)).toHaveText(nextSun.horizon.altitudeDeg >= 0 ? 'Above' : 'Below');
   await page.locator('details[data-control-group="layers"] > summary').focus(); await page.keyboard.press('Enter');
   await page.getByLabel('Celestial bodies', { exact: true }).focus(); await page.keyboard.press('Space');
   // The focused control now has its own layer explanation. It must replace the

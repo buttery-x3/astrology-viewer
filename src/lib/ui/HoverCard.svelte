@@ -52,6 +52,8 @@
   role="tooltip"
   data-testid="hover-card"
   data-feature-kind={preview.kind}
+  data-snapshot-instant={model.snapshotInstantMs ?? undefined}
+  data-feature-role={model.facts.find(fact => fact.label === 'Feature role')?.value}
   data-aspect-type={preview.aspect?.type}
   data-theme={preview.theme.name}
   style:--accent={preview.theme.accent}
