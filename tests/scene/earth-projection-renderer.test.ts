@@ -3,8 +3,10 @@ import { describe, expect, it, vi } from 'vitest';
 import { Line2 } from 'three/addons/lines/Line2.js';
 import { createEarthProjectionRenderer } from '../../src/lib/scene/earth-projection-renderer';
 import { DEFAULT_EARTH_PROJECTIONS, type EarthProjectionSettings } from '../../src/lib/domain/earth-projections';
-import { createEquatorialFrameTransform, IDENTITY_MATRIX3 } from '../../src/lib/astronomy/coordinates';
+import { astronomicalToThree, createEquatorialFrameTransform, IDENTITY_MATRIX3 } from '../../src/lib/astronomy/coordinates';
 import { BODY_IDS, type EphemerisSnapshot, type HouseResult } from '../../src/lib/astronomy/ephemeris';
+import { buildAstrocartography } from '../../src/lib/domain/astrocartography';
+import { GEOGRAPHIC_ANGLE_KEY, GEOGRAPHIC_BODY_STYLE, GEOGRAPHIC_MARKER_FRACTIONS } from '../../src/lib/domain/geographic-line-style';
 import fixtures from '../fixtures/native-swiss.json';
 
 function snapshot(result: HouseResult = fixtures.cases[0]!.observers[0]!.houses[0] as HouseResult): EphemerisSnapshot {
@@ -15,7 +17,7 @@ function snapshot(result: HouseResult = fixtures.cases[0]!.observers[0]!.houses[
     bodies: BODY_IDS.map((id, i) => ({ id, equatorial: { rightAscensionDeg: i * 33, declinationDeg: (i - 5) * 7 } })), houses: [result],
   } as EphemerisSnapshot;
 }
-const settings = (): EarthProjectionSettings => ({ ...DEFAULT_EARTH_PROJECTIONS, bodies: { ...DEFAULT_EARTH_PROJECTIONS.bodies }, angles: { ...DEFAULT_EARTH_PROJECTIONS.angles } });
+const settings = (): EarthProjectionSettings => ({ ...DEFAULT_EARTH_PROJECTIONS, enabled: true, houses: true, bodies: { ...DEFAULT_EARTH_PROJECTIONS.bodies }, angles: { ...DEFAULT_EARTH_PROJECTIONS.angles } });
 function renderer() { return createEarthProjectionRenderer(0.82, (_text, _color, size) => { const sprite = new THREE.Sprite(new THREE.SpriteMaterial()); sprite.scale.setScalar(size); return sprite; }); }
 const interaction = { visible: true, selectedId: null, hoveredId: null };
 function resources(root: THREE.Object3D) {
@@ -27,6 +29,64 @@ function resources(root: THREE.Object3D) {
 }
 
 describe('Earth surface renderer identity and lifecycle', () => {
+  it('gives AC/DC/MC/IC equal solid core weight while colour continues to identify the body', () => {
+    const display = renderer(), chart = snapshot();
+    display.update(chart, { ...settings(), astroOpacity: 0.75 }, interaction);
+    expect(new Set(GEOGRAPHIC_ANGLE_KEY.map(item => item.path)).size).toBe(4);
+    for (const body of BODY_IDS) {
+      const cores = display.entities.filter(entity => entity.id.startsWith(`astro:${body}:`)).flatMap(entity => entity.objects.filter((object): object is Line2 => object instanceof Line2));
+      expect(cores).toHaveLength(8);
+      for (const core of cores) {
+        expect(core.material.dashed).toBe(false);
+        expect(core.material.opacity).toBe(0.75);
+        expect(core.material.linewidth).toBe(1.1);
+        expect(core.material.color.getHexString()).toBe(GEOGRAPHIC_BODY_STYLE[body].color.slice(1));
+      }
+    }
+    display.update(chart, settings(), { ...interaction, selectedId: 'astro:venus:ic' });
+    const selected = display.entities.find(entity => entity.id === 'astro:venus:ic')!.objects[0] as Line2;
+    expect(selected.material.opacity).toBe(1); expect(selected.material.linewidth).toBe(2.8); expect(selected.material.dashed).toBe(false);
+    display.dispose();
+  });
+
+  it('repeats camera-facing categorical badges on actual curve samples with the same line hit identity', () => {
+    const display = renderer(), chart = snapshot(); display.update(chart, settings(), interaction);
+    const source = buildAstrocartography(chart);
+    const camera = new THREE.PerspectiveCamera(); camera.position.set(2, 1, 3); display.faceCamera(camera);
+    for (const entity of display.entities.filter(entity => entity.kind === 'astro-line')) {
+      const markers = entity.objects.filter((object): object is THREE.Sprite => object instanceof THREE.Sprite && !object.userData.geographicExpanded);
+      expect(markers).toHaveLength(GEOGRAPHIC_MARKER_FRACTIONS.length);
+      const samples = source.lines.find(line => line.id === entity.id)!.segments.flat().map(sample => {
+        const point = astronomicalToThree(sample.point); return new THREE.Vector3(point.x, point.y, point.z).multiplyScalar(0.82 * 1.014);
+      });
+      for (const marker of markers) {
+        expect(samples.some(point => point.distanceTo(marker.position) < 1e-8)).toBe(true);
+        expect(marker.userData.featureHit).toMatchObject({ id: entity.id, entityId: entity.id, role: 'badge', representation: 'earth' });
+        expect(marker.userData.geographicMarker).toBe(entity.id.split(':').at(-1));
+        expect(marker.userData.labelEnabled).toBe(marker.position.dot(camera.position.clone().sub(marker.position)) > 0);
+      }
+    }
+    display.dispose();
+  });
+
+  it('keeps a hovered or selected line identified on a visible arc when its equatorial badge is behind Earth', () => {
+    const display = renderer(), chart = snapshot();
+    const id = 'astro:sun:mc', entity = display.entities.find(entity => entity.id === id)!;
+    const source = buildAstrocartography(chart).lines.find(line => line.id === id)!;
+    const sample = astronomicalToThree(source.segments.flat()[5]!.point);
+    const camera = new THREE.PerspectiveCamera(); camera.position.set(sample.x, sample.y, sample.z).multiplyScalar(3);
+    for (const state of [{ selectedId: id, hoveredId: null }, { selectedId: null, hoveredId: id }]) {
+      display.update(chart, settings(), { visible: true, ...state }); display.faceCamera(camera);
+      expect(entity.label!.userData.labelEnabled).toBe(false);
+      const focused = entity.objects.find((object): object is THREE.Sprite => object instanceof THREE.Sprite && object.userData.geographicExpanded)!;
+      expect(focused.visible).toBe(true); expect(focused.userData.labelEnabled).toBe(true);
+      expect(focused.userData.featureHit).toMatchObject({ id, entityId: id, bodyId: 'sun', angle: 'mc', role: 'badge' });
+      expect(display.hitTargets).toContain(focused);
+      expect(display.isSurfaceHitVisible(focused.position)).toBe(true);
+    }
+    display.dispose();
+  });
+
   it('finds the exact primary section analytically under a transformed globe and rejects disabled/interior hits', () => {
     const display=renderer(),chart=snapshot(); display.update(chart,settings(),interaction);
     const parent=new THREE.Group(); parent.position.set(3,-2,4);parent.rotation.set(.4,1.1,-.3);parent.scale.setScalar(1.4);parent.add(display.group);parent.updateMatrixWorld(true);
