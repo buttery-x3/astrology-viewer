@@ -52,6 +52,7 @@
   role="tooltip"
   data-testid="hover-card"
   data-feature-kind={preview.kind}
+  data-snapshot-instant={model.snapshotInstantMs ?? undefined}
   data-aspect-type={preview.aspect?.type}
   data-theme={preview.theme.name}
   style:--accent={preview.theme.accent}
