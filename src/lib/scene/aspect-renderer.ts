@@ -5,6 +5,7 @@ import { astronomicalToThree, equatorialToVector, signedAngularDifferenceDegrees
 import type { EphemerisSnapshot } from '../astronomy/ephemeris';
 import { getAspectDetails, getVisibleAspects, type AspectDisplaySettings } from '../domain/aspect-presentation';
 import { eclipticDirection } from '../domain/sky-reference';
+import { featureHit } from '../domain/scene-hit';
 import { ASPECT_STYLE } from './aspect-style';
 import { buildAspectCurve } from './aspect-curve';
 import { createWideLineGeometry, writeWideLine } from './wide-line-buffer';
@@ -32,6 +33,12 @@ function point(value: Vector3, radius = 1): THREE.Vector3 {
   return new THREE.Vector3(converted.x, converted.y, converted.z).multiplyScalar(radius);
 }
 const bodyName = (id: string) => id[0]!.toUpperCase() + id.slice(1);
+
+/** Keep a subtarget's meaning separate from the pooled aspect that owns it. */
+function identify(object: THREE.Object3D, id: string, name: string, role: string): void {
+  object.userData.hoverName = name;
+  object.userData.featureHit = featureHit(id, name, { representation: 'sky', role });
+}
 
 export function createAspectRenderer(radius: number, captionFactory: CaptionFactory): AspectRenderer {
   const group = new THREE.Group(); group.name = 'Longitude aspects';
@@ -118,6 +125,8 @@ export function createAspectRenderer(radius: number, captionFactory: CaptionFact
         target.group.visible = true; target.entity.valid = true;
         target.entity.id = aspect.id; target.entity.name = `${bodyName(aspect.bodyA)} — ${bodyName(aspect.bodyB)} · ${aspect.type}`;
         target.entity.objects = [target.core, target.caption, ...target.endpoints];
+        identify(target.core, aspect.id, target.entity.name, 'Longitude aspect strand');
+        identify(target.caption, aspect.id, target.entity.name, 'Aspect symbol caption');
         if (target.previousSnapshot !== snapshot || target.previousId !== aspect.id) {
           const curve = buildAspectCurve(equatorialToVector(first.fixedEquatorial), equatorialToVector(second.fixedEquatorial), aspect.type, radius);
           writeWideLine(target.core.geometry, curve.points);
@@ -140,10 +149,12 @@ export function createAspectRenderer(radius: number, captionFactory: CaptionFact
         for (const [endpointIndex, endpoint] of target.endpoints.entries()) {
           endpoint.visible = isSelected;
           endpoint.material.color.set(style.color);
-          endpoint.userData.hoverName = `${bodyName(endpointIndex ? aspect.bodyB : aspect.bodyA)} endpoint · selected aspect indicator`;
+          const endpointBody = endpointIndex ? aspect.bodyB : aspect.bodyA;
+          identify(endpoint, `body:${endpointBody}`, `${bodyName(endpointBody)} endpoint · selected aspect indicator`, 'Body endpoint · selected aspect indicator');
         }
         if (isSelected && settings.measurement) {
           measurementGroup.visible = group.visible;
+          identify(measurement, aspect.id, `${target.entity.name} · measured longitude separation`, 'Measured shortest ecliptic-longitude separation arc');
           const delta = signedAngularDifferenceDegrees(first.longitudeDeg, second.longitudeDeg);
           const count = Math.max(1, Math.ceil(Math.abs(delta) / 2));
           const points = Array.from({ length: count + 1 }, (_, step) => {
@@ -162,7 +173,9 @@ export function createAspectRenderer(radius: number, captionFactory: CaptionFact
             const enabled = group.visible && (anchorIndex === 0 || Math.abs(delta) > 1e-8);
             anchor.marker.visible = enabled; anchor.caption.visible = anchor.caption.userData.labelEnabled = enabled;
             anchor.caption.userData.labelPriority = 24;
-            anchor.marker.userData.hoverName = `${bodyName(body.id)} · ecliptic longitude anchor`;
+            identify(anchor.marker, `body:${body.id}`, `${bodyName(body.id)} · ecliptic longitude anchor`, 'Ecliptic longitude anchor · actual body latitude is retained');
+            identify(anchor.caption, `body:${body.id}`, `${bodyName(body.id)} · longitude anchor caption`, 'Ecliptic longitude anchor caption');
+            identify(anchor.leader, `body:${body.id}`, `${bodyName(body.id)} · longitude caption leader`, 'Caption leader · connects the label to its ecliptic longitude anchor');
             const a = anchor.marker.position, b = anchor.caption.position;
             writeWideLine(anchor.leader.geometry, [{ x: a.x, y: -a.z, z: a.y }, { x: b.x, y: -b.z, z: b.y }]);
             anchor.leader.visible = enabled;
@@ -178,7 +191,7 @@ export function createAspectRenderer(radius: number, captionFactory: CaptionFact
             projectionPoints[0] = { x: actual.x * radius, y: actual.y * radius, z: actual.z * radius };
             writeWideLine(anchor.projection.geometry, projectionPoints);
             anchor.projection.visible = group.visible && Math.abs(body.latitudeDeg) > 1e-8;
-            anchor.projection.userData.hoverName = `${bodyName(body.id)} · latitude projection to the ecliptic`;
+            identify(anchor.projection, `body:${body.id}`, `${bodyName(body.id)} · latitude projection to the ecliptic`, 'Latitude projection · actual body position to its ecliptic longitude');
           }
           target.entity.objects.push(measurement, ...anchors.flatMap(anchor => [anchor.marker, anchor.caption, anchor.leader, anchor.projection]));
         }

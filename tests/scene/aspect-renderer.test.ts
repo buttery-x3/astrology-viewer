@@ -8,6 +8,8 @@ import { DEFAULT_ASPECT_DISPLAY, type AspectDisplaySettings } from '../../src/li
 import { eclipticDirection } from '../../src/lib/domain/sky-reference';
 import { createAspectRenderer } from '../../src/lib/scene/aspect-renderer';
 import { ASPECT_LEGEND, ASPECT_STYLE } from '../../src/lib/scene/aspect-style';
+import { resolveHoverCard } from '../../src/lib/domain/hover-card';
+import type { FeatureHit } from '../../src/lib/domain/scene-hit';
 
 let engine: EphemerisEngine, snapshot: EphemerisSnapshot;
 beforeAll(async () => {
@@ -46,6 +48,69 @@ function expectedPoint(direction: Vector3, scale = radius): THREE.Vector3 {
 }
 
 describe('longitude aspect rendering', () => {
+  it('resolves endpoint and longitude subtargets to their own body cards with exact geometric roles', () => {
+    const display = renderer(), chart = sky([['sun', 350, 12], ['moon', 50, -17]]);
+    display.update(chart, settings(), interaction('aspect:sun-moon:sextile'));
+    const objects = display.entities[0]!.objects;
+    const endpointHits = objects.filter(object => object.userData.ignoreEarthOcclusion).map(object => object.userData.featureHit as FeatureHit);
+    expect(endpointHits.map(hit => hit.entityId)).toEqual(['body:sun', 'body:moon']);
+    const bodyObjects = objects.filter(object => object.userData.featureHit?.kind === 'body');
+    // Two real-position endpoint rings plus marker/caption/leader/projection for each longitude anchor.
+    expect(bodyObjects).toHaveLength(10);
+    for (const object of bodyObjects) {
+      const hit = object.userData.featureHit as FeatureHit;
+      const body = hit.entityId.slice('body:'.length), card = resolveHoverCard(hit, { snapshot: chart });
+      expect(hit.id).toBe(`body:${body}`);
+      expect(hit.representation).toBe('sky');
+      expect(card?.kind).toBe('body');
+      expect(card?.aspect).toBeUndefined();
+      expect(card?.sections.some(section => section.id === `body:${body}`)).toBe(true);
+      expect(card?.sections.some(section => section.id === `body-in-sign:${body}:${body === 'sun' ? 'pisces' : 'taurus'}`)).toBe(true);
+      expect(card?.facts.find(fact => fact.label === 'Feature role')?.value).toBe(hit.role);
+      expect(hit.role).toBeTruthy();
+    }
+    for (const projection of namedLines(display.group, 'Body latitude projection')) expect(projection.userData.featureHit.role).toMatch(/^Latitude projection/);
+    for (const leader of namedLines(display.group, 'Longitude caption leader')) expect(leader.userData.featureHit.role).toMatch(/^Caption leader/);
+    expect(new Set(bodyObjects.map(object => object.userData.featureHit.role)).size).toBe(5);
+  });
+
+  it('retains the combined aspect card on the strand, symbol and measured separation arc', () => {
+    const display = renderer(), chart = sky([['sun', 350, 12], ['moon', 50, -17]]);
+    display.update(chart, settings(), interaction('aspect:sun-moon:sextile'));
+    const objects = display.entities[0]!.objects.filter(object => object.userData.featureHit?.kind === 'aspect');
+    expect(objects).toHaveLength(3);
+    expect(objects.map(object => object.userData.featureHit.role)).toEqual([
+      'Longitude aspect strand', 'Aspect symbol caption', 'Measured shortest ecliptic-longitude separation arc',
+    ]);
+    for (const object of objects) {
+      const hit = object.userData.featureHit as FeatureHit, card = resolveHoverCard(hit, { snapshot: chart });
+      expect(hit.id).toBe('aspect:sun-moon:sextile');
+      expect(hit.entityId).toBe(hit.id);
+      expect(card?.kind).toBe('aspect');
+      expect(card?.aspect?.bodyA.id).toBe('sun');
+      expect(card?.aspect?.bodyB.id).toBe('moon');
+      expect(card?.facts.find(fact => fact.label === 'Feature role')?.value).toBe(hit.role);
+    }
+  });
+
+  it('rebinds pooled endpoint and measurement identities when the eligible body pair changes', () => {
+    const display = renderer();
+    display.update(sky([['sun', 10, 2], ['moon', 70, 3]]), settings(), interaction('aspect:sun-moon:sextile'));
+    const first = display.entities[0]!, endpoints = first.objects.filter(object => object.userData.ignoreEarthOcclusion);
+    const measurement = namedLines(display.group, 'Longitude separation arc')[0]!;
+    display.update(sky([['venus', 20, 8], ['mars', 110, -6]]), settings(), interaction('aspect:venus-mars:square'));
+    const next = display.entities[0]!;
+    expect(next.objects.filter(object => object.userData.ignoreEarthOcclusion)).toEqual(endpoints);
+    expect(endpoints.map(object => object.userData.featureHit.entityId)).toEqual(['body:venus', 'body:mars']);
+    expect(next.objects.filter(object => object.userData.featureHit?.kind === 'body').every(object => ['body:venus', 'body:mars'].includes(object.userData.featureHit.entityId))).toBe(true);
+    expect(measurement.userData.featureHit.entityId).toBe('aspect:venus-mars:square');
+    expect(next.objects.filter(object => object.userData.featureHit?.kind === 'aspect').every(object => object.userData.featureHit.entityId === next.id)).toBe(true);
+    const config = settings(); config.measurement = false;
+    display.update(sky([['venus', 20, 8], ['mars', 110, -6]]), config, interaction('aspect:venus-mars:square'));
+    expect(next.objects.some(object => object.userData.featureHit?.role?.startsWith('Latitude projection'))).toBe(false);
+    expect(measurement.parent!.visible).toBe(false);
+  });
+
   for (const [first, second, middle] of [[350, 50, 20], [50, 350, 20], [20, 80, 50], [80, 20, 50]] as const) {
     it(`measures the shortest longitude arc from${first}° to${second}° with both correct endpoints`, () => {
       const display = renderer(), chart = sky([['sun', first, 8], ['moon', second, -5]]);
