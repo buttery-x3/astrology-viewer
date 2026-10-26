@@ -27,5 +27,33 @@
     "M5 method prose is supplementary budget accounting, not additional catalogue entries.",
     "Product-rule source links are pinned to project commit 0ea709fdff33ac11aed696fcb0b60f17e0fad477; external source review dates remain recorded.",
     "M9 release maintenance verified historical project citation paths at the M8 merge through GitHub file reads; claim prose and original editorial review dates are unchanged. Wikipedia is separately reviewed links-only navigation."
+  ],
+  "additions": [
+    {
+      "milestone": "M10",
+      "reviewedAt": "2026-10-26",
+      "entryIds": [
+        "astro:overview",
+        "astro:body:sun",
+        "astro:body:moon",
+        "astro:body:mercury",
+        "astro:body:venus",
+        "astro:body:mars",
+        "astro:body:jupiter",
+        "astro:body:saturn",
+        "astro:body:uranus",
+        "astro:body:neptune",
+        "astro:body:pluto",
+        "astro:angle:ac",
+        "astro:angle:dc",
+        "astro:angle:mc",
+        "astro:angle:ic"
+      ],
+      "sourceId": "almanac-astrocartography",
+      "sourceUrl": "https://www.almanac.com/astrocartography-explained-find-your-best-places-live",
+      "method": "Original fixed practitioner summaries, directly read from the primary page; deterministic planet/angle combination; no pair-specific prediction, numerical rule, images or runtime generation.",
+      "humanEditorialReview": "Pending external gate",
+      "previousCatalogueClaims": "Existing 305 entries retained unchanged."
+    }
   ]
 }

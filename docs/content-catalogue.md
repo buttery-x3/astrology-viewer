@@ -1,7 +1,8 @@
 # Static interpretation and concept catalogue
 
-The versioned catalogue contains **305 entries and 89 attributed source records**:
-120 body-in-sign placements, 120 body-in-house placements and 65 concepts. The
+The versioned catalogue contains **320 entries and 90 attributed source records**:
+120 body-in-sign placements, 120 body-in-house placements, 65 original concepts
+and 15 astrocartography entries. The
 concept set includes ten body identities/roles, twelve signs, twelve houses, five
 major aspects, seven house systems, thirteen spatial references/angles and six
 evidence/time/frame/convention concepts. All application text is local static
@@ -14,7 +15,7 @@ and review method. These historical cache paths identify the reviewed inputs;
 the ignored research cache is not needed to run, build or validate the release.
 `manifest.json` freezes catalogue version, coverage, review date and SHA256 hashes.
 
-`wikipedia-links.json` is a separate, navigation-only map for all 65 concepts plus
+`wikipedia-links.json` is a separate, navigation-only map for all 80 non-placement concepts/themes plus
 Earth, observer location and constellation regions. It adds general concept
 entry points without importing article prose/images, claiming placement-specific
 support, or changing the 89 claim sources and canonical-page word budgets.
@@ -29,6 +30,22 @@ identify the actual build revision; historical citation pins do not substitute
 for the corresponding source of a later release.
 
 ## Claim roles and attribution
+
+M10 catalogue version 1.1.0 preserves every original 305 card's title, summary and
+claim text. It adds `astro:overview`, ten `astro:body:*` themes and four
+`astro:angle:ac|dc|mc|ic` themes, all labelled traditional interpretation.
+Theresa Reed's bylined Almanac overview/planetary/cardinal passages support the
+154-word combined original summary. Planet/angle cards reuse those exact
+entries; they do not invent a separate prediction for each of the forty pairs.
+The page's suggested influence distance, parans and credited images are excluded.
+
+`getSupplementalClaim` exposes immutable registered explanatory text, including
+the original construction-stage claims. `project-explanations.ts` supplies the
+original M10 feature/layer paragraphs through `getProjectExplanation`; exact
+code/registry correspondence is validated. Hiding citations in a hover preview
+does not remove the underlying claim references or the inspector's attribution.
+The fifteen new Wikipedia links are navigation only, to the locational astrology
+article's Astrocartography section; they supply no placement-specific evidence.
 
 Each substantive card paragraph has its own text, role, source IDs and exact
 source-section locator. The summary is the same claim text joined for alternate

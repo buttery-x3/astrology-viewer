@@ -32,14 +32,14 @@ const files=['catalogue.json','sources.json','supplemental-claims.json','curatio
 const dataFiles=Object.fromEntries(await Promise.all(files.map(async(name)=>{
   const bytes=await readFile(`src/lib/content/data/${name}`);return [name,{sha256:sha256(bytes),bytes:bytes.length}];
 })));
-const budgetText=`${JSON.stringify({catalogueVersion:'1.0.0',policy:'One logical claim per canonical webpage; summary/claim duplicates and reused M3 scene definitions count once. Includes M5 construction-stage prose and shared notes.',pages:validation.budgets},null,2)}\n`;
+const budgetText=`${JSON.stringify({catalogueVersion:'1.1.0',policy:'One logical claim per canonical webpage; summary/claim duplicates and reused M3 scene definitions count once. Includes M5 construction-stage prose, shared notes and M10 original project explanations.',pages:validation.budgets},null,2)}\n`;
 const manifest={
-  catalogueVersion:'1.0.0',reviewedAt:'2026-10-25',status:'reviewed',entryCount:validation.entries,sourceCount:validation.sources,
+  catalogueVersion:'1.1.0',reviewedAt:'2026-10-26',status:'reviewed',entryCount:validation.entries,sourceCount:validation.sources,
   requiredContentIdsSha256:sha256(JSON.stringify([...REQUIRED_CONTENT_IDS].sort())),
   files:{...dataFiles,'word-budgets.json':{sha256:sha256(budgetText),bytes:Buffer.byteLength(budgetText)}},
   byKind:Object.fromEntries([...new Set(catalogue.map((entry)=>entry.kind))].map((kind)=>[kind,catalogue.filter((entry)=>entry.kind===kind).length])),
   claimsByRole:Object.fromEntries([...new Set(catalogue.flatMap((entry)=>entry.claims.map((claim)=>claim.role)))].map((role)=>[role,catalogue.flatMap((entry)=>entry.claims).filter((claim)=>claim.role===role).length])),
-  reviewScope:'Primary-source paragraph support, original summaries and attribution reviewed during M6 authoring; integration validates exact coverage, roles, source references, source-code reuse and combined canonical-page word budgets. No runtime interpretation generation.',
+  reviewScope:'Agent source curation during M6 and M10 authoring; integration validates exact coverage, roles, source references, source-code reuse and combined canonical-page word budgets. No runtime interpretation generation. Human claim-to-passage editorial review remains an external release gate.',
   limitations:['Practitioner sources establish attributed traditions, not predictive effects.','Historical civil time and birth time can remain uncertain despite precise calculation.','Some house definitions were reviewed via indexed primary-page text during publisher outages.','Product-rule sources are pinned to a reviewed project commit; external publisher pages can change after the recorded review date.'],
 };
 const manifestText=`${JSON.stringify(manifest,null,2)}\n`;

@@ -59,6 +59,14 @@
       "bytes": 252,
       "sha256": "0613408568889f5739e5ae252b722a2659c02002839ad970a63dc5e9174b27cf",
       "changes": "None; retained original bytes."
+    },
+    {
+      "file": "vendor/notices/Stellarium-modern-NOTICE.txt",
+      "url": "https://raw.githubusercontent.com/Stellarium/stellarium/2b10b1a3bb534eb4e7586751054bf67b36c22e53/skycultures/modern/description.md",
+      "title": "Stellarium modern figure data attribution and CC BY-SA4.0 notice",
+      "bytes": 896,
+      "sha256": "1aa96696c6ff75c016a3535e68c587ebbc8d8a3f96a81e3d55e72496335ffc03",
+      "changes": "Retained author/licence facts and added explicit source, derivation and HYG attribution. Full unchanged upstream description is retained separately in vendor/stellarium-modern, verified by figure-manifest.json."
     }
   ]
 }

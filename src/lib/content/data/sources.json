@@ -1356,5 +1356,21 @@
     "reviewedAt": "2026-10-25",
     "reviewStatus": "reviewed",
     "reviewMethod": "Read the Explanation paragraph about Earth overtaking Mars; no image downloaded or reproduced"
+  },
+  {
+    "id": "almanac-astrocartography",
+    "url": "https://www.almanac.com/astrocartography-explained-find-your-best-places-live",
+    "title": "Astrocartography Explained: Find Your Best Places to Live",
+    "author": "Theresa Reed",
+    "publisher": "The Old Farmer’s Almanac / Yankee Publishing",
+    "role": "tradition",
+    "tradition": "Contemporary Western relocation astrology; practitioner explanation",
+    "reuse": "Original concise paraphrases only, limited to 180 derived words across this page. No photographs, credited Astro.com map, article text or distance/paran rules are bundled. Article copyright remains with its publisher; source attribution does not relicense it.",
+    "sourceWordLimit": 200,
+    "editorialBudget": 180,
+    "reviewedAt": "2026-10-26",
+    "reviewStatus": "reviewed",
+    "authorBasis": "The page explicitly identifies Theresa Reed as its writer and displays September 22, 2026.",
+    "reviewMethod": "Agent read the primary page’s overview, all ten Planetary Line Meanings paragraphs and the four Cardinal Points passages on 2026-10-26. This is not human editorial sign-off or empirical evidence of effects."
   }
 ]

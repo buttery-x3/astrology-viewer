@@ -8,9 +8,9 @@ const reviewedAt=z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 const url=z.string().url().refine((value)=>value.startsWith('https://'),'Source links must use HTTPS.');
 export const claimSchema=z.object({text:nonempty,sourceIds:z.array(nonempty).min(1),section:nonempty,role:roleSchema}).strict();
 export const entrySchema=z.object({
-  id:nonempty,kind:z.enum(['body','sign','house','aspect','house-system','reference','angle','evidence','time','trail','body-in-sign','body-in-house']),
+  id:nonempty,kind:z.enum(['body','sign','house','aspect','house-system','reference','angle','evidence','time','trail','body-in-sign','body-in-house','astrocartography']),
   title:nonempty,summary:nonempty,claims:z.array(claimSchema).min(1),reviewStatus:reviewed,reviewedAt,
-  bodyId:nonempty.optional(),signId:nonempty.optional(),house:z.number().int().min(1).max(12).optional(),aspectType:nonempty.optional(),systemId:nonempty.optional(),
+  bodyId:nonempty.optional(),signId:nonempty.optional(),house:z.number().int().min(1).max(12).optional(),aspectType:nonempty.optional(),systemId:nonempty.optional(),angleId:z.enum(['ac','dc','mc','ic']).optional(),
   existingClaimId:nonempty.optional(),reusedFrom:nonempty.optional(),startLongitudeDeg:z.number().optional(),endLongitudeDeg:z.number().optional(),exactAngleDeg:z.number().optional(),
 }).strict();
 export const sourceSchema=z.object({
@@ -42,6 +42,7 @@ export const REQUIRED_CONTENT_IDS:readonly string[]=Object.freeze([
   ...['asc','dsc','mc','ic'].map((id)=>`angle:${id}`),...['evidence','civil-time','trails','frames','retrograde','conventions'].map((id)=>`concept:${id}`),
   ...BODY_IDS.flatMap((body)=>SIGN_IDS.map((sign)=>`body-in-sign:${body}:${sign}`)),
   ...BODY_IDS.flatMap((body)=>Array.from({length:12},(_,index)=>`body-in-house:${body}:${index+1}`)),
+  'astro:overview',...BODY_IDS.map(body=>`astro:body:${body}`),...['ac','dc','mc','ic'].map(angle=>`astro:angle:${angle}`),
 ]);
 
 /** Local validation checks editorial completeness; HTTP success cannot establish claim support. */
@@ -55,8 +56,8 @@ export function validateContentCatalogue(rawEntries:unknown,rawSources:unknown,r
   if(new Set(ids).size!==ids.length)issues.push('Content IDs must be unique.');
   if(new Set(sourceIds).size!==sourceIds.length)issues.push('Source IDs must be unique.');
   if(new Set(supplemental.map((item)=>item.id)).size!==supplemental.length)issues.push('Supplemental logical claim IDs must be unique.');
-  if(entries.length!==305)issues.push(`Expected exactly305 entries; found${entries.length}.`);
-  if(sources.length!==89)issues.push(`Expected exactly89 reviewed sources; found${sources.length}.`);
+  if(entries.length!==320)issues.push(`Expected exactly 320 entries; found ${entries.length}.`);
+  if(sources.length!==90)issues.push(`Expected exactly 90 reviewed sources; found ${sources.length}.`);
   for(const id of REQUIRED_CONTENT_IDS)if(!ids.includes(id))issues.push(`Missing required content ${id}.`);
   for(const id of ids)if(!REQUIRED_CONTENT_IDS.includes(id))issues.push(`Unexpected content ${id}.`);
   const sourceMap=new Map(sources.map((item)=>[item.id,item]));
@@ -70,13 +71,14 @@ export function validateContentCatalogue(rawEntries:unknown,rawSources:unknown,r
   };
   for(const entry of entries){
     const prefix=entry.id.split(':')[0];
-    const expectedKind=prefix==='aspect-type'?'aspect':prefix==='system'?'house-system':prefix==='concept'?({evidence:'evidence','civil-time':'time',trails:'trail'}[entry.id.slice(8)]??'reference'):prefix;
+    const expectedKind=prefix==='astro'?'astrocartography':prefix==='aspect-type'?'aspect':prefix==='system'?'house-system':prefix==='concept'?({evidence:'evidence','civil-time':'time',trails:'trail'}[entry.id.slice(8)]??'reference'):prefix;
     if(entry.kind!==expectedKind)issues.push(`Content kind disagrees with ${entry.id}.`);
     if(entry.kind==='body'&&entry.id!==`body:${entry.bodyId}`)issues.push(`Body metadata disagrees with ${entry.id}.`);
     if(entry.kind==='sign'&&entry.id!==`sign:${entry.signId}`)issues.push(`Sign metadata disagrees with ${entry.id}.`);
     if(entry.kind==='house'&&entry.id!==`house:${entry.house}`)issues.push(`House metadata disagrees with ${entry.id}.`);
     if(entry.kind==='aspect'&&entry.id!==`aspect-type:${entry.aspectType}`)issues.push(`Aspect metadata disagrees with ${entry.id}.`);
     if(entry.kind==='house-system'&&entry.id!==`system:${entry.systemId}`)issues.push(`System metadata disagrees with ${entry.id}.`);
+    if(entry.kind==='astrocartography'&&((entry.bodyId&&entry.angleId)||entry.id!==(entry.bodyId?`astro:body:${entry.bodyId}`:entry.angleId?`astro:angle:${entry.angleId}`:'astro:overview')))issues.push(`Astrocartography metadata disagrees with ${entry.id}.`);
     if(entry.summary!==entry.claims.map((claim)=>claim.text).join(' '))issues.push(`Summary has unsupported or duplicate prose: ${entry.id}.`);
     if(entry.id.startsWith('body-in-sign:')&&(!entry.bodyId||!entry.signId||entry.id!==`body-in-sign:${entry.bodyId}:${entry.signId}`))issues.push(`Placement metadata disagrees with ${entry.id}.`);
     if(entry.id.startsWith('body-in-house:')&&(!entry.bodyId||!entry.house||entry.id!==`body-in-house:${entry.bodyId}:${entry.house}`))issues.push(`Placement metadata disagrees with ${entry.id}.`);
