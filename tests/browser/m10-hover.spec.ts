@@ -370,6 +370,51 @@ test('all five theme previews and enlarged cards fit a constrained logical zoom 
   });
 });
 
+test('complete long relationship fits the 504 by 308 native zoom layout with Large text', async ({
+  page,
+}) => {
+  await example(page);
+  await page.setViewportSize({ width: 504, height: 308 });
+  await page.locator('.left-toggle').click();
+  await openControlGroup(page, 'display');
+  await page.getByLabel('Interface text size', { exact: true }).selectOption('large');
+  await page.locator('[data-control-group="display"] > summary').click();
+  const pair = await aspect(page),
+    card = tooltip(page);
+  await expect(card).toHaveClass(/full-width-placements/);
+  await fitsViewport(page, card);
+  await expect(card.locator('[data-claim-section="body-in-sign:sun:capricorn"]')).toContainText(
+    'ordinary play and emotional openness less comfortable.',
+  );
+  await expect(card.locator('[data-claim-section="body-in-sign:moon:scorpio"]')).toContainText(
+    'emotional openness difficult.',
+  );
+  expect(
+    await card
+      .locator('[data-claim-id]')
+      .evaluateAll((paragraphs) =>
+        paragraphs.every((p) =>
+          Array.from(p.getClientRects()).every((r) => r.top >= 0 && r.bottom <= innerHeight + 1),
+        ),
+      ),
+  ).toBe(true);
+  expect(
+    await card
+      .locator('.reading-panel p')
+      .first()
+      .evaluate((p) => getComputedStyle(p).fontSize),
+  ).toBe('14.625px');
+  await expect(card.locator('.and-connector')).toHaveText('and');
+  await leavePreview(page);
+  await pair.focus();
+  await expect(card).toBeVisible();
+  await expect(pair).toHaveAttribute('aria-describedby', 'feature-preview-card');
+  await fitsViewport(page, card);
+  await page.keyboard.press('Escape');
+  await expect(card).toHaveCount(0);
+  await expect(pair).toBeFocused();
+});
+
 test('paginated navigation gives its newly focused star the matching accessible preview', async ({
   page,
 }) => {

@@ -31,6 +31,7 @@
     y = $state(12);
   let expanded = $state(false);
   let dense = $state(false);
+  let fullWidthPlacements = $state(false);
   let described: HTMLElement | null = null,
     originalDescription: string | null = null;
   let previousResetKey: number | undefined;
@@ -55,6 +56,7 @@
     focusInside = false;
     expanded = false;
     dense = false;
+    fullWidthPlacements = false;
     restoreDescription();
   }
   function position() {
@@ -70,6 +72,10 @@
     }
     if (!dense && height > window.innerHeight - 24) {
       dense = true;
+      return;
+    }
+    if (!fullWidthPlacements && model?.kind === 'aspect' && height > window.innerHeight - 24) {
+      fullWidthPlacements = true;
       return;
     }
     x = Math.max(
@@ -93,6 +99,7 @@
     candidate = null;
     expanded = false;
     dense = false;
+    fullWidthPlacements = false;
     const active = document.activeElement;
     if (
       active instanceof HTMLElement &&
@@ -233,7 +240,14 @@
     }}
     onwheel={(event) => event.stopPropagation()}
   >
-    <HoverCard {model} id="feature-preview-card" {motion} {sparkles} {dense} />
+    <HoverCard
+      {model}
+      id="feature-preview-card"
+      {motion}
+      {sparkles}
+      {dense}
+      {fullWidthPlacements}
+    />
   </div>
 {/if}
 
