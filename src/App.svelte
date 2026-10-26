@@ -133,7 +133,7 @@
 
   const selectedSceneId = $derived(selectedFeature?.entityId ?? $explorer.selectedId);
   const earthProjectionDisplay=$derived({...earthSettings,enabled:$explorer.layers.earthProjections,houses:$explorer.layers.earthHouses,astrocartography:$explorer.layers.astrocartography});
-  const cardDesignPreview=typeof window!=='undefined'&&new URLSearchParams(window.location.hash.slice(1)).get('preview')==='aspects';
+  let cardDesignPreview=$state(typeof window!=='undefined'&&new URLSearchParams(window.location.hash.slice(1)).get('preview')==='aspects');
   const selectedBody = $derived($explorer.snapshot?.bodies.find((body) => `body:${body.id}` === selectedSceneId));
   const display=$derived({quality:preferences.quality,labelScale:preferences.labelScale,earthOpacity:preferences.earthOpacity,reducedMotion:preferences.motion==='reduced'||preferences.motion==='system'&&systemReducedMotion});
   const selectedMeta = $derived(bodies.find((body) => body.id === selectedBody?.id));
@@ -394,7 +394,7 @@
   }
 </script>
 
-<svelte:window onkeydown={onKey} />
+<svelte:window onkeydown={onKey} onhashchange={()=>cardDesignPreview=new URLSearchParams(window.location.hash.slice(1)).get('preview')==='aspects'} />
 <svelte:document onpointerover={previewControl} onpointerout={leaveControl} onpointermove={previewPointerMove} onfocusin={previewControl} onfocusout={leaveControl} />
 
 {#if cardDesignPreview}

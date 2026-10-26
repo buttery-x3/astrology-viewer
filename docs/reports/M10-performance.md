@@ -15,7 +15,7 @@ The final run meets the M10 card-processing and picking targets on this host. Th
 | Viewport | 1920×1080 CSS pixels, device pixel ratio 1; actual scene width varies with the inspector |
 | Launch arguments | `--use-angle=d3d11 --enable-gpu --disable-software-rasterizer` |
 | GPU timing | `EXT_disjoint_timer_query_webgl2` available; completed, non-disjoint results retained |
-| Raw evidence | `.cache/m10-performance/validated-hardware.json` |
+| Raw evidence | [M10-performance.json](M10-performance.json) |
 | Raw SHA-256 | `50bf2b75bd306da7fdec038788dc694b053337f6e93e1248380e918091dcb856` |
 
 All 106 source/data/style/WASM files under `src`, plus the lockfile in that count, were hashed before and after the run. Text hashes normalize CRLF to LF; WASM uses exact bytes. Hashes did not change, and Vite reported no hot updates. A separate `git show` comparison verified **all 106 hashes against the committed blobs**, with no mismatches. The development footer's server-start revision is not used as source identity.
@@ -91,7 +91,7 @@ Earlier exploratory runs identified expensive projected-section triangle picking
 
 ## Post-measurement visual review
 
-Four separate, uninstrumented contexts captured the selected Sun–Moon sextile over close Earth and Outside sphere at 1440×900 and 1024×768, with both explorer and inspector panels open. Files are adjacent to the raw report, named `validated-hardware-{1440,1024}-{earth,outside}.png`.
+Four separate, uninstrumented contexts captured the selected Sun–Moon sextile over close Earth and Outside sphere at 1440×900 and 1024×768, with both explorer and inspector panels open. Retained captures: [1440 Earth](assets/m10-1440-earth.png), [1440 Outside](assets/m10-1440-outside.png), [1024 Earth](assets/m10-1024-earth.png) and [1024 Outside](assets/m10-1024-outside.png).
 
 The actual pixels show distinct close-Earth/full-sky compositions, explicit Sun/Moon names and placements, readable dark interpretation panels, and both sidebars retained. Cards remain inside the viewport; the shorter 1024 layout scrolls its contents. These static reduced-motion captures supplement the [five-theme and contrast review](M10-hover-design.md); they do not claim native 200% browser zoom or close the external accessibility gates.
 
