@@ -1,6 +1,6 @@
 {
-  "catalogueVersion": "1.0.0",
-  "policy": "One logical claim per canonical webpage; summary/claim duplicates and reused M3 scene definitions count once. Includes M5 construction-stage prose and shared notes.",
+  "catalogueVersion": "1.1.0",
+  "policy": "One logical claim per canonical webpage; summary/claim duplicates and reused M3 scene definitions count once. Includes M5 construction-stage prose, shared notes and M10 original project explanations.",
   "pages": [
     {
       "canonicalUrl": "https://science.nasa.gov/sun/facts/",
@@ -1073,6 +1073,29 @@
       ]
     },
     {
+      "canonicalUrl": "https://www.almanac.com/astrocartography-explained-find-your-best-places-live",
+      "derivedWords": 154,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "astro:overview:0",
+        "astro:body:sun:0",
+        "astro:body:moon:0",
+        "astro:body:mercury:0",
+        "astro:body:venus:0",
+        "astro:body:mars:0",
+        "astro:body:jupiter:0",
+        "astro:body:saturn:0",
+        "astro:body:uranus:0",
+        "astro:body:neptune:0",
+        "astro:body:pluto:0",
+        "astro:angle:ac:0",
+        "astro:angle:dc:0",
+        "astro:angle:mc:0",
+        "astro:angle:ic:0"
+      ]
+    },
+    {
       "canonicalUrl": "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/house-construction-contract.md",
       "derivedWords": 65,
       "sourceWordLimit": 200,
@@ -1094,6 +1117,52 @@
         "calculation-provenance:1",
         "calculation-provenance:2",
         "calculation-provenance:3"
+      ]
+    },
+    {
+      "canonicalUrl": "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/coordinate-contract.md",
+      "derivedWords": 97,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "hover:earth",
+        "hover:observer",
+        "hover:sign-constellation",
+        "hover:compass",
+        "hover:bodies-layer"
+      ]
+    },
+    {
+      "canonicalUrl": "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/data-and-licensing.md",
+      "derivedWords": 35,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "hover:constellation",
+        "hover:star"
+      ]
+    },
+    {
+      "canonicalUrl": "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md",
+      "derivedWords": 138,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "hover:asterism",
+        "hover:earth-house",
+        "hover:history",
+        "hover:trail-segment",
+        "hover:house-boundary",
+        "hover:aspects-layer"
+      ]
+    },
+    {
+      "canonicalUrl": "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/src/lib/domain/house-geometry.ts",
+      "derivedWords": 24,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "hover:houses-layer"
       ]
     }
   ]

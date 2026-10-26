@@ -1,34 +1,34 @@
 {
-  "catalogueVersion": "1.0.0",
-  "reviewedAt": "2026-10-25",
+  "catalogueVersion": "1.1.0",
+  "reviewedAt": "2026-10-26",
   "status": "reviewed",
-  "entryCount": 305,
-  "sourceCount": 89,
-  "requiredContentIdsSha256": "10f0eaf0a8d2f2eb44171031adbda2be1cdf2ca4b596b11de52133bd021f5d52",
+  "entryCount": 320,
+  "sourceCount": 90,
+  "requiredContentIdsSha256": "5825a41201395b5c6e6376cfaed11ef4dbc8aa30c687a3c6529d9b5f9cd9da7b",
   "files": {
     "catalogue.json": {
-      "sha256": "e78a7017142b54ab5bb494582b3e53d2fdf19adf53e5c92bc82a40d0bafd8573",
-      "bytes": 229107
+      "sha256": "bb0e78fb120ac42ee5fdc843d7682fa0838a0907cc457426f907d74a0038822d",
+      "bytes": 237732
     },
     "sources.json": {
-      "sha256": "11a2f011036e840e081136c4fdfb2bfc2cbb28f0d486be2caae8ef5f3c19b199",
-      "bytes": 66102
+      "sha256": "37805111a74f71be880f9f942678bc31efd1876cebe5fd23ba7f4203226eb13a",
+      "bytes": 67265
     },
     "supplemental-claims.json": {
-      "sha256": "c5ad4440082864b9b1a8aab780ed6434abf37f687cf9b71152be4091bb247ed6",
-      "bytes": 12100
+      "sha256": "318be27fc08431a4511628512216baa7b7961eaede537ad2b7039f19834d174d",
+      "bytes": 20219
     },
     "curation-provenance.json": {
-      "sha256": "d55cd4558a1c0821a744518ef8d46358e6cdd18de4cc9c8ea0b21296ba9bdd8f",
-      "bytes": 1754
+      "sha256": "91f4c952ea0e713f76887250a91e2c64773b38bc925d3b97189b2ce6e906f931",
+      "bytes": 2777
     },
     "wikipedia-links.json": {
-      "sha256": "fda083baad1118caf58b0e3642129eb9dd15a07d8f488e4acd1a0a537163168a",
-      "bytes": 12048
+      "sha256": "dc419bb4bea4443d6ad6b6715c172c2e3407e75367dd840e8531dbbcbaa82e12",
+      "bytes": 14982
     },
     "word-budgets.json": {
-      "sha256": "2a941192590d15d4da86e49badd440d6f4b908016e52222008af72903f27a5fd",
-      "bytes": 31186
+      "sha256": "73c9a6db474f5d65debff9db6cf96c12012c6843293212b1321b773c3e86297e",
+      "bytes": 33403
     }
   },
   "byKind": {
@@ -43,17 +43,18 @@
     "time": 1,
     "trail": 1,
     "body-in-house": 120,
-    "body-in-sign": 120
+    "body-in-sign": 120,
+    "astrocartography": 15
   },
   "claimsByRole": {
     "astronomy": 21,
-    "tradition": 279,
+    "tradition": 294,
     "project-convention": 22,
     "method": 11,
     "evidence": 1,
     "time-data": 1
   },
-  "reviewScope": "Primary-source paragraph support, original summaries and attribution reviewed during M6 authoring; integration validates exact coverage, roles, source references, source-code reuse and combined canonical-page word budgets. No runtime interpretation generation.",
+  "reviewScope": "Agent source curation during M6 and M10 authoring; integration validates exact coverage, roles, source references, source-code reuse and combined canonical-page word budgets. No runtime interpretation generation. Human claim-to-passage editorial review remains an external release gate.",
   "limitations": [
     "Practitioner sources establish attributed traditions, not predictive effects.",
     "Historical civil time and birth time can remain uncertain despite precise calculation.",

@@ -308,5 +308,145 @@
     ],
     "section": "Coordinate flags; geocentric, apparent and equatorial/ecliptic outputs",
     "sourceCode": "src/lib/ui/CalculationProvenance.svelte"
+  },
+  {
+    "id": "hover:earth",
+    "text": "The schematic Earth locates the observer beneath the surrounding sky. Its size is illustrative; geographic directions share the chart’s fixed frame.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/coordinate-contract.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:observer",
+    "text": "The observer sets the local horizon and house calculation. Changing location does not change geocentric planetary longitudes at the same instant.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/coordinate-contract.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:constellation",
+    "text": "An official constellation region is an area of sky, independent of the twelve equal tropical signs.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/data-and-licensing.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:asterism",
+    "text": "These connected stars follow one modern Western drawing convention. The figure is distinct from the official constellation region and from a tropical sign.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:star",
+    "text": "Catalogue stars use mean J2000 directions with linear proper motion. The display omits annual aberration, parallax and variable brightness.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/data-and-licensing.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:earth-house",
+    "text": "This is a radial projection of the current chart’s longitude house onto Earth. It is not a relocated house chart for every location inside the section.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:history",
+    "text": "A boundary history sample preserves its indexed cusp and calculation time. Undefined samples and discontinuous jumps are not connected as a continuous boundary.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:trail-segment",
+    "text": "A segment summarizes the interval between sampled directions. Its interior is approximate; current placements are not substituted for an older sample.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:sign-constellation",
+    "text": "Tropical signs divide ecliptic longitude into twelve equal intervals. They do not share the unequal boundaries of the constellations.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/coordinate-contract.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:house-boundary",
+    "text": "An indexed cusp separates the previous house from the house with that cusp number. Membership follows the system’s directed longitude interval.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:compass",
+    "text": "Compass labels mark local horizon directions: north 0°, east 90°, south 180° and west 270° azimuth.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/coordinate-contract.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:houses-layer",
+    "text": "House displays extend the selected system’s indexed longitude intervals away from the ecliptic. Display modes change their presentation while preserving the same house membership.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/src/lib/domain/house-geometry.ts"
+    ],
+    "section": "M10 display and hover convention; shared longitude house membership; actual latitude versus longitude aspects",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:aspects-layer",
+    "text": "Aspect strands connect bodies whose ecliptic longitude separation falls within an enabled aspect’s configured orb. The actual angle between their sky directions can differ.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md"
+    ],
+    "section": "M10 display and hover convention; shared longitude house membership; actual latitude versus longitude aspects",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:bodies-layer",
+    "text": "Body markers show geocentric planetary directions for the displayed moment. Their sizes and distances on the surrounding sky are illustrative.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/coordinate-contract.md"
+    ],
+    "section": "M10 display and hover convention; shared longitude house membership; actual latitude versus longitude aspects",
+    "sourceCode": "src/lib/content/project-explanations.ts"
   }
 ]

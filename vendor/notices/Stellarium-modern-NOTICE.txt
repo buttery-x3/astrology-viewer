@@ -1,0 +1,12 @@
+Stellarium modern constellation figures
+
+Source: Stellarium v26.2, commit 2b10b1a3bb534eb4e7586751054bf67b36c22e53
+https://github.com/Stellarium/stellarium/tree/2b10b1a3bb534eb4e7586751054bf67b36c22e53/skycultures/modern
+
+Authors: Stellarium’s team
+Text and data: CC BY-SA 4.0
+https://creativecommons.org/licenses/by-sa/4.0/
+
+Changes: Imported only 88 constellation line topologies, joined 710 HIP endpoints to the pinned HYG v4.1 catalogue and retained 9 faint supporting stars. No illustrations are included. Original upstream description/source and exact hashes are retained in vendor/stellarium-modern and figure-manifest.json. The derived figure database remains CC BY-SA 4.0; the application licence does not replace the data licence.
+
+Star coordinates: David Nash / Astronexus HYG Database v4.1, CC BY-SA 4.0. Original HYG attribution and source hashes remain in sky-data-manifest.json.

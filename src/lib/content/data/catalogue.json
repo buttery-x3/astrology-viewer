@@ -6309,5 +6309,289 @@
     ],
     "reviewStatus": "reviewed",
     "reviewedAt": "2026-10-25"
+  },
+  {
+    "id": "astro:overview",
+    "kind": "astrocartography",
+    "title": "Astrocartography",
+    "summary": "Astrocartography associates geographic locations with planetary and angular themes in a natal chart.",
+    "claims": [
+      {
+        "text": "Astrocartography associates geographic locations with planetary and angular themes in a natal chart.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "What is Astrocartography?; How to Read an Astrocartography Map",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26"
+  },
+  {
+    "id": "astro:body:sun",
+    "kind": "astrocartography",
+    "title": "Sun line",
+    "summary": "Vitality, confidence and self-expression are the Sun line's central themes.",
+    "claims": [
+      {
+        "text": "Vitality, confidence and self-expression are the Sun line's central themes.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "Planetary Line Meanings — Sun",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "bodyId": "sun"
+  },
+  {
+    "id": "astro:body:moon",
+    "kind": "astrocartography",
+    "title": "Moon line",
+    "summary": "Moon lines evoke emotional connection, home, family and changing circumstances.",
+    "claims": [
+      {
+        "text": "Moon lines evoke emotional connection, home, family and changing circumstances.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "Planetary Line Meanings — Moon",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "bodyId": "moon"
+  },
+  {
+    "id": "astro:body:mercury",
+    "kind": "astrocartography",
+    "title": "Mercury line",
+    "summary": "Mercury lines encourage curiosity, conversation, study, writing and new connections.",
+    "claims": [
+      {
+        "text": "Mercury lines encourage curiosity, conversation, study, writing and new connections.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "Planetary Line Meanings — Mercury",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "bodyId": "mercury"
+  },
+  {
+    "id": "astro:body:venus",
+    "kind": "astrocartography",
+    "title": "Venus line",
+    "summary": "Venus lines are associated with affection, beauty, comfort and abundance.",
+    "claims": [
+      {
+        "text": "Venus lines are associated with affection, beauty, comfort and abundance.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "Planetary Line Meanings — Venus",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "bodyId": "venus"
+  },
+  {
+    "id": "astro:body:mars",
+    "kind": "astrocartography",
+    "title": "Mars line",
+    "summary": "Mars lines emphasize action, ambition and leadership, with possible impatience or conflict.",
+    "claims": [
+      {
+        "text": "Mars lines emphasize action, ambition and leadership, with possible impatience or conflict.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "Planetary Line Meanings — Mars",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "bodyId": "mars"
+  },
+  {
+    "id": "astro:body:jupiter",
+    "kind": "astrocartography",
+    "title": "Jupiter line",
+    "summary": "Jupiter lines are associated with opportunity, expansion and good fortune.",
+    "claims": [
+      {
+        "text": "Jupiter lines are associated with opportunity, expansion and good fortune.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "Planetary Line Meanings — Jupiter",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "bodyId": "jupiter"
+  },
+  {
+    "id": "astro:body:saturn",
+    "kind": "astrocartography",
+    "title": "Saturn line",
+    "summary": "Saturn lines emphasize responsibility, maturity and demanding lessons.",
+    "claims": [
+      {
+        "text": "Saturn lines emphasize responsibility, maturity and demanding lessons.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "Planetary Line Meanings — Saturn",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "bodyId": "saturn"
+  },
+  {
+    "id": "astro:body:uranus",
+    "kind": "astrocartography",
+    "title": "Uranus line",
+    "summary": "Uranus lines emphasize change, surprises and unpredictable experiences.",
+    "claims": [
+      {
+        "text": "Uranus lines emphasize change, surprises and unpredictable experiences.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "Planetary Line Meanings — Uranus",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "bodyId": "uranus"
+  },
+  {
+    "id": "astro:body:neptune",
+    "kind": "astrocartography",
+    "title": "Neptune line",
+    "summary": "Neptune lines evoke spirituality, imagination and creativity, alongside escapism or unclear expectations.",
+    "claims": [
+      {
+        "text": "Neptune lines evoke spirituality, imagination and creativity, alongside escapism or unclear expectations.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "Planetary Line Meanings — Neptune",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "bodyId": "neptune"
+  },
+  {
+    "id": "astro:body:pluto",
+    "kind": "astrocartography",
+    "title": "Pluto line",
+    "summary": "Pluto lines emphasize transformation and renewal, sometimes with volatility.",
+    "claims": [
+      {
+        "text": "Pluto lines emphasize transformation and renewal, sometimes with volatility.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "Planetary Line Meanings — Pluto",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "bodyId": "pluto"
+  },
+  {
+    "id": "astro:angle:ac",
+    "kind": "astrocartography",
+    "title": "AC line theme",
+    "summary": "The AC theme concerns personal presentation and how one meets the world.",
+    "claims": [
+      {
+        "text": "The AC theme concerns personal presentation and how one meets the world.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "The Cardinal Points (AC, IC, DC, MC) — AC",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "angleId": "ac"
+  },
+  {
+    "id": "astro:angle:dc",
+    "kind": "astrocartography",
+    "title": "DC line theme",
+    "summary": "The DC theme concerns partnerships and encounters with other people.",
+    "claims": [
+      {
+        "text": "The DC theme concerns partnerships and encounters with other people.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "The Cardinal Points (AC, IC, DC, MC) — DC",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "angleId": "dc"
+  },
+  {
+    "id": "astro:angle:mc",
+    "kind": "astrocartography",
+    "title": "MC line theme",
+    "summary": "The MC theme concerns vocation, status and public life.",
+    "claims": [
+      {
+        "text": "The MC theme concerns vocation, status and public life.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "The Cardinal Points (AC, IC, DC, MC) — MC",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "angleId": "mc"
+  },
+  {
+    "id": "astro:angle:ic",
+    "kind": "astrocartography",
+    "title": "IC line theme",
+    "summary": "The IC theme concerns home, family and a sense of rootedness.",
+    "claims": [
+      {
+        "text": "The IC theme concerns home, family and a sense of rootedness.",
+        "sourceIds": [
+          "almanac-astrocartography"
+        ],
+        "section": "The Cardinal Points (AC, IC, DC, MC) — IC",
+        "role": "tradition"
+      }
+    ],
+    "reviewStatus": "reviewed",
+    "reviewedAt": "2026-10-26",
+    "angleId": "ic"
   }
 ]

@@ -6,14 +6,14 @@ import { BODY_IDS,type HouseResult } from '../../src/lib/astronomy/ephemeris';
 import { CONTENT_CATALOGUE,CONTENT_SOURCES,CONTENT_VALIDATION,CONTENT_MANIFEST,REQUIRED_CONTENT_IDS,getContent,getSource,getClaimSources,resolveBodyContent,validateContentCatalogue,canonicalSourceUrl } from '../../src/lib/content';
 
 describe('versioned static reviewed content',()=>{
-  it('contains exactly305 required concepts/placements and89 attributed reviewed sources',()=>{
-    expect(CONTENT_CATALOGUE).toHaveLength(305);expect(CONTENT_SOURCES).toHaveLength(89);
+  it('contains exactly 320 required concepts/placements and 90 attributed reviewed sources',()=>{
+    expect(CONTENT_CATALOGUE).toHaveLength(320);expect(CONTENT_SOURCES).toHaveLength(90);
     expect(new Set(CONTENT_CATALOGUE.map((entry)=>entry.id))).toEqual(new Set(REQUIRED_CONTENT_IDS));
-    expect(CONTENT_VALIDATION.valid).toBe(true);expect(CONTENT_MANIFEST.entryCount).toBe(305);
+    expect(CONTENT_VALIDATION.valid).toBe(true);expect(CONTENT_MANIFEST.entryCount).toBe(320);
     expect(CONTENT_CATALOGUE.filter((entry)=>entry.kind==='body-in-sign')).toHaveLength(120);
     expect(CONTENT_CATALOGUE.filter((entry)=>entry.kind==='body-in-house')).toHaveLength(120);
     for(const entry of CONTENT_CATALOGUE){
-      expect(entry.reviewStatus).toBe('reviewed');expect(entry.reviewedAt).toBe('2026-10-25');
+      expect(entry.reviewStatus).toBe('reviewed');expect(entry.reviewedAt).toBe(entry.id.startsWith('astro:')?'2026-10-26':'2026-10-25');
       for(const claim of entry.claims){
         expect(claim.section.length).toBeGreaterThan(0);
         const resolved=getClaimSources(claim);expect(resolved).toHaveLength(claim.sourceIds.length);

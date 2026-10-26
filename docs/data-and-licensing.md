@@ -40,6 +40,21 @@ M3 uses Pierre Barbier's Delporte boundary compilation and label centres under *
 
 ## Evidence needed before release
 
+M10 adds Stellarium v26.2 modern Western figure topology under its explicit
+CC BY-SA 4.0 data licence, pinned to release commit
+`2b10b1a3bb534eb4e7586751054bf67b36c22e53`. All 710 HIP endpoints map uniquely
+to the existing pinned HYG catalogue; nine faint supporting stars are separate
+from the default magnitude subset. No illustrations are imported. See the
+[figure data contract](constellation-figure-data.md), retained upstream sources,
+figure manifest and distributable attribution notice. The source import checks
+the exact upstream Git blobs and both source and derived SHA256 values.
+
+M10's 15 astrocartography themes use original concise practitioner summaries
+from Theresa Reed's Almanac article. Their combined source-page budget is 154
+derived words. No map/photo/article text is bundled; attribution does not relicense
+the publisher's material, establish predictive validity, or complete the human
+claim-to-passage editorial gate.
+
 | Item | Required evidence |
 |---|---|
 | Calculation engine | Exact upstream source, wrapper/build provenance, native/WASM comparison, all ten bodies/seven systems, explicit failure and fallback handling |
