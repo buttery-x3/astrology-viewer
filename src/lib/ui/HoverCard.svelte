@@ -10,12 +10,14 @@
     motion = true,
     sparkles = true,
     dense = false,
+    fullWidthPlacements = false,
   }: {
     model: HoverCardModel;
     id?: string;
     motion?: boolean;
     sparkles?: boolean;
     dense?: boolean;
+    fullWidthPlacements?: boolean;
   } = $props();
   const uid = $props.id();
   const preview = $derived(hoverPreview(model));
@@ -49,11 +51,12 @@
   class:animate
   class:static-card={!animate}
   class:dense={dense || viewportHeight <= 500}
+  class:full-width-placements={fullWidthPlacements}
   role="tooltip"
   data-testid="hover-card"
   data-feature-kind={preview.kind}
   data-snapshot-instant={model.snapshotInstantMs ?? undefined}
-  data-feature-role={model.facts.find(fact => fact.label === 'Feature role')?.value}
+  data-feature-role={model.facts.find((fact) => fact.label === 'Feature role')?.value}
   data-aspect-type={preview.aspect?.type}
   data-theme={preview.theme.name}
   style:--accent={preview.theme.accent}
@@ -468,6 +471,43 @@
     border-top: 1px solid #dce7f226;
   }
 
+  .full-width-placements .card-interior {
+    padding: 6px;
+  }
+  .full-width-placements .relationship-reading {
+    display: block;
+    padding: 5px 8px;
+  }
+  .full-width-placements .relationship-reading .claim-label {
+    margin-bottom: 3px;
+  }
+  .full-width-placements .relationship-reading .relationship-lead {
+    display: block;
+    margin-bottom: 4px;
+  }
+  .full-width-placements .relationship-reading .reading-panel:not(.relationship-lead) {
+    display: inline;
+    padding: 0;
+    border: 0;
+  }
+  .full-width-placements .relationship-reading .reading-panel:nth-of-type(2) {
+    display: block;
+    margin-bottom: 4px;
+  }
+  .full-width-placements .relationship-reading .planet-identity {
+    display: inline;
+    margin: 0 0.3em 0 0;
+  }
+  .full-width-placements .planet-identity :global(svg) {
+    vertical-align: -0.15em;
+  }
+  .full-width-placements .relationship-reading .and-connector {
+    display: inline;
+    margin-right: 0.4em;
+  }
+  .full-width-placements .relationship-reading .and-connector span {
+    display: none;
+  }
   .and-connector {
     display: flex;
     align-items: center;
