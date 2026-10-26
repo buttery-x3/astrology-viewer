@@ -7,7 +7,8 @@
   let { hit, context, motion = true, sparkles = true, suspended=false, resetKey=0 }: { hit: FeatureHit | null; context: HoverCardContext; motion?: boolean; sparkles?: boolean; suspended?:boolean; resetKey?:number } = $props();
   let displayed = $state<FeatureHit | null>(null);
   let panel = $state<HTMLDivElement>();
-  let inside = false, candidate: FeatureHit | null = null, suppressed: string | null = null;
+  let inside = false, focusInside = false, candidate: FeatureHit | null = null, suppressed: string[] = [];
+  let returnFocus: HTMLElement | null = null;
   let openTimer: ReturnType<typeof setTimeout> | undefined, closeTimer: ReturnType<typeof setTimeout> | undefined;
   let x = $state(12), y = $state(12);
   let described: HTMLElement | null = null, originalDescription: string | null = null;
@@ -18,7 +19,7 @@
     if (described) { if (originalDescription === null) described.removeAttribute('aria-describedby'); else described.setAttribute('aria-describedby', originalDescription); }
     described = null;
   }
-  function close() { clearTimers(); displayed = null; candidate = null; inside = false; restoreDescription(); }
+  function close() { clearTimers(); displayed = null; candidate = null; inside = false; focusInside = false; returnFocus = null; restoreDescription(); }
   function position() {
     if (!displayed || !panel) return;
     const point = displayed.screen ?? { x: 24, y: 90 }, width = panel.offsetWidth, height = panel.offsetHeight;
@@ -36,15 +37,15 @@
   }
   function receive(next: FeatureHit | null) {
     if (!next) {
-      suppressed = null; candidate = null; clearTimeout(openTimer);
-      if (!inside) { clearTimeout(closeTimer); closeTimer = setTimeout(close, 300); }
+      suppressed = []; candidate = null; clearTimeout(openTimer);
+      if (!inside && !focusInside) { clearTimeout(closeTimer); closeTimer = setTimeout(close, 300); }
       return;
     }
     clearTimeout(closeTimer);
-    if (next.id === suppressed) return;
+    if (suppressed.includes(next.id)) return;
     if (displayed?.id === next.id) { displayed = { ...next, screen: displayed.screen ?? next.screen }; return; }
     const focused=document.activeElement instanceof HTMLElement&&document.activeElement.closest<HTMLElement>('[data-feature-id]')?.dataset.featureId===next.id;
-    if (inside && !focused) return;
+    if ((inside || focusInside) && !focused) return;
     if (focused) inside=false;
     const moved = candidate?.screen && next.screen ? Math.hypot(candidate.screen.x - next.screen.x, candidate.screen.y - next.screen.y) > 5 : false;
     if (candidate?.id === next.id && !moved) return;
@@ -66,8 +67,20 @@
   });
   onMount(() => {
     const key = (event: KeyboardEvent) => {
+      if (event.key === 'F2' && displayed && panel) {
+        const active = document.activeElement;
+        if (panel.contains(active)) {
+          if (returnFocus?.isConnected) { event.preventDefault(); event.stopPropagation(); returnFocus.focus({preventScroll:true}); }
+        } else if (active === described) {
+          event.preventDefault(); event.stopPropagation(); returnFocus = described;
+          panel.querySelector<HTMLElement>('[role="tooltip"]')?.focus({preventScroll:true});
+        }
+        return;
+      }
       if (event.key !== 'Escape' || !(displayed || candidate)) return;
-      event.preventDefault(); event.stopPropagation(); suppressed = hit?.id ?? null; close();
+      const restore = panel?.contains(document.activeElement) ? returnFocus : null;
+      event.preventDefault(); event.stopPropagation(); suppressed = [hit?.id,displayed?.id].filter((id):id is string=>!!id); close();
+      if (restore?.isConnected) restore.focus({preventScroll:true});
     };
     const blur = () => close();
     const press = (event: PointerEvent) => { if (!(event.target instanceof Element && event.target.closest('[data-feature-preview]'))) close(); };
@@ -77,8 +90,8 @@
 </script>
 
 {#if model && displayed}
-  <div bind:this={panel} class="feature-preview-position" data-feature-preview data-testid="scene-hover" role="presentation" style:left={`${x}px`} style:top={`${y}px`} onpointerenter={() => { inside = true; candidate = null; clearTimers(); }} onpointerleave={() => { inside = false; if (!hit) closeTimer = setTimeout(close, 180); else receive(hit); }} onwheel={event => event.stopPropagation()}>
-    <HoverCard {model} id="feature-preview-card" {motion} {sparkles} />
+  <div bind:this={panel} class="feature-preview-position" data-feature-preview data-testid="scene-hover" role="presentation" style:left={`${x}px`} style:top={`${y}px`} onpointerenter={() => { inside = true; candidate = null; clearTimers(); }} onpointerleave={() => { inside = false; if (!hit && !focusInside) closeTimer = setTimeout(close, 180); else receive(hit); }} onfocusin={() => { focusInside=true; candidate=null; clearTimers(); }} onfocusout={event => { if(panel?.contains(event.relatedTarget as Node|null))return; focusInside=false; if(!hit&&!inside)closeTimer=setTimeout(close,180); }} onwheel={event => event.stopPropagation()}>
+    <HoverCard {model} id="feature-preview-card" {motion} {sparkles} keyboardHint />
   </div>
 {/if}
 

@@ -8,7 +8,8 @@
     id,
     motion = true,
     sparkles = true,
-  }: { model: HoverCardModel; id?: string; motion?: boolean; sparkles?: boolean } = $props();
+    keyboardHint = false,
+  }: { model: HoverCardModel; id?: string; motion?: boolean; sparkles?: boolean; keyboardHint?: boolean } = $props();
   const uid = $props.id();
   let documentVisible = $state(true),
     reducedMotion = $state(false);
@@ -31,6 +32,7 @@
   });
 </script>
 
+<!-- svelte-ignore a11y_no_noninteractive_tabindex (A scrollable reading surface needs keyboard focus; it contains no interactive controls.) -->
 <article
   id={id ?? uid}
   class:aspect-card={!!theme}
@@ -38,6 +40,8 @@
   class:static-card={!animate}
   class="hover-card"
   role="tooltip"
+  tabindex="0"
+  aria-keyshortcuts={keyboardHint ? 'F2 Escape' : undefined}
   data-testid="hover-card"
   data-feature-kind={model.kind}
   data-aspect-type={model.aspect?.type}
@@ -91,6 +95,7 @@
           </div>
         </div>{/if}
     </header>
+    {#if keyboardHint}<p class="keyboard-hint">F2: scroll card · Escape: close</p>{/if}
     {#if model.notices.length}<div class="context-notices">
         {#each model.notices as notice (notice)}<span>{notice}</span>{/each}
       </div>{/if}
@@ -166,6 +171,17 @@
       0 18px 50px #01050bd9,
       0 0 26px color-mix(in srgb, var(--accent) 22%, transparent),
       inset 0 0 0 1px #ffffff18;
+  }
+  .keyboard-hint {
+    position: relative;
+    z-index: 3;
+    margin: -8px 22px 14px;
+    font-size: 0.68rem;
+    color: #c3cddd;
+  }
+  .hover-card:focus-visible {
+    outline: 3px solid #f1d79d;
+    outline-offset: -4px;
   }
   .card-interior {
     position: relative;
@@ -503,6 +519,7 @@
     .measurements dt {
       color: CanvasText;
     }
+    .keyboard-hint { color: CanvasText; }
     .sparkle-field,
     .corner-symbol {
       display: none;

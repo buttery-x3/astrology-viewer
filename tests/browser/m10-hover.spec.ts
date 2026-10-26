@@ -173,6 +173,39 @@ test('keyboard focus updates a hovered card and restores existing descriptions o
   await expect(moon).toHaveAttribute('aria-pressed', 'true');
 });
 
+test('keyboard readers can focus and scroll a card without changing selection', async ({ page }) => {
+  await page.setViewportSize({width:1440,height:700});
+  await example(page);
+  await openControlGroup(page,'aspects');
+  const pair=page.getByRole('button',{name:'Inspect Sun sextile Moon',exact:true});
+  await pair.focus();
+  await page.keyboard.press('Enter');
+  const card=tooltip(page);
+  await expect(card).toBeVisible();
+  await expect(pair).toBeFocused();
+  await page.keyboard.press('F2');
+  await expect(card).toBeFocused();
+  await expect(card).toHaveAttribute('tabindex','0');
+  expect(await card.evaluate(element=>element.scrollHeight>element.clientHeight)).toBe(true);
+  await page.mouse.move(800,35);
+  await page.keyboard.press('PageDown');
+  await expect.poll(()=>card.evaluate(element=>element.scrollTop)).toBeGreaterThan(0);
+  await page.waitForTimeout(550);
+  await expect(card).toBeVisible();
+  await expect(card).toBeFocused();
+  await expect(pair).toHaveAttribute('aria-pressed','true');
+  // While keyboard reading, moving over another real feature must neither
+  // replace the reading nor reopen it after Escape restores its origin.
+  await page.locator('.object-list [data-feature-id="body:sun"]').hover();
+  await expect(card).toHaveAttribute('data-aspect-type','sextile');
+  await page.keyboard.press('Escape');
+  await expect(card).toHaveCount(0);
+  await expect(pair).toBeFocused();
+  await expect(pair).toHaveAttribute('aria-pressed','true');
+  await page.waitForTimeout(550);
+  await expect(card).toHaveCount(0);
+});
+
 test('a body card stays reachable while the pointer crosses another valid target before its dwell', async ({
   page,
 }) => {
