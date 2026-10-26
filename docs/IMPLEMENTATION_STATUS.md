@@ -2,7 +2,7 @@
 
 The approved plan is [IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md); the source [design brief](source/spatial_astrology_design_brief.md) is retained for final comparison. The user approved concise interactive construction guides and autonomous defaults, milestone development, reviews, and merges.
 
-The user has approved the M10 visual iteration and authorized complete release validation followed by integration into `codex/development`. Final repaired-source evidence and that integration remain pending at this checkpoint. The [final scope audit](reports/M10-plan-review.md) includes the [rectifications and per-view memory amendment](plans/M10-rectifications.md); earlier reports retain their recorded revision boundaries.
+The user has approved the M10 visual iteration and authorized complete release validation followed by integration into `codex/development`. Source gates, installed Chrome/Edge workflows, physical performance, cold loading, native zoom and an independent archive rebuild have passed at the recorded revisions. The final terminal CSS checks/complete CI run, exact post-CSS archive identity and development integration remain pending. The [final scope audit](reports/M10-plan-review.md) includes the [rectifications and per-view memory amendment](plans/M10-rectifications.md); earlier reports retain their recorded revision boundaries.
 
 ## Branch and review process
 
@@ -25,28 +25,36 @@ The user has approved the M10 visual iteration and authorized complete release v
 | M7 Timeline and history | Complete and merged | [PR #9](https://github.com/buttery-x3/astrology-viewer/pull/9), [M7 evidence](reports/M7.md): 365 tests, 23 browser workflows, two trail frames and discrete bounded history; remote CI passed |
 | M8 Accessibility, visual quality, recovery | Engineering complete and merged; external acceptance tracked for release | [PR #10](https://github.com/buttery-x3/astrology-viewer/pull/10), [M8 evidence](reports/M8.md): 404 tests, 41 browser workflows and measured software-renderer resource stability; remote CI passed |
 | M9 Release validation | Engineering implementation and local artifact validation complete; integration tracked in PR #12; external acceptance open | [PR #12](https://github.com/buttery-x3/astrology-viewer/pull/12), [M9 report](reports/M9.md): 515 source tests, three-engine packaged workflows with corrected quality/matrix reruns, 189 verified matrix frames, exact source/CSP checks, physical desktop scene/UI measurements and measured cold loading |
-| M10 Rich hover cards and Earth projections | Implemented and independently reviewed; final audit repairs/validation and development integration pending | [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18), [final scope audit](reports/M10-plan-review.md), [approved visuals](reports/M10-rectification-visual-review.md), [per-view memory](reports/M10-view-layer-memory.md): compact all-family readings with full inspector facts, independent figures/layer profiles, clearer aspects/quieter cusps, equal solid geographic angles with recurring markers/key, 75% geographic opacity and shells/0% defaults. Earlier source/browser/zoom reports remain historical; final results are tracked below. |
+| M10 Rich hover cards and Earth projections | Implemented and independently reviewed; recorded passes below, final terminal CSS/CI/archive and development integration pending | [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18), [scope audit](reports/M10-plan-review.md), [visuals](reports/M10-rectification-visual-review.md), [view memory](reports/M10-view-layer-memory.md): compact all-family readings with full inspector facts, independent figures/layer profiles, clearer aspects/quieter cusps, equal solid geographic curves/markers/key, 75% geographic opacity and shells/0% defaults. 906 source tests, 96 installed-browser workflows, 24 native-zoom previews, physical budgets, cold loading and an independent archive rebuild pass at their recorded revisions. |
 
 The screenshot-driven identity/date follow-up is merged through [PR #11](https://github.com/buttery-x3/astrology-viewer/pull/11), with [evidence](reports/sun-identity-follow-up.md). It adds named Sun/body captions, explicit sign selection and local-first dates without changing calculations. All 42 production browser workflows and remote CI passed. Development includes merge `83f113723f13859c27692ea4e4a113ba776c3c7d`.
 
 ## Final M10 validation checkpoint
 
-The audited product/test baseline is `bd58cf11c0756201ae4e71cc904a63fae632106b`,
-tree `421cf3b67a1332f60e764611f589b71604da7ad1` (identical to `ca78c51`).
-Final camera-test, house-palette and native-fit repairs are integrated at
-`79b585b8007537e41bafefb6f40449fa0e431e45`, tree
-`18c7dd46a0c22aff1a2218a104b8439c76abe112`, and recorded in the scope audit.
-The release owner will bind the final integrated source and artifact
-to the actual results below; this checkpoint does not claim completion or merge.
+The settled product/test candidate is `a2ef959acc4cf42526245ef0362b70ac5e2f4056`,
+tree `7f7a49647f10c3d2e384845a8edbec178379e9ec`, with reporting/CI changes through
+`5ce72d9`. Results retain their actual source/artifact identities. Later terminal
+CSS repair `ca39e0f` changes only full-width aspect line height/padding, preserving
+reading fonts/prose and normal 1920×1080 layout. This checkpoint does not claim
+engineering completion or development merge.
 
-| Required result | Status |
+| Passed check | Recorded result |
 | --- | --- |
-| Final source/type/lint/content/asset/notice checks | Pending integrated result record |
-| Packaged three-engine workflows, matrix, source/CSP and available installed browsers | Pending final repaired-source run; CI 40278075143 exposed a stale startup assumption in the camera test |
-| Actual asserted physical picking/card/frame/idle/resource/recovery workloads | Pending final measured result; earlier successful and failed measurements remain revision-scoped |
-| Final archive identity and independent extracted install/build | Pending final artifact/rebuild record |
-| Current cold loading and actual native 200% no-scroll/Large-text checks | Pending final result after native-fit repair |
-| M10 integration into `codex/development` | Pending evidence review; main remains unchanged |
+| Source/type/lint/content/assets/notices | [CI 40279259335](https://github.com/buttery-x3/astrology-viewer/actions/runs/40279259335), head `3c3a43f2f1ff55ef75c9f10264119bb338249147`: 906 tests/50 files; zero type/Svelte warnings; lint, assets, 320 entries/90 sources/96 budgets and 53 notices pass (50 full notices, three shorthand cases). The later browser failure is retained below. |
+| Installed packaged browsers | `a2ef959`: 96/96 pass in 286.3 seconds, 48 each in Chrome 156.0.8078.47 and Edge 142.0.3595.94; zero skips/flaky cases. Local JSON: `.cache/m10-final-installed.json`. |
+| Physical performance, idle/resources and recovery | [Report](reports/M10-performance.md), [raw](reports/M10-performance.json), [Git binding](reports/M10-performance-binding.json) at `a2ef959`: picking p95 2.0–2.1ms, reveal p95 29.7ms; plateau 537 geometries/331 textures/15 programs, idle renders zero, exact camera recovery and disposal pass. Actual workloads include default Earth, all forty lines/houses, figures, dense Outside and matched Sun sparkles On/Off. |
+| Native Chrome actual 200% zoom | [Compact-card report](reports/M10-native-zoom-rectified.md) at `79b585b`: eight states/24 full-text previews pass, including Large text at 1024×768 outer/504×308 CSS, with no scrolling/clipping/F2 surface. |
+| Cold loading | [Packaged `a2ef959` runs](reports/M10-cold-load.json): 2.1524s/2.2854s/1.9796s, 2,345,077 encoded body bytes each, under the documented 20Mbps/40ms application-layer profile and five-second target. |
+| Independent archive extraction/install/build | [`a2ef959` audit `58221c9`](https://github.com/buttery-x3/astrology-viewer/blob/58221c98e1da9465c4bb335f47e058237b19bbf9/docs/reports/M10-source-archive.md) passes ordinary build, exact source/manifest, assets/content/notices and independent locked dependency checks. This is the last validated archive, before the terminal CSS change. |
+
+The physical run stays bound to `a2ef959`; it is not relabelled as a later-source
+measurement. Three cold loads and RTX desktop results do not establish a
+population percentile or the reference integrated-GPU laptop result.
+
+| Remaining engineering item | Pending result |
+| --- | --- |
+| Terminal CSS and complete three-engine release CI | Linux CI 40279259335 passed 57 browser cases before the new 504×308/Large card reached 318.8px bottom. Record the focused three-engine and two affected actual native checks for `ca39e0f`, then full packaged [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18) CI. `5ce72d9` collects all 261 cases without early stopping or weaker assertions. |
+| Exact final archive/identity and development integration | Independently rebuild/verify the post-CSS source archive and record source/tree/manifest identities in the [archive report](reports/M10-source-archive.md), then record M10 → `codex/development`. The earlier archive pass does not prove the later artifact. Main remains unchanged. |
 
 The five [external acceptance gates](RELEASE_ACCEPTANCE.md#external-acceptance-gates)
 remain open: actual Safari, desktop screen reader, the specified integrated-GPU

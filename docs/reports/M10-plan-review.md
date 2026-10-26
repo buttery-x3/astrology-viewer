@@ -1,14 +1,13 @@
 # M10 independent requirement audit
 
-Reviewed on 26 October 2026 against the product/test baseline
-[`bd58cf11c0756201ae4e71cc904a63fae632106b`](https://github.com/buttery-x3/astrology-viewer/tree/bd58cf11c0756201ae4e71cc904a63fae632106b),
-tree `421cf3b67a1332f60e764611f589b71604da7ad1`, identical to the reviewed
-`ca78c51` tree. The final camera, house-palette and native-fit repairs are integrated
-at [`79b585b8007537e41bafefb6f40449fa0e431e45`](https://github.com/buttery-x3/astrology-viewer/tree/79b585b8007537e41bafefb6f40449fa0e431e45),
-tree `18c7dd46a0c22aff1a2218a104b8439c76abe112`. The release owner must bind the
-actual final source and artifact identities to the pending results below.
-This audit reads actual source, assertions and reports rather than treating test
-counts as evidence of every requirement.
+Reviewed on 26 October 2026 against the settled product/test candidate
+[`a2ef959acc4cf42526245ef0362b70ac5e2f4056`](https://github.com/buttery-x3/astrology-viewer/tree/a2ef959acc4cf42526245ef0362b70ac5e2f4056),
+tree `7f7a49647f10c3d2e384845a8edbec178379e9ec`, with reporting and CI updates
+through `5ce72d9`. The earlier `bd58cf1` audit and `79b585b` camera, house-palette
+and native-fit repairs remain part of this history. Passed results below identify
+their actual source or artifact; a later terminal card CSS repair still needs its
+final checks and archive. This audit reads source, assertions and reports rather
+than treating test counts as evidence of every requirement.
 
 The controlling requirements are the approved [implementation plan](../../IMPLEMENTATION_PLAN.md),
 retained [design brief](../source/spatial_astrology_design_brief.md),
@@ -20,10 +19,11 @@ decoration and view-reset requirements. Other calculation, selection, provenance
 and layer-independence requirements remain in force.
 
 The user approved the visuals and authorized complete release validation and
-subsequent M10 integration into `codex/development`. Final repaired-source
-validation and that development integration are **pending** at this documentation
-handover. Main remains untouched; approval is not recorded as execution or
-completed external acceptance.
+subsequent M10 integration into `codex/development`. Most release checks have
+passed at the recorded revisions. Only the final terminal-layout checks and
+complete CI run, exact final archive/identity, and development integration remain
+**pending** at this documentation handover. Main remains untouched; approval is
+not recorded as execution or completed external acceptance.
 
 ## Findings and completion boundary
 
@@ -59,18 +59,23 @@ The final audit produced these focused follow-ups:
   redraw residuals while rejecting meaningful pan or rotation.
 - `4e771ec` replaces house cards' zodiac-element colour cycle with one distinct
   architectural blue/amber palette. Its domain regression checks every house
-  number and related family against all twelve sign palettes. Nine focused
-  preview tests pass on that review branch; final integrated results remain pending.
-- The current native-zoom review found the Sun–Moon aspect exceeded the available
-  height at 1024 outer pixels, actual 200% zoom and Large text. `13c9e56` adds a
-  measured full-width placement composition preserving prose. Its actual native
-  fit and final regression results are pending; this remains an engineering
-  validation item, not a sixth external acceptance gate.
+  number and related family against all twelve sign palettes. The regression is
+  included in the 906 passing source tests.
+- `13c9e56` repaired the native-zoom Sun–Moon overflow with a measured full-width
+  placement composition preserving prose. The new [native report](M10-native-zoom-rectified.md)
+  passes all eight Windows Chrome states and 24 complete previews at `79b585b`.
+- [CI run 40279259335](https://github.com/buttery-x3/astrology-viewer/actions/runs/40279259335),
+  head `3c3a43f2f1ff55ef75c9f10264119bb338249147`, passed the source gates and 57
+  browser cases before the new 504×308/Large test failed under Linux font
+  wrapping: the card bottom reached 318.8px. This is not a passing release run.
+  Repair `ca39e0f` changes only the terminal full-width class's line height and
+  padding, preserving reading font size and all prose. Its focused three-engine
+  and two affected native checks, followed by complete CI, remain pending.
+  This is an engineering item, not a sixth external acceptance gate.
 
 This documentation review did not run a competing browser/performance suite.
-No engineering-complete or development-merge claim is made while the final
-exact-source results remain pending. The five existing external
-acceptance gates are retained separately.
+No engineering-complete or development-merge claim is made while those final
+items remain pending. The five external acceptance gates are retained separately.
 
 ## Original brief and implementation-plan mapping
 
@@ -131,19 +136,19 @@ decoration rather than excluding real stars or guide geometry.
 
 | Final requirement | Implementation and evidence | Result / limit |
 | --- | --- | --- |
-| Compact HTML preview with full readings and no technical footer, clipping or scrolling | [Preview model](../../src/lib/domain/hover-preview.ts), [HoverCard](../../src/lib/ui/HoverCard.svelte), [preview tests](../../tests/domain/hover-preview.test.ts), [rectification review](M10-rectification-visual-review.md) | Implemented: 460px preferred width, measured widening/compact composition and full-width aspect placement fallback, 13px-equivalent body text at 1.38 line height. Full prose remains; final constrained/native-zoom validation is pending. |
+| Compact HTML preview with full readings and no technical footer, clipping or scrolling | [Preview model](../../src/lib/domain/hover-preview.ts), [HoverCard](../../src/lib/ui/HoverCard.svelte), [preview tests](../../tests/domain/hover-preview.test.ts), [rectification review](M10-rectification-visual-review.md) | Implemented: 460px preferred width, measured widening/compact composition and full-width aspect placement fallback; ordinary body text is 13px equivalent at 1.38 line height. All 24 native previews passed at `79b585b`; the later Linux terminal-layout follow-up is tracked below. |
 | Inspector keeps all calculations, source records and original claim identities | Shared resolver and dedicated preview presentation; removed-field/inspector continuity assertions | Present; previews omit role, orb/angle and routine current-time tables while retaining historical sample/interval identity and essential notices. No runtime summaries are generated. |
 | Expressive treatment across every family, five aspect palettes and equal placement panels | [Theme resolver](../../src/lib/domain/hover-card-themes.ts), body identity colours, complementary gradients, dark panels, glyphs and connector | Implemented; house palette correction is tracked above. Colours do not rank significance or favourable/unfavourable outcomes. |
-| Bounded deterministic glints outside reading text; no extra canvas or animation-driven scene loop | Twelve CSS/SVG glints, noninteractive decorative layer, opacity-only 160ms entrance | Present in source; same-target content updates do not remount the card. Current idle/resource measurements are pending below. |
+| Bounded deterministic glints outside reading text; no extra canvas or animation-driven scene loop | Twelve CSS/SVG glints, noninteractive decorative layer, opacity-only 160ms entrance | Present; same-target updates do not remount the card. At `a2ef959`, glints stayed bounded at twelve and sparkle On/Off plus no-card idle produced zero additional canvas renders. |
 | Sparkles preference, reduced motion, Low quality, forced colours and hidden-document handling for all families | Visibility/media listeners, App flags, v2 persisted display whitelist and motion tests | Present; static cards retain their rich treatment. Personal context remains session-only. |
-| Body contrast and clear glyph/text identity | Dark reading panels, forced-colour text/SVG rules, retained [design](M10-hover-design.md) and rectification captures | Earlier numerical contrast samples describe their earlier design. Final current rendered checks must be recorded without promoting old pixel ratios to the new candidate. |
+| Body contrast and clear glyph/text identity | Dark reading panels, forced-colour text/SVG rules, retained [design](M10-hover-design.md), rectification and [native captures](M10-native-zoom-rectified.md) | Current native captures retain complete readable claim text at standard/Large sizes. Earlier numerical pixel contrast samples remain scoped to their earlier design. |
 | Five aspect studies plus nine representative feature families | [Gallery](../../src/lib/ui/AspectCardPreview.svelte), real production components and preview workflow | Present; illustrative fixtures remain labelled and separate from calculated placements. |
 | 300ms stable dwell, movement tolerance, grace, offset, flip/shift and stable reading position | [FeaturePreview](../../src/lib/ui/FeaturePreview.svelte), hover workflows | Present: 300ms dwell, 5px tolerance and 18px offset with measured viewport placement. |
 | Move into/copy the card, persistent reading, Escape suppression and no selection/camera mutation | HTML portal, wheel isolation, safe-corridor and selected-pair assertions | Present; no interactive control or scroll-only tab stop is added to the passive tooltip. |
 | Keyboard parity, correct origin description/focus and persistent inspector reading | Focus ownership, `aria-describedby` restoration, paginated navigation and keyboard preview tests | Present; F2 transfer and scrolling card surfaces are removed. Actual screen-reader acceptance remains open. |
 | Drag/blur/context/view/removal cancellation; stationary-pointer refresh without idle polling | Runtime demand-render hit checks, reset/suspension and null-model invalidation; lifecycle and snapshot metadata assertions | Present; exact one-hour refresh and representation role remain testable without a visible fact table. |
 | Individual stars/figures/lines/houses/guides/history without thousands of tab stops | [Bounded navigation](../../src/lib/ui/feature-navigation.ts), 12-result pages, stage lists, indexed trail navigator and bounded history | Present: 2,874 stars, 88 figures, 40 geographic lines, 24 surface features and 12 comparison cusps. |
-| 1440×900/1024×768, actual 200% zoom, Large text and panel routes without inaccessible text | Retained rectification captures, enlarged-layout assertions and current native-zoom investigation | Final current-design native-zoom/fit evidence is pending; earlier scrolling/F2 results are historical. |
+| 1440×900/1024×768, actual 200% zoom, Large text and panel routes without inaccessible text | [Native compact-card report](M10-native-zoom-rectified.md), eight states and 24 exact-text card checks | Passed on Windows Chrome at `79b585b`, including the 504×308 CSS viewport. The later Linux wrapping repair needs its two affected native repeats and final CI. Earlier scrolling/F2 results remain historical. |
 
 ### Figures, views and geographic mathematics
 
@@ -169,29 +174,29 @@ decoration rather than excluding real stars or guide geometry.
 
 ### Performance, recovery and release
 
-The release owner must fill the pending rows with the actual final revision,
-artifact/manifest hashes, command or CI run, browser/device details and durable
-report paths. Engineering validation is available work; it is distinct from the
+These checks have passed at their stated revisions. They are distinct from the
 five external acceptance gates.
 
-| Required final evidence | Status at handover | Historical evidence and limit |
-| --- | --- | --- |
-| Source/type/lint/content/asset/notice checks | **Pending final integrated result record** | Earlier source/focused results remain in their milestone reports; no final count is inferred here. |
-| Packaged Chromium/Firefox/WebKit workflows, complete system/display/view matrix and source/CSP checks | **Pending final repaired-source run** on [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18) | Run 40278075143 exposed the camera-test startup assumption above and is not a pass. Earlier M9/M10 reports retain their original source scope. Record actual installed Chrome/Edge versions where checked. |
-| Card processing ≤50ms p95 after eligibility; whole picking ≤4ms p95 | **Pending final measured result** | [M10 performance](M10-performance.md) binds an older success to `dc1b846` and retains the later unresolved `a2ac392` picking miss. Neither proves this candidate. |
-| Actual default Earth, all forty lines + houses, figures, dense Outside and matched sparkle On/Off | **Pending final measured result** | The repaired harness asserts actual independent view/layer/filter/mode states, with the same Sun card/camera for On/Off. Earlier reset/carry assumptions do not establish these workloads. |
-| Idle scene, plateau, bounded decorative DOM, disposal and actual context/camera recovery | **Pending final measured result** | Record current marker/texture/program counts and actual CPU/GPU/rAF samples; do not reuse the previous 538/230/16 counts. |
-| Exact source archive, independent extraction/install/build, notices/data and served revision | **Pending final artifact/rebuild** | [Archive report](M10-source-archive.md) verifies `da1404f`, before later UI/runtime/state changes. Final archive, tree, manifest and source identities must agree. |
-| Cold loading/first usable scene under the documented network profile | **Pending final result** | [M9 cold-load evidence](M9-cold-load.json) remains scoped to its original artifact and method. |
-| Current actual Chrome 200% zoom, Large text, complete no-scroll cards and accessible panels | **Pending final result after native-fit repair** | [Native-zoom report](M10-native-zoom.md) verifies the earlier width repair with scrolling/F2 cards. A constrained CSS viewport is not native page-zoom proof. |
-| M10 integration into `codex/development` and final acceptance/status update | **Pending after evidence review** | User authorization is recorded; completed development integration is not claimed here. Main remains unchanged. |
+| Passed evidence | Actual result and scope |
+| --- | --- |
+| Source/type/lint/content/assets/notices | [CI 40279259335](https://github.com/buttery-x3/astrology-viewer/actions/runs/40279259335), head `3c3a43f2f1ff55ef75c9f10264119bb338249147`: 906 source tests in 50 files; type/Svelte check with zero warnings; lint, assets, 320 entries/90 sources/96 canonical budgets, and all 53 notices passed (50 full notices, three recorded shorthand cases). Its later browser failure does not erase these source results or establish a full release pass. |
+| Installed Chrome/Edge packaged workflows | Artifact `a2ef959`: 96/96 passed, 48 each in Chrome 156.0.8078.47 and Edge 142.0.3595.94, with zero skipped or flaky cases, in 286.3 seconds. Local structured result: `.cache/m10-final-installed.json`. The later terminal CSS revision is covered by the pending checks below. |
+| Card processing ≤50ms p95; whole picking ≤4ms p95 | [Physical report](M10-performance.md), [raw samples](M10-performance.json) and [Git binding](M10-performance-binding.json) bind 111 source/data/style/WASM/lockfile hashes to `a2ef959`: reveal p95 29.7ms over 36 samples; picking p95 2.0–2.1ms, 203 samples for each of four actual workloads. This is RTX 3060 development-runtime evidence, not an integrated-GPU or packaged-runtime timing claim. |
+| Actual workloads, idle, resources and recovery | Default Earth, all forty lines plus houses, Earth with figures, dense Outside, and matched Sun sparkles On/Off are asserted. Delivered rAF p95 was 16.7–16.8ms. Post-warmup resources plateaued at 537 geometries/331 textures/15 programs; sparkle and final idle rendered zero additional frames. Actual context restoration preserved camera state exactly, and disposal removed the canvas and owned geometries/programs. The dense trail result remained explicitly sampling-limited. |
+| Native Chrome 200% zoom, Large text and complete cards/panel routes | [Native report](M10-native-zoom-rectified.md) and [structured evidence](M10-native-zoom-rectified.json): all eight Windows states/24 complete previews passed on `79b585b`, including 1024×768 outer window → 504×308 CSS viewport at actual 200%. Registered prose and standard/Large reading fonts remained intact, with no card scrolling/clipping or F2 surface. The later terminal CSS repair has two affected repeats pending. |
+| Cold loading/first usable scene | [Three packaged runs](M10-cold-load.json) at `a2ef959`: 2.1524s, 2.2854s and 1.9796s, each transferring 2,345,077 encoded body bytes. The documented aggregate 20Mbps/40ms application-layer profile passed the five-second target. Three samples do not establish a population p95 or a real last-mile link result. |
+| Independent source-archive install/build | The [`a2ef959` audit recorded in `58221c9`](https://github.com/buttery-x3/astrology-viewer/blob/58221c98e1da9465c4bb335f47e058237b19bbf9/docs/reports/M10-source-archive.md) passed independent extraction, locked install, ordinary build, assets, content and notices. All 429 files/50 directory paths matched the release tree; no `.git`, linked repository dependencies or native compiler was used. Archive SHA-256 `403497c505b2cfa36258f04b2280549a4484f783bcfd28e8c62c9ebad5da530a`, manifest SHA-256 `565fc7b11438806ca5803ec3f93d22c6a48229a773087b20d618fc4777ede97c`. This is the last validated archive, before the terminal CSS repair. |
 
-Documentation/evidence follow-ups can have a later commit than the product
-baseline above. Record the actual final source comparison and release identity
-rather than silently relabelling an earlier artifact or screenshot. Retain the
-historical [visual review](M10-rectification-visual-review.md),
-[mode-memory review](M10-view-layer-memory.md), browser, native-zoom, archive and
-performance reports with their original revision boundaries.
+The physical report remains bound to `a2ef959`; the later terminal CSS changes
+only a constrained HTML card class, with no picker/controller or normal
+1920×1080 layout change. It is not relabelled as a measurement of a later commit.
+Earlier failed timing runs and scrollable-card/native screenshots retain their
+historical scope.
+
+| Remaining engineering item | Evidence still required |
+| --- | --- |
+| Final terminal CSS and complete three-engine release CI | Record the focused Chromium/Firefox/WebKit and two affected actual native repeats for `ca39e0f`, then the final packaged run on [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18). `5ce72d9` removes early stopping so all 261 browser cases are collected without weakening assertions. CI 40279259335 is not a pass; earlier 40278075143 at `bd58cf1` also failed before the camera repair. |
+| Exact final archive/identity and M10 → `codex/development` | After the CSS repair, rebuild and independently verify the exact final archive, record source/tree/manifest identities in the [archive report](M10-source-archive.md), then record development integration and final status. The last validated `a2ef959` archive is not silently promoted to that later source. Main remains untouched. |
 
 ## Five external acceptance gates
 
