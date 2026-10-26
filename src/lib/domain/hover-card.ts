@@ -522,6 +522,7 @@ export function resolveHoverCard(
         result.observer.latitudeDeg !== sky!.observer.latitudeDeg ||
         result.observer.longitudeDeg !== sky!.observer.longitudeDeg ||
         (hit.system && hit.system !== result.system) ||
+        (hit.frame && hit.frame !== 'stars') ||
         (Number.isInteger(indexedHouse) && indexedHouse !== result.house)
       )
         return null;
@@ -530,11 +531,12 @@ export function resolveHoverCard(
       model.title = `Cusp ${result.house} history`;
       model.kicker = `${systemName(result.system)} · historical boundary`;
       model.sections.push(section('hover:history', 'Boundary sampling'));
-      model.facts.push({ label: 'System', value: systemName(result.system) });
+      model.facts.push({ label: 'System', value: systemName(result.system) }, {label:'Frame',value:'Relative to stars'});
       if (sample) {
         model.facts.push(
           { label: 'Sample time', value: utc(sample.instantMs) },
           { label: 'Sample state', value: sample.status },
+          {label:'Relative to displayed moment',value:sample.instantMs<sky!.instantMs?'Past':sample.instantMs>sky!.instantMs?'Future':'Current'},
         );
         if (sample.status === 'undefined') model.notices.push(sample.reason);
         else {

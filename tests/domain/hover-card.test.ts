@@ -446,6 +446,8 @@ describe('geometric identity, comparisons and historical representations', () =>
         { history: result },
       );
       expect(facts(model)['Sample state']).toBe(sample.status);
+      expect(facts(model).Frame).toBe('Relative to stars');
+      expect(facts(model)['Relative to displayed moment']).toBe(sample.instantMs<snapshot.instantMs?'Past':sample.instantMs>snapshot.instantMs?'Future':'Current');
       expectRegistered(model);
       if (sample.status === 'undefined') {
         expect(facts(model)).not.toHaveProperty('Historical cusp');
@@ -458,6 +460,7 @@ describe('geometric identity, comparisons and historical representations', () =>
         history: result,
       }),
     ).toBeNull();
+    expect(resolveHoverCard(featureHit('history:W:1','Ghost',{frame:'horizon'}),{snapshot,history:result})).toBeNull();
     expect(
       resolveHoverCard(featureHit('history:W:1'), {
         snapshot,
