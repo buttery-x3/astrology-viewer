@@ -34,11 +34,36 @@ timeline remaining visible. No Focus click input is dispatched, and the action l
 contains no hidden, unstable or intercepted-target retry.
 
 The trace supports a browser/GPU stall. Its underlying cause remains unresolved;
-this review demonstrates no product layout fix and does not establish a passing
-Orion workflow. An unchanged scoped rerun is required to investigate it further.
+this review demonstrates no product layout fix. A later unchanged WebKit rerun
+against the same 6c1 package passes 3/3, with no skips, failures or retries, in
+26.230 seconds. Raw evidence is `.cache/m10-final-orion-repeat.json` in the root
+checkout, SHA-256 `28f44af2bf04d436dc5032fd9db46abc0be5643ec37238eaf708b9c4c668d3de`.
+The rerun does not erase the original context-loss failure or establish its cause.
 
 ## Validation scope
 
 The setup change is limited to the aspect browser test. Targeted ESLint and
-`git diff --check` pass. Browser validation is pending coordinated access to the active
-browser window; earlier or remote passes remain revision-scoped.
+`git diff --check` pass. The changed test at source commit
+`fedd5e918c9bef6485f50bc0713840e8a6fe79dd` passes all nine focused cases: three each
+in Chromium, Firefox and WebKit, with zero skips, failures, flaky results or retries.
+Total runner duration is 52.142 seconds. All complete-reading, viewport, Escape,
+retained-selection and inspector assertions execute unchanged.
+
+The standalone server is launched from the absolute artifact directory
+`D:/dev/astrology-viewer/.cache/releases/6c1a0cbc9632944db7e1a8916c2b9c12befc9cfd`
+and its readiness message is checked for that exact revision. The test branch changes
+only this test file and this evidence note relative to 6c1; production source,
+configuration, scripts and packaged bytes are unchanged. Removing the two inserted
+test lines reproduces the original entire test file after newline normalization.
+The tested file SHA-256 is
+`9d69e0146f6196ee6362fa2473953606b6269ca0b0e1494d1d5e00b7ff253e09`.
+
+Raw focused results are retained at
+`.cache/worktrees/m10-final-source-archive/.cache/m10-preview-reentry-unsandboxed-6c1.json`
+relative to the root checkout, SHA-256
+`d4144f835d690928bdf2503fb21a377690c7b7087fcb85035de943f579630af5`.
+An earlier sandbox attempt could not reach the product: localhost navigation was
+denied and Firefox profile initialization failed. Its separate raw results remain
+at `.cache/m10-preview-reentry-6c1.json` in the review worktree. All owned browser and
+server processes from both attempts are closed. These focused results do not claim
+that the original local full suite passed; other evidence remains revision-scoped.
