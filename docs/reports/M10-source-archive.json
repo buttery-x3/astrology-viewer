@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "verifiedAt": "2026-10-26T03:41:18.048Z",
+  "verifiedAt": "2026-10-26T04:23:08.898Z",
   "scope": "Independent frontend source archive extraction/install/build and retained data/content provenance; no browser, server rebuild or engine recompilation in this audit",
-  "revision": "6cfa912f72eafce86b2f17c205e5c65d4d21c172",
-  "tree": "1067f95f63a1980b225cf57eb800fc0360ac3248",
+  "revision": "da1404f27ec1d470e9ff7a763ee26ddeddcdf336",
+  "tree": "ddc00d91a47752a5da1848226ddec04412d2a576",
   "environment": {
     "platform": "win32",
     "node": "v24.15.0",
@@ -13,17 +13,28 @@
     "noRepositoryNodeModulesLink": true
   },
   "archive": {
-    "path": "source/source-6cfa912f72eafce86b2f17c205e5c65d4d21c172.tar.gz",
-    "sha256": "cf63f28bedfea91b1c8a270c67c5923b861320a7ec1728468a3e3dc3acadf3ef",
-    "bytes": 4945060,
-    "entries": 435,
+    "path": "source/source-da1404f27ec1d470e9ff7a763ee26ddeddcdf336.tar.gz",
+    "sha256": "0fa1964c17357c023e53406848afeb0f44322b23834ac21401ac787fd05c2626",
+    "bytes": 6359007,
+    "entries": 449,
     "sourceRevisionFile": {
-      "sha256": "8ac77de97fc531d342d175714fa701d7f205d2d10287f4b124af69857bb821e5",
+      "sha256": "031a4d77d106927af5efb6e13d6c5c6c9d9c7acbbcd90de24924845b02e5a957",
       "bytes": 41
+    },
+    "inventory": {
+      "archivePaths": 449,
+      "files": 399,
+      "directories": 50,
+      "exactGitBlobs": 398,
+      "exportSubstitutions": [
+        "source-revision.txt"
+      ],
+      "allSourcePathsMatched": true,
+      "inventorySha256": "a8af1a0c4ec239f851fb3419b6acb26577bd3bf7fa3f34afdb338a580f1158a5"
     }
   },
   "releaseManifest": {
-    "sha256": "d093bf31ded93fbbb3cdaf22a1e9a7bbb29511e3d0e20c06d81c2adf5a23d18d",
+    "sha256": "4dc2635bc0fdedd9264e24a74403ff0c573f63053805a1b33bed7e647c330d1f",
     "bytes": 27691
   },
   "releaseFilesVerified": 108,
@@ -57,15 +68,15 @@
   ],
   "build": {
     "main": {
-      "path": "dist/assets/index-Dm5fR8Uo.js",
-      "sha256": "6f1ec01b59b3ecfec5c1605ccf0a56343e09bc7ea5ba975ba08e07a02802b14c",
-      "bytes": 2606870
+      "path": "dist/assets/index-BagjKoyv.js",
+      "sha256": "5eaac1d148026a70efea21c296bc2c679e31e8b9de57091b59500a7d054f866e",
+      "bytes": 2608724
     },
     "compiledRevisionVariable": "XV",
-    "compiledRevision": "6cfa912f72eafce86b2f17c205e5c65d4d21c172",
+    "compiledRevision": "da1404f27ec1d470e9ff7a763ee26ddeddcdf336",
     "footerExpression": "XV.slice(0,7)",
-    "footerText": "Build 6cfa912",
-    "sourceHref": "https://github.com/buttery-x3/astrology-viewer/tree/6cfa912f72eafce86b2f17c205e5c65d4d21c172",
+    "footerText": "Build da1404f",
+    "sourceHref": "https://github.com/buttery-x3/astrology-viewer/tree/da1404f27ec1d470e9ff7a763ee26ddeddcdf336",
     "wasm": {
       "sourcePath": "src/lib/astronomy/generated/spatial-ephemeris.wasm",
       "rebuiltPath": "dist/assets/spatial-ephemeris-DKdbe1a_.wasm",
@@ -262,5 +273,9 @@
     "Retained upstream source hashes and licence notices were verified; this is not legal clearance.",
     "The original 33 MB HYG CSV was not downloaded or reimported; the retained HIP-to-HYG map, source hash and catalogue endpoint coverage were verified.",
     "The native engine binary was verified byte-for-byte and not recompiled."
-  ]
+  ],
+  "supersedes": {
+    "revision": "a2ac392c0991558faaea3de2f557fa129c856586",
+    "reason": "The final source updates Escape suppression to use the active hit and explicitly restored keyboard origin rather than the last displayed card ID, allowing legitimate pointer re-entry. The previous archive audit remains valid only for its earlier revision."
+  }
 }
