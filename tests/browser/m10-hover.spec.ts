@@ -339,7 +339,7 @@ test('all five theme previews and enlarged cards fit a constrained logical zoom 
   expect(
     parseFloat(
       await tooltip(page)
-        .locator('p')
+        .locator('.reading-panel p')
         .first()
         .evaluate((element) => getComputedStyle(element).fontSize),
     ),

@@ -79,7 +79,11 @@
       }
       if (event.key !== 'Escape' || !(displayed || candidate)) return;
       const restore = panel?.contains(document.activeElement) ? returnFocus : null;
-      event.preventDefault(); event.stopPropagation(); suppressed = [hit?.id,displayed?.id].filter((id):id is string=>!!id); close();
+      // A pointer reading has already left its feature when it enters the card.
+      // Suppress the active hit and an explicitly restored keyboard origin only;
+      // suppressing the displayed ID alone would prevent legitimate re-entry.
+      const originId = restore?.closest<HTMLElement>('[data-feature-id]')?.dataset.featureId;
+      event.preventDefault(); event.stopPropagation(); suppressed = [hit?.id,originId].filter((id):id is string=>!!id); close();
       if (restore?.isConnected) restore.focus({preventScroll:true});
     };
     const blur = () => close();
