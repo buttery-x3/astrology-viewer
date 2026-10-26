@@ -1,6 +1,6 @@
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { dirname, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import os from 'node:os';
@@ -13,6 +13,9 @@ const { values } = parseArgs({
     output: { type: 'string', default: '.cache/m10-performance/report.json' },
     hardware: { type: 'boolean', default: false },
     quick: { type: 'boolean', default: false },
+    'picking-count': { type: 'string' },
+    'host-cpu': { type: 'boolean', default: false },
+    'no-visuals': { type: 'boolean', default: false },
   },
 });
 const origin = new URL(values.url).origin,
@@ -21,6 +24,14 @@ const origin = new URL(values.url).origin,
 if (!['127.0.0.1', 'localhost', '[::1]'].includes(new URL(origin).hostname))
   throw new Error('This source-instrumentation harness requires a loopback origin.');
 await mkdir(dirname(output), { recursive: true });
+const pickingCount =
+  values['picking-count'] === undefined
+    ? values.quick
+      ? 40
+      : 204
+    : Number(values['picking-count']);
+if (!Number.isInteger(pickingCount) || pickingCount < 32 || pickingCount > 1000)
+  throw new Error('Picking count must be an integer from 32 to 1000.');
 process.env.PLAYWRIGHT_BROWSERS_PATH ??= resolve(sourceRoot, '.cache/playwright');
 const { chromium } = await import('playwright');
 const launchArgs = values.hardware
@@ -123,8 +134,137 @@ function instrumentRuntime(source, url) {
   return result;
 }
 
-const browser = await chromium.launch({ headless: true, args: launchArgs });
+/** Optional read-only host context; terminate only the helper this harness owns. */
+async function startHostSampler() {
+  if (!values['host-cpu']) return null;
+  if (process.platform !== 'win32')
+    throw new Error('The optional host CPU sampler currently supports Windows only.');
+  const scriptPath = output + '.cpu.ps1',
+    reportPath = output + '.cpu.json',
+    stopPath = output + '.cpu.stop';
+  await rm(stopPath, { force: true });
+  await rm(reportPath, { force: true });
+  await writeFile(
+    scriptPath,
+    `param([string]$OutputPath,[string]$StopPath)
+$records=[Collections.Generic.List[object]]::new()
+$previous=@{}
+Get-Process | ForEach-Object {try{if($null -ne $_.CPU){$previous[$_.Id]=$_.CPU}}catch{}}
+$clock=[Diagnostics.Stopwatch]::StartNew()
+$previousTime=0.0
+$previousUtc=[DateTime]::UtcNow
+while(!(Test-Path -LiteralPath $StopPath) -and $records.Count -lt 300){
+ Start-Sleep -Milliseconds 750
+ $now=$clock.Elapsed.TotalSeconds
+ $utc=[DateTime]::UtcNow
+ $rates=[Collections.Generic.List[object]]::new()
+ $next=@{}
+ Get-Process | ForEach-Object {try{
+  $cpu=$_.CPU
+  if($null -ne $cpu){
+   $next[$_.Id]=$cpu
+   if($previous.ContainsKey($_.Id)){
+    $delta=[Math]::Max(0,$cpu-$previous[$_.Id])
+    if($delta -gt 0){[void]$rates.Add([pscustomobject]@{name=$_.ProcessName;pid=$_.Id;cpuSeconds=$delta;coreEquivalent=$delta/($now-$previousTime)})}
+   }
+  }
+ }catch{}}
+ [void]$records.Add([pscustomobject]@{startUtc=$previousUtc.ToString('o');endUtc=$utc.ToString('o');intervalSeconds=$now-$previousTime;totalCpuSeconds=($rates|Measure-Object cpuSeconds -Sum).Sum;top=@($rates|Sort-Object cpuSeconds -Descending|Select-Object -First 12)})
+ $previous=$next;$previousTime=$now;$previousUtc=$utc
+}
+[IO.File]::WriteAllText($OutputPath,(@($records)|ConvertTo-Json -Depth 6),[Text.UTF8Encoding]::new($false))
+`,
+  );
+  const child = spawn(
+    'pwsh',
+    [
+      '-NoProfile',
+      '-NonInteractive',
+      '-File',
+      scriptPath,
+      '-OutputPath',
+      reportPath,
+      '-StopPath',
+      stopPath,
+    ],
+    { windowsHide: true, stdio: 'ignore' },
+  );
+  // Resolve failures as data immediately: an early spawn error cannot become
+  // an unhandled rejected promise while the browser measurements are running.
+  let settled = false;
+  const completed = new Promise((resolve) => {
+    child.once('error', (error) => {
+      settled = true;
+      resolve({ exitCode: null, error: error.message });
+    });
+    child.once('close', (exitCode, signal) => {
+      settled = true;
+      resolve({ exitCode, signal });
+    });
+  });
+  async function waitForExit(milliseconds) {
+    let timer;
+    try {
+      return await Promise.race([
+        completed,
+        new Promise((resolve) => {
+          timer = setTimeout(() => resolve(null), milliseconds);
+        }),
+      ]);
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  let stopPromise;
+  return {
+    stop() {
+      return (stopPromise ??= (async () => {
+        const errors = [];
+        try {
+          await writeFile(stopPath, 'stop\n');
+        } catch (error) {
+          errors.push(error.message);
+        }
+        let status = await waitForExit(10000),
+          forcedTermination = false;
+        if (!status && !settled) {
+          forcedTermination = true;
+          try {
+            child.kill();
+          } catch (error) {
+            errors.push(error.message);
+          }
+          status = await waitForExit(5000);
+        }
+        let samples = [];
+        try {
+          samples = JSON.parse(await readFile(reportPath, 'utf8'));
+          if (!Array.isArray(samples)) samples = samples === null ? [] : [samples];
+          if (!samples.length) errors.push('The CPU sampler returned no samples.');
+        } catch (error) {
+          errors.push(error.message);
+        }
+        return {
+          ...(status ?? {
+            exitCode: null,
+            error: 'The owned CPU helper did not close after termination.',
+          }),
+          forcedTermination,
+          path: reportPath,
+          samples,
+          errors,
+          complete: status?.exitCode === 0 && !forcedTermination && errors.length === 0,
+          method:
+            'Read-only Get-Process CPU deltas with UTC timestamps and actual elapsed intervals; nominal 750ms spacing; names/PIDs only, no process arguments or changes. Sampler failures remain explicit.',
+        };
+      })());
+    },
+  };
+}
+const hostSampler = await startHostSampler();
+let browser;
 try {
+  browser = await chromium.launch({ headless: true, args: launchArgs });
   const page = await browser.newPage({
       viewport: { width: 1920, height: 1080 },
       deviceScaleFactor: 1,
@@ -139,6 +279,7 @@ try {
   await page.addInitScript(() => {
     const p = (window.__m10 = {
       phase: 'startup',
+      timeOriginMs: performance.timeOrigin,
       phaseWindows: [{ phase: 'startup', startMs: 0 }],
       runtime: null,
       picking: [],
@@ -324,6 +465,90 @@ try {
             animation.effect?.target?.classList?.contains('glint'),
         ).length,
     }));
+  const earthDefaultProfile = {
+    bodies: true,
+    horizon: true,
+    ecliptic: true,
+    houses: true,
+    stars: true,
+    signs: true,
+    equator: false,
+    meridian: false,
+    primeVertical: false,
+    angles: true,
+    constellations: false,
+    asterisms: false,
+    earthProjections: true,
+    earthHouses: false,
+    astrocartography: true,
+    aspects: false,
+  };
+  const referenceControls = {
+    bodies: 'Celestial bodies',
+    horizon: 'Horizon & compass',
+    ecliptic: 'Ecliptic',
+    signs: 'Tropical signs',
+    angles: 'Ascendant, MC & opposites',
+    equator: 'Celestial equator',
+    meridian: 'Local meridian',
+    primeVertical: 'Prime vertical',
+    stars: 'Catalogue stars',
+    constellations: 'Constellation regions',
+    asterisms: 'Constellation asterisms',
+    houses: 'Longitude houses',
+  };
+  const workloads = {};
+  async function recordWorkload(name, view, expected, houseMode = null) {
+    const actual = await page.evaluate(() => {
+      const layers = {};
+      for (const label of document.querySelectorAll(
+        '[data-control-group="layers"] [data-feature-id],.earth-controls [data-feature-id],.aspect-controls [data-feature-id="layer:aspects"]',
+      )) {
+        const input = label.querySelector('input[type="checkbox"]');
+        if (input) layers[label.dataset.featureId.slice('layer:'.length)] = input.checked;
+      }
+      const filters = Object.fromEntries(
+        [...document.querySelectorAll('.earth-controls fieldset')].map((fieldset) => [
+          fieldset.querySelector('legend')?.textContent.trim(),
+          [...fieldset.querySelectorAll('input[type="checkbox"]')].map((input) => ({
+            label: input.getAttribute('aria-label'),
+            checked: input.checked,
+          })),
+        ]),
+      );
+      return {
+        view: document.querySelector('.view-options [aria-pressed="true"]')?.textContent.trim(),
+        layers,
+        filters,
+        geographicLineCount:
+          (filters['Bodies on Earth'] ?? []).filter((input) => input.checked).length *
+          (filters['Angular lines'] ?? []).filter((input) => input.checked).length,
+        houseMode: document
+          .querySelector('[data-control-group="houses"] input[type="radio"]:checked')
+          ?.getAttribute('aria-label'),
+        aspectScope: document.querySelector('[aria-label="Aspect scope"]')?.value,
+      };
+    });
+    const differences = Object.entries(expected).filter(
+      ([key, value]) => actual.layers[key] !== value,
+    );
+    if (
+      !actual.view?.includes(view) ||
+      differences.length ||
+      actual.geographicLineCount !== 40 ||
+      (houseMode && actual.houseMode !== houseMode)
+    )
+      throw new Error(
+        `Unexpected ${name} workload: ${JSON.stringify({ expectedView: view, expectedLayers: expected, expectedHouseMode: houseMode, actual })}`,
+      );
+    workloads[name] = actual;
+    return actual;
+  }
+  async function bodyCard() {
+    await page.locator('.object-list [data-feature-id="body:sun"]').focus();
+    await page.locator('[data-testid="hover-card"][data-feature-kind="body"]').waitFor();
+    await page.locator('[data-testid="hover-card"] h2').filter({ hasText: /^Sun$/ }).waitFor();
+  }
   const revealCount = values.quick ? 8 : 36;
   await phase('card-reveal');
   for (let i = 0; i < revealCount; i++) {
@@ -423,35 +648,57 @@ try {
   await group('display');
   await page.getByLabel('Motion preference', { exact: true }).selectOption('full');
   await page.getByLabel('Card sparkles', { exact: true }).selectOption('on');
-  await group('aspects');
   await page.getByRole('button', { name: 'Earth overview', exact: true }).click();
-  await page.locator('.aspect-pair-list button').first().focus();
-  await page.locator('[data-testid="hover-card"][data-feature-kind="aspect"]').waitFor();
+  await recordWorkload('sparkles-on', 'Earth overview', earthDefaultProfile);
+  await bodyCard();
   const sparklesOn = await sparkleIdle('sparkles-on-idle');
   const sparkleOnInteraction = await cameraWork('sparkles-on-camera', values.quick ? 20 : 90);
   await page.getByLabel('Card sparkles', { exact: true }).selectOption('off');
   await page.getByRole('button', { name: 'Earth overview', exact: true }).click();
-  await page.locator('.aspect-pair-list button').first().focus();
-  await page.locator('[data-testid="hover-card"][data-feature-kind="aspect"]').waitFor();
+  await recordWorkload('sparkles-off', 'Earth overview', earthDefaultProfile);
+  await bodyCard();
   const sparklesOff = await sparkleIdle('sparkles-off-idle');
   const sparkleOffInteraction = await cameraWork('sparkles-off-camera', values.quick ? 20 : 90);
   await page.keyboard.press('Escape');
   await page.mouse.move(10, 10);
   await page.getByRole('button', { name: 'Earth overview', exact: true }).click();
+  await recordWorkload('earth-default', 'Earth overview', earthDefaultProfile);
   const earthCamera = await cameraWork('earth-default-camera', values.quick ? 20 : 90);
-  await pickingWork('earth-all40-houses-picking', values.quick ? 40 : 204);
+  await pickingWork('earth-default-picking', pickingCount);
+  await group('earth');
+  await page.getByRole('checkbox', { name: 'Earth projections', exact: true }).check();
+  await page.getByRole('checkbox', { name: 'Astrocartography lines', exact: true }).check();
+  await page.getByRole('checkbox', { name: 'Projected house sections', exact: true }).check();
+  const geographicFilters = page.locator('.earth-controls details');
+  if (!(await geographicFilters.evaluate((node) => node.open)))
+    await geographicFilters.locator(':scope > summary').click();
+  for (const checkbox of await geographicFilters.getByRole('checkbox').all())
+    await checkbox.check();
+  const earthStressProfile = { ...earthDefaultProfile, earthHouses: true };
+  await recordWorkload('earth-all40-houses', 'Earth overview', earthStressProfile);
+  const earthStressCamera = await cameraWork('earth-all40-houses-camera', values.quick ? 20 : 90);
+  await pickingWork('earth-all40-houses-picking', pickingCount);
   await group('layers');
   await page.getByLabel('Constellation asterisms', { exact: true }).check();
+  await recordWorkload('earth-with-figures', 'Earth overview', {
+    ...earthStressProfile,
+    asterisms: true,
+  });
   const figuresCamera = await cameraWork('earth-with-figures-camera', values.quick ? 20 : 90);
-  await pickingWork('earth-with-figures-picking', values.quick ? 40 : 204);
+  await pickingWork('earth-with-figures-picking', pickingCount);
   await page.getByRole('button', { name: 'Outside sphere', exact: true }).click();
-  for (const label of [
-    'Celestial equator',
-    'Local meridian',
-    'Prime vertical',
-    'Constellation regions',
-  ])
+  await group('layers');
+  // View profiles remember their own layers. Configure the dense sky itself;
+  // Earth asterisms and geographic houses cannot establish this workload.
+  for (const label of Object.values(referenceControls))
     await page.getByLabel(label, { exact: true }).check();
+  await group('earth');
+  await page.getByRole('checkbox', { name: 'Earth projections', exact: true }).uncheck();
+  await page.getByRole('checkbox', { name: 'Projected house sections', exact: true }).uncheck();
+  await page.getByRole('checkbox', { name: 'Astrocartography lines', exact: true }).check();
+  await group('aspects');
+  await page.getByRole('checkbox', { name: 'Show aspect strands', exact: true }).check();
+  await page.getByLabel('Aspect scope', { exact: true }).selectOption('all');
   await group('houses');
   await page.getByRole('radio', { name: 'Layered shells', exact: true }).check();
   await page.locator('.object-list').getByRole('button', { name: /^Moon/ }).click();
@@ -467,8 +714,16 @@ try {
     { timeout: 15000 },
   );
   const trailStatus = await page.getByLabel('Trail sampling status', { exact: true }).innerText();
+  const denseProfile = {
+    ...Object.fromEntries(Object.keys(referenceControls).map((key) => [key, true])),
+    earthProjections: false,
+    earthHouses: false,
+    astrocartography: true,
+    aspects: true,
+  };
+  await recordWorkload('dense-sky', 'Outside sphere', denseProfile, 'Layered shells');
   const denseCamera = await cameraWork('dense-sky-camera', values.quick ? 20 : 90);
-  await pickingWork('dense-sky-picking', values.quick ? 40 : 204);
+  await pickingWork('dense-sky-picking', pickingCount);
   const denseResources = await diagnostics();
   await page.getByLabel('Show selected body trail', { exact: true }).uncheck();
   await page.getByLabel('Step unit', { exact: true }).selectOption('hour');
@@ -507,6 +762,12 @@ try {
     await page.keyboard.press('Escape');
     await page.mouse.move(10, 10);
     await page.waitForTimeout(400);
+    await recordWorkload(
+      `resource-pass-${pass}`,
+      'Earth overview',
+      { ...earthStressProfile, asterisms: true, constellations: true },
+      'Layered shells',
+    );
     resourcePasses.push(await diagnostics());
   }
   // A date commit intentionally keeps the old default-overview pose. Recovery
@@ -535,7 +796,8 @@ try {
   const finalBefore = await diagnostics();
   await page.waitForTimeout(800);
   const finalAfter = await diagnostics();
-  await page.screenshot({ path: output.replace(/\.json$/, '') + '.png' });
+  if (!values['no-visuals'])
+    await page.screenshot({ path: output.replace(/\.json$/, '') + '.png' });
   const data = await page.evaluate(() => {
     const p = window.__m10;
     return {
@@ -549,6 +811,7 @@ try {
           'startup',
       })),
       phaseWindows: p.phaseWindows,
+      timeOriginMs: p.timeOriginMs,
       reveals: p.reveals,
       workerMessages: p.workerMessages,
       maxGlints: p.maxGlints,
@@ -583,6 +846,7 @@ try {
       ]),
     );
   const afterHashes = await sourceHashes();
+  const hostCpu = (await hostSampler?.stop()) ?? null;
   const report = {
     generatedAt: new Date().toISOString(),
     sourceUrl: origin,
@@ -607,6 +871,11 @@ try {
     },
     driver,
     quick: values.quick,
+    pickingCount,
+    visualsEnabled: !values['no-visuals'],
+    hostCpu,
+    budgets: { revealAfterEligibilityP95Ms: 50, wholePickingP95Ms: 4 },
+    workloads,
     method: {
       picking:
         'Entire entityAt body including star raycast, Earth/house clipping, ordering and optional constellation background classification; test-only try/finally timing adds small overhead.',
@@ -617,7 +886,9 @@ try {
       input:
         'Synthetic pointermove and ArrowRight dispatched to the real canvas once per rAF; all geometry is the actual App scene.',
       resourcePasses:
-        'Same final enabled layers/mode after each pass; pass0 warms lazy resources; next3 passes repeat hovers, views, dates, layer/mode switches.',
+        'Asserted same final Earth layer profile/mode after each pass; pass0 warms lazy resources; next3 passes repeat hovers, independent remembered view profiles, dates, layer/mode switches.',
+      workloads:
+        'Actual UI layer/filter/view/mode states asserted and recorded before timing. Earth default has aspects and projected houses off; geographic stress explicitly enables all40 lines plus projected houses; dense Outside explicitly enables every reference layer and aspects. Sparkle On/Off uses the same Sun body card and Earth profile.',
     },
     summary: {
       revealAfterEligibility: summarize(data.reveals.map((item) => item.afterEligibilityMs)),
@@ -629,6 +900,7 @@ try {
           sparkleOnInteraction,
           sparkleOffInteraction,
           earthCamera,
+          earthStressCamera,
           figuresCamera,
           denseCamera,
         }).map(([key, value]) => [key, summarize(value)]),
@@ -653,24 +925,60 @@ try {
   await writeFile(output, JSON.stringify(report, null, 2) + '\n');
   // Review images run after every timing/resource/recovery measurement, in
   // separate contexts without the test timing wrappers.
-  const visuals=[];
-  for(const viewport of [{width:1440,height:900},{width:1024,height:768}]){
-    const visual=await browser.newPage({viewport,deviceScaleFactor:1,reducedMotion:'reduce'});
-    try{
-      await visual.goto(origin);await visual.getByRole('button',{name:/Explore example/}).click();await visual.getByText('Moment calculated',{exact:true}).waitFor();
-      const aspects=visual.locator('details[data-control-group="aspects"]');await aspects.locator(':scope > summary').click();
+  const visuals = [];
+  for (const viewport of values['no-visuals']
+    ? []
+    : [
+        { width: 1440, height: 900 },
+        { width: 1024, height: 768 },
+      ]) {
+    const visual = await browser.newPage({
+      viewport,
+      deviceScaleFactor: 1,
+      reducedMotion: 'reduce',
+    });
+    try {
+      await visual.goto(origin);
+      await visual.getByRole('button', { name: /Explore example/ }).click();
+      await visual.getByText('Moment calculated', { exact: true }).waitFor();
+      const aspects = visual.locator('details[data-control-group="aspects"]');
+      if (!(await aspects.evaluate((node) => node.open)))
+        await aspects.locator(':scope > summary').click();
+      await visual.getByRole('checkbox', { name: 'Show aspect strands', exact: true }).check();
       await visual.locator('.aspect-pair-list button').first().click();
-      for(const [id,name] of [['earth','Earth overview'],['outside','Outside sphere']]){
-        await visual.getByRole('button',{name,exact:true}).click();await visual.locator('.aspect-pair-list button').first().hover();
-        await visual.locator('[data-testid="hover-card"][data-feature-kind="aspect"]').waitFor();await visual.waitForTimeout(250);
-        const path=output.replace(/\.json$/,'')+`-${viewport.width}-${id}.png`;
-        await visual.screenshot({path});
-        const metadata=await visual.evaluate(()=>{const box=element=>{const r=element.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};};return {card:box(document.querySelector('[data-testid="hover-card"]')),title:document.querySelector('[data-testid="hover-card"] h2')?.textContent,panels:[...document.querySelectorAll('#explorer-dock,#inspector')].map(element=>({id:element.id,inert:element.inert,box:box(element)}))};});
-        visuals.push({viewport,view:id,path,...metadata});
+      for (const [id, name] of [
+        ['earth', 'Earth overview'],
+        ['outside', 'Outside sphere'],
+      ]) {
+        await visual.getByRole('button', { name, exact: true }).click();
+        await visual.getByRole('checkbox', { name: 'Show aspect strands', exact: true }).check();
+        await visual.locator('.aspect-pair-list button').first().hover();
+        await visual.locator('[data-testid="hover-card"][data-feature-kind="aspect"]').waitFor();
+        await visual.waitForTimeout(250);
+        const path = output.replace(/\.json$/, '') + `-${viewport.width}-${id}.png`;
+        await visual.screenshot({ path });
+        const metadata = await visual.evaluate(() => {
+          const box = (element) => {
+            const r = element.getBoundingClientRect();
+            return { x: r.x, y: r.y, width: r.width, height: r.height };
+          };
+          return {
+            card: box(document.querySelector('[data-testid="hover-card"]')),
+            title: document.querySelector('[data-testid="hover-card"] h2')?.textContent,
+            panels: [...document.querySelectorAll('#explorer-dock,#inspector')].map((element) => ({
+              id: element.id,
+              inert: element.inert,
+              box: box(element),
+            })),
+          };
+        });
+        visuals.push({ viewport, view: id, path, ...metadata });
       }
-    }finally{await visual.close();}
+    } finally {
+      await visual.close();
+    }
   }
-  report.visuals=visuals;
+  report.visuals = visuals;
   await writeFile(output, JSON.stringify(report, null, 2) + '\n');
   console.log(
     JSON.stringify({
@@ -690,5 +998,9 @@ try {
     }),
   );
 } finally {
-  await browser.close();
+  try {
+    await browser?.close();
+  } finally {
+    await hostSampler?.stop();
+  }
 }
