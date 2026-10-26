@@ -263,7 +263,8 @@ test('sparkles persist and motion settings retain the complete static design', a
 test('all five theme previews and enlarged cards fit a constrained logical zoom viewport', async ({
   page,
 }, testInfo) => {
-  await page.goto('/?preview=aspects');
+  // Fragments remain client-side; release resources reject arbitrary query fields.
+  await page.goto('/#preview=aspects');
   await expect(tooltip(page)).toHaveCount(6);
   expect(
     await page
@@ -283,7 +284,7 @@ test('all five theme previews and enlarged cards fit a constrained logical zoom 
   await example(page);
   await openControlGroup(page, 'display');
   await page.getByLabel('Interface text size', { exact: true }).selectOption('large');
-  await page.goto('/?preview=aspects');
+  await page.goto('/#preview=aspects');
   await expect(tooltip(page)).toHaveCount(6);
   expect(
     parseFloat(
