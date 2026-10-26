@@ -563,6 +563,7 @@ try {
     }, title);
     await page.waitForFunction((before) => window.__m10.reveals.length > before, before);
   }
+  await phase('setup');
   async function cameraWork(name, count) {
     await phase(name);
     return page.evaluate(async (count) => {

@@ -472,18 +472,25 @@
   }
 
   .full-width-placements .card-interior {
-    padding: 6px;
+    padding: 5px;
   }
   .full-width-placements .relationship-reading {
     display: block;
-    padding: 5px 8px;
+    padding: 4px 8px;
+    line-height: 1.25;
+  }
+  /* Reserve room for platform font wrapping without reducing the reading font. */
+  .full-width-placements .reading-panel,
+  .full-width-placements .reading-panel p,
+  .full-width-placements .reading-panel h3 {
+    line-height: 1.25;
   }
   .full-width-placements .relationship-reading .claim-label {
     margin-bottom: 3px;
   }
   .full-width-placements .relationship-reading .relationship-lead {
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
   }
   .full-width-placements .relationship-reading .reading-panel:not(.relationship-lead) {
     display: inline;
@@ -492,7 +499,7 @@
   }
   .full-width-placements .relationship-reading .reading-panel:nth-of-type(2) {
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
   }
   .full-width-placements .relationship-reading .planet-identity {
     display: inline;

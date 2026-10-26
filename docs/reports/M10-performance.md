@@ -1,100 +1,53 @@
-# M10 performance and scene recovery
+# M10 final performance and recovery
 
-**Iteration status:** the successful reference measurement below is bound to `dc1b846`, not the current review head. A later clean `a2ac392` confirmation recorded card reveal p95 28.7ms but picking p95 7.2/6.8/4.5ms, exceeding the 4ms target. Its cause is unresolved; unrelated busy processes observed later started after that run and do not establish its cause. The raw local result is retained at `.cache/m10-performance/final-hardware.json`. Further confirmation and any required repair are deferred while the user iterates on the product. Do not treat M10 performance acceptance as complete.
+The settled candidate passes the card-reveal and whole-picking budgets on this physical RTX3060 desktop. The measured clean commit is `a2ef959acc4cf42526245ef0362b70ac5e2f4056`; all **111 source/data/style/WASM and lockfile hashes** also match the exact Git blobs of packaged candidate `a2ef959acc4cf42526245ef0362b70ac5e2f4056`. This is source-development evidence from the actual App, not an integrated-GPU laptop or packaged-runtime timing claim.
 
-Measured 26 October 2026 at 03:33 UTC against the complete development application served at `http://127.0.0.1:5196`. The measured source was clean commit `dc1b8469141c3521ebf84a226b37880563fdfcea`. This is physical Windows desktop evidence from the actual App, including its controls, worker and hover cards. It is not a packaged-release, integrated-GPU laptop, Safari, screen-reader or usability result.
+Measured 2026-10-26T06:25:12.392Z in Chromium 156.0.8078.4, ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11), Windows 10.0.26300, AMD Ryzen 5 5600X 6-Core Processor             , at1920×1080 CSS pixels/DPR1. The real GPU timer extension was available. Source hashes stayed unchanged; no Vite hot update occurred. The footer's old server-start revision is not used as source identity.
 
-The final run meets the M10 card-processing and picking targets on this host. The scene stayed idle while card sparkles animated, and repeated scene operations reached a stable resource plateau.
+[Raw samples](M10-performance.json), [independent Git binding and assertions](M10-performance-binding.json). Raw SHA256: `11081ecabca29f00182760e7a780f10b261cfeedd15276fd98aa37382d3cc659`; normalized source manifest: `189fd1917261f1776e3c1e51e120cb05154db81874276c34b7e13834a16ec934`.
 
-## Tested configuration and identity
+## Measurement and workload
 
-| Item | Observed value |
-|---|---|
-| Browser | Playwright Chromium 156.0.8078.4 |
-| Graphics adapter | ANGLE NVIDIA GeForce RTX 3060, Direct3D 11; physical adapter, not SwiftShader |
-| Driver | Windows driver 32.0.16.1088, dated 22 July 2026; read with `Get-CimInstance Win32_VideoController` |
-| Host | Windows 10.0.26300; AMD Ryzen 5 5600X; 34,301,444,096 bytes RAM |
-| Viewport | 1920×1080 CSS pixels, device pixel ratio 1; actual scene width varies with the inspector |
-| Launch arguments | `--use-angle=d3d11 --enable-gpu --disable-software-rasterizer` |
-| GPU timing | `EXT_disjoint_timer_query_webgl2` available; completed, non-disjoint results retained |
-| Raw evidence | [M10-performance.json](M10-performance.json) |
-| Raw SHA-256 | `50bf2b75bd306da7fdec038788dc694b053337f6e93e1248380e918091dcb856` |
+Command: `node scripts/m10-performance.mjs --url http://127.0.0.1:5196 --hardware --host-cpu --no-visuals --output .cache/m10-performance/current-candidate.json`. The harness records and asserts actual layer/filter/view/house-mode states. Earth default is distinct from all40 geographic lines plus projected houses; dense Outside explicitly enables every reference layer and aspects, respecting independent view memory. Sparkles On/Off use the same actual Sun card and camera path.
 
-All 106 source/data/style/WASM files under `src`, plus the lockfile in that count, were hashed before and after the run. Text hashes normalize CRLF to LF; WASM uses exact bytes. Hashes did not change, and Vite reported no hot updates. A separate `git show` comparison verified **all 106 hashes against the committed blobs**, with no mismatches. The development footer's server-start revision is not used as source identity.
-
-| Binding | SHA-256 |
-|---|---|
-| Sorted source-hash manifest | `bd4e6b5b95dd4add177dd8aa4e57f7a02a274cbe63ad2b1909cf1c35d947301e` |
-| `src/lib/scene/runtime.ts` | `7615ec24665101f38c1266a0438f5c8e3f4742ab52ece8d5362990060c8ecc94` |
-| `src/lib/scene/wide-line-buffer.ts` | `e51e45ccc94b4f17757db99a0eba7706394093651c359f9270564bbe2447f7f1` |
-| `src/App.svelte` | `4fe89822b4baf1336f32707a3f44e6d6031be8c25c80c0e6264d7eb237aaaafb` |
-| `src/lib/ui/FeaturePreview.svelte` | `56dd7074bde4e17a3aad62248c8ac11f9eb1e170b6005cb3003eb41ff6c38efb` |
-| Measurement script | `a00368ecc015cabe4251ab5d1919535a237ac0ee7b9a3d3acc5a13085af3aead` |
-
-## Measurement method
-
-Run [m10-performance.mjs](../../scripts/m10-performance.mjs) against a running local Vite server:
-
-```powershell
-node scripts/m10-performance.mjs --url http://127.0.0.1:5196 --hardware --output .cache/m10-performance/validated-hardware.json
-```
-
-For a server using another checkout, provide `--source-root` with that checkout's absolute path. The harness rejects non-loopback origins. It records actual adapter information and does not infer hardware acceleration from launch arguments.
-
-Test-only response instrumentation parses the served runtime module, wraps the complete unchanged `entityAt` body in `try/finally`, and captures its existing public runtime return value. The served module's original and instrumented hashes are recorded; its original sourcemap source matches the committed runtime hash above. No production timing global, runtime modification or alternative picker is shipped. Arrays are capped at 20,000 samples.
-
-Picking therefore includes raycasts, indexed stars, candidate ordering, Earth/house clipping and background constellation classification. The timing wrapper adds a small overhead. Pointer events are delivered to the real canvas handler once per requested animation frame; this measures handler work and excludes OS input delivery. CPU samples cover synchronous animation callbacks that submit real GL draws. GPU queries cover renderer commands, excluding CSS compositing and display scanout. Delivered rAF intervals, CPU submission and GPU elapsed time are reported separately.
-
-Card eligibility is the scheduled end of the actual 300ms reveal timer. Native object-button focus triggers the normal preview workflow; a matching card's DOM update plus its next rAF provides the UI-ready timestamp. This does not measure physical presentation or wait for the permitted entrance transition to finish. Subsequent control setup has a separate phase and is excluded from interaction-phase summaries.
-
-## Final measurements
+The complete unchanged entityAt body is timed through a test-only try/finally wrapper, including indexed stars, clipping, ordering and constellation background classification. Served original/instrumented module hashes are retained. No alternative picker or timing global is shipped. Reveal time starts at eligibility after the normal300ms dwell and ends at matching card DOM plus next rAF. It excludes physical input delivery/scanout and entrance completion. CPU submission, GPU elapsed and delivered rAF are distinct measurements.
 
 | Measurement | Samples | Median | p95 | Maximum |
 |---|---:|---:|---:|---:|
-| Card after eligibility | 36 | 14.8ms | **31.4ms** | 31.4ms |
-| Whole pick: Earth, all 40 lines and houses | 203 | 1.3ms | **2.3ms** | 5.7ms |
-| Whole pick: Earth plus 88 figures | 203 | 1.4ms | **2.2ms** | 3.2ms |
-| Whole pick: dense Outside sky | 203 | 1.1ms | **1.7ms** | 2.5ms |
+| Card after eligibility (budget50ms p95) | 36 | 14.70ms | **29.70ms** | 30.40ms |
+| earth-default-picking (budget4ms p95) | 203 | 1.30ms | **2.10ms** | 4.80ms |
+| earth-all40-houses-picking (budget4ms p95) | 203 | 1.30ms | **2.10ms** | 2.70ms |
+| earth-with-figures-picking (budget4ms p95) | 203 | 1.40ms | **2.10ms** | 3.00ms |
+| dense-sky-picking (budget4ms p95) | 203 | 1.30ms | **2.00ms** | 2.70ms |
 
-The targets are ≤50ms p95 after card eligibility and ≤4ms p95 picking. They are percentile targets: the 5.7ms maximum Earth pick is retained, not hidden. Measured card and picking phases sent **zero worker messages**, so hovering/focusing did not launch calculation jobs.
+All measured reveal, sparkle and picking phases sent zero worker messages and recorded no main-thread tasks≥50ms. Percentile targets do not hide maximum samples above4ms.
 
-| Camera workload | CPU callback p95 | GPU elapsed p95 | Delivered rAF p95 |
-|---|---:|---:|---:|
-| Default close Earth; all geographic lines/houses | 2.3ms | 4.51ms | 16.7ms |
-| Earth with constellation figures | 3.7ms | 8.95ms | 16.8ms |
-| Dense Outside sky | 6.6ms | 7.50ms | 16.8ms |
-| Aspect card sparkles On | 3.0ms | 7.20ms | 16.7ms |
-| Same camera path, sparkles Off | 2.6ms | 3.27ms | 16.7ms |
+| Camera workload | CPU callback p95 | GPU elapsed p95 |
+|---|---:|---:|
+| Default Earth (houses/aspects off) | 2.60ms | 0.93ms |
+| Earth, all40 lines plus houses | 2.90ms | 3.19ms |
+| Earth plus figures | 3.80ms | 10.17ms |
+| Dense Outside | 5.40ms | 7.55ms |
+| Sun card sparkles On | 2.90ms | 9.74ms |
+| Same Sun card sparkles Off | 2.60ms | 2.88ms |
 
-Each camera run dispatched 90 ArrowRight inputs from the same scene handler; the On/Off comparison resets to the same Earth pose. The figures run had one 33.4ms delivered interval and a 47.5ms CPU maximum. These samples do not establish a universal 60fps guarantee.
+Delivered rAF p95 was16.70–16.80ms for all six camera workloads; the maximum interval was33.20ms. These measurements do not establish universal60fps. The dense ten-year trail request recorded the following status: Limited trail interval Relative to the stars Sampled points 1,996 Point budget 2,000 Shown sampled interval 1999-04-27 00:00:00 UTC 2000-09-06 18:00:00 UTC Requested interval Sampling limits Computation budget reached; only the sampled interval is shown.. No full-capacity trail measurement is claimed. Startup, first resource passes and context restoration long tasks remain in the raw report.
 
-The dense case enabled sky houses, all reference circles, signs, stars, constellation regions and figures, selected Moon and an actual long trail. The ten-year request honestly reached its three-second sampling limit: **796 points**, covering 24 September 1999 to 9 April 2000, were shown. It is not represented as a 2,000-point capacity measurement; the earlier M9 capacity stress remains separate.
+## Idle, resources and recovery
 
-No ≥50ms main-thread long tasks were recorded in either sparkle idle/camera phase, the reveal phase, or the measured picking phases. Long tasks were retained for startup (four), first resource warmup (54ms), and context restoration (81ms). The comparison shows a bounded measured cost, not a claim that CSS animation is free.
-
-## Idle, resource plateau and recovery
-
-Sparkles On exposed 12 running decorative glints. Off left the static design with no running glint animation. Both two-second idle windows produced **zero additional scene renders**, and the final no-card idle window also produced zero renders. Decorative DOM never exceeded 12 glints; dismissed cards left no card or glint nodes.
-
-Four identical passes exercised view entry, independent layer toggles, all three house modes, repeated body previews, four successive hourly chart updates and four reverse updates to the same instant. Counters after every pass were identical:
+Sparkles On had12 running decorative glints; Off had zero running glints. Both2-second idle windows and final no-card idle produced zero additional canvas renders. Glints remained bounded at12.
 
 | Pass | Geometries | Textures | Programs |
 |---|---:|---:|---:|
-| Warmup | 538 | 230 | 16 |
-| Repeat 1 | 538 | 230 | 16 |
-| Repeat 2 | 538 | 230 | 16 |
-| Repeat 3 | 538 | 230 | 16 |
+| Warmup | 537 | 329 | 15 |
+| Repeat 1 | 537 | 331 | 15 |
+| Repeat 2 | 537 | 331 | 15 |
+| Repeat 3 | 537 | 331 | 15 |
 
-Actual `WEBGL_lose_context` loss/restoration succeeded. The test deliberately advanced the moment after entering default Earth overview, then checked restoration: camera position, up, target, FOV and aspect were **exactly equal** before and after recovery. `gl.getError()` was zero and rendering resumed.
+The three repeat snapshots are identical after initial warmup. Each pass repeats independent view profiles, layer toggles, all house modes, body previews and four hourly forward/reverse updates. Actual WebGL context loss/restoration preserved camera position/up/target/FOV/aspect exactly and resumed rendering with GL error0. Disposal removed the canvas and left0 geometries/programs. The single remaining shared internal DFG texture bookkeeping entry is documented in the [earlier ownership audit](M8-scene.md); context loss releases its GL storage. No page errors occurred. The owned hidden host sampler completed normally without forced termination; its data does not establish the cause of earlier timing variation.
 
-Disposal removed the canvas and left zero geometries and programs. The remaining one-texture bookkeeping entry is Three's shared internal DFG lookup, documented in the [earlier ownership audit](M8-scene.md); forced context loss releases its GL storage. Late focus, return and zoom calls completed without errors. There were no page errors.
+## Scope and history
 
-Earlier exploratory runs identified expensive projected-section triangle picking and full-sky bounds on small figure paths. The integrated analytic shared-partition lookup and active-point wide-line bounds are present in this measured source. The bounds preserve Float32 rounding, empty/single-path handling, pooled shrink/reuse and real Line2 stroke-edge picking under transformed parents; the focused renderer checks passed before measurement.
+Earlier dc1b846 and a2ac392 runs remain historical. The latter exceeded the picking target; this fresh run does not retrospectively explain its cause or relabel it a pass. The initially interrupted current run stopped on an ambiguous Catalogue stars test locator; exact checkbox roles repaired the harness, without altering workload or budgets. This complete run is the acceptance evidence.
 
-## Post-measurement visual review
-
-Four separate, uninstrumented contexts captured the selected Sun–Moon sextile over close Earth and Outside sphere at 1440×900 and 1024×768, with both explorer and inspector panels open. Retained captures: [1440 Earth](assets/m10-1440-earth.png), [1440 Outside](assets/m10-1440-outside.png), [1024 Earth](assets/m10-1024-earth.png) and [1024 Outside](assets/m10-1024-outside.png).
-
-The actual pixels show distinct close-Earth/full-sky compositions, explicit Sun/Moon names and placements, readable dark interpretation panels, and both sidebars retained. Cards remain inside the viewport; the shorter 1024 layout scrolls its contents. These static reduced-motion captures supplement the [five-theme and contrast review](M10-hover-design.md); they do not claim native 200% browser zoom or close the external accessibility gates.
-
-The tested RTX 3060 desktop is useful physical-device evidence. Integrated-GPU laptop performance, actual Safari, manual screen-reader review, moderated usability and human editorial review remain open as stated in the approved plan.
+Current visual evidence is recorded separately in the [compact-card review](M10-rectification-visual-review.md) and native-zoom report; historical scrolling-card screenshots are not current UI proof. Actual Safari, desktop screen reader, integrated-GPU laptop, moderated users and human editorial review remain external gates.

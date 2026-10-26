@@ -1,0 +1,2725 @@
+{
+  "title": "M10 rectified compact previews — final native Chrome 200% zoom",
+  "testedAt": "2026-10-26T06:18:51.006Z",
+  "completedAt": "2026-10-26T06:19:57.072Z",
+  "sourceRevision": "79b585b8007537e41bafefb6f40449fa0e431e45",
+  "finalSourceRevision": "79b585b8007537e41bafefb6f40449fa0e431e45",
+  "sourceRevisionChanged": false,
+  "sourceFiles": {
+    "src/App.svelte": "d10d26200502c4f37dd678741b044b87fce36185990f676462b19aac79d5cbd1",
+    "src/app.css": "b8bfe088f0868fc8f93bef5a5cb3ac2cc8b9eddc3e1328d2d6af77fbb51f2657",
+    "src/lib/ui/HoverCard.svelte": "034bc79054a1334583af4d6a85a657fa78691f425000910b96d204baee5ab21c",
+    "src/lib/ui/FeaturePreview.svelte": "da05ddbd8f715e71c7e7d9153a8b858e0d4919882c0906057a6a9685e6968cb3",
+    "src/lib/ui/AspectControls.svelte": "42dbff6745b19a135867442b9a23d573ac0f7821b38689a6a5b1c07e1faf756e",
+    "src/lib/domain/hover-card.ts": "cb8268e1fb78fe8f773eb38d4f12ea609eb9daa2047d054e8720adfa3f4d3bf1",
+    "src/lib/domain/hover-preview.ts": "9e10bfbc86fdd60eeb6f9c4434bae5cf4134b56d9fa38fbd47b96810bed28a04",
+    "src/lib/domain/hover-card-themes.ts": "dda62eef73c5246ba35c93c7699e7a2c600ac3557dce04ef628e623f06a4fbe9",
+    "src/lib/content/data/catalogue.json": "bb0e78fb120ac42ee5fdc843d7682fa0838a0907cc457426f907d74a0038822d",
+    "src/lib/content/data/supplemental-claims.json": "318be27fc08431a4511628512216baa7b7961eaede537ad2b7039f19834d174d"
+  },
+  "finalSourceFiles": {
+    "src/App.svelte": "d10d26200502c4f37dd678741b044b87fce36185990f676462b19aac79d5cbd1",
+    "src/app.css": "b8bfe088f0868fc8f93bef5a5cb3ac2cc8b9eddc3e1328d2d6af77fbb51f2657",
+    "src/lib/ui/HoverCard.svelte": "034bc79054a1334583af4d6a85a657fa78691f425000910b96d204baee5ab21c",
+    "src/lib/ui/FeaturePreview.svelte": "da05ddbd8f715e71c7e7d9153a8b858e0d4919882c0906057a6a9685e6968cb3",
+    "src/lib/ui/AspectControls.svelte": "42dbff6745b19a135867442b9a23d573ac0f7821b38689a6a5b1c07e1faf756e",
+    "src/lib/domain/hover-card.ts": "cb8268e1fb78fe8f773eb38d4f12ea609eb9daa2047d054e8720adfa3f4d3bf1",
+    "src/lib/domain/hover-preview.ts": "9e10bfbc86fdd60eeb6f9c4434bae5cf4134b56d9fa38fbd47b96810bed28a04",
+    "src/lib/domain/hover-card-themes.ts": "dda62eef73c5246ba35c93c7699e7a2c600ac3557dce04ef628e623f06a4fbe9",
+    "src/lib/content/data/catalogue.json": "bb0e78fb120ac42ee5fdc843d7682fa0838a0907cc457426f907d74a0038822d",
+    "src/lib/content/data/supplemental-claims.json": "318be27fc08431a4511628512216baa7b7961eaede537ad2b7039f19834d174d"
+  },
+  "sourceUnchanged": true,
+  "browser": {
+    "version": "156.0.8078.47",
+    "channel": "chrome",
+    "headless": false,
+    "viewport": null,
+    "closed": true
+  },
+  "method": "Actual chrome://settings/appearance Page zoom combobox selectOption(label=200%); CDP Browser window bounds only; no emulated viewport, device scale, CSS zoom or pinch zoom.",
+  "summary": {
+    "native200Proven": true,
+    "stateCount": 8,
+    "expectedStates": 8,
+    "allExpectedStatesPass": true,
+    "servedSourceMatches": true,
+    "sourceUnchanged": true,
+    "pageErrors": 0,
+    "allEightStatesPass": true,
+    "passed": true
+  },
+  "errors": [],
+  "cleanup": [
+    {
+      "path": "D:\\dev\\astrology-viewer\\.cache\\m10-native-zoom-rectified\\79b585b8-2026-10-26T06-18-50-990Z\\owned-native-chrome-profile",
+      "removed": true
+    }
+  ],
+  "zoom": [
+    {
+      "nativeWindow": {
+        "width": 1440,
+        "height": 900
+      },
+      "before": {
+        "dpr": 1,
+        "innerWidth": 1424,
+        "innerHeight": 749,
+        "outerWidth": 1440,
+        "outerHeight": 900,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 1424,
+        "visualViewportHeight": 749,
+        "documentWidth": 1424,
+        "documentHeight": 749,
+        "rootFont": "16px",
+        "compact": false,
+        "buildText": "Moment calculatedEvidence & sourcesBuild 9b625b4Source & licences ↗"
+      },
+      "after": {
+        "dpr": 2,
+        "innerWidth": 712,
+        "innerHeight": 374,
+        "outerWidth": 1440,
+        "outerHeight": 900,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 704.5,
+        "visualViewportHeight": 374.5,
+        "documentWidth": 704,
+        "documentHeight": 800,
+        "rootFont": "16px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild 9b625b4Source & licences ↗"
+      },
+      "dprRatio": 2,
+      "cssWidthRatio": 2,
+      "nativeBoundsBefore": {
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "width": 1440,
+          "height": 900,
+          "windowState": "normal"
+        }
+      },
+      "nativeBoundsAfter": {
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "width": 1440,
+          "height": 900,
+          "windowState": "normal"
+        }
+      }
+    },
+    {
+      "nativeWindow": {
+        "width": 1024,
+        "height": 768
+      },
+      "before": {
+        "dpr": 1,
+        "innerWidth": 1008,
+        "innerHeight": 617,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 993,
+        "visualViewportHeight": 617,
+        "documentWidth": 993,
+        "documentHeight": 720,
+        "rootFont": "18px",
+        "compact": false,
+        "buildText": "Moment calculatedEvidence & sourcesBuild 9b625b4Source & licences ↗"
+      },
+      "after": {
+        "dpr": 2,
+        "innerWidth": 504,
+        "innerHeight": 308,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 496.5,
+        "visualViewportHeight": 308.5,
+        "documentWidth": 496,
+        "documentHeight": 800,
+        "rootFont": "18px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild 9b625b4Source & licences ↗"
+      },
+      "dprRatio": 2,
+      "cssWidthRatio": 2,
+      "nativeBoundsBefore": {
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "width": 1024,
+          "height": 768,
+          "windowState": "normal"
+        }
+      },
+      "nativeBoundsAfter": {
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "width": 1024,
+          "height": 768,
+          "windowState": "normal"
+        }
+      }
+    }
+  ],
+  "states": [
+    {
+      "nativeWindow": {
+        "width": 1440,
+        "height": 900
+      },
+      "text": "standard",
+      "view": "earth",
+      "passed": true,
+      "cssViewport": {
+        "dpr": 2,
+        "innerWidth": 712,
+        "innerHeight": 374,
+        "outerWidth": 1440,
+        "outerHeight": 900,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 704.5,
+        "visualViewportHeight": 374.5,
+        "documentWidth": 704,
+        "documentHeight": 800,
+        "rootFont": "16px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild 9b625b4Source & licences ↗"
+      },
+      "layout": {
+        "viewport": {
+          "width": 712,
+          "height": 374,
+          "visualWidth": 704.5
+        },
+        "documentWidth": 704,
+        "noHorizontalOverflow": true,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 704.5,
+          "height": 83,
+          "right": 704.5,
+          "bottom": 83,
+          "scrollWidth": 705,
+          "clientWidth": 705,
+          "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+        },
+        "headerChildren": [
+          {
+            "className": "brand svelte-1n46o8q",
+            "x": 18,
+            "y": 25,
+            "width": 133.75,
+            "height": 32,
+            "right": 151.75,
+            "bottom": 57,
+            "scrollWidth": 134,
+            "clientWidth": 134,
+            "text": "✦ SPATIALASTROLOGY EXPLORER"
+          },
+          {
+            "className": "context-details svelte-1n46o8q",
+            "x": 385.1953125,
+            "y": 13,
+            "width": 190.40625,
+            "height": 56,
+            "right": 575.6015625,
+            "bottom": 69,
+            "scrollWidth": 190,
+            "clientWidth": 190,
+            "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+          },
+          {
+            "className": "button secondary compact svelte-1n46o8q",
+            "x": 593.6015625,
+            "y": 24,
+            "width": 92.8984375,
+            "height": 34,
+            "right": 686.5,
+            "bottom": 58,
+            "scrollWidth": 91,
+            "clientWidth": 91,
+            "text": "⌖ Edit moment"
+          }
+        ],
+        "headerChildrenWithinViewport": true,
+        "headerOverlaps": [],
+        "inspectorToggle": {
+          "x": 601.9921875,
+          "y": 95,
+          "width": 86.5078125,
+          "height": 32,
+          "right": 688.5,
+          "bottom": 127,
+          "scrollWidth": 85,
+          "clientWidth": 85,
+          "text": "ⓘ Inspector"
+        },
+        "inspectorToggleWithinViewport": true,
+        "openInspector": {
+          "x": 332.5,
+          "width": 360,
+          "right": 692.5,
+          "viewportWidth": 712,
+          "fitsHorizontally": true
+        },
+        "inspectorImage": "1440x900-200-standard-earth-inspector.png",
+        "passed": true
+      },
+      "cards": {
+        "body": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 101.5859375,
+            "width": 560,
+            "height": 232.8359375,
+            "right": 572,
+            "bottom": 334.421875
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 88.09375,
+            "width": 560,
+            "height": 232.8359375,
+            "right": 572,
+            "bottom": 320.9296875
+          },
+          "fonts": [
+            "13px"
+          ],
+          "sections": [
+            "body:sun",
+            "body-in-sign:sun:capricorn",
+            "body-in-house:sun:10"
+          ],
+          "claimIds": [
+            "body:sun:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-house:sun:10:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1440x900-200-standard-earth-body-hover.png",
+            "1440x900-200-standard-earth-body-keyboard.png"
+          ]
+        },
+        "aspect": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 560,
+            "height": 259.7265625,
+            "right": 572,
+            "bottom": 271.7265625
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 61.28125,
+            "width": 560,
+            "height": 259.7265625,
+            "right": 572,
+            "bottom": 321.0078125
+          },
+          "fonts": [
+            "13px"
+          ],
+          "sections": [
+            "aspect-type:sextile",
+            "body-in-sign:sun:capricorn",
+            "body-in-sign:moon:scorpio"
+          ],
+          "claimIds": [
+            "aspect-type:sextile:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-sign:moon:scorpio:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1440x900-200-standard-earth-aspect-hover.png",
+            "1440x900-200-standard-earth-aspect-keyboard.png"
+          ]
+        },
+        "geographic": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 137.96875,
+            "width": 560,
+            "height": 157.484375,
+            "right": 572,
+            "bottom": 295.453125
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 163.9765625,
+            "width": 560,
+            "height": 157.484375,
+            "right": 572,
+            "bottom": 321.4609375
+          },
+          "fonts": [
+            "13px"
+          ],
+          "sections": [
+            "astro:body:venus",
+            "astro:angle:ac"
+          ],
+          "claimIds": [
+            "astro:body:venus:0",
+            "astro:angle:ac:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1440x900-200-standard-earth-geographic-hover.png",
+            "1440x900-200-standard-earth-geographic-keyboard.png"
+          ]
+        }
+      }
+    },
+    {
+      "nativeWindow": {
+        "width": 1440,
+        "height": 900
+      },
+      "text": "standard",
+      "view": "outside",
+      "passed": true,
+      "cssViewport": {
+        "dpr": 2,
+        "innerWidth": 712,
+        "innerHeight": 374,
+        "outerWidth": 1440,
+        "outerHeight": 900,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 704.5,
+        "visualViewportHeight": 374.5,
+        "documentWidth": 704,
+        "documentHeight": 800,
+        "rootFont": "16px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild 9b625b4Source & licences ↗"
+      },
+      "layout": {
+        "viewport": {
+          "width": 712,
+          "height": 374,
+          "visualWidth": 704.5
+        },
+        "documentWidth": 704,
+        "noHorizontalOverflow": true,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 704.5,
+          "height": 83,
+          "right": 704.5,
+          "bottom": 83,
+          "scrollWidth": 705,
+          "clientWidth": 705,
+          "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+        },
+        "headerChildren": [
+          {
+            "className": "brand svelte-1n46o8q",
+            "x": 18,
+            "y": 25,
+            "width": 133.75,
+            "height": 32,
+            "right": 151.75,
+            "bottom": 57,
+            "scrollWidth": 134,
+            "clientWidth": 134,
+            "text": "✦ SPATIALASTROLOGY EXPLORER"
+          },
+          {
+            "className": "context-details svelte-1n46o8q",
+            "x": 385.1953125,
+            "y": 13,
+            "width": 190.40625,
+            "height": 56,
+            "right": 575.6015625,
+            "bottom": 69,
+            "scrollWidth": 190,
+            "clientWidth": 190,
+            "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+          },
+          {
+            "className": "button secondary compact svelte-1n46o8q",
+            "x": 593.6015625,
+            "y": 24,
+            "width": 92.8984375,
+            "height": 34,
+            "right": 686.5,
+            "bottom": 58,
+            "scrollWidth": 91,
+            "clientWidth": 91,
+            "text": "⌖ Edit moment"
+          }
+        ],
+        "headerChildrenWithinViewport": true,
+        "headerOverlaps": [],
+        "inspectorToggle": {
+          "x": 601.9921875,
+          "y": 95,
+          "width": 86.5078125,
+          "height": 32,
+          "right": 688.5,
+          "bottom": 127,
+          "scrollWidth": 85,
+          "clientWidth": 85,
+          "text": "ⓘ Inspector"
+        },
+        "inspectorToggleWithinViewport": true,
+        "openInspector": {
+          "x": 332.5,
+          "width": 360,
+          "right": 692.5,
+          "viewportWidth": 712,
+          "fitsHorizontally": true
+        },
+        "inspectorImage": "1440x900-200-standard-outside-inspector.png",
+        "passed": true
+      },
+      "cards": {
+        "body": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 54.0859375,
+            "width": 560,
+            "height": 232.8359375,
+            "right": 572,
+            "bottom": 286.921875
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 88.09375,
+            "width": 560,
+            "height": 232.8359375,
+            "right": 572,
+            "bottom": 320.9296875
+          },
+          "fonts": [
+            "13px"
+          ],
+          "sections": [
+            "body:sun",
+            "body-in-sign:sun:capricorn",
+            "body-in-house:sun:10"
+          ],
+          "claimIds": [
+            "body:sun:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-house:sun:10:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1440x900-200-standard-outside-body-hover.png",
+            "1440x900-200-standard-outside-body-keyboard.png"
+          ]
+        },
+        "aspect": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 61.2734375,
+            "width": 560,
+            "height": 259.7265625,
+            "right": 572,
+            "bottom": 321
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 61.28125,
+            "width": 560,
+            "height": 259.7265625,
+            "right": 572,
+            "bottom": 321.0078125
+          },
+          "fonts": [
+            "13px"
+          ],
+          "sections": [
+            "aspect-type:sextile",
+            "body-in-sign:sun:capricorn",
+            "body-in-sign:moon:scorpio"
+          ],
+          "claimIds": [
+            "aspect-type:sextile:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-sign:moon:scorpio:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1440x900-200-standard-outside-aspect-hover.png",
+            "1440x900-200-standard-outside-aspect-keyboard.png"
+          ]
+        },
+        "geographic": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 104.46875,
+            "width": 560,
+            "height": 157.484375,
+            "right": 572,
+            "bottom": 261.953125
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 163.9765625,
+            "width": 560,
+            "height": 157.484375,
+            "right": 572,
+            "bottom": 321.4609375
+          },
+          "fonts": [
+            "13px"
+          ],
+          "sections": [
+            "astro:body:venus",
+            "astro:angle:ac"
+          ],
+          "claimIds": [
+            "astro:body:venus:0",
+            "astro:angle:ac:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1440x900-200-standard-outside-geographic-hover.png",
+            "1440x900-200-standard-outside-geographic-keyboard.png"
+          ]
+        }
+      }
+    },
+    {
+      "nativeWindow": {
+        "width": 1440,
+        "height": 900
+      },
+      "text": "large",
+      "view": "earth",
+      "passed": true,
+      "cssViewport": {
+        "dpr": 2,
+        "innerWidth": 712,
+        "innerHeight": 374,
+        "outerWidth": 1440,
+        "outerHeight": 900,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 704.5,
+        "visualViewportHeight": 374.5,
+        "documentWidth": 704,
+        "documentHeight": 800,
+        "rootFont": "18px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild 9b625b4Source & licences ↗"
+      },
+      "layout": {
+        "viewport": {
+          "width": 712,
+          "height": 374,
+          "visualWidth": 704.5
+        },
+        "documentWidth": 704,
+        "noHorizontalOverflow": true,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 704.5,
+          "height": 83,
+          "right": 704.5,
+          "bottom": 83,
+          "scrollWidth": 705,
+          "clientWidth": 705,
+          "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+        },
+        "headerChildren": [
+          {
+            "className": "brand svelte-1n46o8q",
+            "x": 18,
+            "y": 25,
+            "width": 141.84375,
+            "height": 32,
+            "right": 159.84375,
+            "bottom": 57,
+            "scrollWidth": 142,
+            "clientWidth": 142,
+            "text": "✦ SPATIALASTROLOGY EXPLORER"
+          },
+          {
+            "className": "context-details svelte-1n46o8q",
+            "x": 352.59375,
+            "y": 10.5,
+            "width": 214.2109375,
+            "height": 61,
+            "right": 566.8046875,
+            "bottom": 71.5,
+            "scrollWidth": 214,
+            "clientWidth": 214,
+            "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+          },
+          {
+            "className": "button secondary compact svelte-1n46o8q",
+            "x": 584.8046875,
+            "y": 23,
+            "width": 101.6953125,
+            "height": 36,
+            "right": 686.5,
+            "bottom": 59,
+            "scrollWidth": 100,
+            "clientWidth": 100,
+            "text": "⌖ Edit moment"
+          }
+        ],
+        "headerChildrenWithinViewport": true,
+        "headerOverlaps": [],
+        "inspectorToggle": {
+          "x": 593.9296875,
+          "y": 95,
+          "width": 94.5703125,
+          "height": 34,
+          "right": 688.5,
+          "bottom": 129,
+          "scrollWidth": 93,
+          "clientWidth": 93,
+          "text": "ⓘ Inspector"
+        },
+        "inspectorToggleWithinViewport": true,
+        "openInspector": {
+          "x": 332.5,
+          "width": 360,
+          "right": 692.5,
+          "viewportWidth": 712,
+          "fitsHorizontally": true
+        },
+        "inspectorImage": "1440x900-200-large-earth-inspector.png",
+        "passed": true
+      },
+      "cards": {
+        "body": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 76.0234375,
+            "width": 640,
+            "height": 253.9296875,
+            "right": 652,
+            "bottom": 329.953125
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 60.5390625,
+            "width": 640,
+            "height": 253.9296875,
+            "right": 652,
+            "bottom": 314.46875
+          },
+          "fonts": [
+            "14.625px"
+          ],
+          "sections": [
+            "body:sun",
+            "body-in-sign:sun:capricorn",
+            "body-in-house:sun:10"
+          ],
+          "claimIds": [
+            "body:sun:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-house:sun:10:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1440x900-200-large-earth-body-hover.png",
+            "1440x900-200-large-earth-body-keyboard.png"
+          ]
+        },
+        "aspect": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 560,
+            "height": 302.4453125,
+            "right": 572,
+            "bottom": 314.4453125
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12.4375,
+            "width": 560,
+            "height": 302.4453125,
+            "right": 572,
+            "bottom": 314.8828125
+          },
+          "fonts": [
+            "14.625px"
+          ],
+          "sections": [
+            "aspect-type:sextile",
+            "body-in-sign:sun:capricorn",
+            "body-in-sign:moon:scorpio"
+          ],
+          "claimIds": [
+            "aspect-type:sextile:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-sign:moon:scorpio:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1440x900-200-large-earth-aspect-hover.png",
+            "1440x900-200-large-earth-aspect-keyboard.png"
+          ]
+        },
+        "geographic": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 560,
+            "height": 169.78125,
+            "right": 572,
+            "bottom": 181.78125
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 144.2734375,
+            "width": 560,
+            "height": 169.78125,
+            "right": 572,
+            "bottom": 314.0546875
+          },
+          "fonts": [
+            "14.625px"
+          ],
+          "sections": [
+            "astro:body:venus",
+            "astro:angle:ac"
+          ],
+          "claimIds": [
+            "astro:body:venus:0",
+            "astro:angle:ac:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1440x900-200-large-earth-geographic-hover.png",
+            "1440x900-200-large-earth-geographic-keyboard.png"
+          ]
+        }
+      }
+    },
+    {
+      "nativeWindow": {
+        "width": 1440,
+        "height": 900
+      },
+      "text": "large",
+      "view": "outside",
+      "passed": true,
+      "cssViewport": {
+        "dpr": 2,
+        "innerWidth": 712,
+        "innerHeight": 374,
+        "outerWidth": 1440,
+        "outerHeight": 900,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 704.5,
+        "visualViewportHeight": 374.5,
+        "documentWidth": 704,
+        "documentHeight": 800,
+        "rootFont": "18px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild 9b625b4Source & licences ↗"
+      },
+      "layout": {
+        "viewport": {
+          "width": 712,
+          "height": 374,
+          "visualWidth": 704.5
+        },
+        "documentWidth": 704,
+        "noHorizontalOverflow": true,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 704.5,
+          "height": 83,
+          "right": 704.5,
+          "bottom": 83,
+          "scrollWidth": 705,
+          "clientWidth": 705,
+          "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+        },
+        "headerChildren": [
+          {
+            "className": "brand svelte-1n46o8q",
+            "x": 18,
+            "y": 25,
+            "width": 141.84375,
+            "height": 32,
+            "right": 159.84375,
+            "bottom": 57,
+            "scrollWidth": 142,
+            "clientWidth": 142,
+            "text": "✦ SPATIALASTROLOGY EXPLORER"
+          },
+          {
+            "className": "context-details svelte-1n46o8q",
+            "x": 352.59375,
+            "y": 10.5,
+            "width": 214.2109375,
+            "height": 61,
+            "right": 566.8046875,
+            "bottom": 71.5,
+            "scrollWidth": 214,
+            "clientWidth": 214,
+            "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+          },
+          {
+            "className": "button secondary compact svelte-1n46o8q",
+            "x": 584.8046875,
+            "y": 23,
+            "width": 101.6953125,
+            "height": 36,
+            "right": 686.5,
+            "bottom": 59,
+            "scrollWidth": 100,
+            "clientWidth": 100,
+            "text": "⌖ Edit moment"
+          }
+        ],
+        "headerChildrenWithinViewport": true,
+        "headerOverlaps": [],
+        "inspectorToggle": {
+          "x": 593.9296875,
+          "y": 95,
+          "width": 94.5703125,
+          "height": 34,
+          "right": 688.5,
+          "bottom": 129,
+          "scrollWidth": 93,
+          "clientWidth": 93,
+          "text": "ⓘ Inspector"
+        },
+        "inspectorToggleWithinViewport": true,
+        "openInspector": {
+          "x": 332.5,
+          "width": 360,
+          "right": 692.5,
+          "viewportWidth": 712,
+          "fitsHorizontally": true
+        },
+        "inspectorImage": "1440x900-200-large-outside-inspector.png",
+        "passed": true
+      },
+      "cards": {
+        "body": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 47.5234375,
+            "width": 640,
+            "height": 253.9296875,
+            "right": 652,
+            "bottom": 301.453125
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 60.5390625,
+            "width": 640,
+            "height": 253.9296875,
+            "right": 652,
+            "bottom": 314.46875
+          },
+          "fonts": [
+            "14.625px"
+          ],
+          "sections": [
+            "body:sun",
+            "body-in-sign:sun:capricorn",
+            "body-in-house:sun:10"
+          ],
+          "claimIds": [
+            "body:sun:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-house:sun:10:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1440x900-200-large-outside-body-hover.png",
+            "1440x900-200-large-outside-body-keyboard.png"
+          ]
+        },
+        "aspect": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12.4296875,
+            "width": 560,
+            "height": 302.4453125,
+            "right": 572,
+            "bottom": 314.875
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12.4375,
+            "width": 560,
+            "height": 302.4453125,
+            "right": 572,
+            "bottom": 314.8828125
+          },
+          "fonts": [
+            "14.625px"
+          ],
+          "sections": [
+            "aspect-type:sextile",
+            "body-in-sign:sun:capricorn",
+            "body-in-sign:moon:scorpio"
+          ],
+          "claimIds": [
+            "aspect-type:sextile:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-sign:moon:scorpio:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1440x900-200-large-outside-aspect-hover.png",
+            "1440x900-200-large-outside-aspect-keyboard.png"
+          ]
+        },
+        "geographic": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 99.765625,
+            "width": 560,
+            "height": 169.78125,
+            "right": 572,
+            "bottom": 269.546875
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 144.2734375,
+            "width": 560,
+            "height": 169.78125,
+            "right": 572,
+            "bottom": 314.0546875
+          },
+          "fonts": [
+            "14.625px"
+          ],
+          "sections": [
+            "astro:body:venus",
+            "astro:angle:ac"
+          ],
+          "claimIds": [
+            "astro:body:venus:0",
+            "astro:angle:ac:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1440x900-200-large-outside-geographic-hover.png",
+            "1440x900-200-large-outside-geographic-keyboard.png"
+          ]
+        }
+      }
+    },
+    {
+      "nativeWindow": {
+        "width": 1024,
+        "height": 768
+      },
+      "text": "standard",
+      "view": "earth",
+      "passed": true,
+      "cssViewport": {
+        "dpr": 2,
+        "innerWidth": 504,
+        "innerHeight": 308,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 496.5,
+        "visualViewportHeight": 308.5,
+        "documentWidth": 496,
+        "documentHeight": 800,
+        "rootFont": "16px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild 9b625b4Source & licences ↗"
+      },
+      "layout": {
+        "viewport": {
+          "width": 504,
+          "height": 308,
+          "visualWidth": 496.5
+        },
+        "documentWidth": 496,
+        "noHorizontalOverflow": true,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 496.5,
+          "height": 83,
+          "right": 496.5,
+          "bottom": 83,
+          "scrollWidth": 497,
+          "clientWidth": 497,
+          "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+        },
+        "headerChildren": [
+          {
+            "className": "brand svelte-1n46o8q",
+            "x": 18,
+            "y": 25,
+            "width": 133.75,
+            "height": 32,
+            "right": 151.75,
+            "bottom": 57,
+            "scrollWidth": 134,
+            "clientWidth": 134,
+            "text": "✦ SPATIALASTROLOGY EXPLORER"
+          },
+          {
+            "className": "context-details svelte-1n46o8q",
+            "x": 177.1953125,
+            "y": 13,
+            "width": 190.40625,
+            "height": 56,
+            "right": 367.6015625,
+            "bottom": 69,
+            "scrollWidth": 190,
+            "clientWidth": 190,
+            "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+          },
+          {
+            "className": "button secondary compact svelte-1n46o8q",
+            "x": 385.6015625,
+            "y": 24,
+            "width": 92.8984375,
+            "height": 34,
+            "right": 478.5,
+            "bottom": 58,
+            "scrollWidth": 91,
+            "clientWidth": 91,
+            "text": "⌖ Edit moment"
+          }
+        ],
+        "headerChildrenWithinViewport": true,
+        "headerOverlaps": [],
+        "inspectorToggle": {
+          "x": 393.9921875,
+          "y": 95,
+          "width": 86.5078125,
+          "height": 32,
+          "right": 480.5,
+          "bottom": 127,
+          "scrollWidth": 85,
+          "clientWidth": 85,
+          "text": "ⓘ Inspector"
+        },
+        "inspectorToggleWithinViewport": true,
+        "openInspector": {
+          "x": 124.5,
+          "width": 360,
+          "right": 484.5,
+          "viewportWidth": 504,
+          "fitsHorizontally": true
+        },
+        "inspectorImage": "1024x768-200-standard-earth-inspector.png",
+        "passed": true
+      },
+      "cards": {
+        "body": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 268.7109375,
+            "right": 492,
+            "bottom": 280.7109375
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 268.7109375,
+            "right": 492,
+            "bottom": 280.7109375
+          },
+          "fonts": [
+            "13px"
+          ],
+          "sections": [
+            "body:sun",
+            "body-in-sign:sun:capricorn",
+            "body-in-house:sun:10"
+          ],
+          "claimIds": [
+            "body:sun:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-house:sun:10:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-standard-earth-body-hover.png",
+            "1024x768-200-standard-earth-body-keyboard.png"
+          ]
+        },
+        "aspect": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 262.390625,
+            "right": 492,
+            "bottom": 274.390625
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 262.390625,
+            "right": 492,
+            "bottom": 274.390625
+          },
+          "fonts": [
+            "13px"
+          ],
+          "sections": [
+            "aspect-type:sextile",
+            "body-in-sign:sun:capricorn",
+            "body-in-sign:moon:scorpio"
+          ],
+          "claimIds": [
+            "aspect-type:sextile:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-sign:moon:scorpio:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-standard-earth-aspect-hover.png",
+            "1024x768-200-standard-earth-aspect-keyboard.png"
+          ]
+        },
+        "geographic": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 175.421875,
+            "right": 492,
+            "bottom": 187.421875
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 80.9765625,
+            "width": 480,
+            "height": 175.421875,
+            "right": 492,
+            "bottom": 256.3984375
+          },
+          "fonts": [
+            "13px"
+          ],
+          "sections": [
+            "astro:body:venus",
+            "astro:angle:ac"
+          ],
+          "claimIds": [
+            "astro:body:venus:0",
+            "astro:angle:ac:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-standard-earth-geographic-hover.png",
+            "1024x768-200-standard-earth-geographic-keyboard.png"
+          ]
+        }
+      }
+    },
+    {
+      "nativeWindow": {
+        "width": 1024,
+        "height": 768
+      },
+      "text": "standard",
+      "view": "outside",
+      "passed": true,
+      "cssViewport": {
+        "dpr": 2,
+        "innerWidth": 504,
+        "innerHeight": 308,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 496.5,
+        "visualViewportHeight": 308.5,
+        "documentWidth": 496,
+        "documentHeight": 800,
+        "rootFont": "16px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild 9b625b4Source & licences ↗"
+      },
+      "layout": {
+        "viewport": {
+          "width": 504,
+          "height": 308,
+          "visualWidth": 496.5
+        },
+        "documentWidth": 496,
+        "noHorizontalOverflow": true,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 496.5,
+          "height": 83,
+          "right": 496.5,
+          "bottom": 83,
+          "scrollWidth": 497,
+          "clientWidth": 497,
+          "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+        },
+        "headerChildren": [
+          {
+            "className": "brand svelte-1n46o8q",
+            "x": 18,
+            "y": 25,
+            "width": 133.75,
+            "height": 32,
+            "right": 151.75,
+            "bottom": 57,
+            "scrollWidth": 134,
+            "clientWidth": 134,
+            "text": "✦ SPATIALASTROLOGY EXPLORER"
+          },
+          {
+            "className": "context-details svelte-1n46o8q",
+            "x": 177.1953125,
+            "y": 13,
+            "width": 190.40625,
+            "height": 56,
+            "right": 367.6015625,
+            "bottom": 69,
+            "scrollWidth": 190,
+            "clientWidth": 190,
+            "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+          },
+          {
+            "className": "button secondary compact svelte-1n46o8q",
+            "x": 385.6015625,
+            "y": 24,
+            "width": 92.8984375,
+            "height": 34,
+            "right": 478.5,
+            "bottom": 58,
+            "scrollWidth": 91,
+            "clientWidth": 91,
+            "text": "⌖ Edit moment"
+          }
+        ],
+        "headerChildrenWithinViewport": true,
+        "headerOverlaps": [],
+        "inspectorToggle": {
+          "x": 393.9921875,
+          "y": 95,
+          "width": 86.5078125,
+          "height": 32,
+          "right": 480.5,
+          "bottom": 127,
+          "scrollWidth": 85,
+          "clientWidth": 85,
+          "text": "ⓘ Inspector"
+        },
+        "inspectorToggleWithinViewport": true,
+        "openInspector": {
+          "x": 124.5,
+          "width": 360,
+          "right": 484.5,
+          "viewportWidth": 504,
+          "fitsHorizontally": true
+        },
+        "inspectorImage": "1024x768-200-standard-outside-inspector.png",
+        "passed": true
+      },
+      "cards": {
+        "body": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 268.7109375,
+            "right": 492,
+            "bottom": 280.7109375
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 268.7109375,
+            "right": 492,
+            "bottom": 280.7109375
+          },
+          "fonts": [
+            "13px"
+          ],
+          "sections": [
+            "body:sun",
+            "body-in-sign:sun:capricorn",
+            "body-in-house:sun:10"
+          ],
+          "claimIds": [
+            "body:sun:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-house:sun:10:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-standard-outside-body-hover.png",
+            "1024x768-200-standard-outside-body-keyboard.png"
+          ]
+        },
+        "aspect": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 262.390625,
+            "right": 492,
+            "bottom": 274.390625
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 262.390625,
+            "right": 492,
+            "bottom": 274.390625
+          },
+          "fonts": [
+            "13px"
+          ],
+          "sections": [
+            "aspect-type:sextile",
+            "body-in-sign:sun:capricorn",
+            "body-in-sign:moon:scorpio"
+          ],
+          "claimIds": [
+            "aspect-type:sextile:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-sign:moon:scorpio:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-standard-outside-aspect-hover.png",
+            "1024x768-200-standard-outside-aspect-keyboard.png"
+          ]
+        },
+        "geographic": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 71.46875,
+            "width": 480,
+            "height": 175.421875,
+            "right": 492,
+            "bottom": 246.890625
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 48.9765625,
+            "width": 480,
+            "height": 175.421875,
+            "right": 492,
+            "bottom": 224.3984375
+          },
+          "fonts": [
+            "13px"
+          ],
+          "sections": [
+            "astro:body:venus",
+            "astro:angle:ac"
+          ],
+          "claimIds": [
+            "astro:body:venus:0",
+            "astro:angle:ac:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-standard-outside-geographic-hover.png",
+            "1024x768-200-standard-outside-geographic-keyboard.png"
+          ]
+        }
+      }
+    },
+    {
+      "nativeWindow": {
+        "width": 1024,
+        "height": 768
+      },
+      "text": "large",
+      "view": "earth",
+      "passed": true,
+      "cssViewport": {
+        "dpr": 2,
+        "innerWidth": 504,
+        "innerHeight": 308,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 496.5,
+        "visualViewportHeight": 308.5,
+        "documentWidth": 496,
+        "documentHeight": 800,
+        "rootFont": "18px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild 9b625b4Source & licences ↗"
+      },
+      "layout": {
+        "viewport": {
+          "width": 504,
+          "height": 308,
+          "visualWidth": 496.5
+        },
+        "documentWidth": 496,
+        "noHorizontalOverflow": true,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 496.5,
+          "height": 83,
+          "right": 496.5,
+          "bottom": 83,
+          "scrollWidth": 497,
+          "clientWidth": 497,
+          "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+        },
+        "headerChildren": [
+          {
+            "className": "brand svelte-1n46o8q",
+            "x": 18,
+            "y": 25,
+            "width": 141.84375,
+            "height": 32,
+            "right": 159.84375,
+            "bottom": 57,
+            "scrollWidth": 142,
+            "clientWidth": 142,
+            "text": "✦ SPATIALASTROLOGY EXPLORER"
+          },
+          {
+            "className": "context-details svelte-1n46o8q",
+            "x": 177.84375,
+            "y": 2.25,
+            "width": 180.9609375,
+            "height": 77.5,
+            "right": 358.8046875,
+            "bottom": 79.75,
+            "scrollWidth": 181,
+            "clientWidth": 181,
+            "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+          },
+          {
+            "className": "button secondary compact svelte-1n46o8q",
+            "x": 376.8046875,
+            "y": 23,
+            "width": 101.6953125,
+            "height": 36,
+            "right": 478.5,
+            "bottom": 59,
+            "scrollWidth": 100,
+            "clientWidth": 100,
+            "text": "⌖ Edit moment"
+          }
+        ],
+        "headerChildrenWithinViewport": true,
+        "headerOverlaps": [],
+        "inspectorToggle": {
+          "x": 385.9296875,
+          "y": 95,
+          "width": 94.5703125,
+          "height": 34,
+          "right": 480.5,
+          "bottom": 129,
+          "scrollWidth": 93,
+          "clientWidth": 93,
+          "text": "ⓘ Inspector"
+        },
+        "inspectorToggleWithinViewport": true,
+        "openInspector": {
+          "x": 124.5,
+          "width": 360,
+          "right": 484.5,
+          "viewportWidth": 504,
+          "fitsHorizontally": true
+        },
+        "inspectorImage": "1024x768-200-large-earth-inspector.png",
+        "passed": true
+      },
+      "cards": {
+        "body": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 294.2890625,
+            "right": 492,
+            "bottom": 306.2890625
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 294.2890625,
+            "right": 492,
+            "bottom": 306.2890625
+          },
+          "fonts": [
+            "14.625px"
+          ],
+          "sections": [
+            "body:sun",
+            "body-in-sign:sun:capricorn",
+            "body-in-house:sun:10"
+          ],
+          "claimIds": [
+            "body:sun:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-house:sun:10:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-large-earth-body-hover.png",
+            "1024x768-200-large-earth-body-keyboard.png"
+          ]
+        },
+        "aspect": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 285.75,
+            "right": 492,
+            "bottom": 297.75
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 285.75,
+            "right": 492,
+            "bottom": 297.75
+          },
+          "fonts": [
+            "14.625px"
+          ],
+          "sections": [
+            "aspect-type:sextile",
+            "body-in-sign:sun:capricorn",
+            "body-in-sign:moon:scorpio"
+          ],
+          "claimIds": [
+            "aspect-type:sextile:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-sign:moon:scorpio:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-large-earth-aspect-hover.png",
+            "1024x768-200-large-earth-aspect-keyboard.png"
+          ]
+        },
+        "geographic": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 210.140625,
+            "right": 492,
+            "bottom": 222.140625
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 43.7734375,
+            "width": 480,
+            "height": 210.140625,
+            "right": 492,
+            "bottom": 253.9140625
+          },
+          "fonts": [
+            "14.625px"
+          ],
+          "sections": [
+            "astro:body:venus",
+            "astro:angle:ac"
+          ],
+          "claimIds": [
+            "astro:body:venus:0",
+            "astro:angle:ac:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-large-earth-geographic-hover.png",
+            "1024x768-200-large-earth-geographic-keyboard.png"
+          ]
+        }
+      }
+    },
+    {
+      "nativeWindow": {
+        "width": 1024,
+        "height": 768
+      },
+      "text": "large",
+      "view": "outside",
+      "passed": true,
+      "cssViewport": {
+        "dpr": 2,
+        "innerWidth": 504,
+        "innerHeight": 308,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 496.5,
+        "visualViewportHeight": 308.5,
+        "documentWidth": 496,
+        "documentHeight": 800,
+        "rootFont": "18px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild 9b625b4Source & licences ↗"
+      },
+      "layout": {
+        "viewport": {
+          "width": 504,
+          "height": 308,
+          "visualWidth": 496.5
+        },
+        "documentWidth": 496,
+        "noHorizontalOverflow": true,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 496.5,
+          "height": 83,
+          "right": 496.5,
+          "bottom": 83,
+          "scrollWidth": 497,
+          "clientWidth": 497,
+          "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+        },
+        "headerChildren": [
+          {
+            "className": "brand svelte-1n46o8q",
+            "x": 18,
+            "y": 25,
+            "width": 141.84375,
+            "height": 32,
+            "right": 159.84375,
+            "bottom": 57,
+            "scrollWidth": 142,
+            "clientWidth": 142,
+            "text": "✦ SPATIALASTROLOGY EXPLORER"
+          },
+          {
+            "className": "context-details svelte-1n46o8q",
+            "x": 177.84375,
+            "y": 2.25,
+            "width": 180.9609375,
+            "height": 77.5,
+            "right": 358.8046875,
+            "bottom": 79.75,
+            "scrollWidth": 181,
+            "clientWidth": 181,
+            "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+          },
+          {
+            "className": "button secondary compact svelte-1n46o8q",
+            "x": 376.8046875,
+            "y": 23,
+            "width": 101.6953125,
+            "height": 36,
+            "right": 478.5,
+            "bottom": 59,
+            "scrollWidth": 100,
+            "clientWidth": 100,
+            "text": "⌖ Edit moment"
+          }
+        ],
+        "headerChildrenWithinViewport": true,
+        "headerOverlaps": [],
+        "inspectorToggle": {
+          "x": 385.9296875,
+          "y": 95,
+          "width": 94.5703125,
+          "height": 34,
+          "right": 480.5,
+          "bottom": 129,
+          "scrollWidth": 93,
+          "clientWidth": 93,
+          "text": "ⓘ Inspector"
+        },
+        "inspectorToggleWithinViewport": true,
+        "openInspector": {
+          "x": 124.5,
+          "width": 360,
+          "right": 484.5,
+          "viewportWidth": 504,
+          "fitsHorizontally": true
+        },
+        "inspectorImage": "1024x768-200-large-outside-inspector.png",
+        "passed": true
+      },
+      "cards": {
+        "body": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 294.2890625,
+            "right": 492,
+            "bottom": 306.2890625
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 294.2890625,
+            "right": 492,
+            "bottom": 306.2890625
+          },
+          "fonts": [
+            "14.625px"
+          ],
+          "sections": [
+            "body:sun",
+            "body-in-sign:sun:capricorn",
+            "body-in-house:sun:10"
+          ],
+          "claimIds": [
+            "body:sun:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-house:sun:10:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-large-outside-body-hover.png",
+            "1024x768-200-large-outside-body-keyboard.png"
+          ]
+        },
+        "aspect": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 285.75,
+            "right": 492,
+            "bottom": 297.75
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 285.75,
+            "right": 492,
+            "bottom": 297.75
+          },
+          "fonts": [
+            "14.625px"
+          ],
+          "sections": [
+            "aspect-type:sextile",
+            "body-in-sign:sun:capricorn",
+            "body-in-sign:moon:scorpio"
+          ],
+          "claimIds": [
+            "aspect-type:sextile:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-sign:moon:scorpio:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-large-outside-aspect-hover.png",
+            "1024x768-200-large-outside-aspect-keyboard.png"
+          ]
+        },
+        "geographic": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 66.765625,
+            "width": 480,
+            "height": 210.140625,
+            "right": 492,
+            "bottom": 276.90625
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 20.2734375,
+            "width": 480,
+            "height": 210.140625,
+            "right": 492,
+            "bottom": 230.4140625
+          },
+          "fonts": [
+            "14.625px"
+          ],
+          "sections": [
+            "astro:body:venus",
+            "astro:angle:ac"
+          ],
+          "claimIds": [
+            "astro:body:venus:0",
+            "astro:angle:ac:0"
+          ],
+          "completeRegisteredProse": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noPreviewScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-large-outside-geographic-hover.png",
+            "1024x768-200-large-outside-geographic-keyboard.png"
+          ]
+        }
+      }
+    }
+  ],
+  "servedSource": {
+    "src/App.svelte": {
+      "status": 200,
+      "responseSHA256": "5fc7298a1a947899535a3900c1078f98aa686d19c5c28189716c0d870d992965",
+      "decodedSourceSHA256": "d10d26200502c4f37dd678741b044b87fce36185990f676462b19aac79d5cbd1",
+      "matchesDisk": true,
+      "file": "served-src_App.svelte.txt"
+    },
+    "src/app.css": {
+      "status": 200,
+      "responseSHA256": "18eb2ae29d00fb0b610631b53a17c108eeba3d198c845f43c25f2bf8c3c1f604",
+      "decodedSourceSHA256": "b8bfe088f0868fc8f93bef5a5cb3ac2cc8b9eddc3e1328d2d6af77fbb51f2657",
+      "matchesDisk": true,
+      "file": "served-src_app.css.txt"
+    },
+    "src/lib/ui/HoverCard.svelte": {
+      "status": 200,
+      "responseSHA256": "7fe70f653ff1f91985f9457b49607786e90d4c4255e177f78ea024b54bb6f3b3",
+      "decodedSourceSHA256": "034bc79054a1334583af4d6a85a657fa78691f425000910b96d204baee5ab21c",
+      "matchesDisk": true,
+      "file": "served-src_lib_ui_HoverCard.svelte.txt"
+    },
+    "src/lib/ui/FeaturePreview.svelte": {
+      "status": 200,
+      "responseSHA256": "e06411aa77a5792584e97037ec118980a917fc1dc39eaf8d32f609bc87ee9be8",
+      "decodedSourceSHA256": "da05ddbd8f715e71c7e7d9153a8b858e0d4919882c0906057a6a9685e6968cb3",
+      "matchesDisk": true,
+      "file": "served-src_lib_ui_FeaturePreview.svelte.txt"
+    },
+    "src/lib/ui/AspectControls.svelte": {
+      "status": 200,
+      "responseSHA256": "4f418afd57ccd3632b7c9e850af244b3693f33372a4d49a3e5e2b7b6ac4c3ce2",
+      "decodedSourceSHA256": "42dbff6745b19a135867442b9a23d573ac0f7821b38689a6a5b1c07e1faf756e",
+      "matchesDisk": true,
+      "file": "served-src_lib_ui_AspectControls.svelte.txt"
+    },
+    "src/lib/domain/hover-card.ts": {
+      "status": 200,
+      "responseSHA256": "534a5c0a67144793ee48e113371f728c7dbaa6c3152a66ffd9bbfd2a114cdbee",
+      "decodedSourceSHA256": "cb8268e1fb78fe8f773eb38d4f12ea609eb9daa2047d054e8720adfa3f4d3bf1",
+      "matchesDisk": true,
+      "file": "served-src_lib_domain_hover-card.ts.txt"
+    },
+    "src/lib/domain/hover-preview.ts": {
+      "status": 200,
+      "responseSHA256": "482574657fa4c00765ef74c6ad0dbe7b26f0c1d1c2881e40da27c7fe42f8cc3e",
+      "decodedSourceSHA256": "9e10bfbc86fdd60eeb6f9c4434bae5cf4134b56d9fa38fbd47b96810bed28a04",
+      "matchesDisk": true,
+      "file": "served-src_lib_domain_hover-preview.ts.txt"
+    },
+    "src/lib/domain/hover-card-themes.ts": {
+      "status": 200,
+      "responseSHA256": "a8743a8b850ea19cd029e3772ab51998a5c3a91e5eb6c7b7c3f47234134b30ac",
+      "decodedSourceSHA256": "dda62eef73c5246ba35c93c7699e7a2c600ac3557dce04ef628e623f06a4fbe9",
+      "matchesDisk": true,
+      "file": "served-src_lib_domain_hover-card-themes.ts.txt"
+    }
+  },
+  "rawRecord": {
+    "localPath": ".cache/m10-native-zoom-rectified/79b585b8-2026-10-26T06-18-50-990Z/native-zoom-report.json",
+    "sha256": "b4f225d41a5ec444b967bd5ada37adf1d4b48a524f4ef523c8cef2eda8357cdf",
+    "bytes": 524508
+  },
+  "validator": {
+    "retained": "M10-native-zoom-rectified-validator.mjs",
+    "sha256": "0e8cdc9fba235d3d4a7539e03dfc307444804b53588259ee48f3b83e262c6f9c",
+    "launchGuard": "--run-after-gpu-clearance",
+    "expectedRevision": "79b585b8007537e41bafefb6f40449fa0e431e45"
+  },
+  "screenshots": {
+    "total": 66,
+    "all": [
+      {
+        "file": "settings-200-1440.png",
+        "width": 1424,
+        "height": 805,
+        "sha256": "7bd91ac591291c08f0048621b32f02dd3c3999098554d8bf2dffd50bc8739310"
+      },
+      {
+        "file": "1440x900-200-standard-earth-body-hover.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "444ec6762480aba29f504c0a321272e32a56da1cdb51efe1b2b39c341f376710"
+      },
+      {
+        "file": "1440x900-200-standard-earth-body-keyboard.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "5a1aa672d6ff1f4ee8c2fca22a840d73ff711e84fc6c0434771c14e96df0cb7b"
+      },
+      {
+        "file": "1440x900-200-standard-earth-aspect-hover.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "547bbaa3b98271df85f371f981b6377debbfc85f003b7db83bb339c6d2621fc0"
+      },
+      {
+        "file": "1440x900-200-standard-earth-aspect-keyboard.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "b5b8ea1925409f046499726f4037c64b70c459375730a0f4aee944e5905e1a10"
+      },
+      {
+        "file": "1440x900-200-standard-earth-geographic-hover.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "ee57e56dc5b8ca9ff59c607c76aaae5e819be1adcad0f6a97e38729c5418ef7d"
+      },
+      {
+        "file": "1440x900-200-standard-earth-geographic-keyboard.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "51b2fd0217f3f9ed9e1df8358cd5651e0a2536f09d6ef673362f925b90d1ddcf"
+      },
+      {
+        "file": "1440x900-200-standard-earth-scene.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "88bc14d4a2906ccecb5551a9f5ffb23cbbdee7f993d206c72ee7f267edc56f0d"
+      },
+      {
+        "file": "1440x900-200-standard-earth-inspector.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "349aa2d6391983390e441615bbf77eb4afbc756a3674a7cc439b3fbe0641b5df"
+      },
+      {
+        "file": "1440x900-200-standard-outside-body-hover.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "b34a9cfce9d33a30181e80ee5d8ddc4ef17a5b9513f94d0a6baf15147da2b69f"
+      },
+      {
+        "file": "1440x900-200-standard-outside-body-keyboard.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "dc1e56d764809e00f456d99fb4f2c69927a39693f547afc00b086a7d22ae95c0"
+      },
+      {
+        "file": "1440x900-200-standard-outside-aspect-hover.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "0f403fbd7f1e3e1c7bcf50f2fd2e8fe3fd2fc54f82365097b9964620ed8c81d2"
+      },
+      {
+        "file": "1440x900-200-standard-outside-aspect-keyboard.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "986a202ea77eafacbddc8de25f5c79bee633418c87801d002210cde13616f53e"
+      },
+      {
+        "file": "1440x900-200-standard-outside-geographic-hover.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "14e466b3dec28a69e75cf3e8b64b990e9cd9b78995dbab4841968270e3a2c15d"
+      },
+      {
+        "file": "1440x900-200-standard-outside-geographic-keyboard.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "3c3c0ec3f287cc0081896a7e5394466e95d5d20dc08c6713f1a428b25b0dfd75"
+      },
+      {
+        "file": "1440x900-200-standard-outside-scene.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "d6d934bf54172b8d1b649ce413bbb8ffae0d6caac20e49fe4b5102e1c36be1c7"
+      },
+      {
+        "file": "1440x900-200-standard-outside-inspector.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "f224bdaa2cc20c6e0400eaa997fa13d12cb54500d77b57ce08cc7926d0f2719b"
+      },
+      {
+        "file": "1440x900-200-large-earth-body-hover.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "09870fa918341f340e95464e91ccd2ba9fb11dce3c4a44230072c5abeb344367"
+      },
+      {
+        "file": "1440x900-200-large-earth-body-keyboard.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "e0fcf539e2893e2fcb87b065b2bd9b3a54168b2ec28da112e3b03834ce3fcb30"
+      },
+      {
+        "file": "1440x900-200-large-earth-aspect-hover.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "245dd08184baaac36d586aa9ac103e491b7ad08c81f60e4fc2c7124a6c6f2614"
+      },
+      {
+        "file": "1440x900-200-large-earth-aspect-keyboard.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "99ffdb9c260f437f278f254161fcbdae6bb475c0ee8c657168ab0c6f61b6358e"
+      },
+      {
+        "file": "1440x900-200-large-earth-geographic-hover.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "78c0f59413041cbecd2598ab98931bb97aa420084c72d3f13ccbb8c9caf015d8"
+      },
+      {
+        "file": "1440x900-200-large-earth-geographic-keyboard.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "ed4a0645458e6c4dad44691dec682d1b2261c2b4ad83b54dd4043c2beeca0ab0"
+      },
+      {
+        "file": "1440x900-200-large-earth-scene.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "854f88bcc906029f0ed67b1fe2bd003a6fe30d6b09be8fc55dff0fbe46ae0154"
+      },
+      {
+        "file": "1440x900-200-large-earth-inspector.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "3a2bceff4692932ccec14a5994bde6f66613081ee2d7754c070e3bc7b614514c"
+      },
+      {
+        "file": "1440x900-200-large-outside-body-hover.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "957b1f5cf12d6553a7ba569ba136628d23a117a132013c302e3e302b87d30288"
+      },
+      {
+        "file": "1440x900-200-large-outside-body-keyboard.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "736178ca5e95a6f558d6ee4c2342de3ed625ab38b12fe95884c357f6f254255e"
+      },
+      {
+        "file": "1440x900-200-large-outside-aspect-hover.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "206c9871e1c6c74199e0c3173a7edc6296aee008616b051365658876d7c28c03"
+      },
+      {
+        "file": "1440x900-200-large-outside-aspect-keyboard.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "5322e7145e657acd1c92faa4321d93667a279356039d463d839c6a8db768e9d2"
+      },
+      {
+        "file": "1440x900-200-large-outside-geographic-hover.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "0b4ac1f85c36e72bb7661f4a37074f8102f9340bd7d7460f7daa7224b836d4d3"
+      },
+      {
+        "file": "1440x900-200-large-outside-geographic-keyboard.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "a1050f889ddea5cc156cb018b922aea098f96e4900ab14601082de117942c232"
+      },
+      {
+        "file": "1440x900-200-large-outside-scene.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "de9d61a3837f7073ff5bf7346fa85455de41f239d41b8d34d719d5c2a0db9781"
+      },
+      {
+        "file": "1440x900-200-large-outside-inspector.png",
+        "width": 1424,
+        "height": 749,
+        "sha256": "6aeb0bebe737cd59b30d0c300d99c24dc7eb4028743b5d411fa59bb78ede5a08"
+      },
+      {
+        "file": "settings-200-1024.png",
+        "width": 1008,
+        "height": 673,
+        "sha256": "8b0d7145fdc87064d273a9b765b7d24c231001e90130f73fc31edeb3bb3c2cd6"
+      },
+      {
+        "file": "1024x768-200-standard-earth-body-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "cd36c6ad3358bbf1080b133df45fc7632ce54bd846da11e02ace4018ba36920a"
+      },
+      {
+        "file": "1024x768-200-standard-earth-body-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "0a5f6b0315a8d0f6ac3c69c41979f48680966cff456449c65016a9482ce2a3ce"
+      },
+      {
+        "file": "1024x768-200-standard-earth-aspect-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "ce87e83f922dd724c67167cd101fe999da4e5f7659d1b7b8917c7e456c01b61d"
+      },
+      {
+        "file": "1024x768-200-standard-earth-aspect-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "f280078a7f90604e1cc25fc3fdcf224c3a8ca33b4ab01c8b5dafae5d075f4d00"
+      },
+      {
+        "file": "1024x768-200-standard-earth-geographic-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "0417f61d957d9038c71c923ef63babe215e5d8f3938fb8eed0d3c8b6956ea7a2"
+      },
+      {
+        "file": "1024x768-200-standard-earth-geographic-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "0b5674ecc3f3e100e4128b95c4a6a205f9f51278edf7dae18e18debf2ab0b4de"
+      },
+      {
+        "file": "1024x768-200-standard-earth-scene.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "c7b5adcc581f0c57b7314f3e98a71189df53bf5d610cac97b4949744f596195e"
+      },
+      {
+        "file": "1024x768-200-standard-earth-inspector.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "6ef7e6ae51e0e796eaf166d60a0a3753bb71c82f83a969aa66c9b7dfd52dcd37"
+      },
+      {
+        "file": "1024x768-200-standard-outside-body-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "b64d4d43ed0d788f114bf345f781ffa792ce08467f8891f5d206c5076cb78a0e"
+      },
+      {
+        "file": "1024x768-200-standard-outside-body-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "6156d6cde3ee91a9c87fd0d212b4cf7c9c78a79e99494f76aa244d9508d9907b"
+      },
+      {
+        "file": "1024x768-200-standard-outside-aspect-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "f45cf3d83d2b2a0087883e0bce6fb33704906b0698b5de4146ddaeaf9737095e"
+      },
+      {
+        "file": "1024x768-200-standard-outside-aspect-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "c40576d99cdbc802a16120293326b80d8304c75baf9a78d8c31dec56ae5a3538"
+      },
+      {
+        "file": "1024x768-200-standard-outside-geographic-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "b49c7a497013b61b5d3a9d830b4bf6b5ba3ba1dbda0e34a6d602bc721c67cb50"
+      },
+      {
+        "file": "1024x768-200-standard-outside-geographic-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "c6c70ef2b80c0875862f570f831c3b8fe4b4681ddc8e078304c3d6c93750c110"
+      },
+      {
+        "file": "1024x768-200-standard-outside-scene.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "3f73a4a9aa16a8f8f2fa410181ca74d8ea7aad429cc7eecafcdd64d5c1fda92a"
+      },
+      {
+        "file": "1024x768-200-standard-outside-inspector.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "9c4cf4fbac54d8980224e68283d23dc65f9cf706b62a9ca941ddac39e5680e45"
+      },
+      {
+        "file": "1024x768-200-large-earth-body-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "c869b1cee4ccb1d11f7cbf1867b002600e54d47c66193b681e1249fe59bd214c"
+      },
+      {
+        "file": "1024x768-200-large-earth-body-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "5d58b83dd98cb90d3c100c51fee3d47693aae7e2e06697f9b1aadd430bc39e7c"
+      },
+      {
+        "file": "1024x768-200-large-earth-aspect-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "a951b6e4da868d98659fe91f40b26ef46a91c95d7344095add396107a1cdcc13"
+      },
+      {
+        "file": "1024x768-200-large-earth-aspect-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "f90830be76a33b946693c106fc43604acbb767e790d0c5a3f638f30f3f144c52"
+      },
+      {
+        "file": "1024x768-200-large-earth-geographic-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "8bc84cfacf6f752e002ccdf74a0a21c4e8cb939029b8b087c702954d74039e5c"
+      },
+      {
+        "file": "1024x768-200-large-earth-geographic-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "7e3f7bd6196e5ef36eb8117e6aa1329c6053c5b3c529b440db2cf25537d815e8"
+      },
+      {
+        "file": "1024x768-200-large-earth-scene.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "51db9b1727ccf1a0d485aaebb46078bd1e73e4f36d2b6f09587afb3377dd94c3"
+      },
+      {
+        "file": "1024x768-200-large-earth-inspector.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "22d8567e7444749c5ac2b3b33e0355c52807604e62f22970370c8113dfb1f48d"
+      },
+      {
+        "file": "1024x768-200-large-outside-body-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "ca884e05796b57afef9e661ef024f877cb3d27000e25dd8298fde9ba5b505289"
+      },
+      {
+        "file": "1024x768-200-large-outside-body-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "00fe49b5aa6818f7fa3d47525f2142ee631dac309216afc2c00cee84fe9c2301"
+      },
+      {
+        "file": "1024x768-200-large-outside-aspect-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "dc1e6ebababf33f68d0a68ead31784e7c19790ef403c416581d78a23e59284e7"
+      },
+      {
+        "file": "1024x768-200-large-outside-aspect-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "77af7b0e541b3e35288ef87f256fb5a9d011a5a0165e301482a9094708162421"
+      },
+      {
+        "file": "1024x768-200-large-outside-geographic-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "a3f9d4090e0d0725037696e0301d10e4183bb53ea14ddb8815b9fc0be8e6d1d5"
+      },
+      {
+        "file": "1024x768-200-large-outside-geographic-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "8934d34f9619b3687e052cd5afea24aec6130d0b2b123d80e9458b4f0aa981c6"
+      },
+      {
+        "file": "1024x768-200-large-outside-scene.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "62761ea892fabf749b0468645008f2abd790c145f29d06470b41204412288580"
+      },
+      {
+        "file": "1024x768-200-large-outside-inspector.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "7283615807c363216bbf771b6ccc54e9faf9705ca17f6fb7a48ba24bfadec691"
+      }
+    ],
+    "retainedImages": [
+      {
+        "original": "settings-200-1440.png",
+        "retained": "assets/m10-compact-native-200-settings-1440.png",
+        "sha256": "7bd91ac591291c08f0048621b32f02dd3c3999098554d8bf2dffd50bc8739310",
+        "width": 1424,
+        "height": 805
+      },
+      {
+        "original": "settings-200-1024.png",
+        "retained": "assets/m10-compact-native-200-settings-1024.png",
+        "sha256": "8b0d7145fdc87064d273a9b765b7d24c231001e90130f73fc31edeb3bb3c2cd6",
+        "width": 1008,
+        "height": 673
+      },
+      {
+        "original": "1440x900-200-large-outside-aspect-keyboard.png",
+        "retained": "assets/m10-compact-native-200-1440-large-aspect.png",
+        "sha256": "5322e7145e657acd1c92faa4321d93667a279356039d463d839c6a8db768e9d2",
+        "width": 1424,
+        "height": 749
+      },
+      {
+        "original": "1024x768-200-large-earth-aspect-keyboard.png",
+        "retained": "assets/m10-compact-native-200-1024-large-aspect.png",
+        "sha256": "f90830be76a33b946693c106fc43604acbb767e790d0c5a3f638f30f3f144c52",
+        "width": 1008,
+        "height": 617
+      },
+      {
+        "original": "1024x768-200-large-outside-body-keyboard.png",
+        "retained": "assets/m10-compact-native-200-1024-large-body.png",
+        "sha256": "00fe49b5aa6818f7fa3d47525f2142ee631dac309216afc2c00cee84fe9c2301",
+        "width": 1008,
+        "height": 617
+      },
+      {
+        "original": "1024x768-200-large-outside-geographic-keyboard.png",
+        "retained": "assets/m10-compact-native-200-1024-large-geographic.png",
+        "sha256": "8934d34f9619b3687e052cd5afea24aec6130d0b2b123d80e9458b4f0aa981c6",
+        "width": 1008,
+        "height": 617
+      },
+      {
+        "original": "1024x768-200-large-outside-inspector.png",
+        "retained": "assets/m10-compact-native-200-1024-inspector.png",
+        "sha256": "7283615807c363216bbf771b6ccc54e9faf9705ca17f6fb7a48ba24bfadec691",
+        "width": 1008,
+        "height": 617
+      },
+      {
+        "original": "1024x768-200-large-outside-scene.png",
+        "retained": "assets/m10-compact-native-200-1024-scene.png",
+        "sha256": "62761ea892fabf749b0468645008f2abd790c145f29d06470b41204412288580",
+        "width": 1008,
+        "height": 617
+      }
+    ]
+  },
+  "regression": {
+    "sourceRevision": "bd58cf11c0756201ae4e71cc904a63fae632106b",
+    "localRawRecord": ".cache/m10-native-zoom-rectified/bd58cf11-2026-10-26T06-09-39-461Z/native-zoom-report.json",
+    "failedStates": [
+      {
+        "nativeWindow": {
+          "width": 1024,
+          "height": 768
+        },
+        "view": "earth",
+        "text": "large",
+        "aspectBounds": {
+          "x": 12,
+          "y": 12,
+          "width": 480,
+          "height": 342.8046875,
+          "right": 492,
+          "bottom": 354.8046875
+        },
+        "viewport": {
+          "width": 504,
+          "height": 308,
+          "visualWidth": 496.5,
+          "visualHeight": 308.5
+        }
+      },
+      {
+        "nativeWindow": {
+          "width": 1024,
+          "height": 768
+        },
+        "view": "outside",
+        "text": "large",
+        "aspectBounds": {
+          "x": 12,
+          "y": 12,
+          "width": 480,
+          "height": 342.8046875,
+          "right": 492,
+          "bottom": 354.8046875
+        },
+        "viewport": {
+          "width": 504,
+          "height": 308,
+          "visualWidth": 496.5,
+          "visualHeight": 308.5
+        }
+      }
+    ],
+    "originalProseStillIdentical": true,
+    "repairSourceCommit": "13c9e568cbe0237f0a33a205514382a919884578",
+    "focusedRepairRecord": ".cache/m10-native-zoom-rectified/13c9e568-2026-10-26T06-16-48-143Z/native-zoom-report.json",
+    "retainedBeforeImage": "assets/m10-compact-native-200-1024-aspect-before-repair.png"
+  }
+}

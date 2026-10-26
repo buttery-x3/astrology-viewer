@@ -1,0 +1,403 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-26T06:26:48.336Z",
+  "artifact": {
+    "revision": "a2ef959acc4cf42526245ef0362b70ac5e2f4056",
+    "tree": "7f7a49647f10c3d2e384845a8edbec178379e9ec",
+    "sourceArchiveSha256": "403497c505b2cfa36258f04b2280549a4484f783bcfd28e8c62c9ebad5da530a",
+    "servedManifestSha256": "c1e5b7c096d408a6b371c4c29892562c54de27a1c84ca6ea4e5f953c29b69330"
+  },
+  "artifactOrigin": "http://127.0.0.1:51443",
+  "browserVersion": "156.0.8078.4",
+  "launchArgs": [
+    "--use-angle=d3d11",
+    "--enable-gpu",
+    "--disable-software-rasterizer"
+  ],
+  "host": {
+    "platform": "win32",
+    "release": "10.0.26300",
+    "architecture": "x64",
+    "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
+    "logicalCpus": 12
+  },
+  "profile": {
+    "downloadBytesPerSecond": 2500000,
+    "responseLatencyMs": 40,
+    "runs": 3,
+    "timeoutMs": 30000,
+    "maxResponseBytes": 8388608,
+    "maxRunBytes": 16777216
+  },
+  "summary": {
+    "count": 3,
+    "medianMs": 2152.399999976158,
+    "p95Ms": 2285.399999976158,
+    "maxMs": 2285.399999976158,
+    "p95Method": "Nearest-rank; with3 runs p95 equals the maximum. This small sample does not establish a population percentile.",
+    "underFiveSeconds": true
+  },
+  "runs": [
+    {
+      "run": 1,
+      "phases": {
+        "exampleClickMs": 1208.6000000238419,
+        "chartReadyMs": 2057.6999999284744,
+        "firstUsableMs": 2152.399999976158,
+        "domContentLoadedMs": 858,
+        "loadEventMs": 1022.1999999284744,
+        "clickToUsableMs": 943.7999999523163
+      },
+      "driver": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "vendor": "Google Inc. (NVIDIA)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "viewport": [
+          1920,
+          1080
+        ],
+        "devicePixelRatio": 1
+      },
+      "currentLocalMoment": "2000-01-01 · 12:00:00 local",
+      "currentUtcMoment": "01 Jan 2000 · 12:00:00 UTC · UTC+00:00",
+      "encodedBodyBytes": 2345077,
+      "encodedCodeBytes": 588423,
+      "resources": [
+        {
+          "path": "/",
+          "method": "GET",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "contentEncoding": "identity",
+          "declaredBytes": 569,
+          "encodedBytes": 569,
+          "requestedMs": 100.66480000000001,
+          "headersMs": 149.95119999999997,
+          "firstBodyMs": 150.8985,
+          "completedMs": 151.22570000000007
+        },
+        {
+          "path": "/assets/index-B64Howmq.js",
+          "method": "GET",
+          "status": 200,
+          "contentType": "text/javascript; charset=utf-8",
+          "contentEncoding": "br",
+          "declaredBytes": 534836,
+          "encodedBytes": 534836,
+          "requestedMs": 206.66510000000005,
+          "headersMs": 257.52420000000006,
+          "firstBodyMs": 288.6251,
+          "completedMs": 552.9164000000001
+        },
+        {
+          "path": "/assets/index-D7W2iG_M.css",
+          "method": "GET",
+          "status": 200,
+          "contentType": "text/css; charset=utf-8",
+          "contentEncoding": "br",
+          "declaredBytes": 14776,
+          "encodedBytes": 14776,
+          "requestedMs": 208.4796,
+          "headersMs": 258.1195,
+          "firstBodyMs": 304.3089,
+          "completedMs": 304.658
+        },
+        {
+          "path": "/assets/ephemeris-worker-Cq_XH-3f.js",
+          "method": "GET",
+          "status": 200,
+          "contentType": "text/javascript; charset=utf-8",
+          "contentEncoding": "br",
+          "declaredBytes": 38811,
+          "encodedBytes": 38811,
+          "requestedMs": 960.1048,
+          "headersMs": 1015.4807,
+          "firstBodyMs": 1030.9164999999998,
+          "completedMs": 1031.2376
+        },
+        {
+          "path": "/assets/spatial-ephemeris-DKdbe1a_.wasm",
+          "method": "GET",
+          "status": 200,
+          "contentType": "application/wasm",
+          "contentEncoding": "br",
+          "declaredBytes": 163634,
+          "encodedBytes": 163634,
+          "requestedMs": 1155.9627,
+          "headersMs": 1214.5221000000001,
+          "firstBodyMs": 1245.4276,
+          "completedMs": 1432.7782000000002
+        },
+        {
+          "path": "/data/ephemeris/sepl_18.se1?sha256=ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+          "method": "GET",
+          "status": 200,
+          "contentType": "application/octet-stream",
+          "contentEncoding": "br",
+          "declaredBytes": 414236,
+          "encodedBytes": 414236,
+          "requestedMs": 1157.3714,
+          "headersMs": 1215.147,
+          "firstBodyMs": 1276.9875000000002,
+          "completedMs": 1695.5551
+        },
+        {
+          "path": "/data/ephemeris/semo_18.se1?sha256=1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+          "method": "GET",
+          "status": 200,
+          "contentType": "application/octet-stream",
+          "contentEncoding": "br",
+          "declaredBytes": 1178215,
+          "encodedBytes": 1178215,
+          "requestedMs": 1158.1009,
+          "headersMs": 1215.4912,
+          "firstBodyMs": 1302.8515000000002,
+          "completedMs": 2066.9648
+        }
+      ],
+      "errors": [],
+      "blocked": []
+    },
+    {
+      "run": 2,
+      "phases": {
+        "exampleClickMs": 1259.2999999523163,
+        "chartReadyMs": 2227.6999999284744,
+        "firstUsableMs": 2285.399999976158,
+        "domContentLoadedMs": 1071.7999999523163,
+        "loadEventMs": 1181.7999999523163,
+        "clickToUsableMs": 1026.1000000238419
+      },
+      "driver": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "vendor": "Google Inc. (NVIDIA)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "viewport": [
+          1920,
+          1080
+        ],
+        "devicePixelRatio": 1
+      },
+      "currentLocalMoment": "2000-01-01 · 12:00:00 local",
+      "currentUtcMoment": "01 Jan 2000 · 12:00:00 UTC · UTC+00:00",
+      "encodedBodyBytes": 2345077,
+      "encodedCodeBytes": 588423,
+      "resources": [
+        {
+          "path": "/",
+          "method": "GET",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "contentEncoding": "identity",
+          "declaredBytes": 569,
+          "encodedBytes": 569,
+          "requestedMs": 75.18730000000005,
+          "headersMs": 133.5662000000002,
+          "firstBodyMs": 133.8429000000001,
+          "completedMs": 133.9688000000001
+        },
+        {
+          "path": "/assets/index-B64Howmq.js",
+          "method": "GET",
+          "status": 200,
+          "contentType": "text/javascript; charset=utf-8",
+          "contentEncoding": "br",
+          "declaredBytes": 534836,
+          "encodedBytes": 534836,
+          "requestedMs": 196.57439999999997,
+          "headersMs": 243.59370000000035,
+          "firstBodyMs": 274.1663000000003,
+          "completedMs": 536.6937000000003
+        },
+        {
+          "path": "/assets/index-D7W2iG_M.css",
+          "method": "GET",
+          "status": 200,
+          "contentType": "text/css; charset=utf-8",
+          "contentEncoding": "br",
+          "declaredBytes": 14776,
+          "encodedBytes": 14776,
+          "requestedMs": 197.93020000000024,
+          "headersMs": 244.23700000000008,
+          "firstBodyMs": 289.36090000000013,
+          "completedMs": 289.7693000000004
+        },
+        {
+          "path": "/assets/ephemeris-worker-Cq_XH-3f.js",
+          "method": "GET",
+          "status": 200,
+          "contentType": "text/javascript; charset=utf-8",
+          "contentEncoding": "br",
+          "declaredBytes": 38811,
+          "encodedBytes": 38811,
+          "requestedMs": 1152.7271,
+          "headersMs": 1198.6970000000001,
+          "firstBodyMs": 1228.9308,
+          "completedMs": 1229.1310000000003
+        },
+        {
+          "path": "/assets/spatial-ephemeris-DKdbe1a_.wasm",
+          "method": "GET",
+          "status": 200,
+          "contentType": "application/wasm",
+          "contentEncoding": "br",
+          "declaredBytes": 163634,
+          "encodedBytes": 163634,
+          "requestedMs": 1314.2993000000006,
+          "headersMs": 1369.2548000000006,
+          "firstBodyMs": 1399.8872000000001,
+          "completedMs": 1582.7795999999998
+        },
+        {
+          "path": "/data/ephemeris/sepl_18.se1?sha256=ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+          "method": "GET",
+          "status": 200,
+          "contentType": "application/octet-stream",
+          "contentEncoding": "br",
+          "declaredBytes": 414236,
+          "encodedBytes": 414236,
+          "requestedMs": 1315.8507,
+          "headersMs": 1369.6608999999999,
+          "firstBodyMs": 1429.7694000000001,
+          "completedMs": 1842.5702
+        },
+        {
+          "path": "/data/ephemeris/semo_18.se1?sha256=1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+          "method": "GET",
+          "status": 200,
+          "contentType": "application/octet-stream",
+          "contentEncoding": "br",
+          "declaredBytes": 1178215,
+          "encodedBytes": 1178215,
+          "requestedMs": 1317.0886,
+          "headersMs": 1369.9773999999998,
+          "firstBodyMs": 1461.1037999999999,
+          "completedMs": 2212.9323000000004
+        }
+      ],
+      "errors": [],
+      "blocked": []
+    },
+    {
+      "run": 3,
+      "phases": {
+        "exampleClickMs": 964,
+        "chartReadyMs": 1922.1999999284744,
+        "firstUsableMs": 1979.5999999046326,
+        "domContentLoadedMs": 823.0999999046326,
+        "loadEventMs": 902.1999999284744,
+        "clickToUsableMs": 1015.5999999046326
+      },
+      "driver": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "vendor": "Google Inc. (NVIDIA)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "viewport": [
+          1920,
+          1080
+        ],
+        "devicePixelRatio": 1
+      },
+      "currentLocalMoment": "2000-01-01 · 12:00:00 local",
+      "currentUtcMoment": "01 Jan 2000 · 12:00:00 UTC · UTC+00:00",
+      "encodedBodyBytes": 2345077,
+      "encodedCodeBytes": 588423,
+      "resources": [
+        {
+          "path": "/",
+          "method": "GET",
+          "status": 200,
+          "contentType": "text/html; charset=utf-8",
+          "contentEncoding": "identity",
+          "declaredBytes": 569,
+          "encodedBytes": 569,
+          "requestedMs": 73.16760000000068,
+          "headersMs": 119.04350000000068,
+          "firstBodyMs": 121.67370000000028,
+          "completedMs": 121.8701000000001
+        },
+        {
+          "path": "/assets/index-B64Howmq.js",
+          "method": "GET",
+          "status": 200,
+          "contentType": "text/javascript; charset=utf-8",
+          "contentEncoding": "br",
+          "declaredBytes": 534836,
+          "encodedBytes": 534836,
+          "requestedMs": 173.7546000000002,
+          "headersMs": 226.9273000000003,
+          "firstBodyMs": 258.2997000000005,
+          "completedMs": 522.9160000000002
+        },
+        {
+          "path": "/assets/index-D7W2iG_M.css",
+          "method": "GET",
+          "status": 200,
+          "contentType": "text/css; charset=utf-8",
+          "contentEncoding": "br",
+          "declaredBytes": 14776,
+          "encodedBytes": 14776,
+          "requestedMs": 175.26530000000002,
+          "headersMs": 227.32920000000013,
+          "firstBodyMs": 273.7513000000008,
+          "completedMs": 274.1092000000008
+        },
+        {
+          "path": "/assets/ephemeris-worker-Cq_XH-3f.js",
+          "method": "GET",
+          "status": 200,
+          "contentType": "text/javascript; charset=utf-8",
+          "contentEncoding": "br",
+          "declaredBytes": 38811,
+          "encodedBytes": 38811,
+          "requestedMs": 898.3725000000004,
+          "headersMs": 941.7985000000008,
+          "firstBodyMs": 972.9439000000002,
+          "completedMs": 973.2806
+        },
+        {
+          "path": "/assets/spatial-ephemeris-DKdbe1a_.wasm",
+          "method": "GET",
+          "status": 200,
+          "contentType": "application/wasm",
+          "contentEncoding": "br",
+          "declaredBytes": 163634,
+          "encodedBytes": 163634,
+          "requestedMs": 1008.4527000000007,
+          "headersMs": 1066.0312000000004,
+          "firstBodyMs": 1095.8525,
+          "completedMs": 1280.0258000000003
+        },
+        {
+          "path": "/data/ephemeris/sepl_18.se1?sha256=ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+          "method": "GET",
+          "status": 200,
+          "contentType": "application/octet-stream",
+          "contentEncoding": "br",
+          "declaredBytes": 414236,
+          "encodedBytes": 414236,
+          "requestedMs": 1009.5526,
+          "headersMs": 1066.3959000000004,
+          "firstBodyMs": 1126.7341000000006,
+          "completedMs": 1545.0049000000008
+        },
+        {
+          "path": "/data/ephemeris/semo_18.se1?sha256=1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+          "method": "GET",
+          "status": 200,
+          "contentType": "application/octet-stream",
+          "contentEncoding": "br",
+          "declaredBytes": 1178215,
+          "encodedBytes": 1178215,
+          "requestedMs": 1010.6991000000007,
+          "headersMs": 1066.6658000000007,
+          "firstBodyMs": 1158.5942000000005,
+          "completedMs": 1917.7323000000006
+        }
+      ],
+      "errors": [],
+      "blocked": []
+    }
+  ],
+  "method": "Three fresh isolated Chromium contexts, cache disabled by request interception, fixed Greenwich2000-01-01T12Z example. One raw HTTP(S) loopback proxy serializes encoded response-body chunks across all page/worker requests at an aggregate2,500,000B/s (20Mbps), with40ms added before each response header. No idle token credit; timer/backpressure overhead can make observed delivery slower. Node http.request preserves gzip/Brotli bytes. Encoded byte totals exclude HTTP/TLS headers and framing. Page-navigation start to committed numerical/chart UI plus two requestAnimationFrame callbacks; this instrumented application-layer network profile is not an OS packet shaper, real last-mile link, or physical scanout measurement. Browser/CPU/driver caches outside fresh contexts can remain warm. Nearest-rank p95 over3 runs is descriptive only."
+}
