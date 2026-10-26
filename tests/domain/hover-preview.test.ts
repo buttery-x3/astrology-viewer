@@ -39,6 +39,15 @@ describe('dedicated compact preview presentation', () => {
       'private sensitivity still needs acknowledgment',
     );
   });
+  it('distinguishes a longitude marker from its label connector without showing implementation roles', () => {
+    const body = featurePreviewStudies().find((model) => model.kind === 'body')!;
+    const marker = hoverPreview({...body,facts:[{label:'Feature role',value:'Longitude anchor · projection on the ecliptic'}]});
+    const connector = hoverPreview({...body,facts:[{label:'Feature role',value:'Caption leader · connects the label to its ecliptic longitude anchor'}]});
+    expect(marker.title).toBe('Moon · ecliptic longitude marker');
+    expect(connector.title).toBe('Moon · label connector to the ecliptic');
+    expect(connector.sections).toEqual(body.sections);
+    expect(connector).not.toHaveProperty('facts');
+  });
   it('removes repeated astrocartography introduction only from line previews', () => {
     const fixture = featurePreviewStudies().find((model) => model.kind === 'astro-line')!;
     for (const body of BODY_IDS)

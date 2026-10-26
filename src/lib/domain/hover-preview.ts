@@ -30,7 +30,9 @@ export function hoverPreview(model: HoverCardModel) {
         house ? `House ${house.id.split(':').at(-1)}` : undefined,
       );
       if (/latitude projection/i.test(role)) title = `${model.title} · projection to the ecliptic`;
-      else if (/longitude anchor|caption leader/i.test(role))
+      else if (/caption leader/i.test(role))
+        title = `${model.title} · label connector to the ecliptic`;
+      else if (/longitude anchor/i.test(role))
         title = `${model.title} · ecliptic longitude marker`;
       break;
     }
