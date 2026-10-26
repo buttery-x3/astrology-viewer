@@ -1,0 +1,20 @@
+{
+  "candidate": "a2ef959acc4cf42526245ef0362b70ac5e2f4056",
+  "measuredCommit": "a2ef959acc4cf42526245ef0362b70ac5e2f4056",
+  "sourceFileCount": 111,
+  "normalizedSourceManifestSha256": "189fd1917261f1776e3c1e51e120cb05154db81874276c34b7e13834a16ec934",
+  "sourceUnchanged": true,
+  "gitBlobMismatches": [],
+  "rawSha256": "11081ecabca29f00182760e7a780f10b261cfeedd15276fd98aa37382d3cc659",
+  "harnessSha256": "181a57d396161f8cd4846d304f9ad28657ec72abf215cb79003dc7d8081691f3",
+  "passedAssertions": [
+    "four picking p95 <=4ms with203 samples each",
+    "36 reveal samples p95 <=50ms",
+    "source/served-module identity and no HMR updates",
+    "no measured-phase worker messages or >=50ms long tasks",
+    "sparkles on/off and final idle zero renders",
+    "three post-warmup resource passes identical",
+    "exact context-restored camera",
+    "canvas removed and owned geometry/program counts zero"
+  ]
+}
