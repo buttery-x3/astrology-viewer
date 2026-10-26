@@ -120,6 +120,27 @@ describe('dedicated compact preview presentation', () => {
 });
 
 describe('expressive feature family themes', () => {
+  it('keeps all house-family palettes distinct from the twelve zodiac sign palettes', () => {
+    const palette = (theme: ReturnType<typeof resolveCardTheme>) =>
+      [theme.accent, theme.warm, theme.cool].join(':');
+    const signs = CONTENT_CATALOGUE.filter(entry => entry.kind === 'sign');
+    expect(signs).toHaveLength(12);
+    const signPalettes = new Set(signs.map(entry => palette(resolveCardTheme({
+      kind: 'sign', entityId: entry.id, glyph: {key: entry.signId!, color: '#c4d4df'},
+    }))));
+    const housePalettes = new Set<string>();
+    for (let house = 1; house <= 12; house++)
+      for (const kind of ['house', 'boundary', 'earth-house', 'history', 'construction'] as const) {
+        const entityId = kind === 'earth-house' ? `earth:house:primary:${house}`
+          : kind === 'history' ? `boundary:${house}` : `${kind}:${house}`;
+        const colors = palette(resolveCardTheme({
+          kind, entityId, glyph: {key: 'house', color: '#c4d4df'},
+        }));
+        expect(signPalettes.has(colors)).toBe(false);
+        housePalettes.add(colors);
+      }
+    expect(housePalettes.size).toBe(1);
+  });
   it('gives every feature family a complete colour palette', () => {
     for (const kind of FEATURE_KINDS) {
       const theme = resolveCardTheme({

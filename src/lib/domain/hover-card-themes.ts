@@ -49,6 +49,11 @@ const ELEMENT_PALETTES = [
   { accent: '#a9d6ed', warm: '#5c6592', cool: '#267a88', name: 'Air' },
   { accent: '#b4b9ed', warm: '#66518f', cool: '#236e7e', name: 'Water' },
 ] as const;
+// Houses describe chart divisions, not corresponding zodiac signs. Give
+// their cards one architectural blue/amber treatment without an element cycle.
+const HOUSE_PALETTE: Readonly<CardTheme> = Object.freeze({
+  accent: '#b9cde7', warm: '#8b653c', cool: '#365d7c', name: 'House',
+});
 const SIGN_KEYS = [
   'aries',
   'taurus',
@@ -87,9 +92,8 @@ export function resolveCardTheme(
   if (model.kind === 'sign')
     return ELEMENT_PALETTES[Math.max(0, SIGN_KEYS.indexOf(model.glyph.key)) % 4]!;
   if (['house', 'boundary', 'earth-house', 'history', 'construction'].includes(model.kind)) {
-    const house = Number(model.entityId.match(/(\d+)$/)?.[1] ?? 1);
     return {
-      ...ELEMENT_PALETTES[(Math.max(1, house) - 1) % 4]!,
+      ...HOUSE_PALETTE,
       name: model.kind === 'construction' ? 'Construction' : 'House',
     };
   }
