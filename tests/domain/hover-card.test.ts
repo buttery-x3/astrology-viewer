@@ -502,6 +502,8 @@ describe('five reusable visual themes', () => {
     expect(points).toEqual(cardSparkles('aspect:venus-neptune:square'));
     expect(points).not.toEqual(cardSparkles('aspect:sun-moon:square'));
     expect(points).toHaveLength(12);
+    expect(points.slice(0, 4).every((point) => point.y <= 15)).toBe(true);
+    expect(points.slice(4, 8).every((point) => point.x >= 82)).toBe(true);
     for (const point of points) {
       expect(point.duration).toBeGreaterThanOrEqual(3);
       expect(point.duration).toBeLessThanOrEqual(6);
