@@ -1,7 +1,7 @@
 <script lang="ts">
   import { HOUSE_SYSTEMS, type EphemerisSnapshot, type HouseSystemId } from '../astronomy/ephemeris';
   import { housePartition } from '../domain/chart';
-  import { compareHouseAssignments, type HouseDisplaySettings } from '../domain/house-geometry';
+  import { DEFAULT_HOUSE_DISPLAY, compareHouseAssignments, type HouseDisplaySettings } from '../domain/house-geometry';
 
   let {
     system, comparisonSystem, display, snapshot, busy, selectedId = null,
@@ -67,6 +67,7 @@
       </label>
     {/each}
   </fieldset>
+  <button class="text-button reset-house-display" onclick={() => onDisplayChange({ ...DEFAULT_HOUSE_DISPLAY })}>Reset house display</button>
   <label class="range-label" for={`${uid}-opacity`}><span>House fill opacity</span><output for={`${uid}-opacity`}>{Math.round(display.opacity * 100)}%</output></label>
   <input id={`${uid}-opacity`} class="house-range" type="range" aria-label="House opacity" min="0" max="1" step="0.01" value={display.opacity} oninput={event => onDisplayChange({ opacity: Number(event.currentTarget.value) })} />
   {#if display.mode === 'arcs'}

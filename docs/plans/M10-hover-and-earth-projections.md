@@ -1,6 +1,6 @@
 # M10 — Rich hover cards, constellation figures, and Earth projections
 
-Prepared 26 October 2026 against development `36d3df1`. **Proposed implementation plan; no M10 application changes have been made.** This extends the approved [implementation plan](../../IMPLEMENTATION_PLAN.md) and retains its desktop mouse/keyboard, calculation, privacy, and review conventions.
+Prepared 26 October 2026 against development `36d3df1`. **Approved for autonomous implementation on 26 October 2026.** Package evidence and reviews are recorded in [implementation status](../IMPLEMENTATION_STATUS.md). This extends the approved [implementation plan](../../IMPLEMENTATION_PLAN.md) and retains its desktop mouse/keyboard, calculation, privacy, and review conventions.
 
 The user's screenshot specifies the desired close, observer-facing Earth composition. The linked Almanac article is a reference for astrocartography explanations, not a calculation specification or an instruction to reproduce its images/text. The user's subsequent requirements set the default house rendering to **Layered shells**, with **Lift selected shells: 0%**, and make aspect cards a visual centrepiece with themed borders, complementary gradients, translucent dark reading panels and animated sparkles.
 
@@ -265,7 +265,7 @@ Use reusable buffers and screen-space hit tolerances. Rebuild geographic paths o
 
 ## 7. Work packages and delivery process
 
-The current request is planning only. Once implementation is started, follow the existing pushed-branch/review/merge process; leave `main` unchanged. M10 is one product milestone, delivered in reviewable dependent branches into `codex/development`.
+Implementation is authorized. Follow the existing pushed-branch/review/merge process; leave `main` unchanged. M10 is one product milestone, delivered in reviewable dependent branches into `codex/development`.
 
 | Package / suggested branch | Deliverable | Dependency |
 |---|---|---|

@@ -263,7 +263,7 @@
     if ($explorer.snapshot?.instantMs === birthContext.instantMs) displayedTimeKnown = birthContext.timeKnown;
     explorer.requestChart({ instantMs: birthContext.instantMs });
   }
-  function beginGlobePick(draft: GlobeDraft) { formInstant = draft.instantMs; formCivil = draft.civil; formObserver = draft.observer; formTimeKnown = draft.timeKnown; formKeepLocal = draft.keepLocal; formOpen = false; welcome = false; globePickMode = true; explorer.setViewpoint('overview'); }
+  function beginGlobePick(draft: GlobeDraft) { formInstant = draft.instantMs; formCivil = draft.civil; formObserver = draft.observer; formTimeKnown = draft.timeKnown; formKeepLocal = draft.keepLocal; formOpen = false; welcome = false; globePickMode = true; explorer.setViewpoint('overview',false); }
   function observerPicked(coordinates: { latitudeDeg: number; longitudeDeg: number }) {
     globePickMode = false;
     formObserver = { ...formObserver, ...coordinates, label: 'Globe selection', source: 'globe', zoneOverride: true };
@@ -271,7 +271,7 @@
   }
   function pausePlayback(reason:string|null=null){playing=false;playbackClock=null;pauseReason=reason;}
   function updatePreferences(patch:Partial<DisplayPreferences>){preferences={...preferences,...patch};if(patch.houseMode)houseDisplay={...houseDisplay,mode:patch.houseMode};}
-  function resetPreferences(){preferences={...DEFAULT_PREFERENCES};houseDisplay={...houseDisplay,mode:DEFAULT_PREFERENCES.houseMode};}
+  function resetPreferences(){preferences={...DEFAULT_PREFERENCES};houseDisplay={...DEFAULT_HOUSE_DISPLAY};}
   function clearSelection(){explorer.select(null);announcement='Selection cleared.';if(!inspectorPinned){if(document.activeElement?.closest('#inspector'))void collapseInspector();else{inspectorCollapsed=true;rightOpen=false;}}}
   async function collapseInspector(){inspectorCollapsed=true;rightOpen=false;await tick();document.querySelector<HTMLButtonElement>('[aria-label="Expand inspector"]')?.focus();}
   async function collapseTools(){toolsCollapsed=!compactPanels;leftOpen=false;await tick();document.querySelector<HTMLButtonElement>('.left-toggle')?.focus();}
@@ -363,7 +363,7 @@
     <section class="scene-stage" aria-label="Spatial exploration">
       <div class="scene-topline"><span class="scene-tag"><span class="status-dot"></span> CELESTIAL SPHERE</span><span class="scene-mode">{views.find((view) => view.id === $explorer.viewpoint)?.label}</span></div>
       <span class="schematic-label">Schematic sky · distances not to scale</span>
-      <SceneCanvas bind:this={sceneCanvas} snapshot={$explorer.snapshot} presentation={{ viewpoint: $explorer.viewpoint, selectedId: $explorer.selectedId, layers: $explorer.layers,houseDisplay,construction,aspects,trails,trailResult:activeTrail,history,historyResult:activeHistory,display }} {globePickMode} onObserverPick={observerPicked} onSelect={(id) => { if(id)selectFeature(id);else clearSelection(); }} onViewpoint={(viewpoint) => explorer.setViewpoint(viewpoint)} onStatus={(message) => sceneStatus = message} />
+      <SceneCanvas bind:this={sceneCanvas} snapshot={$explorer.snapshot} presentation={{ viewpoint: $explorer.viewpoint, selectedId: $explorer.selectedId, layers: $explorer.layers,houseDisplay,construction,aspects,trails,trailResult:activeTrail,history,historyResult:activeHistory,display }} {globePickMode} onObserverPick={observerPicked} onSelect={(id) => { if(id)selectFeature(id);else clearSelection(); }} onViewpoint={(viewpoint) => explorer.setViewpoint(viewpoint,!globePickMode)} onStatus={(message) => sceneStatus = message} />
       {#if globePickMode}<div class="globe-pick-banner" role="status"><span>Click Earth to choose observer coordinates. Drag to rotate.</span><button class="text-button" onclick={() => globePickMode = false}>Cancel</button></div>{/if}
       {#if welcome}
         <div class="welcome-card">

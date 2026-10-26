@@ -59,6 +59,24 @@ function setup() {
 }
 
 describe('exploration state and worker coordination', () => {
+  it('applies geographic presets only on explicit view entry, including same-view re-entry', () => {
+    const {store}=setup();
+    const revision=get(store).revision;
+    store.setLayer('earthHouses',false);store.setLayer('astrocartography',false);
+    store.setViewpoint('overview',false);
+    expect(get(store).layers.earthHouses).toBe(false);
+    store.setViewpoint('overview');
+    expect(get(store)).toMatchObject({revision,viewRevision:1,layers:{earthProjections:true,earthHouses:true,astrocartography:true}});
+    store.setViewpoint('outside');expect(get(store).layers.earthProjections).toBe(false);
+    store.setViewpoint('overview',false);expect(get(store).layers.earthProjections).toBe(false);
+    const pickingViewRevision=get(store).viewRevision;
+    store.setViewpoint('overview',false); // Runtime confirms temporary globe-pick framing.
+    expect(get(store).viewRevision).toBe(pickingViewRevision);
+    expect(get(store).layers.earthProjections).toBe(false);
+    store.setViewpoint('overview');expect(get(store).layers.earthProjections).toBe(true);
+    store.setViewpoint('observer');expect(get(store).layers.earthProjections).toBe(false);
+    store.destroy();
+  });
   it('provides a synchronous Svelte readable and loads the deterministic example once', () => {
     const { store, workers } = setup();
     expect(get(store)).toMatchObject({ status: 'loading', revision: 0, snapshot: null, error: null, input: { instantMs: Date.UTC(2000, 0, 1, 12), observer: { latitudeDeg: 51.5, longitudeDeg: 0 }, system: 'W' } });
