@@ -22,10 +22,10 @@ and layer-independence requirements remain in force.
 The user approved the visuals and authorized complete release validation and
 subsequent M10 integration into `codex/development`. The complete Linux packaged
 three-engine suite now passes. The supplemental Windows run and focused
-follow-ups remain explicit below. Development integration on
-[PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18) is still
-**pending**. Main remains untouched; validation is not recorded as a completed
-merge or external acceptance.
+follow-ups remain explicit below. [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18)
+merged reviewed head `6c3d64c` into `codex/development` as
+`4bbcf0f88f6b35b18aae4f63653c6b2957fac872`. Main remains untouched; engineering
+completion does not close the five external acceptance gates.
 
 ## Findings and completion boundary
 
@@ -86,8 +86,8 @@ The final audit produced these focused follow-ups:
   the unchanged `6c1a0cb` artifact. The Windows full-run failures remain recorded.
 
 This documentation review did not run a competing browser/performance suite.
-No development-merge claim is made before its execution. The five external
-acceptance gates are retained separately.
+The executed development merge is recorded below. The five external acceptance
+gates are retained separately.
 
 ## Original brief and implementation-plan mapping
 
@@ -111,7 +111,7 @@ rows detail the extension rather than implicitly replacing these commitments.
 | Brief 10; plan 11: restrained observatory styling, explicit glyph names, distinct sign/house encoding, active legends and strongest selection | [runtime](../../src/lib/scene/runtime.ts), [App legends](../../src/App.svelte), [hover design review](M10-hover-design.md), [M10 performance/visual review](M10-performance.md) | Present; aspect palettes identify type rather than good/bad or strength. Expressive cards retain explicit feature names; the final audit's separate house palette avoids a zodiac-element cycle. |
 | Brief 12; plan 6, 11: keyboard alternatives, visible focus, scalable text, collapsible desktop panels, motion/quality options | [FeatureNavigation](../../src/lib/ui/FeatureNavigation.svelte), [accessibility tests](../../tests/browser/accessibility.spec.ts), [hover workflows](../../tests/browser/m10-hover.spec.ts), [manual kit](../manual-validation.md) | Engineering paths present; native zoom/screen-reader evaluation is not inferred from axe or logical viewport tests. |
 | Brief 12; plan 3, 12: coherent pending/error/provisional/undefined state, recovery and privacy | [explorer coordinator](../../src/lib/state/explorer.ts), [preferences](../../src/lib/state/preferences.ts), [worker recovery tests](../../tests/state/worker-recovery.test.ts), [recovery workflows](../../tests/browser/recovery-preferences.spec.ts) | Present; display-only whitelist excludes personal context, and hovering starts no lookup or calculation request. |
-| Plan 2, 12–14: reproducible source/data, deployment, CSP, HTTPS configuration, notices, exact corresponding source and branch review process | [release builder](../../scripts/build-release.ts), [server](../../server/production.ts), [source workflow](../../tests/browser/release-source.spec.ts), [CI](../../.github/workflows/ci.yml), [deployment](../deployment.md), [M9](M9.md) | Infrastructure, exact archive verification and complete Linux packaged validation pass; development integration remains pending. No external deployment was requested. |
+| Plan 2, 12–14: reproducible source/data, deployment, CSP, HTTPS configuration, notices, exact corresponding source and branch review process | [release builder](../../scripts/build-release.ts), [server](../../server/production.ts), [source workflow](../../tests/browser/release-source.spec.ts), [CI](../../.github/workflows/ci.yml), [deployment](../deployment.md), [M9](M9.md) | Infrastructure, exact archive verification, complete Linux packaged validation and reviewed development integration pass. No external deployment was requested. |
 | Brief 13; plan 13, 17: six learner tasks and definition of complete | [release acceptance](../RELEASE_ACCEPTANCE.md), [manual protocol](../manual-validation.md) | The engineering workflows exist; moderated understanding and the other declared external gates are explicitly unperformed. |
 
 ## M10 requirement mapping
@@ -211,9 +211,9 @@ comparison, not a new GPU measurement or a relabelled timing run.
 Earlier failed timing runs and scrollable-card/native screenshots retain their
 historical scope.
 
-| Remaining integration item | Evidence still required |
+| Completed integration item | Recorded evidence |
 | --- | --- |
-| M10 → `codex/development` and final status | Execute the approved integration through [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18), then record the actual merge and final identities in the validation report and status documents. Browser validation is recorded above; a completed merge is not inferred from it. Main remains untouched. |
+| M10 → `codex/development` and final status | [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18) merged `6c3d64cb409068a50e21450f88549dca26a5223e` as `4bbcf0f88f6b35b18aae4f63653c6b2957fac872`. The integration and reviewed trees match, local/remote development were synchronized, and final routine [CI 40285339199](https://github.com/buttery-x3/astrology-viewer/actions/runs/40285339199) passes. Later merge-record documentation changes no production/test/config source. Main remains `8b45caf`; [PR #13](https://github.com/buttery-x3/astrology-viewer/pull/13) remains draft/unmerged. |
 
 ## Five external acceptance gates
 
