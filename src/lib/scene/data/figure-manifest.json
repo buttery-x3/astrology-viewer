@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "version": "Stellarium-26.2-modern-HYG-4.1",
+  "revision": "2b10b1a3bb534eb4e7586751054bf67b36c22e53",
+  "author": "Stellarium team; star positions David Nash / Astronexus HYG v4.1",
+  "license": "CC-BY-SA-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "notice": "vendor/stellarium-modern/description.md",
+  "changes": "Extracted only the 88 modern constellation line topologies; resolved every HIP ID to the pinned HYG ID; retained nine fainter support stars; no illustrations, unrelated asterisms or cultural descriptions imported into runtime data.",
+  "policy": "Modern Western connection convention, not official IAU boundary geometry. Endpoint directions use the identical HYG fixed-J2000 linear proper-motion policy as catalogue stars. Short great-circle interpolation is a display convention.",
+  "counts": {
+    "figures": 88,
+    "polylines": 219,
+    "segments": 695,
+    "endpoints": 710,
+    "supportStars": 9
+  },
+  "sources": [
+    {
+      "file": "vendor/stellarium-modern/index.json",
+      "url": "https://raw.githubusercontent.com/Stellarium/stellarium/2b10b1a3bb534eb4e7586751054bf67b36c22e53/skycultures/modern/index.json",
+      "gitBlob": "09872ba40293423bd15e37706866cc4782178554",
+      "sha256": "1f2f5ffd6c9e25a7d0dcfdbf1f756e2db03dd3b8ed4ec016a2839b09f6b0fe1e",
+      "bytes": 205767
+    },
+    {
+      "file": "vendor/stellarium-modern/description.md",
+      "url": "https://raw.githubusercontent.com/Stellarium/stellarium/2b10b1a3bb534eb4e7586751054bf67b36c22e53/skycultures/modern/description.md",
+      "gitBlob": "2b8f761ff31b56537d38794667f66827b3e07976",
+      "sha256": "4b58344f63168d7c816fdfef405103b5770fda2e1f4a4bf5c8871041ce042586",
+      "bytes": 53269
+    },
+    {
+      "name": "hygdata_v41.csv",
+      "url": "https://raw.githubusercontent.com/astronexus/HYG-Database/c7f7f883fe678cc7680169a50ccd7dcc49b060ce/hyg/CURRENT/hygdata_v41.csv",
+      "blob": "ba2dec4eb0f6768914c7fc1051258100214ddf84",
+      "bytes": 33932548,
+      "sha256": "d9f69fd86bbf90a4e4d52b4c5c53eacfa6dfc0bfdef85bfd94f095e0bebe4ebd",
+      "file": "hygdata_v41.csv"
+    }
+  ],
+  "assets": [
+    {
+      "file": "constellation-figures.json",
+      "bytes": 34915,
+      "sha256": "cc67ca70fcee802d658d62a39a138ecdc67884e6cca6bb4ee38389762b98c958"
+    }
+  ]
+}

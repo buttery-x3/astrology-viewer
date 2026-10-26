@@ -3,9 +3,9 @@ import { REQUIRED_CONTENT_IDS } from '../../src/lib/content/validation';
 import { WIKIPEDIA_OVERVIEWS, getWikipediaOverviews } from '../../src/lib/content/wikipedia';
 
 describe('Wikipedia concept navigation, distinct from claim citations',()=>{
-  it('covers all65required base concepts without inventing Wikipedia placement support',()=>{
+  it('covers all 80 required concepts without inventing Wikipedia placement support',()=>{
     const concepts=REQUIRED_CONTENT_IDS.filter(id=>!id.startsWith('body-in-'));
-    expect(concepts).toHaveLength(65);
+    expect(concepts).toHaveLength(80);
     for(const id of concepts)expect(getWikipediaOverviews(id).length,id).toBeGreaterThan(0);
     for(const id of REQUIRED_CONTENT_IDS.filter(id=>id.startsWith('body-in-')))expect(getWikipediaOverviews(id),id).toEqual([]);
   });
