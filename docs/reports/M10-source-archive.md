@@ -1,14 +1,17 @@
 # M10 final source-archive rebuild
 
-The frontend source archive for revision `6cfa912f72eafce86b2f17c205e5c65d4d21c172` was independently extracted, installed and rebuilt successfully on Windows with Node 24.15.0, npm 11.12.1 and pinned Vite 8.3.5. Exact hashes, file sizes, manifest identities and retained-data checks are recorded in [M10-source-archive.json](M10-source-archive.json).
+The frontend source archive for final frozen revision `da1404f27ec1d470e9ff7a763ee26ddeddcdf336` was independently extracted, installed and rebuilt successfully on Windows with Node 24.15.0, npm 11.12.1 and pinned Vite 8.3.5. Exact hashes, file sizes, manifest identities and retained-data checks are recorded in [M10-source-archive.json](M10-source-archive.json).
 
-The archive was extracted into a fresh OS temporary directory, outside the repository, after checking its 435 listed paths. Neither the extracted source nor any ancestor contained `.git`. Its `node_modules` was installed by `npm ci --no-audit --no-fund` (217 packages); it was not linked to the repository installation. The expanded `source-revision.txt` contained the full release revision. The ordinary `npm run build` used no revision override, local-source override or native engine compiler and returned exit code 0.
+This supersedes the `a2ac392…` archive audit. The final source corrects Escape suppression to use the active feature and an explicitly restored keyboard origin, allowing a pointer reading to reopen on legitimate re-entry. Earlier audit evidence remains scoped to its earlier source revision; this repeat independently installed and rebuilt the corrected archive.
+
+The archive was extracted into a fresh OS temporary directory, outside the repository, after checking all 449 listed paths. Its 399 source-file paths matched the release commit exactly: 398 files matched their Git blob hashes, and the remaining `source-revision.txt` contained the expected full revision after Git's export substitution. The other 50 entries were directories. Neither the extracted source nor any ancestor contained `.git`. Its `node_modules` was installed by `npm ci --no-audit --no-fund` (217 packages); it was not linked to the repository installation. The ordinary `npm run build` used no revision override, local-source override or native engine compiler and returned exit code 0.
 
 | Verified item | Result |
 | --- | --- |
-| Source archive SHA-256 | `cf63f28bedfea91b1c8a270c67c5923b861320a7ec1728468a3e3dc3acadf3ef` |
-| Release source tree | `1067f95f63a1980b225cf57eb800fc0360ac3248` |
-| Compiled revision and footer | Full `6cfa912f72eafce86b2f17c205e5c65d4d21c172`; compiled footer derives `Build 6cfa912` from that value |
+| Source archive SHA-256 | `0fa1964c17357c023e53406848afeb0f44322b23834ac21401ac787fd05c2626` |
+| Release manifest SHA-256 | `4dc2635bc0fdedd9264e24a74403ff0c573f63053805a1b33bed7e647c330d1f` |
+| Release source tree | `ddc00d91a47752a5da1848226ddec04412d2a576` |
+| Compiled revision and footer | Full `da1404f27ec1d470e9ff7a763ee26ddeddcdf336`; compiled footer derives `Build da1404f` from that value |
 | WASM source, rebuilt asset and released asset | All 392,316 bytes; SHA-256 `a2aaedc3f371af501d2dfd61258a8160c873b0df3ea94ad568377df4353fb88e` |
 | Complete release manifest | All 108 listed files/encoded variants match their recorded hashes and lengths |
 | Retained figures | 88 figures, 219 polylines, 695 segments, 710 unique HIP endpoints and nine supporting stars |
