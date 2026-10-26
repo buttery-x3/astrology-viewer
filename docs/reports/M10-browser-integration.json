@@ -1,0 +1,206 @@
+{
+  "description": "Independent M10 live integration browser validation",
+  "server": "http://127.0.0.1:5196",
+  "sourceIdentity": {
+    "committedBase": "ce6b3bbb95ef68fddf2a4e11185a537b52e7b568",
+    "workingTree": "Uncommitted M10 integration fixes; not an exact packaged-release revision"
+  },
+  "playwrightVersion": "1.64.1",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "stats": {
+    "startTime": "2026-10-26T03:26:10.869Z",
+    "duration": 57898.627,
+    "expected": 14,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "cases": [
+    {
+      "file": "m10-earth.spec.ts",
+      "title": "constellation regions and modern figures remain independent, including endpoints with stars hidden",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3481,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m10-earth.spec.ts",
+      "title": "re-entering Earth overview restores its close globe and projections without changing the moment",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2406,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m10-earth.spec.ts",
+      "title": "a selected geographic line focuses from Outside sphere without applying the Earth re-entry preset",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3606,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m10-earth.spec.ts",
+      "title": "actual Earth house selection and sky house selection submit reciprocal highlights",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3876,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m10-earth.spec.ts",
+      "title": "a real Orion figure path opens its asterism reading without selecting the official region",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4811,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "m10-earth.spec.ts",
+      "title": "a real aspect strand composes both placements and disappears from hover after an orb crossing",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4753,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "scene-display.spec.ts",
+      "title": "native view controls, orientation, quality and restored context preserve the chart",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4789,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "scene-display.spec.ts",
+      "title": "an actual eclipse overlap offers keyboard choices without changing the current chart",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4298,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "scene-display.spec.ts",
+      "title": "a translucent Earth permits choosing the actual body behind it",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5126,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "scene-display.spec.ts",
+      "title": "Melbourne1987 renders the linked Taurus label at its native-frame anchor and identifies the unselected Sun",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5680,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "scene-display.spec.ts",
+      "title": "Melbourne local birth date remains prominent when its UTC date is the previous day",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3452,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "spatial.spec.ts",
+      "title": "keyboard users inspect signs, reference angles and real constellation regions in one sky",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4473,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "spatial.spec.ts",
+      "title": "an ordinary Earth click inspects the globe and focus does not edit the observer",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2695,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "file": "spatial.spec.ts",
+      "title": "camera and reference layers leave body measurements unchanged",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 2965,
+          "retry": 0
+        }
+      ]
+    }
+  ]
+}
