@@ -1,6 +1,10 @@
 import { expect, test } from '@playwright/test';
-import { getClaimSources, getContent } from '../../src/lib/content';
+import { readFileSync } from 'node:fs';
+import type { ContentEntry, ContentSource } from '../../src/lib/content/validation';
 import { openControlGroup } from './helpers';
+
+const catalogue = JSON.parse(readFileSync(new URL('../../src/lib/content/data/catalogue.json', import.meta.url), 'utf8')) as ContentEntry[];
+const sources = JSON.parse(readFileSync(new URL('../../src/lib/content/data/sources.json', import.meta.url), 'utf8')) as ContentSource[];
 
 for (const [angle, theme, name] of [
   ['asc', 'ac', 'Ascendant'],
@@ -16,9 +20,9 @@ for (const [angle, theme, name] of [
     await page.getByLabel('Find a body, sign, angle or region', { exact: true }).fill(name);
     const target = page.locator(`.feature-list [data-feature-id="angle:${angle}"]`);
     await target.focus();
-    const entry = getContent(`astro:angle:${theme}`)!;
+    const entry = catalogue.find(entry => entry.id === `astro:angle:${theme}`)!;
     const claim = entry.claims[0]!;
-    const source = getClaimSources(claim)[0]!;
+    const source = sources.find(source => source.id === claim.sourceIds[0])!;
     const card = page.getByTestId('hover-card');
     await expect(card).toContainText(claim.text);
     await expect(card.locator('a')).toHaveCount(0);
