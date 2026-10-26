@@ -1,23 +1,28 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { HoverCardModel } from '../domain/hover-card';
-  import { ASPECT_CARD_THEMES, cardSparkles } from '../domain/hover-card-themes';
+  import { hoverPreview } from '../domain/hover-preview';
+  import { cardSparkles } from '../domain/hover-card-themes';
   import FeatureGlyph from './FeatureGlyph.svelte';
   let {
     model,
     id,
     motion = true,
     sparkles = true,
-    keyboardHint = false,
-  }: { model: HoverCardModel; id?: string; motion?: boolean; sparkles?: boolean; keyboardHint?: boolean } = $props();
+  }: {
+    model: HoverCardModel;
+    id?: string;
+    motion?: boolean;
+    sparkles?: boolean;
+  } = $props();
   const uid = $props.id();
+  const preview = $derived(hoverPreview(model));
+  const points = $derived(cardSparkles(model.id));
   let documentVisible = $state(true),
     reducedMotion = $state(false);
-  const theme = $derived(model.aspect ? ASPECT_CARD_THEMES[model.aspect.type] : null);
-  const points = $derived(cardSparkles(model.id));
   const animate = $derived(motion && sparkles && documentVisible && !reducedMotion);
   onMount(() => {
-    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const preference = matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => {
       documentVisible = !document.hidden;
       reducedMotion = preference.matches;
@@ -32,410 +37,324 @@
   });
 </script>
 
-<!-- svelte-ignore a11y_no_noninteractive_tabindex (A scrollable reading surface needs keyboard focus; it contains no interactive controls.) -->
 <article
   id={id ?? uid}
-  class:aspect-card={!!theme}
+  class="hover-card"
+  class:aspect-card={!!preview.aspect}
   class:animate
   class:static-card={!animate}
-  class="hover-card"
   role="tooltip"
-  tabindex="0"
-  aria-keyshortcuts={keyboardHint ? 'F2 Escape' : undefined}
   data-testid="hover-card"
-  data-feature-kind={model.kind}
-  data-aspect-type={model.aspect?.type}
-  style={`--accent:${theme?.accent ?? model.glyph.color};--warm:${theme?.warm ?? '#38546a'};--cool:${theme?.cool ?? '#26364f'}`}
+  data-feature-kind={preview.kind}
+  data-aspect-type={preview.aspect?.type}
+  data-theme={preview.theme.name}
+  style:--accent={preview.theme.accent}
+  style:--warm={preview.theme.warm}
+  style:--cool={preview.theme.cool}
 >
   <div class="card-interior">
-    {#if theme}<div class="sparkle-field" aria-hidden="true">
-        {#each points as point (point.index)}<svg
-            class="glint"
-            style={`--x:${point.index < 8 ? point.x : point.index % 2 ? 98 : 2}%;--y:${point.index < 8 ? `${point.y}px` : `${point.y}%`};--size:${point.size}px;--delay:${point.delay}s;--duration:${point.duration}s`}
-            viewBox="0 0 16 16"><path d="M8 0 10 6 16 8 10 10 8 16 6 10 0 8 6 6Z" /></svg
-          >{/each}
-      </div>{/if}
+    <div class="sparkle-field" aria-hidden="true">
+      {#each points as point (point.index)}<svg
+          class="glint"
+          style:--x={(point.index < 8 ? point.x : point.index % 2 ? 99 : 1) + '%'}
+          style:--y={point.index < 8 ? Math.min(point.y, 14) + 'px' : point.y + '%'}
+          style:--size={point.size + 'px'}
+          style:--delay={point.delay + 's'}
+          style:--duration={point.duration + 's'}
+          viewBox="0 0 16 16"><path d="M8 0 10 6 16 8 10 10 8 16 6 10 0 8 6 6Z" /></svg
+        >{/each}
+    </div>
     <header class="identity">
-      {#if model.aspect && theme}
-        <div class="aspect-heading">
-          <span class="eyebrow">Planetary relationship</span>
-          <h2>{theme.name}</h2>
-          <span class="corner-symbol" aria-hidden="true"
-            ><FeatureGlyph name={model.aspect.type} size={42} /></span
-          >
+      {#if preview.aspect}
+        <div class="relationship-heading">
+          <p class="relationship-identity">
+            <span class="body-name" style:color={preview.aspect.bodyA.color}
+              ><FeatureGlyph name={preview.aspect.bodyA.id} size={23} />{preview.aspect.bodyA
+                .name}</span
+            >
+            <span class="relationship-symbol"
+              ><FeatureGlyph name={preview.aspect.type} size={20} /></span
+            >
+            <span class="body-name" style:color={preview.aspect.bodyB.color}
+              ><FeatureGlyph name={preview.aspect.bodyB.id} size={23} />{preview.aspect.bodyB
+                .name}</span
+            >
+          </p>
+          <h2 class="aspect-name">{preview.theme.name}</h2>
         </div>
-        <div
-          class="relationship"
-          aria-label={`${model.aspect.bodyA.name} ${theme.name.toLowerCase()} ${model.aspect.bodyB.name}`}
-        >
-          {#each [model.aspect.bodyA, model.aspect.bodyB] as body, index (body.id)}
-            {#if index === 1}<div class="relationship-symbol" aria-hidden="true">
-                <span></span><FeatureGlyph name={model.aspect.type} size={31} /><span></span>
-              </div>{/if}
-            <div class="planet-identity">
-              <div class="medallion" style={`--body-color:${body.color}`}>
-                <FeatureGlyph name={body.id} color={body.color} size={37} />
-              </div>
-              <strong>{body.name}</strong>
-              <div class="placement-label">
-                <FeatureGlyph name={body.sign.id} size={15} /><span
-                  >{body.sign.name} {body.sign.degree.toFixed(2)}°</span
-                >
-              </div>
-            </div>
-          {/each}
+      {:else}
+        <span class="feature-emblem"><FeatureGlyph name={preview.glyph.key} size={29} /></span>
+        <div class="identity-text">
+          <span class="eyebrow">{preview.kicker}</span>
+          <h2>{preview.title}</h2>
         </div>
-      {:else}<div class="simple-heading">
-          <span class="feature-emblem"
-            ><FeatureGlyph name={model.glyph.key} color={model.glyph.color} size={32} /></span
-          >
-          <div>
-            <span class="eyebrow">{model.kicker}</span>
-            <h2>{model.title}</h2>
-          </div>
-        </div>{/if}
+      {/if}
     </header>
-    {#if keyboardHint}<p class="keyboard-hint">F2: scroll card · Escape: close</p>{/if}
-    {#if model.notices.length}<div class="context-notices">
-        {#each model.notices as notice (notice)}<span>{notice}</span>{/each}
+    {#if preview.identity.length}<p class="identity-line">{preview.identity.join(' · ')}</p>{/if}
+    {#if preview.caption}<p class="geometric-caption">{preview.caption}</p>{/if}
+    {#if preview.notices.length}<div class="context-notices">
+        {#each preview.notices as notice (notice)}<span>{notice}</span>{/each}
       </div>{/if}
-    <div class="reading">
-      {#each model.sections as section, index (section.id)}
-        {#if model.aspect && index === 2}<div class="and-connector" aria-hidden="true">
+    <div class="reading" class:relationship-reading={!!preview.aspect}>
+      {#each preview.sections as section, index (section.id)}
+        {#if index === preview.firstTraditionalSection}<p class="claim-label">
+            Traditional interpretation
+          </p>{/if}
+        {#if preview.aspect && index === 2}<div class="and-connector" aria-hidden="true">
             <span></span>and<span></span>
           </div>{/if}
-        <section class="reading-panel" data-claim-section={section.id}>
-          <h3>
-            {#if model.aspect && index > 0}<FeatureGlyph
-                name={index === 1 ? model.aspect.bodyA.id : model.aspect.bodyB.id}
-                color={index === 1 ? model.aspect.bodyA.color : model.aspect.bodyB.color}
-                size={20}
-              />{/if}{section.title}
-          </h3>
+        <section
+          class="reading-panel"
+          data-claim-section={section.id}
+          class:relationship-lead={!!preview.aspect && index === 0}
+        >
+          {#if preview.aspect && index > 0}
+            {@const body = index === 1 ? preview.aspect.bodyA : preview.aspect.bodyB}
+            <h3 class="planet-identity">
+              <FeatureGlyph name={body.id} color={body.color} size={18} /><span
+                >{body.name} in
+                <span class="sign-name"
+                  ><FeatureGlyph name={body.sign.id} size={14} />{body.sign.name}</span
+                ></span
+              >
+            </h3>
+          {:else if !(preview.aspect && index === 0) && !['Traditional interpretation', 'Traditional body theme', 'Traditional angle theme', 'Body meaning'].includes(section.title)}
+            <h3>{section.title}</h3>
+          {/if}
           {#each section.paragraphs as paragraph (paragraph.claimId)}<p
               data-claim-id={paragraph.claimId}
               data-claim-role={paragraph.role}
             >
-              {#if paragraph.role === 'tradition' && (!model.aspect || index > 0)}<span
-                  class="claim-label">Traditional interpretation</span
-                >{/if}{paragraph.text}
+              {paragraph.text}
             </p>{/each}
         </section>
       {/each}
     </div>
-    {#if model.facts.length}<footer class="measurements">
-        <dl>
-          {#each model.facts as fact (fact.label)}<div>
-              <dt>{fact.label}</dt>
-              <dd>{fact.value}</dd>
-            </div>{/each}
-        </dl>
-      </footer>{/if}
   </div>
 </article>
 
 <style>
   .hover-card {
-    width: min(410px, calc(100vw - 32px));
-    max-height: min(85dvh, 820px);
-    overflow: auto;
-    overscroll-behavior: contain;
     box-sizing: border-box;
-    border: 1.5px solid #50677b;
-    border-radius: 19px;
-    color: #eef2f8;
-    background: #101b2b;
-    box-shadow:
-      0 18px 55px #01050bd9,
-      0 2px 7px #0009;
-    font:
-      400 1rem/1.55 system-ui,
-      sans-serif;
-    isolation: isolate;
-    pointer-events: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #67788d #0b1422;
-    animation: card-reveal 190ms ease-out both;
-  }
-  .aspect-card {
-    border-color: transparent;
+    width: 100%;
+    border: 1.5px solid transparent;
+    border-radius: 15px;
+    color: #f0f3fa;
     background: linear-gradient(
         135deg,
         var(--accent),
-        var(--warm) 30%,
-        var(--cool) 77%,
+        var(--warm) 32%,
+        var(--cool) 76%,
         var(--accent)
       )
       border-box;
     box-shadow:
-      0 18px 50px #01050bd9,
-      0 0 26px color-mix(in srgb, var(--accent) 22%, transparent),
-      inset 0 0 0 1px #ffffff18;
-  }
-  .keyboard-hint {
-    position: relative;
-    z-index: 3;
-    margin: -8px 22px 14px;
-    font-size: 0.68rem;
-    color: #c3cddd;
-  }
-  .hover-card:focus-visible {
-    outline: 3px solid #f1d79d;
-    outline-offset: -4px;
+      0 15px 42px #01050bbf,
+      0 0 21px color-mix(in srgb, var(--accent) 20%, transparent),
+      inset 0 0 0 1px #ffffff16;
+    font:
+      400 0.8125rem/1.38 system-ui,
+      sans-serif;
+    isolation: isolate;
+    pointer-events: auto;
+    animation: card-reveal 160ms ease-out both;
+    overflow-wrap: anywhere;
   }
   .card-interior {
     position: relative;
-    overflow: hidden;
-    border-radius: 17px;
+    border-radius: 13px;
+    padding: 12px;
     background:
       radial-gradient(
-        ellipse at 2% 3%,
-        color-mix(in srgb, var(--warm) 65%, transparent),
-        transparent 58%
+        ellipse at 0 0,
+        color-mix(in srgb, var(--warm) 58%, transparent),
+        transparent 70%
       ),
       radial-gradient(
-        ellipse at 100% 21%,
-        color-mix(in srgb, var(--cool) 80%, transparent),
-        transparent 60%
+        ellipse at 100% 5%,
+        color-mix(in srgb, var(--cool) 68%, transparent),
+        transparent 75%
       ),
-      #09101f;
-    min-height: 100%;
+      #0b1322;
   }
   .identity {
     position: relative;
     z-index: 2;
-    padding: 21px 22px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    min-width: 0;
   }
-  .eyebrow {
-    display: block;
-    font-size: 0.66rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #d0d9e6;
-    line-height: 1.6;
-    font-weight: 650;
+  .identity-text {
+    min-width: 0;
   }
   .identity h2 {
     font:
-      500 1.6rem/1.15 Georgia,
-      serif;
-    letter-spacing: 0.015em;
-    margin: 5px 0 0;
-    color: #fff9f2;
-    text-wrap: balance;
+      600 1.0625rem/1.2 system-ui,
+      sans-serif;
+    color: #fff8ed;
+    margin: 1px 0 0;
+    letter-spacing: 0.005em;
   }
-  .aspect-heading h2 {
-    font-size: 1.8rem;
-    color: var(--accent);
-  }
-  .aspect-heading {
-    position: relative;
-  }
-  .corner-symbol {
-    position: absolute;
-    right: -5px;
-    top: 1px;
-    color: var(--accent);
-    opacity: 0.19;
-    transform: rotate(-8deg);
-  }
-  .relationship {
-    display: grid;
-    grid-template-columns: 1fr 58px 1fr;
-    align-items: start;
-    margin-top: 20px;
-    position: relative;
-  }
-  .planet-identity {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 7px;
-    min-width: 0;
-  }
-  .planet-identity strong {
-    font-size: 1.03rem;
-    letter-spacing: 0.02em;
-    color: #fff3e7;
-    font-weight: 600;
-  }
-  .medallion {
-    display: grid;
-    place-items: center;
-    width: 70px;
-    height: 70px;
-    border: 1px solid var(--body-color);
-    outline: 1px solid #ffffff13;
-    outline-offset: 5px;
-    border-radius: 50%;
-    background: radial-gradient(
-      circle at 30% 25%,
-      color-mix(in srgb, var(--body-color) 14%, transparent),
-      #09101dd9 72%
-    );
-    box-shadow:
-      0 0 25px color-mix(in srgb, var(--body-color) 18%, transparent),
-      inset 0 0 18px #ffffff04;
-  }
-  .placement-label {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.75rem;
-    color: #dae4ef;
-    text-align: center;
-    flex-wrap: wrap;
-  }
-  .relationship-symbol {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    margin: 22px -13px 0;
-    color: var(--accent);
-    z-index: 1;
-  }
-  .relationship-symbol span {
-    height: 1px;
-    flex: 1;
-    background: linear-gradient(90deg, transparent, var(--accent));
-    min-width: 15px;
-  }
-  .relationship-symbol span:last-child {
-    transform: scaleX(-1);
-  }
-  .simple-heading {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-  .simple-heading h2 {
-    font-family: system-ui, sans-serif;
-    font-size: 1.3rem;
+  .eyebrow {
+    display: block;
+    font-size: 0.64rem;
+    line-height: 1.3;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #e0e7f1;
   }
   .feature-emblem {
+    flex-shrink: 0;
     display: grid;
     place-items: center;
-    flex-shrink: 0;
-    width: 49px;
-    height: 49px;
-    border: 1px solid #b8d0e32c;
-    border-radius: 13px;
-    background: #0a1425;
+    width: 39px;
+    height: 39px;
+    border: 1px solid color-mix(in srgb, var(--accent) 70%, transparent);
+    border-radius: 11px;
+    color: var(--accent);
+    background: radial-gradient(
+      circle at 30% 20%,
+      color-mix(in srgb, var(--accent) 20%, transparent),
+      #0b1523bd
+    );
+    box-shadow:
+      0 0 16px color-mix(in srgb, var(--accent) 20%, transparent),
+      inset 0 0 12px #ffffff06;
   }
-  .reading {
-    position: relative;
-    z-index: 3;
-    padding: 0 15px 16px;
-    display: grid;
-    gap: 11px;
-  }
-  .reading-panel {
-    padding: 13px 15px 15px;
-    border: 1px solid #dae5f21a;
-    border-radius: 12px;
-    background: rgba(7, 12, 24, 0.92);
-    box-shadow: inset 0 1px 0 #ffffff05;
-  }
-  .reading-panel h3 {
-    font-size: 0.78rem;
-    line-height: 1.5;
-    margin: 0 0 8px;
-    font-weight: 600;
-    color: #dbe3ef;
+  .relationship-heading {
+    width: 100%;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 9px;
+    flex-wrap: wrap;
+  }
+  .relationship-heading .relationship-identity {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 8px;
-    letter-spacing: 0.015em;
-  }
-  .reading-panel p {
-    font-size: 1rem;
-    line-height: 1.55;
+    font-size: 1.0625rem;
     margin: 0;
-    color: #eef2f8;
-    overflow-wrap: anywhere;
   }
-  .reading-panel p + p {
-    margin-top: 10px;
-  }
-  .claim-label {
-    display: block;
-    font-size: 0.63rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #abbace;
-    margin-bottom: 5px;
-  }
-  .and-connector {
-    display: flex;
+  .body-name {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 11px;
-    font:
-      italic 0.83rem Georgia,
-      serif;
+    gap: 4px;
+  }
+  .relationship-symbol {
+    display: inline-flex;
     color: var(--accent);
-    margin: -3px 0;
   }
-  .and-connector span {
-    height: 1px;
-    width: 30px;
-    background: linear-gradient(90deg, transparent, #c8bddd55);
+  .aspect-name {
+    color: var(--accent);
+    font:
+      500 1.125rem/1.2 Georgia,
+      serif;
   }
-  .and-connector span:last-child {
-    transform: scaleX(-1);
+  .identity-line,
+  .geometric-caption {
+    position: relative;
+    z-index: 2;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    margin: 0 0 7px;
+    color: #e0e7ef;
+  }
+  .identity-line {
+    color: #e8d7bb;
+  }
+  .geometric-caption {
+    font-size: inherit;
   }
   .context-notices {
     position: relative;
-    z-index: 3;
+    z-index: 2;
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    padding: 0 20px 13px;
+    gap: 4px;
+    margin: 0 0 7px;
   }
   .context-notices span {
-    padding: 4px 8px;
-    border-radius: 5px;
-    border: 1px solid #d5b98744;
-    background: #171b2be8;
     font-size: 0.69rem;
-    line-height: 1.5;
-    color: #eadbc4;
+    line-height: 1.35;
+    border-left: 2px solid #d7b97f;
+    padding: 2px 6px;
+    color: #f0dfbd;
+    background: #121b2acc;
+    border-radius: 0 4px 4px 0;
   }
-  .measurements {
+  .reading {
     position: relative;
-    z-index: 3;
-    background: #070e1cdc;
-    border-top: 1px solid #dae5f21c;
-    padding: 13px 20px 17px;
-  }
-  .measurements dl {
-    margin: 0;
+    z-index: 2;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 11px 16px;
+    gap: 7px;
   }
-  .measurements dt {
-    font-size: 0.66rem;
-    color: #aebcd0;
-    line-height: 1.5;
+  .reading-panel {
+    padding: 8px 9px;
+    border: 1px solid #dce7f21c;
+    border-radius: 9px;
+    background: #070e1aeb;
+    box-shadow: inset 0 1px 0 #ffffff04;
+    min-width: 0;
   }
-  .measurements dd {
-    font-size: 0.78rem;
-    font-variant-numeric: tabular-nums;
-    margin: 3px 0 0;
-    color: #e4ecf7;
-    overflow-wrap: anywhere;
-    line-height: 1.5;
+  .reading-panel h3 {
+    font-size: inherit;
+    font-weight: 650;
+    line-height: 1.35;
+    margin: 0 0 4px;
+    color: #e4eaf5;
+  }
+  .reading-panel p {
+    font: inherit;
+    line-height: 1.38;
+    margin: 0;
+    color: #f0f3fa;
+  }
+  .reading-panel p + p {
+    margin-top: 5px;
+  }
+  .claim-label {
+    font-size: 0.62rem;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #d0dbea;
+    margin: 0 1px -3px;
+  }
+  .planet-identity {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .planet-identity :global(svg) {
+    flex-shrink: 0;
+  }
+  .sign-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    color: #f1debd;
+  }
+  .relationship-lead {
+    padding: 0 1px;
+    border: 0;
+    background: none;
+    box-shadow: none;
+  }
+  .relationship-reading .planet-identity {
+    margin-bottom: 5px;
   }
   .sparkle-field {
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    overflow: hidden;
+    overflow: clip;
     contain: paint;
+    border-radius: 13px;
   }
   .glint {
     position: absolute;
@@ -444,7 +363,7 @@
     width: var(--size);
     height: var(--size);
     fill: var(--accent);
-    opacity: 0.48;
+    opacity: 0.55;
     transform: translate(-50%, -50%);
     pointer-events: none;
   }
@@ -458,24 +377,121 @@
     animation: none;
   }
   .static-card .glint {
-    opacity: 0.48;
+    opacity: 0.55;
+  }
+  @media (max-height: 500px) {
+    .card-interior {
+      padding: 9px;
+    }
+    .identity {
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .feature-emblem {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+    }
+    .identity h2,
+    .relationship-heading .relationship-identity {
+      font-size: 1rem;
+    }
+    .aspect-name {
+      font-size: 1rem;
+    }
+    .identity-line,
+    .geometric-caption {
+      margin-bottom: 5px;
+    }
+    .context-notices {
+      margin-bottom: 5px;
+    }
+    .reading {
+      gap: 5px;
+      border: 1px solid #dce7f21c;
+      border-radius: 9px;
+      padding: 7px 8px;
+      background: #070e1aeb;
+    }
+    .reading-panel {
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      box-shadow: none;
+    }
+    .reading-panel h3 {
+      display: inline;
+      margin: 0 0.3em 0 0;
+    }
+    .reading-panel p {
+      display: inline;
+    }
+    .reading-panel p + p:before {
+      content: ' ';
+    }
+    .claim-label {
+      margin: 0;
+      font-size: 0.62rem;
+    }
+    .relationship-reading .planet-identity {
+      display: flex;
+      margin: 0 0 3px;
+    }
+    .relationship-reading {
+      grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
+      gap: 5px 6px;
+    }
+    .relationship-reading .claim-label,
+    .relationship-reading .relationship-lead {
+      grid-column: 1/-1;
+    }
+    .relationship-reading .and-connector {
+      align-self: center;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.69rem;
+    }
+    .relationship-reading .and-connector span {
+      width: 1px;
+      height: 10px;
+    }
+    .relationship-reading .reading-panel:not(.relationship-lead) {
+      padding-top: 5px;
+      border-top: 1px solid #dce7f226;
+    }
+  }
+  .and-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: var(--accent);
+    font:
+      italic 0.75rem/1.2 Georgia,
+      serif;
+  }
+  .and-connector span {
+    width: 24px;
+    height: 1px;
+    background: color-mix(in srgb, var(--accent) 50%, transparent);
   }
   @keyframes glint {
     0%,
     70%,
     100% {
-      opacity: 0.13;
-      transform: translate(-50%, -50%) scale(0.6);
+      opacity: 0.15;
+      transform: translate(-50%, -50%) scale(0.65);
     }
     25% {
-      opacity: 0.8;
-      transform: translate(calc(-50% + 1px), calc(-50% - 2px)) scale(1.05);
+      opacity: 0.85;
+      transform: translate(calc(-50% + 1px), calc(-50% - 1px)) scale(1.05);
     }
   }
   @keyframes card-reveal {
     from {
       opacity: 0;
-      transform: translateY(4px);
+      transform: translateY(3px);
     }
     to {
       opacity: 1;
@@ -493,43 +509,37 @@
   }
   @media (forced-colors: active) {
     .hover-card {
-      border: 2px solid CanvasText;
+      border-color: CanvasText;
       background: Canvas;
       color: CanvasText;
       box-shadow: none;
     }
     .card-interior,
+    .reading,
     .reading-panel,
-    .measurements,
-    .medallion,
     .feature-emblem,
     .context-notices span {
       background: Canvas;
       color: CanvasText;
       border-color: CanvasText;
+      box-shadow: none;
     }
     .identity h2,
     .eyebrow,
-    .planet-identity strong,
-    .placement-label,
-    .reading-panel p,
+    .aspect-name,
+    .identity-line,
+    .geometric-caption,
     .reading-panel h3,
+    .reading-panel p,
     .claim-label,
-    .measurements dd,
-    .measurements dt {
+    .sign-name {
       color: CanvasText;
     }
-    .keyboard-hint { color: CanvasText; }
-    .sparkle-field,
-    .corner-symbol {
+    .body-name {
+      color: CanvasText !important;
+    }
+    .sparkle-field {
       display: none;
-    }
-    .medallion {
-      outline-color: CanvasText;
-      box-shadow: none;
-    }
-    .relationship-symbol {
-      color: CanvasText;
     }
   }
 </style>

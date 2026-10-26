@@ -30,7 +30,7 @@ async function animated(card: Locator) {
 }
 async function expectStatic(card: Locator) {
   await expect.poll(() => animated(card)).toBe(false);
-  await expect(card.locator('.medallion')).toHaveCount(2);
+  await expect(card.locator('.planet-identity')).toHaveCount(2);
   await expect(card.locator('.reading-panel')).toHaveCount(3);
   expect(
     await card
@@ -49,6 +49,20 @@ async function fitsViewport(page: Page, card: Locator) {
   expect(box!.y).toBeGreaterThanOrEqual(0);
   expect(box!.x + box!.width).toBeLessThanOrEqual(viewport.width + 1);
   expect(box!.y + box!.height).toBeLessThanOrEqual(viewport.height + 1);
+  const surfaces = await card.evaluate((element) =>
+    [element, element.closest('[data-feature-preview]')]
+      .filter((surface): surface is Element => !!surface)
+      .map((surface) => ({
+        contentFits:
+          surface.scrollHeight <= surface.clientHeight + 1 &&
+          surface.scrollWidth <= surface.clientWidth + 1,
+        overflow: getComputedStyle(surface).overflowY,
+      })),
+  );
+  expect(surfaces.every((surface) => surface.contentFits)).toBe(true);
+  expect(
+    surfaces.every((surface) => !['auto', 'scroll', 'hidden', 'clip'].includes(surface.overflow)),
+  ).toBe(true);
 }
 
 test('body preview waits for dwell and composes a single source-free calculated card', async ({
@@ -98,7 +112,7 @@ test('body preview waits for dwell and composes a single source-free calculated 
   expect(errors).toEqual([]);
 });
 
-test('aspect preview remains readable and scrollable, and Escape preserves its selected pair', async ({
+test('complete aspect preview fits without scrolling, and Escape preserves its selected pair', async ({
   page,
 }) => {
   await example(page);
@@ -109,11 +123,13 @@ test('aspect preview remains readable and scrollable, and Escape preserves its s
   await expect(card.locator('[data-claim-section="aspect-type:sextile"]')).toHaveCount(1);
   await expect(card.locator('[data-claim-section="body-in-sign:sun:capricorn"]')).toHaveCount(1);
   await expect(card.locator('[data-claim-section="body-in-sign:moon:scorpio"]')).toHaveCount(1);
-  await expect(card).toContainText('Actual sky angle');
+  await expect(card).not.toContainText(
+    /Actual sky angle|Longitude separation|Configured orb|Displayed moment|Feature role/,
+  );
+  await expect(card.locator('.and-connector')).toHaveText('and');
   await expect(card.locator('a')).toHaveCount(0);
   await card.hover();
-  await page.mouse.wheel(0, 850);
-  await expect.poll(() => card.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
+  await fitsViewport(page, card);
   await expect(card).toBeVisible();
   await leavePreview(page);
   await pair.click();
@@ -173,35 +189,35 @@ test('keyboard focus updates a hovered card and restores existing descriptions o
   await expect(moon).toHaveAttribute('aria-pressed', 'true');
 });
 
-test('keyboard readers can focus and scroll a card without changing selection', async ({ page }) => {
-  await page.setViewportSize({width:1440,height:700});
+test('keyboard previews keep focus on their origin and need no scrolling tab stop', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 700 });
   await example(page);
-  await openControlGroup(page,'aspects');
-  const pair=page.getByRole('button',{name:'Inspect Sun sextile Moon',exact:true});
+  await openControlGroup(page, 'aspects');
+  const pair = page.getByRole('button', { name: 'Inspect Sun sextile Moon', exact: true });
   await pair.focus();
   await page.keyboard.press('Enter');
-  const card=tooltip(page);
+  const card = tooltip(page);
   await expect(card).toBeVisible();
   await expect(pair).toBeFocused();
   await page.keyboard.press('F2');
-  await expect(card).toBeFocused();
-  await expect(card).toHaveAttribute('tabindex','0');
-  expect(await card.evaluate(element=>element.scrollHeight>element.clientHeight)).toBe(true);
-  await page.mouse.move(800,35);
-  await page.keyboard.press('PageDown');
-  await expect.poll(()=>card.evaluate(element=>element.scrollTop)).toBeGreaterThan(0);
+  await expect(pair).toBeFocused();
+  await expect(card).not.toHaveAttribute('tabindex');
+  await expect(card).not.toHaveAttribute('aria-keyshortcuts');
+  await expect(card).not.toContainText('F2');
+  await expect(pair).toHaveAttribute('aria-describedby', 'feature-preview-card');
+  await fitsViewport(page, card);
+  await card.hover();
   await page.waitForTimeout(550);
   await expect(card).toBeVisible();
-  await expect(card).toBeFocused();
-  await expect(pair).toHaveAttribute('aria-pressed','true');
-  // While keyboard reading, moving over another real feature must neither
-  // replace the reading nor reopen it after Escape restores its origin.
-  await page.locator('.object-list [data-feature-id="body:sun"]').hover();
-  await expect(card).toHaveAttribute('data-aspect-type','sextile');
+  await expect(pair).toBeFocused();
+  await expect(pair).toHaveAttribute('aria-pressed', 'true');
+  await expect(card).toHaveAttribute('data-aspect-type', 'sextile');
   await page.keyboard.press('Escape');
   await expect(card).toHaveCount(0);
   await expect(pair).toBeFocused();
-  await expect(pair).toHaveAttribute('aria-pressed','true');
+  await expect(pair).toHaveAttribute('aria-pressed', 'true');
   await page.waitForTimeout(550);
   await expect(card).toHaveCount(0);
 });
@@ -298,7 +314,7 @@ test('all five theme previews and enlarged cards fit a constrained logical zoom 
 }, testInfo) => {
   // Fragments remain client-side; release resources reject arbitrary query fields.
   await page.goto('/#preview=aspects');
-  await expect(tooltip(page)).toHaveCount(6);
+  await expect(tooltip(page)).toHaveCount(15);
   expect(
     await page
       .locator('.theme-grid .hover-card')
@@ -309,7 +325,8 @@ test('all five theme previews and enlarged cards fit a constrained logical zoom 
       .locator('.theme-grid .reading-panel p')
       .first()
       .evaluate((element) => getComputedStyle(element).fontSize),
-  ).toBe('16px');
+  ).toBe('13px');
+  expect(await page.locator('.feature-grid .hover-card').count()).toBe(9);
   await testInfo.attach('five-card-preview', {
     body: await page.screenshot({ fullPage: true }),
     contentType: 'image/png',
@@ -318,7 +335,7 @@ test('all five theme previews and enlarged cards fit a constrained logical zoom 
   await openControlGroup(page, 'display');
   await page.getByLabel('Interface text size', { exact: true }).selectOption('large');
   await page.goto('/#preview=aspects');
-  await expect(tooltip(page)).toHaveCount(6);
+  await expect(tooltip(page)).toHaveCount(15);
   expect(
     parseFloat(
       await page
@@ -326,7 +343,7 @@ test('all five theme previews and enlarged cards fit a constrained logical zoom 
         .first()
         .evaluate((element) => getComputedStyle(element).fontSize),
     ),
-  ).toBeGreaterThanOrEqual(20);
+  ).toBeGreaterThanOrEqual(14.625);
   await page.setViewportSize({ width: 720, height: 600 });
   await page.addStyleTag({ content: 'html{font-size:32px!important}' });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -343,10 +360,10 @@ test('all five theme previews and enlarged cards fit a constrained logical zoom 
         .first()
         .evaluate((element) => getComputedStyle(element).fontSize),
     ),
-  ).toBeGreaterThanOrEqual(32);
+  ).toBeGreaterThanOrEqual(26);
   expect(
     await tooltip(page).evaluate((element) => element.scrollHeight > element.clientHeight),
-  ).toBe(true);
+  ).toBe(false);
   await testInfo.attach('logical-zoom-large-card', {
     body: await page.screenshot(),
     contentType: 'image/png',
@@ -407,10 +424,11 @@ test('support-star and astro-line navigation preserve their own preview and insp
   await line.focus();
   await expect(tooltip(page)).toHaveAttribute('data-feature-kind', 'astro-line');
   await expect(
-    tooltip(page).getByRole('heading', { name: 'Venus · AC', exact: true }),
+    tooltip(page).getByRole('heading', { name: 'Venus · AC — Rising', exact: true }),
   ).toBeVisible();
-  await expect(tooltip(page)).toContainText('Traditional body theme');
-  await expect(tooltip(page)).toContainText('Traditional angle theme');
+  await expect(tooltip(page).locator('[data-claim-section="astro:body:venus"]')).toHaveCount(1);
+  await expect(tooltip(page).locator('[data-claim-section="astro:angle:ac"]')).toHaveCount(1);
+  await expect(tooltip(page).locator('[data-claim-section="astro:overview"]')).toHaveCount(0);
   await line.click();
   await expect(line).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('#inspector .feature-reading')).toContainText('Venus · AC');
