@@ -1,5 +1,11 @@
 # M10 feature and view contract
 
+The [approved rectifications](plans/M10-rectifications.md) amend the original presentation contract. Outside sphere is the initial view and enables aspects. Explicit Earth entry enables astrocartography, disables projected house sections and aspects; explicit Observer entry enables asterisms and disables aspects and the Earth master. Geographic opacity starts at 75%. Unspecified layer choices and appearance/filter settings survive view entry. Internal focus and globe picking do not apply presets.
+
+Hover previews use a separate compact presentation of the resolved model. All feature families receive colour themes and sparkles; previews omit technical measurement/role/current-time tables and the repeated generic astrocartography introduction. Cards fit without scrolling or clipping. Full inspector facts and attribution remain available. Historical sample time/frame and essential qualifications remain explicit. Keyboard previews stay described by their origin; there is no F2 scroll mode or focusable tooltip surface.
+
+All four geographic angle types have equal solid strokes. Repeated categorical pictograms and AC/DC/MC/IC badges identify them, with a matching visible key; body colours retain their identities. Geometry and overlap selection are independent of that decoration.
+
 An interaction identifies both a semantic entity and the representation actually hit. `FeatureHit` in `src/lib/domain/scene-hit.ts` is the shared transport. Hover state remains independent of selected state. Resolve content from the displayed immutable snapshot, never the pending form/request.
 
 | Representation | Stable hit ID | Parent / context |
