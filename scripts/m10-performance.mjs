@@ -679,7 +679,7 @@ try {
   const earthStressCamera = await cameraWork('earth-all40-houses-camera', values.quick ? 20 : 90);
   await pickingWork('earth-all40-houses-picking', pickingCount);
   await group('layers');
-  await page.getByLabel('Constellation asterisms', { exact: true }).check();
+  await page.getByRole('checkbox', { name: 'Constellation asterisms', exact: true }).check();
   await recordWorkload('earth-with-figures', 'Earth overview', {
     ...earthStressProfile,
     asterisms: true,
@@ -691,7 +691,7 @@ try {
   // View profiles remember their own layers. Configure the dense sky itself;
   // Earth asterisms and geographic houses cannot establish this workload.
   for (const label of Object.values(referenceControls))
-    await page.getByLabel(label, { exact: true }).check();
+    await page.getByRole('checkbox', { name: label, exact: true }).check();
   await group('earth');
   await page.getByRole('checkbox', { name: 'Earth projections', exact: true }).uncheck();
   await page.getByRole('checkbox', { name: 'Projected house sections', exact: true }).uncheck();
@@ -704,7 +704,7 @@ try {
   await page.locator('.object-list').getByRole('button', { name: /^Moon/ }).click();
   await group('trails');
   await page.getByLabel('Trail window', { exact: true }).selectOption(String(3652.5 * 86400000));
-  await page.getByLabel('Show selected body trail', { exact: true }).check();
+  await page.getByRole('checkbox', { name: 'Show selected body trail', exact: true }).check();
   await page.waitForFunction(
     () =>
       /Trail ready|Limited trail interval/.test(
@@ -725,7 +725,7 @@ try {
   const denseCamera = await cameraWork('dense-sky-camera', values.quick ? 20 : 90);
   await pickingWork('dense-sky-picking', pickingCount);
   const denseResources = await diagnostics();
-  await page.getByLabel('Show selected body trail', { exact: true }).uncheck();
+  await page.getByRole('checkbox', { name: 'Show selected body trail', exact: true }).uncheck();
   await page.getByLabel('Step unit', { exact: true }).selectOption('hour');
   const resourcePasses = [];
   async function stepHour(direction) {
@@ -744,8 +744,12 @@ try {
     for (const view of ['Observer sky', 'Outside sphere', 'Earth overview'])
       await page.getByRole('button', { name: view, exact: true }).click();
     for (const state of [false, true]) {
-      await page.getByLabel('Constellation asterisms', { exact: true }).setChecked(state);
-      await page.getByLabel('Constellation regions', { exact: true }).setChecked(state);
+      await page
+        .getByRole('checkbox', { name: 'Constellation asterisms', exact: true })
+        .setChecked(state);
+      await page
+        .getByRole('checkbox', { name: 'Constellation regions', exact: true })
+        .setChecked(state);
     }
     for (const mode of ['Volumes / wedges', 'Boundary arcs', 'Layered shells'])
       await page.getByRole('radio', { name: mode, exact: true }).check();
