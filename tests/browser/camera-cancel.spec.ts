@@ -15,11 +15,13 @@ async function observeCamera(page:Page){
   });
 }
 
-test('right-drag leaves the overview camera anchored to its target',async({page})=>{
+test('right-drag leaves the Earth overview camera anchored to its target',async({page})=>{
   await observeCamera(page);
   await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();
   await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+  await page.getByRole('button',{name:'Earth overview',exact:true}).click();
   await expect.poll(()=>page.evaluate(()=>(window as any).cameraProbe.view.length)).toBe(16);
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   const before=await page.evaluate(()=>(window as any).cameraProbe.view);
   const context=await page.locator('.context-details').innerText();
   const box=await page.locator('.scene-canvas canvas').boundingBox();if(!box)throw new Error('Missing canvas.');
@@ -28,6 +30,29 @@ test('right-drag leaves the overview camera anchored to its target',async({page}
   await page.mouse.move(5,5);
   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   expect(await page.evaluate(()=>(window as any).cameraProbe.view)).toEqual(before);
+  expect(await page.locator('.context-details').innerText()).toBe(context);
+});
+
+test('right-drag preserves the Outside sphere pose within numerical roundoff',async({page})=>{
+  await observeCamera(page);
+  await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();
+  await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+  await expect(page.getByRole('button',{name:'Outside sphere',exact:true})).toHaveAttribute('aria-pressed','true');
+  await expect.poll(()=>page.evaluate(()=>(window as any).cameraProbe.view.length)).toBe(16);
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  const before=await page.evaluate(()=>(window as any).cameraProbe.view as number[]);
+  const context=await page.locator('.context-details').innerText();
+  const box=await page.locator('.scene-canvas canvas').boundingBox();if(!box)throw new Error('Missing canvas.');
+  await page.mouse.move(box.x+box.width*.4,box.y+box.height*.4);await page.mouse.down({button:'right'});
+  await page.mouse.move(box.x+box.width*.6,box.y+box.height*.55,{steps:5});await page.mouse.up({button:'right'});
+  await page.mouse.move(5,5);
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  const after=await page.evaluate(()=>(window as any).cameraProbe.view as number[]);
+  expect(before).toHaveLength(16);expect(after).toHaveLength(16);
+  // Equivalent camera redraws can change signed zero or leave ~1e-15
+  // translation residuals. This matrix tolerance is far below a CSS pixel
+  // at the tested scene scale and does not permit a visible pan or rotation.
+  for(let index=0;index<16;index++)expect(Math.abs(after[index]!-before[index]!)).toBeLessThan(1e-10);
   expect(await page.locator('.context-details').innerText()).toBe(context);
 });
 
