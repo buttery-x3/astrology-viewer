@@ -164,6 +164,13 @@ test('keyboard focus updates a hovered card and restores existing descriptions o
   await expect(moon).not.toHaveAttribute('aria-describedby');
   await expect(moon).toHaveAttribute('aria-pressed', 'true');
   await expect(sun).toHaveAttribute('aria-describedby', 'existing-test-help');
+  await sun.focus();
+  await expect(tooltip(page).getByRole('heading', { name: 'Sun', exact: true })).toBeVisible();
+  await page.locator('.object-list [data-feature-id="body:mercury"]').hover();
+  await expect(tooltip(page).getByRole('heading', { name: 'Mercury', exact: true })).toBeVisible();
+  await expect(sun).toBeFocused();
+  await expect(sun).toHaveAttribute('aria-describedby', 'existing-test-help');
+  await expect(moon).toHaveAttribute('aria-pressed', 'true');
 });
 
 test('a body card stays reachable while the pointer crosses another valid target before its dwell', async ({
