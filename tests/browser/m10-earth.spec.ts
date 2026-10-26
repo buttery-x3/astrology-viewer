@@ -88,12 +88,12 @@ test('constellation regions and modern figures remain independent, including end
   await expect(page.locator('#inspector')).toContainText('Constellation asterism');
 });
 
-test('re-entering Earth overview restores its close globe and projections without changing the moment',async({page})=>{
+test('re-entering Earth overview restores its close globe while retaining its layer memory and moment',async({page})=>{
   await example(page);const context=await page.locator('.context-details').innerText();await settle(page);const initial=(await probe(page)).view;
   await openControlGroup(page,'earth');await page.getByLabel('Earth projections',{exact:true}).uncheck();await page.getByLabel('Projected house sections',{exact:true}).uncheck();await page.getByLabel('Astrocartography lines',{exact:true}).uncheck();
   const canvas=page.locator('.scene-canvas canvas');await canvas.focus();await page.keyboard.press('ArrowRight');await expect.poll(async()=>(await probe(page)).view).not.toEqual(initial);
   await page.getByRole('button',{name:'Earth overview',exact:true}).click();
-  for(const name of ['Earth projections','Astrocartography lines'])await expect(page.getByLabel(name,{exact:true})).toBeChecked();
+  for(const name of ['Earth projections','Astrocartography lines'])await expect(page.getByLabel(name,{exact:true})).not.toBeChecked();
   await expect(page.getByLabel('Projected house sections',{exact:true})).not.toBeChecked();
   await expect.poll(async()=>separation((await probe(page)).view,initial)).toBeLessThan(1e-5);
   expect(await page.locator('.context-details').innerText()).toBe(context);
