@@ -2,7 +2,7 @@
 
 This audit compares the approved [implementation plan](../IMPLEMENTATION_PLAN.md), [M10 extension](plans/M10-hover-and-earth-projections.md), [rectifications and mode-memory amendment](plans/M10-rectifications.md), and retained [design brief](source/spatial_astrology_design_brief.md). It records engineering evidence separately from acceptance requiring actual people or reference hardware.
 
-The [final scope audit](reports/M10-plan-review.md) reviews settled candidate `6c1a0cbc9632944db7e1a8916c2b9c12befc9cfd`. The complete Linux packaged three-engine suite passes 261/261 with all 189 matrix frames. Source, native/installed-browser, physical, final latency/cold-load and archive evidence retain their recorded scopes; the supplemental Windows failures and focused follow-ups remain explicit below. Development integration through [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18) is **pending execution**. Main remains unchanged.
+The [final scope audit](reports/M10-plan-review.md) reviews settled candidate `6c1a0cbc9632944db7e1a8916c2b9c12befc9cfd`. The complete Linux packaged three-engine suite passes 261/261 with all 189 matrix frames. Source, native/installed-browser, physical, final latency/cold-load and archive evidence retain their recorded scopes; the supplemental Windows failures and focused follow-ups remain explicit below. M10 merged into `codex/development` through [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18) as `4bbcf0f88f6b35b18aae4f63653c6b2957fac872`. Engineering validation/integration are complete; five external acceptance gates remain open. Main remains unchanged.
 
 | Requirement | Implementation and durable evidence | Remaining release work |
 | --- | --- | --- |
@@ -22,7 +22,7 @@ The [final scope audit](reports/M10-plan-review.md) reviews settled candidate `6
 | Selection, hover, focus, labels and concise live legends | Shared entity IDs, independent camera, collision layout/leaders and overlap chooser; exact native Sun anchor, committed-snapshot refresh and historical hit identity remain asserted; full inspector retains numerical facts and attribution; complete Linux and installed Chrome/Edge checks pass, with Windows follow-ups recorded below | Manual screen reader/comprehension gates |
 | Display preferences, accessibility, privacy and recovery | Whitelisted preferences, independent session-only layer profiles, no personal persistence, bounded streams/watchdogs, generation guards and context recovery; 906 source tests, complete Linux suite and installed browser checks pass | Actual screen reader and reference-device performance |
 | Deployable artifact with source access and licensing | Clean-commit builder, independently installed standalone server, HTTPS/proxy policy, exact Git archive, 53 notice records and strict CSP; source identity/archive/calculation workflow passes in all three engines | Actual hosting configuration/HTTPS endpoint is an operator task; no external deployment requested |
-| Deterministic QA, honest support and release documentation | Complete Linux suite 261/261 and 189 matrix frames; Windows full run 259/261 with both failures retained and scoped follow-ups. Source, installed/native, physical, latency/cold and exact archive results remain revision-scoped | Development integration pending; untested browser versions remain unverified |
+| Deterministic QA, honest support and release documentation | Complete Linux suite 261/261 and 189 matrix frames; Windows full run 259/261 with both failures retained and scoped follow-ups. Source, installed/native, physical, latency/cold and exact archive results remain revision-scoped; M10 is reviewed and merged into development | External acceptance gates; untested browser versions remain unverified |
 | Moderated comprehension evaluation | Design brief scenarios and plan section 13 | Approximately five visual learners and two experienced users; record real observations and address findings |
 | Compact rich hover/focus readings across every feature family | Dedicated preview model preserves full inspector facts/claims, removes technical/current-time tables and repeated geographic boilerplate, and retains historical identity/notices. All families retain rich themes/glints; full prose adapts without scrolling or an F2/tab-stop mode. [Native Chrome](reports/M10-native-zoom-rectified.md), the [terminal amendment](reports/M10-native-zoom-headroom-amendment.md) and complete Linux suite pass; test-only pointer re-entry follow-ups retain all assertions | Screen-reader/comprehension gates remain external |
 | Independent constellation stick figures | Pinned Stellarium topology, 88 figures, 710 unambiguous endpoints, nine support stars and shared HYG proper motion; [data contract](constellation-figure-data.md), actual canvas tests and complete Linux suite pass. The Windows Orion stall and unchanged successful repeats remain recorded | Manual figure/region comprehension |
@@ -53,12 +53,12 @@ This scopes the earlier timing evidence without claiming another GPU run.
 
 ## Development integration
 
-Validation is recorded above. The approved integration still requires execution;
-the five external gates below retain their own acceptance scope.
+Validation is recorded above and the approved M10 integration is complete.
+The five external gates below retain their own acceptance scope.
 
-| Final item | Pending result |
+| Final item | Recorded result |
 | --- | --- |
-| Development integration and final status | Execute the authorized M10 → `codex/development` integration through [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18), then record the actual merge and final identities in the validation report/status documents. Passing validation is not recorded as execution. Main remains untouched. |
+| Development integration and final status | [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18) merged reviewed head `6c3d64c` as `4bbcf0f88f6b35b18aae4f63653c6b2957fac872`; tree equality and local/remote synchronization were verified. Final routine [CI 40285339199](https://github.com/buttery-x3/astrology-viewer/actions/runs/40285339199) passes. Main remains `8b45caf0867e20b93cd126871ad38a526672a3c4`, with development-to-main [PR #13](https://github.com/buttery-x3/astrology-viewer/pull/13) draft and unmerged. |
 
 ## External acceptance gates
 

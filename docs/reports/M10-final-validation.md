@@ -1,6 +1,6 @@
 # M10 release validation and final audit
 
-The frozen product candidate is `6c1a0cbc9632944db7e1a8916c2b9c12befc9cfd`, tree `02970a9f388aa475c656ba9920b05feae92d8d0e`. Complete release validation and the focused browser follow-ups have finished. Later commits change evidence and one browser test's pointer movement; production source, configuration and build scripts remain identical to the candidate. Main remains at `8b45caf0867e20b93cd126871ad38a526672a3c4`; M10 development integration awaits final evidence review.
+The frozen product candidate is `6c1a0cbc9632944db7e1a8916c2b9c12befc9cfd`, tree `02970a9f388aa475c656ba9920b05feae92d8d0e`. Complete release validation and the focused browser follow-ups have finished. Later commits change evidence and one browser test's pointer movement; production source, configuration and build scripts remain identical to the candidate. M10 is independently reviewed and merged into pushed `codex/development` as `4bbcf0f88f6b35b18aae4f63653c6b2957fac872`. Main remains at `8b45caf0867e20b93cd126871ad38a526672a3c4`.
 
 ## Recorded results
 
@@ -49,6 +49,6 @@ Two real fit failures are retained at their original revisions: the first native
 
 ## Integration and external acceptance
 
-Release validation is complete. Development integration awaits the final evidence review and execution of [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18). The development-to-main [PR #13](https://github.com/buttery-x3/astrology-viewer/pull/13) remains draft and unmerged.
+Release validation and development integration are complete. [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18) merged independently reviewed head `6c3d64cb409068a50e21450f88549dca26a5223e` into `codex/development` as `4bbcf0f88f6b35b18aae4f63653c6b2957fac872` on 26 October 2026 at 07:23 UTC. The merge and reviewed trees are identical; production/config/build source still matches frozen `6c1a0cb`, with only the separately tested pointer re-entry setup added to the tests. Final routine [CI 40285339199](https://github.com/buttery-x3/astrology-viewer/actions/runs/40285339199) passes, and local/remote development were synchronized. Later merge-record documentation does not require another broad release run. The development-to-main [PR #13](https://github.com/buttery-x3/astrology-viewer/pull/13) remains draft and unmerged.
 
 The five external acceptance gates remain open: actual Safari/macOS, a real desktop screen-reader session, the specified integrated-GPU laptop, moderated visual learners/experienced users, and human claim-to-passage editorial review. Automated tests, native Chrome zoom and RTX desktop measurements cannot substitute for those sessions. See the [acceptance audit](../RELEASE_ACCEPTANCE.md) and [manual protocol](../manual-validation.md).
