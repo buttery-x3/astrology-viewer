@@ -1,12 +1,13 @@
 import * as THREE from 'three';
 import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
-import { astronomicalToThree, type Vector3 } from '../astronomy/coordinates';
+import { astronomicalToThree, threeToAstronomical, type Vector3 } from '../astronomy/coordinates';
 import { BODY_IDS, type BodyId, type EphemerisSnapshot } from '../astronomy/ephemeris';
 import { buildAstrocartography, ASTRO_ANGLES, type AstroLine } from '../domain/astrocartography';
-import { buildEarthHouseProjection, type EarthHouseProjection, type EarthProjectionSettings } from '../domain/earth-projections';
+import { buildEarthHouseProjection, classifyEarthHouse, type EarthHouseProjection, type EarthProjectionSettings } from '../domain/earth-projections';
 import type { HouseMesh } from '../domain/house-geometry';
 import { createWideLineGeometry, writeWideLine } from './wide-line-buffer';
+import { primaryHouseLink } from '../domain/house-links';
 
 type CaptionFactory = (text: string, color: string, size: number) => THREE.Sprite;
 type Fill = THREE.Mesh<THREE.BufferGeometry, THREE.MeshBasicMaterial>;
@@ -27,6 +28,8 @@ export interface EarthProjectionRenderer {
   faceCamera(camera: THREE.Camera): void;
   /** Apply to raycaster hits, since raycasting does not execute fragment clipping. */
   isSurfaceHitVisible(worldPoint: THREE.Vector3): boolean;
+  /** Analytic surface/partition lookup avoids testing every projected triangle on each pointer move. */
+  intersectHouse(ray:THREE.Ray,snapshot:EphemerisSnapshot):THREE.Intersection|null;
   dispose(): void;
 }
 const BODY_COLOURS: Record<BodyId, number> = {
@@ -173,9 +176,11 @@ export function createEarthProjectionRenderer(radius: number, captionFactory: Ca
         }
       } else if (!snapshot) { previousAstroKey = ''; for (const slot of curves) { slot.target.valid = false; slot.data = null; } }
       const houseOpacity = THREE.MathUtils.clamp(settings.houseOpacity, 0, 1), astroOpacity = THREE.MathUtils.clamp(settings.astroOpacity, 0, 1);
+      const linkedSelection=primaryHouseLink(interaction.selectedId),linkedHover=primaryHouseLink(interaction.hoveredId);
+      group.userData.highlightedHouse=linkedSelection?.skyHouseId??null;
       for (const slot of regions) {
         slot.target.valid = houseResult?.status === 'valid';
-        const selected = interaction.selectedId === slot.target.id, hovered = interaction.hoveredId === slot.target.id;
+        const selected = linkedSelection?.earthHouseId === slot.target.id, hovered = linkedHover?.earthHouseId === slot.target.id;
         const active = group.visible && houses.visible && slot.target.valid;
         slot.surface.visible = active; slot.surface.material.opacity = Math.min(1, houseOpacity * (selected ? 2.4 : hovered ? 1.9 : 1));
         slot.surface.material.color.setHex(selected ? 0xd6b56c : hovered ? 0x8dc7c7 : slot.target.id.endsWith(':1') ? 0x759faf : Number(slot.target.id.split(':').at(-1)) % 2 ? 0x647e9b : 0x618d9a);
@@ -186,7 +191,7 @@ export function createEarthProjectionRenderer(radius: number, captionFactory: Ca
       }
       for (const slot of boundaries) {
         slot.target.valid = houseResult?.status === 'valid';
-        const active = group.visible && houses.visible && slot.target.valid, emphasized = interaction.selectedId === slot.target.id || interaction.hoveredId === slot.target.id;
+        const active = group.visible && houses.visible && slot.target.valid, emphasized = linkedSelection?.earthBoundaryId === slot.target.id || linkedHover?.earthBoundaryId === slot.target.id;
         slot.line.visible = active; slot.line.material.opacity = emphasized ? 0.95 : Math.min(0.8, 0.3 + houseOpacity); slot.line.material.linewidth = emphasized ? 2.2 : 1.1;
         if (active) hitTargets.push(slot.line);
       }
@@ -217,6 +222,19 @@ export function createEarthProjectionRenderer(radius: number, captionFactory: Ca
       }
     },
     isSurfaceHitVisible(worldPoint) { refreshCameraLocal(); const point = group.worldToLocal(worldPoint.clone()); return !disposed && point.dot(cameraLocal.clone().sub(point)) >= 0; },
+    intersectHouse(ray,snapshot){
+      if(disposed||!group.visible||!houses.visible||houseResult?.status!=='valid')return null;
+      group.updateWorldMatrix(true,false);
+      const localRay=ray.clone().applyMatrix4(group.matrixWorld.clone().invert());
+      const point=localRay.intersectSphere(new THREE.Sphere(new THREE.Vector3(),radius*1.003),new THREE.Vector3());
+      if(!point||point.dot(localRay.origin.clone().sub(point))<0)return null;
+      const membership=classifyEarthHouse(snapshot,threeToAstronomical(point));
+      if(membership.status!=='valid')return null;
+      const surface=regions[membership.house-1]!.surface;
+      if(!surface.visible)return null;
+      const worldPoint=group.localToWorld(point);
+      return {object:surface,point:worldPoint,distance:ray.origin.distanceTo(worldPoint)};
+    },
     dispose() {
       if (disposed) return; disposed = true; hitTargets = []; group.visible = false;
       const geometries = new Set<THREE.BufferGeometry>(), materials = new Set<THREE.Material>();

@@ -21,7 +21,7 @@ describe('bounded semantic keyboard routes to additional scene features',()=>{
     expect(counts).toEqual({stars:2874,figures:88,astro:40,earth:24,comparison:12,construction:0});
     const ids=groups.flatMap(group=>group.items.map(item=>item.hit.id));expect(new Set(ids).size).toBe(ids.length);expect(ids.every(id=>/^[a-z][a-z0-9]*(?::[a-z0-9_-]+)+$/.test(id))).toBe(true);
     for(const group of groups)for(const item of group.items){expect(resolveHoverCard(item.hit,context()),item.hit.id).not.toBeNull();expect(item.hit.name).toBeTruthy();}
-    const comparison=groups.find(group=>group.id==='comparison')!.items;expect(comparison.every(item=>item.hit.representation==='comparison'&&item.hit.system==='E'&&item.hit.entityId.startsWith('boundary:'))).toBe(true);
+    const comparison=groups.find(group=>group.id==='comparison')!.items;expect(comparison.every(item=>item.hit.representation==='comparison'&&item.hit.system==='E'&&item.hit.entityId===item.hit.id&&item.hit.entityId.startsWith('boundary:comparison:'))).toBe(true);
   });
   it('paginates the complete catalogue without creating thousands of target rows or losing identities',()=>{
     const stars=navigationGroups(context())[0]!.items,ids:string[]=[];

@@ -82,6 +82,7 @@ export function createConstructionRenderer(radius: number, captionFactory: Capti
     object.userData.constructionId = id;
     object.userData.hoverName = `${label} · ${result!.name}`;
     object.userData.constructionKind = kind;
+    object.userData.featureHit = {id:id.toLowerCase().replace(/[^a-z0-9:_-]/g,'-'),entityId:`boundary:${result!.house}`,kind:'construction',representation:'guide',system:result!.system,constructionId:id,role:kind};
     object.userData.labelPriority = kind === 'intersection' ? 28 : kind === 'timing' ? 22 : 18;
     object.name = id;
   }

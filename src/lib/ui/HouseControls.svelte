@@ -121,8 +121,8 @@
     <div class="house-rows">
       {#each houseNumbers as house (house)}
         <div>
-          <button class:chosen={selectedId === `house:${house}`} aria-pressed={selectedId === `house:${house}`} onclick={() => onSelect(`house:${house}`)}>House {house}</button>
-          <button class:chosen={selectedId === `boundary:${house}`} aria-pressed={selectedId === `boundary:${house}`} aria-label={`Boundary ${house}, ${cusp(house)}`} onclick={() => onSelect(`boundary:${house}`)}><span>C{house}</span><small>{cusp(house)}</small></button>
+          <button class:chosen={selectedId === `house:${house}`} aria-pressed={selectedId === `house:${house}`} data-feature-id={`house:${house}`} onclick={() => onSelect(`house:${house}`)}>House {house}</button>
+          <button class:chosen={selectedId === `boundary:${house}`} aria-pressed={selectedId === `boundary:${house}`} aria-label={`Boundary ${house}, ${cusp(house)}`} data-feature-id={`boundary:${house}`} onclick={() => onSelect(`boundary:${house}`)}><span>C{house}</span><small>{cusp(house)}</small></button>
         </div>
       {/each}
     </div>

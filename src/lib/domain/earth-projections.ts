@@ -6,7 +6,7 @@ import {
 import { BODY_IDS, type BodyId, type EphemerisSnapshot, type HouseResult, type HouseSystemId } from '../astronomy/ephemeris';
 import { ASTRO_ANGLES, geographicSample, type AstroAngle, type GeographicSample } from './astrocartography';
 import { buildHouseGeometry, type HouseGeometryOptions, type HouseMesh } from './house-geometry';
-import { classifyLongitude } from './chart';
+import { classifyLongitude, housePartition } from './chart';
 
 export interface EarthProjectionSettings {
   enabled: boolean; houses: boolean; astrocartography: boolean;
@@ -21,6 +21,11 @@ export const DEFAULT_EARTH_PROJECTIONS: Readonly<EarthProjectionSettings> = Obje
 type EarthFrame = Pick<EphemerisSnapshot, 'frame' | 'greenwichSiderealTimeDeg'>;
 /** Sub-pixel numerical snap only; preserves half-open cusp identity after frame round trips. */
 export const EARTH_HOUSE_BOUNDARY_TOLERANCE_DEG = 1e-8;
+
+/** The controls and renderer must report the same unavailable partition. */
+export function earthHouseAvailability(result: HouseResult | undefined) {
+  return result ? housePartition(result) : { status: 'undefined' as const, reason: 'No primary house result is available.' };
+}
 
 /** Fixed J2000 astronomical -> Earth-fixed astronomical (not Three.js axes). */
 export function fixedToEarthDirection(point: Vector3, snapshot: EarthFrame): Vector3 {

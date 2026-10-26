@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, tick, untrack } from 'svelte';
   import { HOUSE_SYSTEMS, type BodyPosition, type EphemerisSnapshot, type HouseResult } from './lib/astronomy/ephemeris';
-  import { classifyLongitude, zodiacSign } from './lib/domain/chart';
+  import { ASPECT_TYPES, classifyLongitude, zodiacSign } from './lib/domain/chart';
   import { createExplorerStore, type LayerKey } from './lib/state/explorer';
   import FeatureObjectList from './lib/ui/FeatureObjectList.svelte';
   import FeatureInspector from './lib/ui/FeatureInspector.svelte';
@@ -33,6 +33,16 @@
   import DisplayControls from './lib/ui/DisplayControls.svelte';
   import {DEFAULT_PREFERENCES,readPreferences,writePreferences,type DisplayPreferences} from './lib/state/preferences';
   import {SOURCE_HREF,BUILD_REVISION} from './lib/source-access';
+  import FeaturePreview from './lib/ui/FeaturePreview.svelte';
+  import FeatureReading from './lib/ui/FeatureReading.svelte';
+  import { featureHit, type FeatureHit } from './lib/domain/scene-hit';
+  import { resolveHoverCard, type HoverCardContext } from './lib/domain/hover-card';
+  import { CATALOGUE_STARS } from './lib/scene/sky-data';
+  import { FIGURE_SUPPORT_STARS } from './lib/scene/constellation-figures';
+  import EarthProjectionControls from './lib/ui/EarthProjectionControls.svelte';
+  import { DEFAULT_EARTH_PROJECTIONS, earthHouseAvailability, type EarthProjectionSettings } from './lib/domain/earth-projections';
+  import AspectCardPreview from './lib/ui/AspectCardPreview.svelte';
+  import FeatureNavigation from './lib/ui/FeatureNavigation.svelte';
 
   const explorer = createExplorerStore();
   const trailService=createTrailService();
@@ -60,6 +70,7 @@
     { id: 'primeVertical', label: 'Prime vertical', color: '#9aaeb3' },
     { id: 'stars', label: 'Catalogue stars', color: '#cad8e8' },
     { id: 'constellations', label: 'Constellation regions', color: '#7394b3' },
+    { id: 'asterisms', label: 'Constellation asterisms', color: '#89b3cc' },
     { id: 'houses', label: 'Longitude houses', color: '#82a8c9' },
   ] as const;
   const initialBirthContext = exampleBirthContext();
@@ -94,8 +105,9 @@
   let houseDisplay=$state<HouseDisplaySettings>({...DEFAULT_HOUSE_DISPLAY,mode:initialPreferences.houseMode});
   let construction=$state<ConstructionSettings>({...DEFAULT_CONSTRUCTION});
   let aspects=$state<AspectDisplaySettings>({...DEFAULT_ASPECT_DISPLAY,types:{...DEFAULT_ASPECT_DISPLAY.types},orbs:{...DEFAULT_ASPECT_DISPLAY.orbs}});
+  let earthSettings=$state<EarthProjectionSettings>({...DEFAULT_EARTH_PROJECTIONS,bodies:{...DEFAULT_EARTH_PROJECTIONS.bodies},angles:{...DEFAULT_EARTH_PROJECTIONS.angles}});
   let evidenceOpen=$state(false);
-  let evidenceDialog:HTMLDialogElement;
+  let evidenceDialog=$state<HTMLDialogElement>();
   let timelinePreset=$state<TimelinePreset>('1d');
   let timeWindow=$state(timelineWindow(initialBirthContext.instantMs,TIMELINE_PRESETS['1d']));
   let stepUnit=$state<StepUnit>('day');
@@ -108,11 +120,21 @@
   let history=$state<BoundaryHistorySettings>({...DEFAULT_BOUNDARY_HISTORY});
   let trailKey:string|null=null,historyKey:string|null=null;
   let trailInterval:{startMs:number;endMs:number}|null=null,historyInterval:{startMs:number;endMs:number}|null=null;
-  let formDialog: HTMLDialogElement;
+  let formDialog=$state<HTMLDialogElement>();
   let sceneCanvas: { focusSelection(): void; returnToObserver(): void } | undefined = $state();
   let observedSnapshot: EphemerisSnapshot | null = null;
+  let hoveredFeature = $state<FeatureHit | null>(null);
+  let previewFocusOwned = false;
+  let lastPreviewPointer: {x:number;y:number} | null = null;
+  let lastScenePreview: FeatureHit | null = null;
+  let selectedFeature = $state<FeatureHit | null>(null);
+  const snapshotRevisions = new WeakMap<EphemerisSnapshot,number>();
+  const hoverStars = new Map([...CATALOGUE_STARS,...FIGURE_SUPPORT_STARS].map(star=>[star[0],star]));
 
-  const selectedBody = $derived($explorer.snapshot?.bodies.find((body) => `body:${body.id}` === $explorer.selectedId));
+  const selectedSceneId = $derived(selectedFeature?.entityId ?? $explorer.selectedId);
+  const earthProjectionDisplay=$derived({...earthSettings,enabled:$explorer.layers.earthProjections,houses:$explorer.layers.earthHouses,astrocartography:$explorer.layers.astrocartography});
+  const cardDesignPreview=typeof window!=='undefined'&&new URLSearchParams(window.location.search).get('preview')==='aspects';
+  const selectedBody = $derived($explorer.snapshot?.bodies.find((body) => `body:${body.id}` === selectedSceneId));
   const display=$derived({quality:preferences.quality,labelScale:preferences.labelScale,earthOpacity:preferences.earthOpacity,reducedMotion:preferences.motion==='reduced'||preferences.motion==='system'&&systemReducedMotion});
   const selectedMeta = $derived(bodies.find((body) => body.id === selectedBody?.id));
   const shownInstant = $derived($explorer.snapshot?.instantMs ?? $explorer.input.instantMs);
@@ -125,9 +147,22 @@
   const localContext = $derived(civilAtInstant(shownInstant, displayedObserver));
   const visibleAspects=$derived(($explorer.snapshot?getVisibleAspects($explorer.snapshot.bodies,aspects,$explorer.selectedId):[]).filter(aspect=>!$explorer.selectedId?.startsWith('aspect:')||aspect.id===$explorer.selectedId));
   const aspectLegend=$derived(ASPECT_LEGEND.filter(type=>visibleAspects.some(aspect=>aspect.type===type.id)));
-  const boundaryHouse=$derived(Number(/^(?:house|boundary):([1-9]|1[0-2])$/.exec($explorer.selectedId??'')?.[1])||null);
+  const boundaryHouse=$derived(Number(/^(?:house|boundary):([1-9]|1[0-2])$/.exec(selectedSceneId??'')?.[1])||null);
   const activeTrail=$derived(trails.enabled&&selectedBody&&$trailService.trail.result?.bodyId===selectedBody.id&&$trailService.trail.result.frame===trails.frame&&$trailService.trail.result.observer.latitudeDeg===$explorer.snapshot?.observer.latitudeDeg&&$trailService.trail.result.observer.longitudeDeg===$explorer.snapshot?.observer.longitudeDeg?$trailService.trail.result:null);
   const activeHistory=$derived(history.enabled&&boundaryHouse&&$trailService.history.result?.house===boundaryHouse&&$trailService.history.result.system===selectedHouses?.system&&$trailService.history.result.observer.latitudeDeg===$explorer.snapshot?.observer.latitudeDeg&&$trailService.history.result.observer.longitudeDeg===$explorer.snapshot?.observer.longitudeDeg?$trailService.history.result:null);
+  const earthHouseState=$derived(earthHouseAvailability(selectedHouses));
+  const hoverLayers=$derived({
+    ...Object.fromEntries(Object.entries($explorer.layers).map(([id,enabled])=>[id,{enabled}])),
+    houses:{enabled:$explorer.layers.houses,available:earthHouseState.status==='valid',...(earthHouseState.status==='undefined'?{reason:earthHouseState.reason}:{})},
+    earthHouses:{enabled:$explorer.layers.earthHouses,available:earthHouseState.status==='valid'&&$explorer.viewpoint!=='observer'&&$explorer.layers.earthProjections,...(earthHouseState.status==='undefined'?{reason:earthHouseState.reason}:{reason:'Enable Earth projections in an exterior view to display house sections.'})},
+    earthProjections:{enabled:$explorer.layers.earthProjections,available:$explorer.viewpoint!=='observer',reason:'Earth projections are hidden in Observer sky.'},
+    astrocartography:{enabled:$explorer.layers.astrocartography,available:$explorer.viewpoint!=='observer'&&$explorer.layers.earthProjections,reason:'Enable Earth projections in an exterior view to display geographic lines.'},
+    aspects:{enabled:aspects.enabled},construction:{enabled:construction.enabled,available:activeConstruction?.status==='valid',reason:activeConstruction?.notes[0]??'Enable a construction guide to inspect its geometry.'},
+    trails:{enabled:trails.enabled,available:!!selectedBody,reason:'Select a body to display its trail.'},history:{enabled:history.enabled,available:!!boundaryHouse,reason:'Select a primary boundary to display its history.'},
+    ...Object.fromEntries(ASPECT_TYPES.map(type=>[`aspect-type:${type.id}`,{enabled:aspects.enabled&&aspects.types[type.id]}])),
+  });
+  const previewContext = $derived<HoverCardContext>({snapshot:$explorer.snapshot,revision:$explorer.snapshot?snapshotRevisions.get($explorer.snapshot):undefined,orbs:aspects.orbs,provisional:!displayedTimeKnown,pending:busy,stars:hoverStars,trail:activeTrail,history:activeHistory,construction:activeConstruction,localTime:{instantMs:shownInstant,label:`${civilDateValue(localContext.civil)} · ${civilTimeValue(localContext.civil)} local · ${formatOffset(localContext.offsetMinutes)}`},layers:hoverLayers});
+  const selectedReading = $derived(selectedFeature && (['star','asterism','construction','trail','history','earth-house','astro-line'].includes(selectedFeature.kind)||selectedFeature.representation==='comparison') ? resolveHoverCard(selectedFeature,previewContext) : null);
   $effect(()=>{writePreferences({...preferences});document.documentElement.style.fontSize=preferences.textSize==='large'?'18px':'16px';});
 
   $effect(()=>{
@@ -156,6 +191,7 @@
     const snapshot = $explorer.snapshot;
     if (snapshot && snapshot !== observedSnapshot) {
       observedSnapshot = snapshot;
+      snapshotRevisions.set(snapshot,$explorer.revision);
       if (snapshot.observer.latitudeDeg === explorationObserver.latitudeDeg && snapshot.observer.longitudeDeg === explorationObserver.longitudeDeg) {
         displayedObserver = explorationObserver;
         displayedTimeKnown = explorationTimeKnown;
@@ -196,8 +232,10 @@
     rightOpen=true;inspectorCollapsed=false;if(compactPanels)leftOpen=false;
     if(transferFocus)void tick().then(()=>document.getElementById('inspector')?.focus());
   }
-  function selectBody(id: string) { explorer.select(`body:${id}`); explorer.setLayer('bodies',true);showInspector();announcement=`Selected ${bodies.find(body=>body.id===id)?.name??id}. Read its position and interpretation in the inspector.`; }
+  function selectBody(id: string) { selectedFeature=null; explorer.select(`body:${id}`); explorer.setLayer('bodies',true);showInspector();announcement=`Selected ${bodies.find(body=>body.id===id)?.name??id}. Read its position and interpretation in the inspector.`; }
   function selectFeature(id: string) {
+    selectedFeature=null;
+    if (id.startsWith('star:') || id.startsWith('asterism:') || id.startsWith('earth:') || id.startsWith('astro:')) { selectHit(featureHit(id,id)); return; }
     if(id.startsWith('body:')){selectBody(id.slice(5));return;}
     explorer.select(id);showInspector();announcement=`Selected ${id.replaceAll(':',' ').replaceAll('-',' ')}. Inspector updated.`;
     const boundary=/^(?:house|boundary):([1-9]|1[0-2])$/.exec(id);
@@ -211,6 +249,62 @@
       if(detail)aspects={...aspects,enabled:true,types:{...aspects.types,[detail.type]:true}};
     }
   }
+  function selectHit(hit: FeatureHit) {
+    if (['body','sign','angle','reference','constellation','aspect','house','boundary'].includes(hit.kind) && hit.representation!=='comparison') { selectFeature(hit.entityId); return; }
+    selectedFeature=hit; explorer.select(hit.id); showInspector(); announcement=`Selected ${hit.name}. Inspector updated.`;
+    if(hit.kind==='star'){
+      explorer.setLayer('stars',true);
+      if(FIGURE_SUPPORT_STARS.some(star=>hit.entityId===`star:hyg:${star[0]}`))explorer.setLayer('asterisms',true);
+    }
+    if(hit.kind==='asterism')explorer.setLayer('asterisms',true);
+    if(hit.kind==='earth-house'||hit.kind==='astro-line'){
+      if($explorer.viewpoint==='observer')explorer.setViewpoint('overview');
+      explorer.setLayer('earthProjections',true);
+      explorer.setLayer(hit.kind==='earth-house'?'earthHouses':'astrocartography',true);
+      if(hit.kind==='astro-line'){
+        const [,bodyId,angle]=hit.id.split(':');
+        if(bodyId&&bodyId in earthSettings.bodies&&angle&&angle in earthSettings.angles)earthSettings={...earthSettings,bodies:{...earthSettings.bodies,[bodyId]:true},angles:{...earthSettings.angles,[angle]:true}};
+      }
+    }
+  }
+  function updateEarthSettings(patch:Partial<EarthProjectionSettings>){
+    if(patch.enabled!==undefined)explorer.setLayer('earthProjections',patch.enabled);
+    if(patch.houses!==undefined)explorer.setLayer('earthHouses',patch.houses);
+    if(patch.astrocartography!==undefined)explorer.setLayer('astrocartography',patch.astrocartography);
+    earthSettings={...earthSettings,...patch};
+  }
+  function constructionLegendTarget(kind:string){
+    const element=activeConstruction&&[...activeConstruction.lines,...activeConstruction.markers].find(item=>item.kind===kind&&item.stage<=construction.stage);
+    if(!element||!activeConstruction)return featureHit('layer:construction','House construction guides');
+    return featureHit(element.id.toLowerCase(),element.label,{entityId:`boundary:${activeConstruction.house}`,kind:'construction',role:kind,system:activeConstruction.system,constructionId:element.id,representation:'guide'});
+  }
+  function previewControl(event: PointerEvent | FocusEvent) {
+    if(event instanceof PointerEvent&&previewFocusOwned)return;
+    const target=event.target instanceof Element?event.target.closest<HTMLElement>('[data-feature-id]'):null;
+    if (!target || target.closest('[data-feature-preview]')) return;
+    if(event instanceof FocusEvent)previewFocusOwned=true;
+    const id=target.dataset.featureId!; const rect=target.getBoundingClientRect();
+    let details:Partial<FeatureHit>={};
+    try{if(target.dataset.featureJson){const value=JSON.parse(target.dataset.featureJson);if(value.id===id)details=value;}}catch{/* Only registered feature metadata is used. */}
+    hoveredFeature=featureHit(id,target.dataset.featureName??target.textContent?.trim()??id,{...details,screen:{x:event instanceof PointerEvent?event.clientX:rect.right,y:event instanceof PointerEvent?event.clientY:rect.top+rect.height/2}});
+  }
+  function leaveControl(event: PointerEvent | FocusEvent) {
+    if(event instanceof PointerEvent&&previewFocusOwned)return;
+    const from=event.target instanceof Element?event.target.closest('[data-feature-id]'):null;
+    const to=event.relatedTarget instanceof Element?event.relatedTarget.closest('[data-feature-id]'):null;
+    if(from&&from!==to)hoveredFeature=null;
+  }
+  function previewPointerMove(event:PointerEvent){
+    const moved=!lastPreviewPointer||event.clientX!==lastPreviewPointer.x||event.clientY!==lastPreviewPointer.y;
+    lastPreviewPointer={x:event.clientX,y:event.clientY};
+    if(!moved)return;
+    previewFocusOwned=false;
+    if(event.target instanceof Element&&event.target.closest('[data-feature-preview]'))return;
+    if(event.target instanceof Element&&event.target.closest('[data-feature-id]'))previewControl(event);
+    else if(event.target instanceof Element&&event.target.closest('.scene-canvas'))hoveredFeature=lastScenePreview;
+    else hoveredFeature=null;
+  }
+  function previewScene(hit:FeatureHit|null){lastScenePreview=hit;if(!previewFocusOwned)hoveredFeature=hit;}
   function showConstruction(house?:number){
     groups={...groups,construction:true};toolsCollapsed=false;
     const selected=/^(?:house|boundary):([1-9]|1[0-2])$/.exec($explorer.selectedId??'');
@@ -272,7 +366,7 @@
   function pausePlayback(reason:string|null=null){playing=false;playbackClock=null;pauseReason=reason;}
   function updatePreferences(patch:Partial<DisplayPreferences>){preferences={...preferences,...patch};if(patch.houseMode)houseDisplay={...houseDisplay,mode:patch.houseMode};}
   function resetPreferences(){preferences={...DEFAULT_PREFERENCES};houseDisplay={...DEFAULT_HOUSE_DISPLAY};}
-  function clearSelection(){explorer.select(null);announcement='Selection cleared.';if(!inspectorPinned){if(document.activeElement?.closest('#inspector'))void collapseInspector();else{inspectorCollapsed=true;rightOpen=false;}}}
+  function clearSelection(){selectedFeature=null;explorer.select(null);announcement='Selection cleared.';if(!inspectorPinned){if(document.activeElement?.closest('#inspector'))void collapseInspector();else{inspectorCollapsed=true;rightOpen=false;}}}
   async function collapseInspector(){inspectorCollapsed=true;rightOpen=false;await tick();document.querySelector<HTMLButtonElement>('[aria-label="Expand inspector"]')?.focus();}
   async function collapseTools(){toolsCollapsed=!compactPanels;leftOpen=false;await tick();document.querySelector<HTMLButtonElement>('.left-toggle')?.focus();}
   async function openObjects(){toolsCollapsed=false;if(compactPanels){leftOpen=true;rightOpen=false;}await tick();document.getElementById('object-list')?.focus();}
@@ -301,6 +395,12 @@
 </script>
 
 <svelte:window onkeydown={onKey} />
+<svelte:document onpointerover={previewControl} onpointerout={leaveControl} onpointermove={previewPointerMove} onfocusin={previewControl} onfocusout={leaveControl} />
+
+{#if cardDesignPreview}
+  <AspectCardPreview motion={!display.reducedMotion&&display.quality!=='low'} largeText={preferences.textSize==='large'}/>
+{:else}
+<FeaturePreview hit={formOpen||globePickMode||sceneStatus?null:hoveredFeature} suspended={formOpen||globePickMode||!!sceneStatus} resetKey={$explorer.viewRevision} context={previewContext} motion={!display.reducedMotion&&display.quality!=='low'} sparkles={preferences.cardSparkles} />
 
 <a class="skip-link" href="#object-list" onclick={event=>{event.preventDefault();void openObjects();}}>Skip to celestial objects</a>
 <div class="observatory" data-reduced-motion={display.reducedMotion}>
@@ -330,7 +430,7 @@
         <div class="object-list" aria-label="Select celestial body">
           {#each bodies as body (body.id)}
             {@const position = $explorer.snapshot?.bodies.find((value) => value.id === body.id)}
-            <button class:chosen={$explorer.selectedId === `body:${body.id}`} onclick={() => selectBody(body.id)} aria-pressed={$explorer.selectedId === `body:${body.id}`}><span class="body-glyph" style:color={body.color} aria-hidden="true">{body.glyph}</span><span>{body.name}</span><small>{position ? `${(position.longitudeDeg % 30).toFixed(1)}° ${sign(position).slice(0, 3)}` : '—'}</small></button>
+            <button class:chosen={$explorer.selectedId === `body:${body.id}`} data-feature-id={`body:${body.id}`} onclick={() => selectBody(body.id)} aria-pressed={$explorer.selectedId === `body:${body.id}`}><span class="body-glyph" style:color={body.color} aria-hidden="true">{body.glyph}</span><span>{body.name}</span><small>{position ? `${(position.longitudeDeg % 30).toFixed(1)}° ${sign(position).slice(0, 3)}` : '—'}</small></button>
           {/each}
         </div>
       </section>
@@ -346,24 +446,25 @@
         <h2>Reference layers</h2>
         <div class="layer-options">
           {#each layerOptions as layer (layer.id)}
-            <label class="layer-row"><span>{layer.label}</span><input type="checkbox" checked={$explorer.layers[layer.id]} onchange={(event) => explorer.setLayer(layer.id, event.currentTarget.checked)} /><span class="toggle-track" aria-hidden="true"></span></label>
+            <label class="layer-row" data-feature-id={`layer:${layer.id}`}><span>{layer.label}</span><input type="checkbox" checked={$explorer.layers[layer.id]} onchange={(event) => explorer.setLayer(layer.id, event.currentTarget.checked)} /><span class="toggle-track" aria-hidden="true"></span></label>
           {/each}
         </div>
       </section></ControlGroup>
+      <ControlGroup id="earth" title="Earth projections" open={!!groups.earth} onToggle={open=>groups={...groups,earth:open}}><EarthProjectionControls settings={earthProjectionDisplay} snapshot={$explorer.snapshot} onChange={updateEarthSettings}/></ControlGroup>
       <ControlGroup id="houses" title="Houses" open={!!groups.houses} onToggle={open=>groups={...groups,houses:open}}><HouseControls system={$explorer.input.system} comparisonSystem={$explorer.input.comparisonSystem} display={houseDisplay} snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} {busy} onSystemChange={(system)=>explorer.requestChart({system,comparisonSystem:$explorer.input.comparisonSystem===system?null:$explorer.input.comparisonSystem})} onComparisonChange={(comparisonSystem)=>explorer.requestChart({comparisonSystem})} onDisplayChange={patch=>{houseDisplay={...houseDisplay,...patch};if(patch.mode)updatePreferences({houseMode:patch.mode});}} onSelect={selectFeature} onShowConstruction={showConstruction} /></ControlGroup>
       {#if construction.enabled}<ControlGroup id="construction" title="Construction guide" open={!!groups.construction} onToggle={open=>groups={...groups,construction:open}}><ConstructionGuide snapshot={$explorer.snapshot} settings={construction} onChange={(patch)=>construction={...construction,...patch}} onSelect={selectFeature} onFocus={focusConstruction} /></ControlGroup>{/if}
       <ControlGroup id="aspects" title="Aspects" open={!!groups.aspects} onToggle={open=>groups={...groups,aspects:open}}><AspectControls snapshot={$explorer.snapshot} settings={aspects} selectedId={$explorer.selectedId} onChange={patch=>aspects={...aspects,...patch}} onSelect={selectFeature} /></ControlGroup>
       <ControlGroup id="trails" title="Motion history" open={!!groups.trails} onToggle={open=>groups={...groups,trails:open}}><TrailControls settings={trails} historySettings={history} bodyId={selectedBody?.id??null} {boundaryHouse} state={$trailService} onChange={patch=>trails={...trails,...patch}} onHistoryChange={patch=>history={...history,...patch}} onRetry={()=>trailService.retry()} onRetryHistory={()=>trailService.retry()} onCancel={()=>trailService.cancelTrail()} onCancelHistory={()=>trailService.cancelHistory()} /></ControlGroup>
 
-      <ControlGroup id="references" title="Signs and references" open={!!groups.references} onToggle={open=>groups={...groups,references:open}}><FeatureObjectList snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} onSelect={selectFeature} /></ControlGroup>
-      <ControlGroup id="display" title="Display and access" open={!!groups.display} onToggle={open=>groups={...groups,display:open}}><DisplayControls settings={display} motion={preferences.motion} textSize={preferences.textSize} onChange={patch=>updatePreferences({quality:patch.quality??preferences.quality,labelScale:patch.labelScale??preferences.labelScale,earthOpacity:patch.earthOpacity??preferences.earthOpacity})} onMotionChange={motion=>updatePreferences({motion})} onTextSizeChange={textSize=>updatePreferences({textSize})} onReset={resetPreferences} /></ControlGroup>
+      <ControlGroup id="references" title="Signs and references" open={!!groups.references} onToggle={open=>groups={...groups,references:open}}><FeatureObjectList snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} onSelect={selectFeature} /><FeatureNavigation context={previewContext} selectedId={$explorer.selectedId} stage={construction.stage} onSelect={selectHit}/></ControlGroup>
+      <ControlGroup id="display" title="Display and access" open={!!groups.display} onToggle={open=>groups={...groups,display:open}}><DisplayControls cardSparkles={preferences.cardSparkles} onSparklesChange={cardSparkles=>updatePreferences({cardSparkles})} settings={display} motion={preferences.motion} textSize={preferences.textSize} onChange={patch=>updatePreferences({quality:patch.quality??preferences.quality,labelScale:patch.labelScale??preferences.labelScale,earthOpacity:patch.earthOpacity??preferences.earthOpacity})} onMotionChange={motion=>updatePreferences({motion})} onTextSizeChange={textSize=>updatePreferences({textSize})} onReset={resetPreferences} /></ControlGroup>
       <div class="dock-footer"><span class="status-dot"></span> Browser calculation <a href="https://github.com/aloistr/swisseph" target="_blank" rel="noreferrer">Swiss Ephemeris ↗</a></div>
     </aside>
 
     <section class="scene-stage" aria-label="Spatial exploration">
       <div class="scene-topline"><span class="scene-tag"><span class="status-dot"></span> CELESTIAL SPHERE</span><span class="scene-mode">{views.find((view) => view.id === $explorer.viewpoint)?.label}</span></div>
       <span class="schematic-label">Schematic sky · distances not to scale</span>
-      <SceneCanvas bind:this={sceneCanvas} snapshot={$explorer.snapshot} presentation={{ viewpoint: $explorer.viewpoint, selectedId: $explorer.selectedId, layers: $explorer.layers,houseDisplay,construction,aspects,trails,trailResult:activeTrail,history,historyResult:activeHistory,display }} {globePickMode} onObserverPick={observerPicked} onSelect={(id) => { if(id)selectFeature(id);else clearSelection(); }} onViewpoint={(viewpoint) => explorer.setViewpoint(viewpoint,!globePickMode)} onStatus={(message) => sceneStatus = message} />
+      <SceneCanvas bind:this={sceneCanvas} snapshot={$explorer.snapshot} presentation={{ viewpoint: $explorer.viewpoint, viewRevision:$explorer.viewRevision, earthProjections:earthProjectionDisplay, selectedId: selectedSceneId, layers: $explorer.layers,houseDisplay,construction,aspects,trails,trailResult:activeTrail,history,historyResult:activeHistory,display }} {globePickMode} onObserverPick={observerPicked} onHover={previewScene} onSelectHit={selectHit} onSelect={(id) => { if(id)selectFeature(id);else clearSelection(); }} onViewpoint={(viewpoint,applyPreset=true) => explorer.setViewpoint(viewpoint,applyPreset&&!globePickMode)} onStatus={(message) => sceneStatus = message} />
       {#if globePickMode}<div class="globe-pick-banner" role="status"><span>Click Earth to choose observer coordinates. Drag to rotate.</span><button class="text-button" onclick={() => globePickMode = false}>Cancel</button></div>{/if}
       {#if welcome}
         <div class="welcome-card">
@@ -375,16 +476,21 @@
         </div>
       {/if}
       {#if sceneStatus}<div class="scene-notice" role="status"><strong>3D view unavailable</strong><span>{sceneStatus}</span><span>The moment controls and celestial object list remain available.</span></div>{/if}
-      <details class="layer-key legend-disclosure"><summary>Layer key</summary><div class="scene-legend" aria-label="Active layer legend">{#each layerOptions.filter(layer=>$explorer.layers[layer.id]) as layer (layer.id)}<span><i class="legend-line" style:background={layer.color}></i>{layer.label}</span>{/each}{#if $explorer.selectedId}<span><i class="legend-line" style:background="#f1d79d"></i>Selected feature</span>{/if}{#if $explorer.layers.houses && houseComparison?.status==='valid'}<span><i class="legend-line" style:background="transparent" style:border-top="1px dashed #b0a4d7"></i>Comparison boundaries</span>{#if houseComparison.changedRegions.length}<span><i class="legend-line" style:background="#b0a4d7"></i>Changed assignments</span>{/if}{/if}{#if $explorer.layers.houses && selectedHouses?.status==='valid' && houseDisplay.mode==='shells' && houseDisplay.shellSeparation>0 && ($explorer.selectedId?.startsWith('house:')||selectedBody)}<span>Radial leaders: shell lift</span>{/if}<span class="legend-convention">Below horizon: dimmed body · distances schematic</span></div></details>
-      {#if construction.enabled}<details class="construction-key legend-disclosure" open={!!boundaryHouse}><summary>Construction key</summary><div aria-label="Construction legend">{#each constructionLegend as item (item.kind)}<span><i style:border-top={`1px ${item.dashed?'dashed':'solid'} ${item.color}`}></i>{item.label}</span>{/each}<small>C{construction.boundaryHouse} · {activeConstruction?.status==='valid'?`stage ${construction.stage+1} · sweep ${Math.round(construction.progress*100)}%`:'construction unavailable'}</small></div></details>{/if}
-      {#if aspectLegend.length}<details class="aspect-key legend-disclosure" open={$explorer.selectedId?.startsWith('aspect:')}><summary>Aspect key</summary><div aria-label="Aspect legend">{#each aspectLegend as type (type.id)}<span><i style:border-top={`2px ${type.dashed?'dashed':'solid'} ${type.color}`}></i>{type.glyph} {type.label}</span>{/each}<small>Brighter core: closer to exact · curved strand: connection{aspects.glow?' · glow: emphasis':''}</small>{#if $explorer.selectedId?.startsWith('aspect:')&&aspects.measurement}<small>Gold arc: longitude separation · dashed leaders: latitude projection</small>{/if}</div></details>{/if}
-      {#if activeTrail||activeHistory}<details class="trail-key legend-disclosure" open><summary>Motion key</summary><div aria-label="Motion history legend">{#if activeTrail}<strong>{selectedMeta?.name} · {TRAIL_REFERENCE_LABELS[activeTrail.frame]}</strong>{#each TRAIL_LEGEND.filter(item=>['past','future','direction','tick'].includes(item.id)) as item (item.id)}<span><i style:border-top={`1px ${item.dashed?'dashed':'solid'} ${item.color}`}></i>{item.label}</span>{/each}<small>{formatInstant(activeTrail.startMs)} → {formatInstant(activeTrail.endMs)} UTC</small>{#if activeTrail.status!=='complete'}<small>{activeTrail.status==='partial'?'Refining sampled path…':'Limited to the sampled interval · see trail controls'}</small>{/if}{/if}{#if activeHistory}<strong>C{activeHistory.house} · {activeHistory.samples.filter(sample=>sample.status!=='undefined').length} discrete boundary ghosts</strong><small>Dashed violet: history · gold: discrete boundary change · undefined samples omitted</small>{/if}</div></details>{/if}
+      <details class="layer-key legend-disclosure"><summary>Layer key</summary><div class="scene-legend" aria-label="Active layer legend">{#each layerOptions.filter(layer=>$explorer.layers[layer.id]) as layer (layer.id)}<button class="legend-feature" data-feature-id={`layer:${layer.id}`}><i class="legend-line" style:background={layer.color}></i>{layer.label}</button>{/each}{#if $explorer.selectedId}<span><i class="legend-line" style:background="#f1d79d"></i>Selected feature</span>{/if}{#if $explorer.layers.houses && houseComparison?.status==='valid'}<button class="legend-feature" data-feature-id="layer:houses"><i class="legend-line" style:background="transparent" style:border-top="1px dashed #b0a4d7"></i>Comparison boundaries</button>{#if houseComparison.changedRegions.length}<span><i class="legend-line" style:background="#b0a4d7"></i>Changed assignments</span>{/if}{/if}{#if $explorer.layers.houses && selectedHouses?.status==='valid' && houseDisplay.mode==='shells' && houseDisplay.shellSeparation>0 && ($explorer.selectedId?.startsWith('house:')||selectedBody)}<span>Radial leaders: shell lift</span>{/if}<span class="legend-convention">Below horizon: dimmed body · distances schematic</span></div></details>
+      {#if construction.enabled}<details class="construction-key legend-disclosure" open={!!boundaryHouse}><summary>Construction key</summary><div aria-label="Construction legend">{#each constructionLegend as item (item.kind)}{@const target=constructionLegendTarget(item.kind)}<button class="legend-feature" data-feature-id={target.id} data-feature-json={JSON.stringify(target)}><i style:border-top={`1px ${item.dashed?'dashed':'solid'} ${item.color}`}></i>{item.label}</button>{/each}<small>C{construction.boundaryHouse} · {activeConstruction?.status==='valid'?`stage ${construction.stage+1} · sweep ${Math.round(construction.progress*100)}%`:'construction unavailable'}</small></div></details>{/if}
+      {#if aspectLegend.length}<details class="aspect-key legend-disclosure" open={$explorer.selectedId?.startsWith('aspect:')}><summary>Aspect key</summary><div aria-label="Aspect legend">{#each aspectLegend as type (type.id)}<button class="legend-feature" data-feature-id={`layer:aspect-type:${type.id}`}><i style:border-top={`2px ${type.dashed?'dashed':'solid'} ${type.color}`}></i>{type.glyph} {type.label}</button>{/each}<small>Brighter core: closer to exact · curved strand: connection{aspects.glow?' · glow: emphasis':''}</small>{#if $explorer.selectedId?.startsWith('aspect:')&&aspects.measurement}<small>Gold arc: longitude separation · dashed leaders: latitude projection</small>{/if}</div></details>{/if}
+      {#if activeTrail||activeHistory}<details class="trail-key legend-disclosure" open><summary>Motion key</summary><div aria-label="Motion history legend">{#if activeTrail}<strong>{selectedMeta?.name} · {TRAIL_REFERENCE_LABELS[activeTrail.frame]}</strong>{#each TRAIL_LEGEND.filter(item=>['past','future','direction','tick'].includes(item.id)) as item (item.id)}<button class="legend-feature" data-feature-id="layer:trails"><i style:border-top={`1px ${item.dashed?'dashed':'solid'} ${item.color}`}></i>{item.label}</button>{/each}<small>{formatInstant(activeTrail.startMs)} → {formatInstant(activeTrail.endMs)} UTC</small>{#if activeTrail.status!=='complete'}<small>{activeTrail.status==='partial'?'Refining sampled path…':'Limited to the sampled interval · see trail controls'}</small>{/if}{/if}{#if activeHistory}<strong>C{activeHistory.house} · {activeHistory.samples.filter(sample=>sample.status!=='undefined').length} discrete boundary ghosts</strong><small>Dashed violet: history · gold: discrete boundary change · undefined samples omitted</small>{/if}</div></details>{/if}
     </section>
 
     <button class="mobile-panel-toggle right-toggle" aria-label="Expand inspector" aria-expanded={compactPanels?rightOpen:!inspectorCollapsed} aria-controls="inspector" onclick={() => { inspectorCollapsed=false;rightOpen=!rightOpen;leftOpen=false; }}>ⓘ Inspector</button>
     <aside id="inspector" class:drawer-open={rightOpen} class="inspector panel" inert={inspectorCollapsed} tabindex="-1" aria-label="Selected feature inspector">
       <div class="panel-heading"><span class="eyebrow">INSPECTOR</span><div class="inspector-actions"><button class="icon-button" aria-label="Pin inspector" aria-pressed={inspectorPinned} title="Keep this panel open when selection is cleared" onclick={()=>inspectorPinned=!inspectorPinned}>⌖</button><button class="icon-button" aria-label="Clear selection" disabled={!$explorer.selectedId} onclick={clearSelection}>↶</button><button class="drawer-close icon-button" onclick={collapseInspector} aria-label="Collapse inspector">×</button></div></div>
-      {#if selectedBody && selectedMeta}
+      {#if selectedReading}
+        <FeatureReading model={selectedReading}/><button class="button secondary focus-button" onclick={()=>sceneCanvas?.focusSelection()}>Focus in the scene <kbd>F</kbd></button>
+      {:else if selectedFeature}
+        <div class="selected-heading"><span class="eyebrow">Selected feature unavailable</span><h2>{selectedFeature.name}</h2></div>
+        <section class="inspector-section" role="status"><p>This feature no longer matches the displayed snapshot or reference frame. Select an available feature to inspect its current context.</p></section>
+      {:else if selectedBody && selectedMeta}
         <div class="selected-heading"><span class="selected-glyph" style:color={selectedMeta.color} aria-hidden="true">{selectedMeta.glyph}</span><span class="eyebrow">CELESTIAL BODY</span><h2>{selectedMeta.name}</h2><p>{sign(selectedBody)} <span class="dot">·</span> {deg(selectedBody.longitudeDeg % 30)}</p></div>
         <div class="inspector-section"><h3>Position in the chart</h3><dl class="data-list"><div><dt>Ecliptic longitude</dt><dd>{deg(selectedBody.longitudeDeg)}</dd></div><div><dt>Ecliptic latitude</dt><dd>{deg(selectedBody.latitudeDeg)}</dd></div><div><dt>House · {HOUSE_SYSTEMS.find(s=>s.id===selectedHouses?.system)?.name??'Primary'}</dt><dd>{houseFor(selectedBody)}</dd></div>{#if $explorer.snapshot?.houses[1]}<div><dt>House · {HOUSE_SYSTEMS.find(s=>s.id===$explorer.snapshot?.houses[1]?.system)?.name}</dt><dd>{houseFor(selectedBody,$explorer.snapshot.houses[1])}</dd></div>{/if}<div><dt>Motion</dt><dd>{selectedBody.longitudeSpeedDegPerDay < 0 ? 'Retrograde' : 'Direct'}</dd></div></dl></div>
         <div class="inspector-section"><h3>From the observer</h3><dl class="data-list"><div><dt>Altitude</dt><dd>{deg(selectedBody.horizon.altitudeDeg)}</dd></div><div><dt>Azimuth</dt><dd>{selectedBody.horizon.azimuthDeg === null ? 'Undefined' : deg(selectedBody.horizon.azimuthDeg)}</dd></div><div><dt>Horizon</dt><dd class:above={selectedBody.horizon.altitudeDeg >= 0}>{selectedBody.horizon.altitudeDeg >= 0 ? 'Above' : 'Below'}</dd></div></dl><p class="field-note">Geometric horizon; atmospheric refraction is excluded.</p></div>
@@ -416,3 +522,4 @@
   {#if formOpen}{#key formSession}<MomentForm mode={formMode} initialInstantMs={formInstant} initialObserver={formObserver} initialTimeKnown={formTimeKnown} initialCivil={formCivil} initialKeepLocal={formKeepLocal} onCommit={commitMoment} onCancel={() => formOpen = false} onGlobePick={beginGlobePick} />{/key}{/if}
 </dialog>
 <dialog bind:this={evidenceDialog} class="evidence-dialog" aria-labelledby="evidence-title" onclose={()=>evidenceOpen=false} oncancel={()=>evidenceOpen=false}>{#if evidenceOpen}<EvidencePanel onClose={()=>evidenceOpen=false} />{/if}</dialog>
+{/if}

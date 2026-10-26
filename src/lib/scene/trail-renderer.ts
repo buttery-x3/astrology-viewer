@@ -115,7 +115,9 @@ export function createTrailRenderer(radius: number, captionFactory: CaptionFacto
           };
           if (geometry.first && geometry.last) {
             label(startLabel, `Start · ${timeLabel(geometry.first.instantMs)}`); offsetLabel(startLabel, geometry.first.point, 0.23);
+            startLabel.userData.sampleInstantMs = geometry.first.instantMs;
             label(endLabel, `End · ${timeLabel(geometry.last.instantMs)}`); offsetLabel(endLabel, geometry.last.point, -0.23);
+            endLabel.userData.sampleInstantMs = geometry.last.instantMs;
             label(referenceLabel, TRAIL_REFERENCE_LABELS[result.frame]);
             const current = projected.samples.find(sample => sample.isCurrent) ?? projected.samples[Math.floor(projected.samples.length / 2)]!;
             offsetLabel(referenceLabel, current.point, 0.47);
@@ -124,6 +126,7 @@ export function createTrailRenderer(radius: number, captionFactory: CaptionFacto
             const decoration = geometry.decorations[index]; target.userData.hasTick = Boolean(decoration);
             if (!decoration) continue;
             label(target, timeLabel(decoration.sample.instantMs)); offsetLabel(target, decoration.sample.point, -0.14);
+            target.userData.sampleInstantMs = decoration.sample.instantMs;
           }
           bodyGroup.userData.hasPath = count > 0;
           bodyGroup.userData.currentInserted = projected.currentInserted;
@@ -137,7 +140,11 @@ export function createTrailRenderer(radius: number, captionFactory: CaptionFacto
           for (const target of [startLabel, endLabel, referenceLabel]) target.visible = target.userData.labelEnabled = true;
           for (const target of tickLabels) target.visible = target.userData.labelEnabled = target.userData.hasTick;
           const name = `${result.bodyId[0]!.toUpperCase()}${result.bodyId.slice(1)} trail · ${TRAIL_REFERENCE_LABELS[result.frame]}`;
-          for (const target of [...strokes, arrows, ticks, startLabel, endLabel, referenceLabel, ...tickLabels]) identify(target, bodyId, name);
+          for (const target of [...strokes, arrows, ticks, startLabel, endLabel, referenceLabel, ...tickLabels]) {
+            identify(target, bodyId, name);
+            const time = target.userData.sampleInstantMs as number | undefined;
+            target.userData.featureHit = {id:time===undefined?`trail:${result.bodyId}:interval`:`trail:${result.bodyId}:sample:${time}`,entityId:bodyId,kind:'trail',representation:'history',frame:result.frame,sampleInstantMs:time??result.startMs,...(time===undefined?{sampleEndInstantMs:result.endMs}:{})};
+          }
           hitTargets.push(...strokes, arrows, ticks, startLabel, endLabel, referenceLabel, ...tickLabels);
         }
       }
@@ -163,6 +170,7 @@ export function createTrailRenderer(radius: number, captionFactory: CaptionFacto
           ghost.caption.visible = ghost.caption.userData.labelEnabled = group.visible;
           const name = `Cusp ${historyResult.house} history · ${timeLabel(sample.instantMs)}${changed ? ' · discrete change' : ''}`;
           identify(ghost.line, boundaryId, name); identify(ghost.caption, boundaryId, name);
+          for (const target of [ghost.line,ghost.caption]) target.userData.featureHit = {id:`history:${historyResult.system.toLowerCase()}:${historyResult.house}:${sample.instantMs}`,entityId:boundaryId,kind:'history',representation:'history',system:historyResult.system,sampleInstantMs:sample.instantMs,role:sample.status,frame:'stars'};
           ghost.line.name = name; hitTargets.push(ghost.line, ghost.caption);
         }
         previousHistory = historyResult;

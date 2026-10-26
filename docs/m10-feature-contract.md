@@ -6,7 +6,7 @@ An interaction identifies both a semantic entity and the representation actually
 |---|---|---|
 | Body, sign, angle, sky reference | Existing entity ID | Same entity; role distinguishes measurement endpoints/projections |
 | Primary house / cusp | `house:n`, `boundary:n` | Primary system |
-| Comparison house / cusp | `house:comparison:n`, `boundary:comparison:n` | Parent `house:n` / `boundary:n`; explicit comparison system |
+| Comparison house / cusp | `house:comparison:n`, `boundary:comparison:n` | Distinct comparison selection; current secondary system |
 | Aspect strand / measurement | Existing `aspect:…` ID | Current pair, type, permitted orb |
 | Catalogue point | `star:hyg:n` | Catalogue index resolves HYG tuple; fixed-frame epoch policy |
 | Region / modern figure | `constellation:ori`, `asterism:ori` | Shared constellation identity, distinct representation |
@@ -17,6 +17,8 @@ An interaction identifies both a semantic entity and the representation actually
 | Layer control / legend | `layer:…` | Layer purpose, availability and enabled state, even when hidden |
 
 Only lowercase namespace segments appear in selectable IDs. System codes remain typed metadata. Missing/superseded geometry invalidates the hover; no tooltip may invent a replacement result. Historical metadata must not receive a current-placement interpretation.
+
+Primary geographic and comparison-slot IDs follow the current primary/secondary result when methods change. Historical construction/trail/cusp hits retain their explicit stored system, frame, element and sample metadata. Overlap choices transport the same complete hit instead of reducing a subfeature to its parent.
 
 Explicit Earth-overview entry applies the projection preset and increments `viewRevision`, including re-entry into the same view. Outside/Observer entry disables the master. Layer changes do not apply view presets. Temporary globe picking calls `setViewpoint('overview', false)` and suppresses projected layers without altering saved layer settings. Snapshot and house-display changes never issue a view-entry command.
 

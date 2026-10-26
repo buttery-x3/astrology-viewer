@@ -246,6 +246,17 @@ describe('registered placements and single aspect composition', () => {
 });
 
 describe('geometric identity, comparisons and historical representations', () => {
+  it('keeps a projected primary selection on the new primary system rather than its old comparison', () => {
+    const oldPrimary=engine.calculate(snapshot.instantMs,snapshot.observer,['W']).houses[0]!;
+    const newPrimary=engine.calculate(snapshot.instantMs,snapshot.observer,['P']).houses[0]!;
+    const hit=featureHit('earth:house:primary:7','Projected house 7',{kind:'earth-house',representation:'earth',system:'W'});
+    for(const houses of [[newPrimary],[newPrimary,oldPrimary]]) {
+      const model=card(hit,{snapshot:{...snapshot,houses}});
+      expect(model.entityId).toBe('earth:house:primary:7');
+      expect(facts(model).System).toBe('Placidus');
+      if(newPrimary.status==='valid')expect(facts(model)['Indexed cusp']).toBe(`${newPrimary.cusps[6]!.toFixed(2)}°`);
+    }
+  });
   for (const sign of ZODIAC_SIGNS)
     it(`identifies tropical ${sign.name} independently of constellation regions`, () => {
       const model = card(featureHit(`sign:${sign.id}`));
@@ -285,6 +296,16 @@ describe('geometric identity, comparisons and historical representations', () =>
     expect(projected.kicker).toBe('Projected chart boundary');
     expect(projected.sections.map((section) => section.id)).toContain('hover:house-boundary');
     expectRegistered(projected);
+  });
+  it('rebinds a stable comparison cusp to the current secondary slot after a method change', () => {
+    const sky=engine.calculate(snapshot.instantMs,snapshot.observer,['E','P']);
+    const hit=featureHit('boundary:comparison:7','Comparison cusp 7',{representation:'comparison',system:'E'});
+    const model=card(hit,{snapshot:sky});
+    expect(facts(model).System).toBe('Placidus');
+    expect(model.notices).toContain('Comparison · Placidus');
+    const current=sky.houses[1]!;
+    if(current.status==='valid')expect(facts(model)['Indexed cusp']).toBe(`${current.cusps[6]!.toFixed(2)}°`);
+    expect(resolveHoverCard(hit,{snapshot:{...sky,houses:[sky.houses[0]!]}})).toBeNull();
   });
   it('discloses undefined houses instead of inventing a body-in-house placement', () => {
     const sky = {
@@ -391,6 +412,7 @@ describe('geometric identity, comparisons and historical representations', () =>
     );
     expect(facts(segment)).toHaveProperty('Segment begins');
     expect(facts(segment)).toHaveProperty('Segment ends');
+    expect(facts(segment)['Relative to displayed moment']).toBe('Spans displayed moment');
     expectRegistered(segment);
     expect(
       resolveHoverCard(

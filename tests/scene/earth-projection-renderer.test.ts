@@ -27,6 +27,37 @@ function resources(root: THREE.Object3D) {
 }
 
 describe('Earth surface renderer identity and lifecycle', () => {
+  it('finds the exact primary section analytically under a transformed globe and rejects disabled/interior hits', () => {
+    const display=renderer(),chart=snapshot(); display.update(chart,settings(),interaction);
+    const parent=new THREE.Group(); parent.position.set(3,-2,4);parent.rotation.set(.4,1.1,-.3);parent.scale.setScalar(1.4);parent.add(display.group);parent.updateMatrixWorld(true);
+    for(const entity of display.entities.filter(entity=>entity.id.startsWith('earth:house:'))) {
+      const origin=parent.localToWorld(entity.anchor.clone().normalize().multiplyScalar(3));
+      const centre=parent.localToWorld(new THREE.Vector3());
+      const hit=display.intersectHouse(new THREE.Ray(origin,centre.clone().sub(origin).normalize()),chart);
+      expect(hit?.object.userData.entityId).toBe(entity.id);
+      expect(hit?.distance).toBeCloseTo((3-.82*1.003)*1.4,8);
+      expect(hit?.point.distanceTo(centre)).toBeCloseTo(.82*1.003*1.4,8);
+    }
+    const origin=parent.localToWorld(new THREE.Vector3(0,0,3)),centre=parent.localToWorld(new THREE.Vector3());
+    const ray=new THREE.Ray(origin,centre.clone().sub(origin).normalize());
+    display.update(chart,{...settings(),houses:false},interaction);expect(display.intersectHouse(ray,chart)).toBeNull();
+    display.update(chart,settings(),interaction);expect(display.intersectHouse(new THREE.Ray(centre,new THREE.Vector3(1,0,0)),chart)).toBeNull();
+    display.dispose(); expect(display.intersectHouse(ray,chart)).toBeNull();
+  });
+  it('links primary sky house/cusp selections to their geographic section while preserving explicit geographic IDs', () => {
+    const display=renderer(),chart=snapshot();
+    const region=display.entities.find(entity=>entity.id==='earth:house:primary:7')!;
+    const surface=region.objects[0] as THREE.Mesh<THREE.BufferGeometry,THREE.MeshBasicMaterial>;
+    for(const selectedId of ['house:7','boundary:7','earth:house:primary:7','earth:boundary:primary:7']) {
+      display.update(chart,settings(),{...interaction,selectedId});
+      expect(display.group.userData.highlightedHouse).toBe('house:7');
+      expect(surface.material.color.getHex()).toBe(0xd6b56c);
+      expect(region.id).toBe('earth:house:primary:7');
+    }
+    display.update(chart,settings(),{...interaction,selectedId:'boundary:comparison:7'});
+    expect(display.group.userData.highlightedHouse).toBeNull();
+    expect(surface.material.color.getHex()).not.toBe(0xd6b56c); display.dispose();
+  });
   it('registers all24 indexed house features and40 geographic lines with independent IDs/roles', () => {
     const display = renderer(), chart = snapshot(), original = JSON.stringify(chart);
     display.update(chart, settings(), interaction);

@@ -32,6 +32,18 @@ function named<T extends THREE.Object3D>(group: THREE.Group, name: string): T {
 }
 
 describe('house renderer presentation invariants', () => {
+  it('links projected house/cusp selections to the same primary sky shell without linking comparison cusps', () => {
+    const display=renderer(),snapshot=sky();
+    for(const selectedId of ['earth:house:primary:7','earth:boundary:primary:7','house:7']) {
+      display.update(snapshot,settings,{...interaction,selectedId});
+      expect(display.group.userData.highlightedHouse).toBe('house:7');
+      const shell=named<THREE.Mesh<THREE.BufferGeometry,THREE.MeshBasicMaterial>>(display.group,'House 7 outer surface');
+      expect(shell.material.color.getHex()).toBe(0xf1d79d);
+      expect(shell.material.visible).toBe(true);
+    }
+    display.update(snapshot,settings,{...interaction,selectedId:'boundary:comparison:7'});
+    expect(display.group.userData.highlightedHouse).toBeNull();
+  });
   for (const result of fixtures.cases[0]!.observers[0]!.houses) for (const mode of ['volumes', 'arcs', 'shells'] as const) {
     it(`renders native ${result.system} cusps in ${mode} without changing membership or body positions`, () => {
       const display = renderer(), snapshot = sky([result as HouseResult]);
@@ -114,9 +126,9 @@ describe('house renderer presentation invariants', () => {
     const boundary = display.entities.find(entity => entity.id === 'boundary:1')!;
     expect(boundary.objects[0]!.visible).toBe(true);
     expect(boundary.lines[0]!.userData.pickable).toBe(false);
-    expect(boundary.label.userData.labelEnabled).toBe(false);
+    expect(boundary.label!.userData.labelEnabled).toBe(false);
     display.update(sky(), settings, { ...interaction, selectedId: 'boundary:1' });
-    expect(boundary.label.userData.labelEnabled).toBe(true);
+    expect(boundary.label!.userData.labelEnabled).toBe(true);
   });
 
   it('links a selected body to its primary house and shows only changed comparison boundaries by default', () => {

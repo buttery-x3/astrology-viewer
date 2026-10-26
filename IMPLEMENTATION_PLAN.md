@@ -669,6 +669,6 @@ The release must retain the defining experience: one explorable spatial sky in w
 
 Approval of this plan does not assert that proposed calculations, targets, tests, content entries, or deployment have already been verified. Each milestone records its actual evidence separately.
 
-## 18. Proposed additional milestone
+## 18. Approved additional milestone
 
-The user's 26 October 2026 extension is planned in [M10 — Rich hover cards, constellation figures, and Earth projections](docs/plans/M10-hover-and-earth-projections.md). It covers combined aspect explanations on hover with themed luminous borders, complementary gradients, translucent dark reading panels and animated sparkles; independent constellation stick figures; close Earth overview with projected house sections and astrocartography; and Layered shells with 0% selected-shell lift as the initial/reset default. M10 is proposed and not yet implemented; its document records concrete defaults, work packages, numerical conventions and acceptance criteria.
+The user's approved 26 October 2026 extension is specified in [M10 — Rich hover cards, constellation figures, and Earth projections](docs/plans/M10-hover-and-earth-projections.md). It covers combined aspect explanations on hover with themed luminous borders, complementary gradients, translucent dark reading panels and animated sparkles; independent constellation stick figures; close Earth overview with projected house sections and astrocartography; and Layered shells with 0% selected-shell lift as the initial/reset default. Implementation and integrated validation are in progress; [implementation status](docs/IMPLEMENTATION_STATUS.md) records reviewed packages and actual evidence.

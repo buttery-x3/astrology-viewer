@@ -30,7 +30,7 @@ export function navigationGroups(context:HoverCardContext,stage=2):NavigationGro
     if(primary&&partition?.status==='valid')for(let house=1;house<=12;house++)for(const role of ['house','boundary']){const id=`earth:${role}:primary:${house}`;earth.push({hit:{id,entityId:id,name:`Projected ${role==='house'?'house':'cusp'} ${house} · ${systemName(primary.system)}`,kind:'earth-house',representation:'earth',system:primary.system,role:role==='house'?'section':'boundary'},detail:role==='house'?'Projected chart house':'Projected indexed boundary'});}
     else earthReason=partition?.status==='undefined'?partition.reason:'No primary house calculation is available.';
     const secondary=sky.houses[1],secondaryPartition=secondary?housePartition(secondary):null;
-    if(secondary&&secondaryPartition?.status==='valid')for(let house=1;house<=12;house++)comparison.push({hit:{id:`boundary:comparison:${house}`,entityId:`boundary:${house}`,name:`Comparison cusp ${house} · ${systemName(secondary.system)}`,kind:'boundary',representation:'comparison',system:secondary.system,role:'comparison-boundary'},detail:`Comparison boundary · ${systemName(secondary.system)}`});
+    if(secondary&&secondaryPartition?.status==='valid')for(let house=1;house<=12;house++)comparison.push({hit:{id:`boundary:comparison:${house}`,entityId:`boundary:comparison:${house}`,name:`Comparison cusp ${house} · ${systemName(secondary.system)}`,kind:'boundary',representation:'comparison',system:secondary.system,role:'comparison-boundary'},detail:`Comparison boundary · ${systemName(secondary.system)}`});
     else if(secondaryPartition?.status==='undefined')comparisonReason=secondaryPartition.reason;
     const guide=context.construction;
     if(guide?.status==='valid'){

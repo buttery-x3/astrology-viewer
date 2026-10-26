@@ -7,11 +7,12 @@ import {
   type EphemerisSnapshot,
   type HouseResult,
 } from '../astronomy/ephemeris';
-import { normalizeDegrees } from '../astronomy/coordinates';
-import { CATALOGUE_STARS, CONSTELLATIONS, type CatalogueStar } from '../scene/sky-data';
+import { normalizeDegrees, vectorToEquatorial } from '../astronomy/coordinates';
+import { CATALOGUE_STARS, CONSTELLATIONS, catalogueStarDirection, type CatalogueStar } from '../scene/sky-data';
 import { getAspectDetails } from './aspect-presentation';
 import {
   classifyLongitude,
+  ASPECT_TYPES,
   housePartition,
   zodiacSign,
   DEFAULT_ORBS,
@@ -101,6 +102,9 @@ export const LAYER_HELP: Record<string, { title: string; claimIds: readonly stri
     construction: { title: 'House construction guides', claimIds: ['construction:display-note:5'] },
     trails: { title: 'Body trails', claimIds: ['concept:trails'] },
     history: { title: 'Boundary history', claimIds: ['hover:history'] },
+    ...Object.fromEntries(ASPECT_TYPES.map(type => [`aspect-type:${type.id}`, {
+      title: type.name, claimIds: [`aspect-type:${type.id}`, 'hover:aspects-layer'],
+    }])),
   });
 const starsById = new Map(CATALOGUE_STARS.map((star) => [star[0], star]));
 const cachedReferences = new WeakMap<EphemerisSnapshot, readonly SkyReference[]>();
@@ -135,11 +139,12 @@ function section(id: string, title: string, role?: ContentClaim['role']): HoverS
   return { id, title, paragraphs: paragraphs(id, role) };
 }
 function housesFor(hit: FeatureHit, snapshot: EphemerisSnapshot): HouseResult | undefined {
+  // The primary representation follows the current chart when its method changes.
+  if (/^earth:(?:house|boundary):primary:/.test(hit.id)) return snapshot.houses[0];
+  if (hit.representation==='comparison') return snapshot.houses[1];
   return hit.system
     ? snapshot.houses.find((item) => item.system === hit.system)
-    : hit.representation === 'comparison'
-      ? snapshot.houses[1]
-      : snapshot.houses[0];
+    : snapshot.houses[0];
 }
 function references(context: HoverCardContext) {
   if (context.references) return context.references;
@@ -221,7 +226,7 @@ export function resolveHoverCard(
   if (context.pending) model.notices.push('Previous calculated snapshot · update pending');
   if (context.provisional) model.notices.push('Provisional birth time');
   if (hit.representation === 'comparison')
-    model.notices.push(`Comparison · ${systemName(hit.system ?? sky?.houses[1]?.system)}`);
+    model.notices.push(`Comparison · ${systemName(sky?.houses[1]?.system ?? hit.system)}`);
   if (hit.role) model.facts.push({ label: 'Feature role', value: hit.role });
   const id = hit.entityId;
   switch (hit.kind) {
@@ -345,7 +350,8 @@ export function resolveHoverCard(
         );
         if (context.localTime?.instantMs === sky!.instantMs)
           model.facts.push({ label: 'Local moment', value: context.localTime.label });
-      } else if (/(?:compass|cardinal|north|east|south|west)(?::|$)/.test(id) && !getContent(id)) {
+      } else if (/(?:compass|cardinal|north|east|south|west)(?::|$)/.test(hit.id) && !getContent(hit.id)) {
+        model.title = hit.name;
         model.sections.push(section('hover:compass', 'Local directions'));
       } else {
         const reference = references(context).find((item) => item.id === id);
@@ -396,6 +402,12 @@ export function resolveHoverCard(
       model.facts.push(
         { label: 'Catalogue identity', value: `HYG ${star[0]}` },
         { label: 'Visual magnitude', value: star[2].toFixed(2) },
+      );
+      const position=vectorToEquatorial(catalogueStarDirection(star,sky!.time.julianDateTt));
+      model.facts.push(
+        {label:'Fixed J2000 RA',value:degree(position.rightAscensionDeg)},
+        {label:'Fixed J2000 declination',value:signedDegree(position.declinationDeg)},
+        {label:'Position epoch',value:utc(sky!.instantMs)},
       );
       model.sections.push(section('hover:star', 'Catalogue position'));
       break;
@@ -465,7 +477,9 @@ export function resolveHoverCard(
           {
             label: 'Relative to displayed moment',
             value:
-              hit.sampleInstantMs < sky!.instantMs
+              hit.sampleEndInstantMs !== undefined && hit.sampleInstantMs <= sky!.instantMs && hit.sampleEndInstantMs >= sky!.instantMs
+                ? 'Spans displayed moment'
+                : (hit.sampleEndInstantMs ?? hit.sampleInstantMs) < sky!.instantMs
                 ? 'Past'
                 : hit.sampleInstantMs > sky!.instantMs
                   ? 'Future'
