@@ -70,6 +70,7 @@ test('a real canvas preview clears on graphics-context loss while the pointer re
   page,
 }) => {
   await example(page);
+  await page.getByRole('button', { name: 'Earth overview', exact: true }).click();
   const canvas = page.locator('.scene-canvas canvas'),
     box = (await canvas.boundingBox())!;
   await canvas.hover({ position: { x: box.width / 2 + 50, y: box.height / 2 } });
@@ -83,7 +84,7 @@ test('a real canvas preview clears on graphics-context loss while the pointer re
   await expect(card(page)).toHaveCount(0);
 });
 
-test('default overview keeps the actual GPU camera pose across hour stepping and context restoration', async ({
+test('Earth overview keeps the actual GPU camera pose across hour stepping and context restoration', async ({
   page,
 }) => {
   await page.addInitScript(() => {
@@ -113,6 +114,7 @@ test('default overview keeps the actual GPU camera pose across hour stepping and
     };
   });
   await example(page);
+  await page.getByRole('button', { name: 'Earth overview', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Earth overview', exact: true })).toHaveAttribute(
     'aria-pressed',
     'true',
@@ -185,6 +187,8 @@ test('actual indexed catalogue points choose Mizar and Alcor exactly at the Obse
 }, testInfo) => {
   await installSceneFrameCapture(page);
   await example(page);
+  // Configure the Observer profile after entering it; other views keep their own layers.
+  await page.getByRole('button', { name: 'Observer sky', exact: true }).click();
   await openControlGroup(page, 'display');
   await page.getByLabel('Rendering quality', { exact: true }).selectOption('low');
   await openControlGroup(page, 'aspects');
@@ -196,7 +200,6 @@ test('actual indexed catalogue points choose Mizar and Alcor exactly at the Obse
     if ((await target.getAttribute('data-feature-id')) !== 'layer:stars')
       await target.locator('input').uncheck();
   }
-  await page.getByRole('button', { name: 'Observer sky', exact: true }).click();
   await openControlGroup(page, 'references');
   const canvas = page.locator('.scene-canvas canvas'),
     records: { hygId: number; name: string; choices: string[] }[] = [];
