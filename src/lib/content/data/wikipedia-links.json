@@ -1,0 +1,557 @@
+{
+  "reviewedAt": "2026-10-25",
+  "role": "navigation-only",
+  "verification": "Requested article URLs were opened through web browsing; page identity and relevant overview topic checked. This does not establish claim support or a licence to copy article prose.",
+  "reuse": "Links and article titles only; no Wikipedia article text or images are copied. Existing primary-source claims and canonical-page word budgets remain unchanged.",
+  "redirectNotes": {
+    "angle:dsc": "Currently redirects to broader Horoscope article.",
+    "angle:mc": "Currently redirects to broader House (astrology) article.",
+    "concept:frames": "Currently resolves as Astronomical coordinate systems."
+  },
+  "links": {
+    "body:sun": [
+      {
+        "title": "Sun",
+        "url": "https://en.wikipedia.org/wiki/Sun"
+      },
+      {
+        "title": "Planets in astrology",
+        "url": "https://en.wikipedia.org/wiki/Planets_in_astrology"
+      }
+    ],
+    "body:moon": [
+      {
+        "title": "Moon",
+        "url": "https://en.wikipedia.org/wiki/Moon"
+      },
+      {
+        "title": "Planets in astrology",
+        "url": "https://en.wikipedia.org/wiki/Planets_in_astrology"
+      }
+    ],
+    "body:mercury": [
+      {
+        "title": "Mercury (planet)",
+        "url": "https://en.wikipedia.org/wiki/Mercury_(planet)"
+      },
+      {
+        "title": "Planets in astrology",
+        "url": "https://en.wikipedia.org/wiki/Planets_in_astrology"
+      }
+    ],
+    "body:venus": [
+      {
+        "title": "Venus",
+        "url": "https://en.wikipedia.org/wiki/Venus"
+      },
+      {
+        "title": "Planets in astrology",
+        "url": "https://en.wikipedia.org/wiki/Planets_in_astrology"
+      }
+    ],
+    "body:mars": [
+      {
+        "title": "Mars",
+        "url": "https://en.wikipedia.org/wiki/Mars"
+      },
+      {
+        "title": "Planets in astrology",
+        "url": "https://en.wikipedia.org/wiki/Planets_in_astrology"
+      }
+    ],
+    "body:jupiter": [
+      {
+        "title": "Jupiter",
+        "url": "https://en.wikipedia.org/wiki/Jupiter"
+      },
+      {
+        "title": "Planets in astrology",
+        "url": "https://en.wikipedia.org/wiki/Planets_in_astrology"
+      }
+    ],
+    "body:saturn": [
+      {
+        "title": "Saturn",
+        "url": "https://en.wikipedia.org/wiki/Saturn"
+      },
+      {
+        "title": "Planets in astrology",
+        "url": "https://en.wikipedia.org/wiki/Planets_in_astrology"
+      }
+    ],
+    "body:uranus": [
+      {
+        "title": "Uranus",
+        "url": "https://en.wikipedia.org/wiki/Uranus"
+      },
+      {
+        "title": "Planets in astrology",
+        "url": "https://en.wikipedia.org/wiki/Planets_in_astrology"
+      }
+    ],
+    "body:neptune": [
+      {
+        "title": "Neptune",
+        "url": "https://en.wikipedia.org/wiki/Neptune"
+      },
+      {
+        "title": "Planets in astrology",
+        "url": "https://en.wikipedia.org/wiki/Planets_in_astrology"
+      }
+    ],
+    "body:pluto": [
+      {
+        "title": "Pluto",
+        "url": "https://en.wikipedia.org/wiki/Pluto"
+      },
+      {
+        "title": "Planets in astrology",
+        "url": "https://en.wikipedia.org/wiki/Planets_in_astrology"
+      }
+    ],
+    "sign:aries": [
+      {
+        "title": "Aries (astrology)",
+        "url": "https://en.wikipedia.org/wiki/Aries_(astrology)"
+      }
+    ],
+    "sign:taurus": [
+      {
+        "title": "Taurus (astrology)",
+        "url": "https://en.wikipedia.org/wiki/Taurus_(astrology)"
+      }
+    ],
+    "sign:gemini": [
+      {
+        "title": "Gemini (astrology)",
+        "url": "https://en.wikipedia.org/wiki/Gemini_(astrology)"
+      }
+    ],
+    "sign:cancer": [
+      {
+        "title": "Cancer (astrology)",
+        "url": "https://en.wikipedia.org/wiki/Cancer_(astrology)"
+      }
+    ],
+    "sign:leo": [
+      {
+        "title": "Leo (astrology)",
+        "url": "https://en.wikipedia.org/wiki/Leo_(astrology)"
+      }
+    ],
+    "sign:virgo": [
+      {
+        "title": "Virgo (astrology)",
+        "url": "https://en.wikipedia.org/wiki/Virgo_(astrology)"
+      }
+    ],
+    "sign:libra": [
+      {
+        "title": "Libra (astrology)",
+        "url": "https://en.wikipedia.org/wiki/Libra_(astrology)"
+      }
+    ],
+    "sign:scorpio": [
+      {
+        "title": "Scorpio (astrology)",
+        "url": "https://en.wikipedia.org/wiki/Scorpio_(astrology)"
+      }
+    ],
+    "sign:sagittarius": [
+      {
+        "title": "Sagittarius (astrology)",
+        "url": "https://en.wikipedia.org/wiki/Sagittarius_(astrology)"
+      }
+    ],
+    "sign:capricorn": [
+      {
+        "title": "Capricorn (astrology)",
+        "url": "https://en.wikipedia.org/wiki/Capricorn_(astrology)"
+      }
+    ],
+    "sign:aquarius": [
+      {
+        "title": "Aquarius (astrology)",
+        "url": "https://en.wikipedia.org/wiki/Aquarius_(astrology)"
+      }
+    ],
+    "sign:pisces": [
+      {
+        "title": "Pisces (astrology)",
+        "url": "https://en.wikipedia.org/wiki/Pisces_(astrology)"
+      }
+    ],
+    "house:1": [
+      {
+        "title": "Houses in astrology",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "house:2": [
+      {
+        "title": "Houses in astrology",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "house:3": [
+      {
+        "title": "Houses in astrology",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "house:4": [
+      {
+        "title": "Houses in astrology",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "house:5": [
+      {
+        "title": "Houses in astrology",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "house:6": [
+      {
+        "title": "Houses in astrology",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "house:7": [
+      {
+        "title": "Houses in astrology",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "house:8": [
+      {
+        "title": "Houses in astrology",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "house:9": [
+      {
+        "title": "Houses in astrology",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "house:10": [
+      {
+        "title": "Houses in astrology",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "house:11": [
+      {
+        "title": "Houses in astrology",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "house:12": [
+      {
+        "title": "Houses in astrology",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "aspect-type:conjunction": [
+      {
+        "title": "Astrological aspects",
+        "url": "https://en.wikipedia.org/wiki/Astrological_aspect"
+      }
+    ],
+    "aspect-type:sextile": [
+      {
+        "title": "Astrological aspects",
+        "url": "https://en.wikipedia.org/wiki/Astrological_aspect"
+      }
+    ],
+    "aspect-type:square": [
+      {
+        "title": "Astrological aspects",
+        "url": "https://en.wikipedia.org/wiki/Astrological_aspect"
+      }
+    ],
+    "aspect-type:trine": [
+      {
+        "title": "Astrological aspects",
+        "url": "https://en.wikipedia.org/wiki/Astrological_aspect"
+      }
+    ],
+    "aspect-type:opposition": [
+      {
+        "title": "Astrological aspects",
+        "url": "https://en.wikipedia.org/wiki/Astrological_aspect"
+      }
+    ],
+    "system:W": [
+      {
+        "title": "Systems of house division",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "system:E": [
+      {
+        "title": "Systems of house division",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "system:O": [
+      {
+        "title": "Systems of house division",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "system:R": [
+      {
+        "title": "Systems of house division",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "system:C": [
+      {
+        "title": "Systems of house division",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "system:P": [
+      {
+        "title": "Systems of house division",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "system:K": [
+      {
+        "title": "Systems of house division",
+        "url": "https://en.wikipedia.org/wiki/House_(astrology)"
+      }
+    ],
+    "reference:horizon": [
+      {
+        "title": "Horizon",
+        "url": "https://en.wikipedia.org/wiki/Horizon"
+      }
+    ],
+    "reference:ecliptic": [
+      {
+        "title": "Ecliptic",
+        "url": "https://en.wikipedia.org/wiki/Ecliptic"
+      }
+    ],
+    "reference:equator": [
+      {
+        "title": "Celestial equator",
+        "url": "https://en.wikipedia.org/wiki/Celestial_equator"
+      }
+    ],
+    "reference:meridian": [
+      {
+        "title": "Meridian (astronomy)",
+        "url": "https://en.wikipedia.org/wiki/Meridian_(astronomy)"
+      }
+    ],
+    "reference:prime-vertical": [
+      {
+        "title": "Prime vertical",
+        "url": "https://en.wikipedia.org/wiki/Prime_vertical"
+      }
+    ],
+    "reference:zenith": [
+      {
+        "title": "Zenith",
+        "url": "https://en.wikipedia.org/wiki/Zenith"
+      }
+    ],
+    "reference:nadir": [
+      {
+        "title": "Nadir",
+        "url": "https://en.wikipedia.org/wiki/Nadir"
+      }
+    ],
+    "reference:north-pole": [
+      {
+        "title": "Celestial pole",
+        "url": "https://en.wikipedia.org/wiki/Celestial_pole"
+      }
+    ],
+    "reference:south-pole": [
+      {
+        "title": "Celestial pole",
+        "url": "https://en.wikipedia.org/wiki/Celestial_pole"
+      }
+    ],
+    "angle:asc": [
+      {
+        "title": "Ascendant",
+        "url": "https://en.wikipedia.org/wiki/Ascendant"
+      }
+    ],
+    "angle:dsc": [
+      {
+        "title": "Descendant",
+        "url": "https://en.wikipedia.org/wiki/Descendant_(astrology)"
+      }
+    ],
+    "angle:mc": [
+      {
+        "title": "Midheaven",
+        "url": "https://en.wikipedia.org/wiki/Midheaven"
+      }
+    ],
+    "angle:ic": [
+      {
+        "title": "Imum coeli",
+        "url": "https://en.wikipedia.org/wiki/Imum_coeli"
+      }
+    ],
+    "concept:evidence": [
+      {
+        "title": "Astrology and science",
+        "url": "https://en.wikipedia.org/wiki/Astrology_and_science"
+      }
+    ],
+    "concept:civil-time": [
+      {
+        "title": "Time zone",
+        "url": "https://en.wikipedia.org/wiki/Time_zone"
+      }
+    ],
+    "concept:frames": [
+      {
+        "title": "Astronomical coordinate systems",
+        "url": "https://en.wikipedia.org/wiki/Celestial_coordinate_system"
+      }
+    ],
+    "concept:retrograde": [
+      {
+        "title": "Apparent retrograde motion",
+        "url": "https://en.wikipedia.org/wiki/Apparent_retrograde_motion"
+      }
+    ],
+    "concept:conventions": [
+      {
+        "title": "Zodiac",
+        "url": "https://en.wikipedia.org/wiki/Zodiac"
+      }
+    ],
+    "concept:trails": [
+      {
+        "title": "Equatorial coordinate system",
+        "url": "https://en.wikipedia.org/wiki/Equatorial_coordinate_system"
+      },
+      {
+        "title": "Horizontal coordinate system",
+        "url": "https://en.wikipedia.org/wiki/Horizontal_coordinate_system"
+      }
+    ],
+    "astro:overview": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:body:sun": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:body:moon": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:body:mercury": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:body:venus": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:body:mars": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:body:jupiter": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:body:saturn": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:body:uranus": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:body:neptune": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:body:pluto": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:angle:ac": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:angle:dc": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:angle:mc": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ],
+    "astro:angle:ic": [
+      {
+        "title": "Locational astrology — Astrocartography",
+        "url": "https://en.wikipedia.org/wiki/Locational_astrology#Astrocartography"
+      }
+    ]
+  },
+  "featureLinks": {
+    "reference:earth": [
+      {
+        "title": "Earth",
+        "url": "https://en.wikipedia.org/wiki/Earth"
+      }
+    ],
+    "reference:observer": [
+      {
+        "title": "Geographic coordinate system",
+        "url": "https://en.wikipedia.org/wiki/Geographic_coordinate_system"
+      }
+    ],
+    "constellation:*": [
+      {
+        "title": "IAU designated constellations",
+        "url": "https://en.wikipedia.org/wiki/IAU_designated_constellations"
+      }
+    ]
+  }
+}

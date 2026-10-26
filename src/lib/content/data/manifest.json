@@ -1,0 +1,64 @@
+{
+  "catalogueVersion": "1.1.0",
+  "reviewedAt": "2026-10-26",
+  "status": "reviewed",
+  "entryCount": 320,
+  "sourceCount": 90,
+  "requiredContentIdsSha256": "5825a41201395b5c6e6376cfaed11ef4dbc8aa30c687a3c6529d9b5f9cd9da7b",
+  "files": {
+    "catalogue.json": {
+      "sha256": "bb0e78fb120ac42ee5fdc843d7682fa0838a0907cc457426f907d74a0038822d",
+      "bytes": 237732
+    },
+    "sources.json": {
+      "sha256": "37805111a74f71be880f9f942678bc31efd1876cebe5fd23ba7f4203226eb13a",
+      "bytes": 67265
+    },
+    "supplemental-claims.json": {
+      "sha256": "318be27fc08431a4511628512216baa7b7961eaede537ad2b7039f19834d174d",
+      "bytes": 20219
+    },
+    "curation-provenance.json": {
+      "sha256": "91f4c952ea0e713f76887250a91e2c64773b38bc925d3b97189b2ce6e906f931",
+      "bytes": 2777
+    },
+    "wikipedia-links.json": {
+      "sha256": "dc419bb4bea4443d6ad6b6715c172c2e3407e75367dd840e8531dbbcbaa82e12",
+      "bytes": 14982
+    },
+    "word-budgets.json": {
+      "sha256": "73c9a6db474f5d65debff9db6cf96c12012c6843293212b1321b773c3e86297e",
+      "bytes": 33403
+    }
+  },
+  "byKind": {
+    "body": 10,
+    "sign": 12,
+    "house": 12,
+    "aspect": 5,
+    "house-system": 7,
+    "reference": 12,
+    "angle": 4,
+    "evidence": 1,
+    "time": 1,
+    "trail": 1,
+    "body-in-house": 120,
+    "body-in-sign": 120,
+    "astrocartography": 15
+  },
+  "claimsByRole": {
+    "astronomy": 21,
+    "tradition": 294,
+    "project-convention": 22,
+    "method": 11,
+    "evidence": 1,
+    "time-data": 1
+  },
+  "reviewScope": "Agent source curation during M6 and M10 authoring; integration validates exact coverage, roles, source references, source-code reuse and combined canonical-page word budgets. No runtime interpretation generation. Human claim-to-passage editorial review remains an external release gate.",
+  "limitations": [
+    "Practitioner sources establish attributed traditions, not predictive effects.",
+    "Historical civil time and birth time can remain uncertain despite precise calculation.",
+    "Some house definitions were reviewed via indexed primary-page text during publisher outages.",
+    "Product-rule sources are pinned to a reviewed project commit; external publisher pages can change after the recorded review date."
+  ]
+}

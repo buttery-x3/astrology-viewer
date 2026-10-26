@@ -1,0 +1,452 @@
+[
+  {
+    "id": "construction:W:0",
+    "text": "Locate the system’s Ascendant sign.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case W / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:W:1",
+    "text": "Advance one whole sign per house.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case W / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:W:2",
+    "text": "The sign’s starting degree is the cusp.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case W / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:E:0",
+    "text": "Start at the system’s Ascendant degree.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case E / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:E:1",
+    "text": "Advance thirty degrees per house.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case E / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:E:2",
+    "text": "The resulting longitude defines the cusp.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case E / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:O:0",
+    "text": "Use the system’s four principal angles.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case O / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:O:1",
+    "text": "Trisect each directed ecliptic quadrant.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case O / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:O:2",
+    "text": "The third marks locate intermediate cusps.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case O / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:R:0",
+    "text": "Divide the celestial equator into twelve parts.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case R / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:R:1",
+    "text": "Project through the north and south horizon points.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case R / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:R:2",
+    "text": "Keep the system’s indexed ecliptic intersection.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case R / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:C:0",
+    "text": "Divide the prime vertical into twelve parts.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case C / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:C:1",
+    "text": "Project through the north and south horizon points.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case C / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:C:2",
+    "text": "Keep the system’s indexed ecliptic intersection.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case C / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:P:0",
+    "text": "Follow this cusp’s own declination circle.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case P / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:P:1",
+    "text": "Thirds divide rising or setting time.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case P / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:P:2",
+    "text": "Solve its time fraction on the ecliptic.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case P / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:K:0",
+    "text": "Track the Midheaven degree’s rising arc.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case K / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:K:1",
+    "text": "Use its thirds to shift horizons.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case K / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:K:2",
+    "text": "Intersect each shifted horizon with the ecliptic.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH case K / default Placidus",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:polar-note",
+    "text": "System-specific polar angles can differ from literal eastern ASC or upper-transit MC.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH polar angle conventions and angle anchors",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:anchor-note",
+    "text": "Angle anchors need no timed trisection. Select C11, C12, C2 or C3 to inspect it.",
+    "role": "method",
+    "sourceUrls": [
+      "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c"
+    ],
+    "section": "CalcH polar angle conventions and angle anchors",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:display-note:0",
+    "text": "Independent construction differs from the returned cusps by more than 0.01°. Geometry is withheld until the discrepancy is resolved.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/house-construction-contract.md"
+    ],
+    "section": "Timing-circle display convention; Sweep and validation",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:display-note:2",
+    "text": "Timing-circle markers illustrate Earth’s rotation relative to a held horizon; the fixed ecliptic degree does not move against the stars.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/house-construction-contract.md"
+    ],
+    "section": "Timing-circle display convention; Sweep and validation",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:display-note:3",
+    "text": "Shifted horizon planes show past/future orientations in fixed axes; the MC arc is a separate local-timing reference.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/house-construction-contract.md"
+    ],
+    "section": "Timing-circle display convention; Sweep and validation",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "construction:display-note:5",
+    "text": "Construction sweep illustrates the rule; chart values stay fixed.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/house-construction-contract.md"
+    ],
+    "section": "Timing-circle display convention; Sweep and validation",
+    "sourceCode": "src/lib/domain/house-construction.ts"
+  },
+  {
+    "id": "calculation-provenance:0",
+    "text": "The engine treats this historical UTC-labelled reference as UT1 using its pinned historical ΔT model. It is not evidence of the accuracy of a recorded civil clock.",
+    "role": "method",
+    "sourceUrls": [
+      "https://www.astro.com/swisseph/swephprg.htm"
+    ],
+    "section": "swe_utc_to_jd; delta T; historical/future UTC handling",
+    "sourceCode": "src/lib/ui/CalculationProvenance.svelte"
+  },
+  {
+    "id": "calculation-provenance:1",
+    "text": "The date exceeds the engine’s known leap-second information. It uses a future UT1 assumption and modelled ΔT; future Earth rotation and civil rules remain uncertain.",
+    "role": "method",
+    "sourceUrls": [
+      "https://www.astro.com/swisseph/swephprg.htm"
+    ],
+    "section": "swe_utc_to_jd; delta T; historical/future UTC handling",
+    "sourceCode": "src/lib/ui/CalculationProvenance.svelte"
+  },
+  {
+    "id": "calculation-provenance:2",
+    "text": "UTC is converted using the engine’s pinned leap-second table and ΔT model. TT and UT1 are kept distinct.",
+    "role": "method",
+    "sourceUrls": [
+      "https://www.astro.com/swisseph/swephprg.htm"
+    ],
+    "section": "swe_utc_to_jd; delta T; historical/future UTC handling",
+    "sourceCode": "src/lib/ui/CalculationProvenance.svelte"
+  },
+  {
+    "id": "calculation-provenance:3",
+    "text": "Apparent geocentric directions · tropical of date · fixed J2000 scene axes · geometric horizon · no atmospheric refraction or topocentric parallax.",
+    "role": "method",
+    "sourceUrls": [
+      "https://www.astro.com/swisseph/swephprg.htm"
+    ],
+    "section": "Coordinate flags; geocentric, apparent and equatorial/ecliptic outputs",
+    "sourceCode": "src/lib/ui/CalculationProvenance.svelte"
+  },
+  {
+    "id": "hover:earth",
+    "text": "The schematic Earth locates the observer beneath the surrounding sky. Its size is illustrative; geographic directions share the chart’s fixed frame.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/coordinate-contract.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:observer",
+    "text": "The observer sets the local horizon and house calculation. Changing location does not change geocentric planetary longitudes at the same instant.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/coordinate-contract.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:constellation",
+    "text": "An official constellation region is an area of sky, independent of the twelve equal tropical signs.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/data-and-licensing.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:asterism",
+    "text": "These connected stars follow one modern Western drawing convention. The figure is distinct from the official constellation region and from a tropical sign.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:star",
+    "text": "Catalogue stars use mean J2000 directions with linear proper motion. The display omits annual aberration, parallax and variable brightness.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/data-and-licensing.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:earth-house",
+    "text": "This is a radial projection of the current chart’s longitude house onto Earth. It is not a relocated house chart for every location inside the section.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:history",
+    "text": "A boundary history sample preserves its indexed cusp and calculation time. Undefined samples and discontinuous jumps are not connected as a continuous boundary.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:trail-segment",
+    "text": "A segment summarizes the interval between sampled directions. Its interior is approximate; current placements are not substituted for an older sample.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:sign-constellation",
+    "text": "Tropical signs divide ecliptic longitude into twelve equal intervals. They do not share the unequal boundaries of the constellations.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/coordinate-contract.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:house-boundary",
+    "text": "An indexed cusp separates the previous house from the house with that cusp number. Membership follows the system’s directed longitude interval.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:compass",
+    "text": "Compass labels mark local horizon directions: north 0°, east 90°, south 180° and west 270° azimuth.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/coordinate-contract.md"
+    ],
+    "section": "2. Rich hover cards; 3. Constellation asterisms; 5. Earth projections; 6. Implementation architecture",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:houses-layer",
+    "text": "House displays extend the selected system’s indexed longitude intervals away from the ecliptic. Display modes change their presentation while preserving the same house membership.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/src/lib/domain/house-geometry.ts"
+    ],
+    "section": "M10 display and hover convention; shared longitude house membership; actual latitude versus longitude aspects",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:aspects-layer",
+    "text": "Aspect strands connect bodies whose ecliptic longitude separation falls within an enabled aspect’s configured orb. The actual angle between their sky directions can differ.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md"
+    ],
+    "section": "M10 display and hover convention; shared longitude house membership; actual latitude versus longitude aspects",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  },
+  {
+    "id": "hover:bodies-layer",
+    "text": "Body markers show geocentric planetary directions for the displayed moment. Their sizes and distances on the surrounding sky are illustrative.",
+    "role": "project-convention",
+    "sourceUrls": [
+      "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/coordinate-contract.md"
+    ],
+    "section": "M10 display and hover convention; shared longitude house membership; actual latitude versus longitude aspects",
+    "sourceCode": "src/lib/content/project-explanations.ts"
+  }
+]

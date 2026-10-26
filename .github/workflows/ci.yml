@@ -1,0 +1,75 @@
+name: Milestone checks
+on:
+  pull_request:
+    branches: [codex/development, main]
+    types: [opened, synchronize, reopened, labeled]
+  push:
+    branches: [codex/development]
+  workflow_dispatch:
+    inputs:
+      full_release:
+        description: Run the complete packaged three-engine release validation
+        type: boolean
+        default: true
+concurrency:
+  group: milestone-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      FULL_RELEASE: ${{ (github.event_name == 'workflow_dispatch' && inputs.full_release) || (github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'full-release-validation') }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run lint
+      - run: npm test
+      - run: npm run validate:content
+      - run: npm run validate:notices
+      - run: node scripts/verify-assets.mjs
+      - if: env.FULL_RELEASE == 'true'
+        run: node scripts/install-browsers.mjs chromium firefox webkit --with-deps
+      - if: env.FULL_RELEASE == 'true'
+        run: sudo apt-get install -y --no-install-recommends xvfb xauth libgl1-mesa-dri libegl-mesa0 mesa-utils
+      - if: env.FULL_RELEASE == 'true'
+        run: npm run release:build
+      - if: env.FULL_RELEASE == 'true'
+        run: xvfb-run -a -s '-screen 0 1920x1080x24 -nolisten tcp +extension GLX' npm run release:verify -- --config playwright.cross-browser.config.ts
+        env:
+          MATRIX_SCREENSHOTS: '1'
+          BROWSER_SOFTWARE_WEBGL: '1'
+          LIBGL_ALWAYS_SOFTWARE: 'true'
+          GALLIUM_DRIVER: llvmpipe
+      - uses: actions/upload-artifact@v4
+        if: success() && env.FULL_RELEASE == 'true'
+        with:
+          name: verified-release-candidate
+          path: |
+            .cache/releases/
+            !.cache/releases/build-*/**
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: success() && env.FULL_RELEASE == 'true'
+        with:
+          name: verified-browser-evidence
+          path: |
+            .cache/browser-cross-results.json
+            .cache/browser-environment/firefox-webgl-environment.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: failure() && env.FULL_RELEASE == 'true'
+        with:
+          name: browser-failure-evidence
+          path: |
+            test-results/
+            .cache/browser-cross-results/
+            .cache/browser-cross-results.json
+            .cache/browser-environment/
+          if-no-files-found: ignore

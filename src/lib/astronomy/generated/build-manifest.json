@@ -1,0 +1,47 @@
+{
+  "upstream": "https://github.com/aloistr/swisseph",
+  "revision": "f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0",
+  "tag": "v2.10.3bfinal",
+  "emscripten": "4.0.23",
+  "flags": [
+    "native/spatial_ephemeris.c",
+    "vendor/swisseph/swedate.c",
+    "vendor/swisseph/swehouse.c",
+    "vendor/swisseph/swejpl.c",
+    "vendor/swisseph/swemmoon.c",
+    "vendor/swisseph/swemplan.c",
+    "vendor/swisseph/sweph.c",
+    "vendor/swisseph/swephlib.c",
+    "vendor/swisseph/swecl.c",
+    "vendor/swisseph/swehel.c",
+    "-Ivendor/swisseph",
+    "-I.cache/build",
+    "-O3",
+    "-lm",
+    "--no-entry",
+    "-sMODULARIZE=1",
+    "-sEXPORT_ES6=1",
+    "-sEXPORT_NAME=createSpatialEphemeris",
+    "-sENVIRONMENT=web,worker,node",
+    "-sALLOW_MEMORY_GROWTH=1",
+    "-sINITIAL_MEMORY=16777216",
+    "-sFILESYSTEM=1",
+    "-sEXPORTED_RUNTIME_METHODS=[\"ccall\",\"cwrap\",\"FS\",\"UTF8ToString\",\"stringToUTF8\",\"lengthBytesUTF8\",\"HEAPF64\",\"HEAPU8\"]",
+    "-sEXPORTED_FUNCTIONS=[\"_sa_init\",\"_sa_close\",\"_sa_version\",\"_sa_time\",\"_sa_body\",\"_sa_houses\",\"_sa_sidereal\",\"_sa_delta_t\",\"_sa_horizon\",\"_sa_frame\",\"_sa_file\",\"_malloc\",\"_free\"]",
+    "-sINCOMING_MODULE_JS_API=[\"locateFile\",\"wasmBinary\",\"print\",\"printErr\"]",
+    "-o",
+    "src/lib/astronomy/generated/spatial-ephemeris.js"
+  ],
+  "files": [
+    {
+      "name": "spatial-ephemeris.js",
+      "bytes": 60343,
+      "sha256": "7d76caf1b7ca95ddf03cff55194d414bf7689a94d1c73218fb224b1665f26059"
+    },
+    {
+      "name": "spatial-ephemeris.wasm",
+      "bytes": 392316,
+      "sha256": "a2aaedc3f371af501d2dfd61258a8160c873b0df3ea94ad568377df4353fb88e"
+    }
+  ]
+}

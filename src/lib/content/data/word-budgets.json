@@ -1,0 +1,1169 @@
+{
+  "catalogueVersion": "1.1.0",
+  "policy": "One logical claim per canonical webpage; summary/claim duplicates and reused M3 scene definitions count once. Includes M5 construction-stage prose, shared notes and M10 original project explanations.",
+  "pages": [
+    {
+      "canonicalUrl": "https://science.nasa.gov/sun/facts/",
+      "derivedWords": 13,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:sun:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/sun.html",
+      "derivedWords": 11,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:sun:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://science.nasa.gov/moon/facts/",
+      "derivedWords": 12,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:moon:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/moon.html",
+      "derivedWords": 12,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:moon:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://science.nasa.gov/mercury/facts/",
+      "derivedWords": 13,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:mercury:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/mercury.html",
+      "derivedWords": 12,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:mercury:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://science.nasa.gov/venus/venus-facts/",
+      "derivedWords": 13,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:venus:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/venus.html",
+      "derivedWords": 12,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:venus:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://science.nasa.gov/mars/facts/",
+      "derivedWords": 13,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:mars:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/mars.html",
+      "derivedWords": 11,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:mars:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://science.nasa.gov/jupiter/jupiter-facts/",
+      "derivedWords": 12,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:jupiter:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/jupiter.html",
+      "derivedWords": 13,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:jupiter:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://science.nasa.gov/saturn/facts/",
+      "derivedWords": 13,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:saturn:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/saturn.html",
+      "derivedWords": 11,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:saturn:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://science.nasa.gov/uranus/facts/",
+      "derivedWords": 13,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:uranus:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/uranus.html",
+      "derivedWords": 13,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:uranus:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://science.nasa.gov/neptune/neptune-facts/",
+      "derivedWords": 13,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:neptune:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/neptune.html",
+      "derivedWords": 13,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:neptune:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://science.nasa.gov/dwarf-planets/pluto/facts/",
+      "derivedWords": 12,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:pluto:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/pluto.html",
+      "derivedWords": 12,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body:pluto:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/IMPLEMENTATION_PLAN.md",
+      "derivedWords": 165,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:aries:0",
+        "sign:taurus:0",
+        "sign:gemini:0",
+        "sign:cancer:0",
+        "sign:leo:0",
+        "sign:virgo:0",
+        "sign:libra:0",
+        "sign:scorpio:0",
+        "sign:sagittarius:0",
+        "sign:capricorn:0",
+        "sign:aquarius:0",
+        "sign:pisces:0",
+        "aspect-type:conjunction:0",
+        "aspect-type:sextile:0",
+        "aspect-type:square:0",
+        "aspect-type:trine:0",
+        "aspect-type:opposition:0",
+        "concept:evidence:1",
+        "concept:trails:0",
+        "concept:conventions:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/zodiacaries.html",
+      "derivedWords": 17,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:aries:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/zodiactaurus.html",
+      "derivedWords": 16,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:taurus:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/zodiacgemini.html",
+      "derivedWords": 19,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:gemini:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/zodiaccancer.html",
+      "derivedWords": 17,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:cancer:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/zodiacleo.html",
+      "derivedWords": 18,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:leo:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/zodiacvirgo.html",
+      "derivedWords": 19,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:virgo:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/zodiaclibra.html",
+      "derivedWords": 17,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:libra:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/zodiacscorpio.html",
+      "derivedWords": 19,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:scorpio:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/zodiacsagittarius.html",
+      "derivedWords": 18,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:sagittarius:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/zodiaccapricorn.html",
+      "derivedWords": 19,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:capricorn:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/zodiacaquarius.html",
+      "derivedWords": 20,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:aquarius:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/zodiacpisces.html",
+      "derivedWords": 17,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sign:pisces:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.skyscript.co.uk/1.html",
+      "derivedWords": 21,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "house:1:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.skyscript.co.uk/2.html",
+      "derivedWords": 21,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "house:2:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.skyscript.co.uk/3.html",
+      "derivedWords": 20,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "house:3:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.skyscript.co.uk/4.html",
+      "derivedWords": 22,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "house:4:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.skyscript.co.uk/5.html",
+      "derivedWords": 20,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "house:5:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.skyscript.co.uk/6.html",
+      "derivedWords": 20,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "house:6:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.skyscript.co.uk/7.html",
+      "derivedWords": 19,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "house:7:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.skyscript.co.uk/8.html",
+      "derivedWords": 22,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "house:8:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.skyscript.co.uk/9.html",
+      "derivedWords": 22,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "house:9:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.skyscript.co.uk/10.html",
+      "derivedWords": 22,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "house:10:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.skyscript.co.uk/11.html",
+      "derivedWords": 21,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "house:11:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.skyscript.co.uk/12.html",
+      "derivedWords": 22,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "house:12:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/aspectsinastrology.html",
+      "derivedWords": 105,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "aspect-type:conjunction:1",
+        "aspect-type:sextile:1",
+        "aspect-type:square:1",
+        "aspect-type:trine:1",
+        "aspect-type:opposition:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swehouse.c",
+      "derivedWords": 175,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "system:W:0",
+        "construction:W:0",
+        "construction:W:1",
+        "construction:W:2",
+        "construction:E:0",
+        "construction:E:1",
+        "construction:E:2",
+        "construction:O:0",
+        "construction:O:1",
+        "construction:O:2",
+        "construction:R:0",
+        "construction:R:1",
+        "construction:R:2",
+        "construction:C:0",
+        "construction:C:1",
+        "construction:C:2",
+        "construction:P:0",
+        "construction:P:1",
+        "construction:P:2",
+        "construction:K:0",
+        "construction:K:1",
+        "construction:K:2",
+        "construction:polar-note",
+        "construction:anchor-note"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.astro.com/swisseph/swisseph.htm",
+      "derivedWords": 163,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "system:E:0",
+        "system:O:0",
+        "system:R:0",
+        "system:C:0",
+        "system:P:0",
+        "system:K:0",
+        "sky-reference:angle:asc",
+        "sky-reference:angle:dsc",
+        "sky-reference:angle:mc",
+        "sky-reference:angle:ic"
+      ]
+    },
+    {
+      "canonicalUrl": "https://aa.usno.navy.mil/faq/asa_glossary",
+      "derivedWords": 38,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sky-reference:reference:horizon",
+        "sky-reference:reference:meridian"
+      ]
+    },
+    {
+      "canonicalUrl": "https://science.nasa.gov/learn/basics-of-space-flight/chapter2-2/",
+      "derivedWords": 99,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sky-reference:reference:ecliptic",
+        "sky-reference:reference:equator",
+        "sky-reference:reference:zenith",
+        "sky-reference:reference:nadir",
+        "sky-reference:reference:north-pole",
+        "sky-reference:reference:south-pole"
+      ]
+    },
+    {
+      "canonicalUrl": "https://msi.nga.mil/api/publications/download?key=16693975%2FSFH00000%2FBowditch_Vol_2_LoRes.pdf&type=view",
+      "derivedWords": 15,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "sky-reference:reference:prime-vertical"
+      ]
+    },
+    {
+      "canonicalUrl": "https://muller.lbl.gov/papers/Astrology-Carlson.pdf",
+      "derivedWords": 13,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "concept:evidence:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://data.iana.org/time-zones/theory.html",
+      "derivedWords": 12,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "concept:civil-time:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/coordinate-contract.md",
+      "derivedWords": 27,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "concept:civil-time:1",
+        "concept:frames:1"
+      ]
+    },
+    {
+      "canonicalUrl": "https://aa.usno.navy.mil/faq/ICRS_doc",
+      "derivedWords": 14,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "concept:frames:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://science.nasa.gov/image-article/apod-2023-april-15-when-z-is-for-mars/",
+      "derivedWords": 24,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "concept:retrograde:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/suninhouses.html",
+      "derivedWords": 156,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-house:sun:1:0",
+        "body-in-house:sun:2:0",
+        "body-in-house:sun:3:0",
+        "body-in-house:sun:4:0",
+        "body-in-house:sun:5:0",
+        "body-in-house:sun:6:0",
+        "body-in-house:sun:7:0",
+        "body-in-house:sun:8:0",
+        "body-in-house:sun:9:0",
+        "body-in-house:sun:10:0",
+        "body-in-house:sun:11:0",
+        "body-in-house:sun:12:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/natal/mooninhouses.html",
+      "derivedWords": 159,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-house:moon:1:0",
+        "body-in-house:moon:2:0",
+        "body-in-house:moon:3:0",
+        "body-in-house:moon:4:0",
+        "body-in-house:moon:5:0",
+        "body-in-house:moon:6:0",
+        "body-in-house:moon:7:0",
+        "body-in-house:moon:8:0",
+        "body-in-house:moon:9:0",
+        "body-in-house:moon:10:0",
+        "body-in-house:moon:11:0",
+        "body-in-house:moon:12:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/natal/mercuryinhouses.html",
+      "derivedWords": 166,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-house:mercury:1:0",
+        "body-in-house:mercury:2:0",
+        "body-in-house:mercury:3:0",
+        "body-in-house:mercury:4:0",
+        "body-in-house:mercury:5:0",
+        "body-in-house:mercury:6:0",
+        "body-in-house:mercury:7:0",
+        "body-in-house:mercury:8:0",
+        "body-in-house:mercury:9:0",
+        "body-in-house:mercury:10:0",
+        "body-in-house:mercury:11:0",
+        "body-in-house:mercury:12:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/natal/venusinhouses.html",
+      "derivedWords": 166,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-house:venus:1:0",
+        "body-in-house:venus:2:0",
+        "body-in-house:venus:3:0",
+        "body-in-house:venus:4:0",
+        "body-in-house:venus:5:0",
+        "body-in-house:venus:6:0",
+        "body-in-house:venus:7:0",
+        "body-in-house:venus:8:0",
+        "body-in-house:venus:9:0",
+        "body-in-house:venus:10:0",
+        "body-in-house:venus:11:0",
+        "body-in-house:venus:12:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/natal/marsinhouses.html",
+      "derivedWords": 163,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-house:mars:1:0",
+        "body-in-house:mars:2:0",
+        "body-in-house:mars:3:0",
+        "body-in-house:mars:4:0",
+        "body-in-house:mars:5:0",
+        "body-in-house:mars:6:0",
+        "body-in-house:mars:7:0",
+        "body-in-house:mars:8:0",
+        "body-in-house:mars:9:0",
+        "body-in-house:mars:10:0",
+        "body-in-house:mars:11:0",
+        "body-in-house:mars:12:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/jupiterinhouses.html",
+      "derivedWords": 162,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-house:jupiter:1:0",
+        "body-in-house:jupiter:2:0",
+        "body-in-house:jupiter:3:0",
+        "body-in-house:jupiter:4:0",
+        "body-in-house:jupiter:5:0",
+        "body-in-house:jupiter:6:0",
+        "body-in-house:jupiter:7:0",
+        "body-in-house:jupiter:8:0",
+        "body-in-house:jupiter:9:0",
+        "body-in-house:jupiter:10:0",
+        "body-in-house:jupiter:11:0",
+        "body-in-house:jupiter:12:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/saturninhouses.html",
+      "derivedWords": 167,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-house:saturn:1:0",
+        "body-in-house:saturn:2:0",
+        "body-in-house:saturn:3:0",
+        "body-in-house:saturn:4:0",
+        "body-in-house:saturn:5:0",
+        "body-in-house:saturn:6:0",
+        "body-in-house:saturn:7:0",
+        "body-in-house:saturn:8:0",
+        "body-in-house:saturn:9:0",
+        "body-in-house:saturn:10:0",
+        "body-in-house:saturn:11:0",
+        "body-in-house:saturn:12:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/uranusinhouses.html",
+      "derivedWords": 167,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-house:uranus:1:0",
+        "body-in-house:uranus:2:0",
+        "body-in-house:uranus:3:0",
+        "body-in-house:uranus:4:0",
+        "body-in-house:uranus:5:0",
+        "body-in-house:uranus:6:0",
+        "body-in-house:uranus:7:0",
+        "body-in-house:uranus:8:0",
+        "body-in-house:uranus:9:0",
+        "body-in-house:uranus:10:0",
+        "body-in-house:uranus:11:0",
+        "body-in-house:uranus:12:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/neptuneinhouses.html",
+      "derivedWords": 176,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-house:neptune:1:0",
+        "body-in-house:neptune:2:0",
+        "body-in-house:neptune:3:0",
+        "body-in-house:neptune:4:0",
+        "body-in-house:neptune:5:0",
+        "body-in-house:neptune:6:0",
+        "body-in-house:neptune:7:0",
+        "body-in-house:neptune:8:0",
+        "body-in-house:neptune:9:0",
+        "body-in-house:neptune:10:0",
+        "body-in-house:neptune:11:0",
+        "body-in-house:neptune:12:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/plutoinhouses.html",
+      "derivedWords": 180,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-house:pluto:1:0",
+        "body-in-house:pluto:2:0",
+        "body-in-house:pluto:3:0",
+        "body-in-house:pluto:4:0",
+        "body-in-house:pluto:5:0",
+        "body-in-house:pluto:6:0",
+        "body-in-house:pluto:7:0",
+        "body-in-house:pluto:8:0",
+        "body-in-house:pluto:9:0",
+        "body-in-house:pluto:10:0",
+        "body-in-house:pluto:11:0",
+        "body-in-house:pluto:12:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/index/suninsigns.html",
+      "derivedWords": 136,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:sun:aries:0",
+        "body-in-sign:sun:taurus:0",
+        "body-in-sign:sun:gemini:0",
+        "body-in-sign:sun:cancer:0",
+        "body-in-sign:sun:leo:0",
+        "body-in-sign:sun:virgo:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/suninsigns_page2.html",
+      "derivedWords": 142,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:sun:libra:0",
+        "body-in-sign:sun:scorpio:0",
+        "body-in-sign:sun:sagittarius:0",
+        "body-in-sign:sun:capricorn:0",
+        "body-in-sign:sun:aquarius:0",
+        "body-in-sign:sun:pisces:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/mooninsigns.html",
+      "derivedWords": 143,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:moon:aries:0",
+        "body-in-sign:moon:taurus:0",
+        "body-in-sign:moon:gemini:0",
+        "body-in-sign:moon:cancer:0",
+        "body-in-sign:moon:leo:0",
+        "body-in-sign:moon:virgo:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/mooninsigns_pg2.html",
+      "derivedWords": 143,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:moon:libra:0",
+        "body-in-sign:moon:scorpio:0",
+        "body-in-sign:moon:sagittarius:0",
+        "body-in-sign:moon:capricorn:0",
+        "body-in-sign:moon:aquarius:0",
+        "body-in-sign:moon:pisces:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/mercuryinsigns.html",
+      "derivedWords": 145,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:mercury:aries:0",
+        "body-in-sign:mercury:taurus:0",
+        "body-in-sign:mercury:gemini:0",
+        "body-in-sign:mercury:cancer:0",
+        "body-in-sign:mercury:leo:0",
+        "body-in-sign:mercury:virgo:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/mercuryinsigns_page2.html",
+      "derivedWords": 145,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:mercury:libra:0",
+        "body-in-sign:mercury:scorpio:0",
+        "body-in-sign:mercury:sagittarius:0",
+        "body-in-sign:mercury:capricorn:0",
+        "body-in-sign:mercury:aquarius:0",
+        "body-in-sign:mercury:pisces:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/natal/venusinsigns.html",
+      "derivedWords": 179,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:venus:aries:0",
+        "body-in-sign:venus:taurus:0",
+        "body-in-sign:venus:gemini:0",
+        "body-in-sign:venus:cancer:0",
+        "body-in-sign:venus:leo:0",
+        "body-in-sign:venus:virgo:0",
+        "body-in-sign:venus:libra:0",
+        "body-in-sign:venus:scorpio:0",
+        "body-in-sign:venus:sagittarius:0",
+        "body-in-sign:venus:capricorn:0",
+        "body-in-sign:venus:aquarius:0",
+        "body-in-sign:venus:pisces:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/marsinsigns.html",
+      "derivedWords": 148,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:mars:aries:0",
+        "body-in-sign:mars:taurus:0",
+        "body-in-sign:mars:gemini:0",
+        "body-in-sign:mars:cancer:0",
+        "body-in-sign:mars:leo:0",
+        "body-in-sign:mars:virgo:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/articles/marsinsigns_pg2.html",
+      "derivedWords": 144,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:mars:libra:0",
+        "body-in-sign:mars:scorpio:0",
+        "body-in-sign:mars:sagittarius:0",
+        "body-in-sign:mars:capricorn:0",
+        "body-in-sign:mars:aquarius:0",
+        "body-in-sign:mars:pisces:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/natal/jupiterinsigns.html",
+      "derivedWords": 180,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:jupiter:aries:0",
+        "body-in-sign:jupiter:taurus:0",
+        "body-in-sign:jupiter:gemini:0",
+        "body-in-sign:jupiter:cancer:0",
+        "body-in-sign:jupiter:leo:0",
+        "body-in-sign:jupiter:virgo:0",
+        "body-in-sign:jupiter:libra:0",
+        "body-in-sign:jupiter:scorpio:0",
+        "body-in-sign:jupiter:sagittarius:0",
+        "body-in-sign:jupiter:capricorn:0",
+        "body-in-sign:jupiter:aquarius:0",
+        "body-in-sign:jupiter:pisces:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/natal/saturn-signs.html",
+      "derivedWords": 180,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:saturn:aries:0",
+        "body-in-sign:saturn:taurus:0",
+        "body-in-sign:saturn:gemini:0",
+        "body-in-sign:saturn:cancer:0",
+        "body-in-sign:saturn:leo:0",
+        "body-in-sign:saturn:virgo:0",
+        "body-in-sign:saturn:libra:0",
+        "body-in-sign:saturn:scorpio:0",
+        "body-in-sign:saturn:sagittarius:0",
+        "body-in-sign:saturn:capricorn:0",
+        "body-in-sign:saturn:aquarius:0",
+        "body-in-sign:saturn:pisces:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/natal/uranus-signs.html",
+      "derivedWords": 180,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:uranus:aries:0",
+        "body-in-sign:uranus:taurus:0",
+        "body-in-sign:uranus:gemini:0",
+        "body-in-sign:uranus:cancer:0",
+        "body-in-sign:uranus:leo:0",
+        "body-in-sign:uranus:virgo:0",
+        "body-in-sign:uranus:libra:0",
+        "body-in-sign:uranus:scorpio:0",
+        "body-in-sign:uranus:sagittarius:0",
+        "body-in-sign:uranus:capricorn:0",
+        "body-in-sign:uranus:aquarius:0",
+        "body-in-sign:uranus:pisces:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://astrostyle.com/astrology/neptune-in-aries/",
+      "derivedWords": 24,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:neptune:aries:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://astrostyle.com/astrology/neptune-in-taurus/",
+      "derivedWords": 24,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:neptune:taurus:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://astrostyle.com/astrology/neptune-in-gemini/",
+      "derivedWords": 23,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:neptune:gemini:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://astrostyle.com/astrology/neptune-in-cancer/",
+      "derivedWords": 23,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:neptune:cancer:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://astrostyle.com/astrology/neptune-in-leo/",
+      "derivedWords": 24,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:neptune:leo:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://cafeastrology.com/natal/neptune-pluto-signs.html",
+      "derivedWords": 180,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:neptune:virgo:0",
+        "body-in-sign:neptune:libra:0",
+        "body-in-sign:neptune:scorpio:0",
+        "body-in-sign:neptune:sagittarius:0",
+        "body-in-sign:neptune:capricorn:0",
+        "body-in-sign:neptune:aquarius:0",
+        "body-in-sign:neptune:pisces:0",
+        "body-in-sign:pluto:leo:0",
+        "body-in-sign:pluto:virgo:0",
+        "body-in-sign:pluto:libra:0",
+        "body-in-sign:pluto:scorpio:0",
+        "body-in-sign:pluto:sagittarius:0",
+        "body-in-sign:pluto:capricorn:0",
+        "body-in-sign:pluto:aquarius:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://astrostyle.com/astrology/pluto-in-aries/",
+      "derivedWords": 25,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:pluto:aries:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://astrostyle.com/astrology/pluto-in-taurus/",
+      "derivedWords": 23,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:pluto:taurus:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://astrostyle.com/astrology/pluto-in-gemini/",
+      "derivedWords": 24,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:pluto:gemini:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://astrostyle.com/astrology/pluto-in-cancer/",
+      "derivedWords": 25,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:pluto:cancer:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://astrostyle.com/astrology/pluto-in-pisces/",
+      "derivedWords": 26,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "body-in-sign:pluto:pisces:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.almanac.com/astrocartography-explained-find-your-best-places-live",
+      "derivedWords": 154,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "astro:overview:0",
+        "astro:body:sun:0",
+        "astro:body:moon:0",
+        "astro:body:mercury:0",
+        "astro:body:venus:0",
+        "astro:body:mars:0",
+        "astro:body:jupiter:0",
+        "astro:body:saturn:0",
+        "astro:body:uranus:0",
+        "astro:body:neptune:0",
+        "astro:body:pluto:0",
+        "astro:angle:ac:0",
+        "astro:angle:dc:0",
+        "astro:angle:mc:0",
+        "astro:angle:ic:0"
+      ]
+    },
+    {
+      "canonicalUrl": "https://github.com/buttery-x3/astrology-viewer/blob/0ea709fdff33ac11aed696fcb0b60f17e0fad477/docs/house-construction-contract.md",
+      "derivedWords": 65,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "construction:display-note:0",
+        "construction:display-note:2",
+        "construction:display-note:3",
+        "construction:display-note:5"
+      ]
+    },
+    {
+      "canonicalUrl": "https://www.astro.com/swisseph/swephprg.htm",
+      "derivedWords": 92,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "calculation-provenance:0",
+        "calculation-provenance:1",
+        "calculation-provenance:2",
+        "calculation-provenance:3"
+      ]
+    },
+    {
+      "canonicalUrl": "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/coordinate-contract.md",
+      "derivedWords": 97,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "hover:earth",
+        "hover:observer",
+        "hover:sign-constellation",
+        "hover:compass",
+        "hover:bodies-layer"
+      ]
+    },
+    {
+      "canonicalUrl": "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/data-and-licensing.md",
+      "derivedWords": 35,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "hover:constellation",
+        "hover:star"
+      ]
+    },
+    {
+      "canonicalUrl": "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/docs/plans/M10-hover-and-earth-projections.md",
+      "derivedWords": 138,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "hover:asterism",
+        "hover:earth-house",
+        "hover:history",
+        "hover:trail-segment",
+        "hover:house-boundary",
+        "hover:aspects-layer"
+      ]
+    },
+    {
+      "canonicalUrl": "https://github.com/buttery-x3/astrology-viewer/blob/49327afa68e5b77f213182cb98d448e3dc938f00/src/lib/domain/house-geometry.ts",
+      "derivedWords": 24,
+      "sourceWordLimit": 200,
+      "editorialBudget": 180,
+      "claimIds": [
+        "hover:houses-layer"
+      ]
+    }
+  ]
+}

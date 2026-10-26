@@ -1,0 +1,1287 @@
+{
+  "observer": "500@399",
+  "quantity": "31: ObsEcLon / ObsEcLat",
+  "referenceDefinition": "Observer-centered IAU76/80 ecliptic-of-date, apparent target center, airless; light-time, gravitational deflection and stellar aberration included.",
+  "fixtures": [
+    {
+      "bodyId": "sun",
+      "target": 10,
+      "timeType": "UT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27UT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.5000000000%27+%272451545.0000000000%27+%272461338.5000000000%27+%272488069.5000000000%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/sun-ut.json",
+      "rawSha256": "4b3c4c73c833fc8be83323652b5138be4577ac4856b845658209923d554e97f1",
+      "retrievedAt": "2026-10-25T11:36:45.472Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Sun (10)                        {source: DE441}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDUT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.5,
+          "julianDate": 2415020.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 280.1532941,
+          "latitudeDeg": 0.0000648,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545,
+          "julianDate": 2451545,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 280.3689092,
+          "latitudeDeg": 0.0002381,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.5,
+          "julianDate": 2461338.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 211.5914352,
+          "latitudeDeg": 0.0001532,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5,
+          "julianDate": 2488069.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 280.6041925,
+          "latitudeDeg": 0.0000877,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "moon",
+      "target": 301,
+      "timeType": "UT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27301%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27UT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.5000000000%27+%272451545.0000000000%27+%272461338.5000000000%27+%272488069.5000000000%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/moon-ut.json",
+      "rawSha256": "6a7fccdbbaf320d6cbd1ffa499010f5dd5481fd569fb7f0fda154b41e6a39f83",
+      "retrievedAt": "2026-10-25T11:37:02.040Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Moon (301)                      {source: DE441}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDUT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.5,
+          "julianDate": 2415020.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 272.4162663,
+          "latitudeDeg": 1.1082671,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545,
+          "julianDate": 2451545,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 223.323786,
+          "latitudeDeg": 5.1707422,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.5,
+          "julianDate": 2461338.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 16.0921937,
+          "latitudeDeg": 3.7758644,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5,
+          "julianDate": 2488069.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 157.4116073,
+          "latitudeDeg": 1.0917477,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "mercury",
+      "target": 199,
+      "timeType": "UT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27199%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27UT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.5000000000%27+%272451545.0000000000%27+%272461338.5000000000%27+%272488069.5000000000%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/mercury-ut.json",
+      "rawSha256": "090f051435cc8240aafbedce4357aa420b738dded4999d144dbad2049b5598a0",
+      "retrievedAt": "2026-10-25T11:37:02.287Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Mercury (199)                   {source: DE441}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDUT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.5,
+          "julianDate": 2415020.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 258.9977026,
+          "latitudeDeg": 1.126422,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545,
+          "julianDate": 2451545,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 271.8892699,
+          "latitudeDeg": -0.994819,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.5,
+          "julianDate": 2461338.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 230.9460969,
+          "latitudeDeg": -2.9391313,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5,
+          "julianDate": 2488069.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 288.0057719,
+          "latitudeDeg": -2.1126781,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "venus",
+      "target": 299,
+      "timeType": "UT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27299%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27UT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.5000000000%27+%272451545.0000000000%27+%272461338.5000000000%27+%272488069.5000000000%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/venus-ut.json",
+      "rawSha256": "53f393ce1a8ac297620f1d2488d9635d064896d5d0b82ca12f912513cd289d8d",
+      "retrievedAt": "2026-10-25T11:37:02.540Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Venus (299)                     {source: DE441}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDUT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.5,
+          "julianDate": 2415020.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 306.3743725,
+          "latitudeDeg": -1.6830905,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545,
+          "julianDate": 2451545,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 241.5657794,
+          "latitudeDeg": 2.0663548,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.5,
+          "julianDate": 2461338.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 210.2334277,
+          "latitudeDeg": -6.3662005,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5,
+          "julianDate": 2488069.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 320.0704851,
+          "latitudeDeg": -1.8524067,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "mars",
+      "target": 499,
+      "timeType": "UT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27499%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27UT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.5000000000%27+%272451545.0000000000%27+%272461338.5000000000%27+%272488069.5000000000%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/mars-ut.json",
+      "rawSha256": "086c6a46316aea3817db02d5ccc8e979c8ac906631eb5e73363882d162e38ad0",
+      "retrievedAt": "2026-10-25T11:37:02.787Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Mars (499)                      {source: mar099}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDUT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.5,
+          "julianDate": 2415020.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 283.8676754,
+          "latitudeDeg": -0.9254021,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545,
+          "julianDate": 2451545,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 327.9632921,
+          "latitudeDeg": -1.0677752,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.5,
+          "julianDate": 2461338.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 135.0205124,
+          "latitudeDeg": 1.457758,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5,
+          "julianDate": 2488069.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 29.5253593,
+          "latitudeDeg": 0.9517639,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "jupiter",
+      "target": 599,
+      "timeType": "UT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27599%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27UT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.5000000000%27+%272451545.0000000000%27+%272461338.5000000000%27+%272488069.5000000000%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/jupiter-ut.json",
+      "rawSha256": "7ea84768859a886ca47c3a203956a816e005289e1b0ee2c7232ce5bfb5d13c42",
+      "retrievedAt": "2026-10-25T11:37:03.032Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Jupiter (599)                   {source: jup365_merged}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDUT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.5,
+          "julianDate": 2415020.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 241.135883,
+          "latitudeDeg": 0.8142907,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545,
+          "julianDate": 2451545,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 25.2530685,
+          "latitudeDeg": -1.2621868,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.5,
+          "julianDate": 2461338.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 143.4174372,
+          "latitudeDeg": 0.6669334,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5,
+          "julianDate": 2488069.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 201.206317,
+          "latitudeDeg": 1.2766059,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "saturn",
+      "target": 699,
+      "timeType": "UT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27699%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27UT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.5000000000%27+%272451545.0000000000%27+%272461338.5000000000%27+%272488069.5000000000%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/saturn-ut.json",
+      "rawSha256": "261f59512d874ca5858bdbc4ee67bd172ea63ad9012e2808c1110a80946986c4",
+      "retrievedAt": "2026-10-25T11:37:03.278Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Saturn (699)                    {source: sat441l}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDUT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.5,
+          "julianDate": 2415020.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 267.7167387,
+          "latitudeDeg": 1.0076898,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545,
+          "julianDate": 2451545,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 40.3956366,
+          "latitudeDeg": -2.4448533,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.5,
+          "julianDate": 2461338.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 9.7516856,
+          "latitudeDeg": -2.6988235,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5,
+          "julianDate": 2488069.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 205.6316624,
+          "latitudeDeg": 2.4222185,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "uranus",
+      "target": 799,
+      "timeType": "UT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27799%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27UT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.5000000000%27+%272451545.0000000000%27+%272461338.5000000000%27+%272488069.5000000000%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/uranus-ut.json",
+      "rawSha256": "152381560d183cabd0dfa33f27c4b83cb4f43bf4d97f00b59546cdee65972cdc",
+      "retrievedAt": "2026-10-25T11:37:03.531Z",
+      "signature": {
+        "source": "NASA/JPL Horizons API",
+        "version": "1.2"
+      },
+      "targetHeader": "Target body name: Uranus (799)                    {source: ura184_merged}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDUT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.5,
+          "julianDate": 2415020.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 250.1391591,
+          "latitudeDeg": 0.0634029,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545,
+          "julianDate": 2451545,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 314.809168,
+          "latitudeDeg": -0.658324,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.5,
+          "julianDate": 2461338.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 64.9186573,
+          "latitudeDeg": -0.1519361,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5,
+          "julianDate": 2488069.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 17.7413057,
+          "latitudeDeg": -0.6294645,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "neptune",
+      "target": 899,
+      "timeType": "UT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27899%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27UT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.5000000000%27+%272451545.0000000000%27+%272461338.5000000000%27+%272488069.5000000000%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/neptune-ut.json",
+      "rawSha256": "78d5d9eb0b2f452f90919fc21e4b3efb4310080d2013d1bf2221cc62a4d20282",
+      "retrievedAt": "2026-10-25T11:37:03.777Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Neptune (899)                   {source: nep098_merged}",
+      "centerHeader": "Center body name: Earth (399)                     {source: nep098_merged}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDUT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.5,
+          "julianDate": 2415020.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 85.2186599,
+          "latitudeDeg": -1.2996533,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545,
+          "julianDate": 2451545,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 303.1930007,
+          "latitudeDeg": 0.2350026,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.5,
+          "julianDate": 2461338.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 2.2389131,
+          "latitudeDeg": -1.4168874,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5,
+          "julianDate": 2488069.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 167.2905214,
+          "latitudeDeg": 0.9638819,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "pluto",
+      "target": 999,
+      "timeType": "UT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27999%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27UT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.5000000000%27+%272451545.0000000000%27+%272461338.5000000000%27+%272488069.5000000000%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/pluto-ut.json",
+      "rawSha256": "e6617c17ddfa55b43e7b944279852183fbb39db85dee4d6addaa77318a800652",
+      "retrievedAt": "2026-10-25T11:37:04.028Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Pluto (999)                     {source: plu060_merged}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDUT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.5,
+          "julianDate": 2415020.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 75.2513936,
+          "latitudeDeg": -9.7769714,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545,
+          "julianDate": 2451545,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 251.4547644,
+          "latitudeDeg": 10.8552605,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.5,
+          "julianDate": 2461338.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 303.0872075,
+          "latitudeDeg": -4.2775808,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5,
+          "julianDate": 2488069.5,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 32.4030239,
+          "latitudeDeg": -16.9212249,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "sun",
+      "target": 10,
+      "timeType": "TT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%2710%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27TT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.4999769586%27+%272451545.0007428704%27+%272461338.5008007409%27+%272488069.5010784958%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/sun-tt.json",
+      "rawSha256": "f201970f598946aebd21f1ffed3fc5a5200cce2d5601e46e850eb4b0e803abd6",
+      "retrievedAt": "2026-10-25T11:37:04.277Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Sun (10)                        {source: DE441}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDTT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.4999769586,
+          "julianDate": 2415020.499976956,
+          "outputTimeDifferenceSeconds": -0.00024139881134033203,
+          "longitudeDeg": 280.1532936,
+          "latitudeDeg": 0.0000648,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545.0007428704,
+          "julianDate": 2451545.00074287,
+          "outputTimeDifferenceSeconds": -0.00004023313522338867,
+          "longitudeDeg": 280.3689092,
+          "latitudeDeg": 0.0002381,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.500800741,
+          "julianDate": 2461338.500800741,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 211.5914352,
+          "latitudeDeg": 0.0001532,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5010784958,
+          "julianDate": 2488069.501078496,
+          "outputTimeDifferenceSeconds": 0.00004023313522338867,
+          "longitudeDeg": 280.6044755,
+          "latitudeDeg": 0.0000877,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "moon",
+      "target": 301,
+      "timeType": "TT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27301%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27TT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.4999769586%27+%272451545.0007428704%27+%272461338.5008007409%27+%272488069.5010784958%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/moon-tt.json",
+      "rawSha256": "72d411754883c3d7081ecab4c220224233e83e046461013f36985fb422178dd4",
+      "retrievedAt": "2026-10-25T11:37:04.531Z",
+      "signature": {
+        "source": "NASA/JPL Horizons API",
+        "version": "1.2"
+      },
+      "targetHeader": "Target body name: Moon (301)                      {source: DE441}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDTT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.4999769586,
+          "julianDate": 2415020.499976956,
+          "outputTimeDifferenceSeconds": -0.00024139881134033203,
+          "longitudeDeg": 272.4162586,
+          "latitudeDeg": 1.1082664,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545.0007428704,
+          "julianDate": 2451545.00074287,
+          "outputTimeDifferenceSeconds": -0.00004023313522338867,
+          "longitudeDeg": 223.323786,
+          "latitudeDeg": 5.1707422,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.500800741,
+          "julianDate": 2461338.500800741,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 16.0921937,
+          "latitudeDeg": 3.7758644,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5010784958,
+          "julianDate": 2488069.501078496,
+          "outputTimeDifferenceSeconds": 0.00004023313522338867,
+          "longitudeDeg": 157.4154992,
+          "latitudeDeg": 1.0914112,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "mercury",
+      "target": 199,
+      "timeType": "TT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27199%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27TT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.4999769586%27+%272451545.0007428704%27+%272461338.5008007409%27+%272488069.5010784958%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/mercury-tt.json",
+      "rawSha256": "e9d3f7c198d21ab470de7056c7cfb1eaab1b7d0279110d10800ab47f014eb426",
+      "retrievedAt": "2026-10-25T11:37:04.782Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Mercury (199)                   {source: DE441}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDTT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.4999769586,
+          "julianDate": 2415020.499976956,
+          "outputTimeDifferenceSeconds": -0.00024139881134033203,
+          "longitudeDeg": 258.9977019,
+          "latitudeDeg": 1.1264221,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545.0007428704,
+          "julianDate": 2451545.00074287,
+          "outputTimeDifferenceSeconds": -0.00004023313522338867,
+          "longitudeDeg": 271.8892699,
+          "latitudeDeg": -0.994819,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.500800741,
+          "julianDate": 2461338.500800741,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 230.9460969,
+          "latitudeDeg": -2.9391313,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5010784958,
+          "julianDate": 2488069.501078496,
+          "outputTimeDifferenceSeconds": 0.00004023313522338867,
+          "longitudeDeg": 288.0062227,
+          "latitudeDeg": -2.1126846,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "venus",
+      "target": 299,
+      "timeType": "TT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27299%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27TT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.4999769586%27+%272451545.0007428704%27+%272461338.5008007409%27+%272488069.5010784958%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/venus-tt.json",
+      "rawSha256": "b5a7c8ab2262fb3a426b095c6fc17c32f44df6c85c12bc11f31a15724d46772d",
+      "retrievedAt": "2026-10-25T11:37:05.027Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Venus (299)                     {source: DE441}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDTT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.4999769586,
+          "julianDate": 2415020.499976956,
+          "outputTimeDifferenceSeconds": -0.00024139881134033203,
+          "longitudeDeg": 306.3743718,
+          "latitudeDeg": -1.6830905,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545.0007428704,
+          "julianDate": 2451545.00074287,
+          "outputTimeDifferenceSeconds": -0.00004023313522338867,
+          "longitudeDeg": 241.5657794,
+          "latitudeDeg": 2.0663548,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.500800741,
+          "julianDate": 2461338.500800741,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 210.2334277,
+          "latitudeDeg": -6.3662005,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5010784958,
+          "julianDate": 2488069.501078496,
+          "outputTimeDifferenceSeconds": 0.00004023313522338867,
+          "longitudeDeg": 320.0708191,
+          "latitudeDeg": -1.8524005,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "mars",
+      "target": 499,
+      "timeType": "TT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27499%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27TT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.4999769586%27+%272451545.0007428704%27+%272461338.5008007409%27+%272488069.5010784958%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/mars-tt.json",
+      "rawSha256": "fe7252546cc83d203990920c75f88ae4c6d7ebbed12e11a6903f54a8d0d2b734",
+      "retrievedAt": "2026-10-25T11:37:05.275Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Mars (499)                      {source: mar099}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDTT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.4999769586,
+          "julianDate": 2415020.499976956,
+          "outputTimeDifferenceSeconds": -0.00024139881134033203,
+          "longitudeDeg": 283.867675,
+          "latitudeDeg": -0.9254021,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545.0007428704,
+          "julianDate": 2451545.00074287,
+          "outputTimeDifferenceSeconds": -0.00004023313522338867,
+          "longitudeDeg": 327.9632921,
+          "latitudeDeg": -1.0677752,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.500800741,
+          "julianDate": 2461338.500800741,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 135.0205124,
+          "latitudeDeg": 1.457758,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5010784958,
+          "julianDate": 2488069.501078496,
+          "outputTimeDifferenceSeconds": 0.00004023313522338867,
+          "longitudeDeg": 29.5254723,
+          "latitudeDeg": 0.9517693,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "jupiter",
+      "target": 599,
+      "timeType": "TT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27599%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27TT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.4999769586%27+%272451545.0007428704%27+%272461338.5008007409%27+%272488069.5010784958%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/jupiter-tt.json",
+      "rawSha256": "a90d89115be09f50802f4dadceadd1cacf9a3cca797e5cfef3d6349cf0f787f5",
+      "retrievedAt": "2026-10-25T11:37:05.520Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Jupiter (599)                   {source: jup365_merged}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDTT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.4999769586,
+          "julianDate": 2415020.499976956,
+          "outputTimeDifferenceSeconds": -0.00024139881134033203,
+          "longitudeDeg": 241.1358829,
+          "latitudeDeg": 0.8142907,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545.0007428704,
+          "julianDate": 2451545.00074287,
+          "outputTimeDifferenceSeconds": -0.00004023313522338867,
+          "longitudeDeg": 25.2530685,
+          "latitudeDeg": -1.2621868,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.500800741,
+          "julianDate": 2461338.500800741,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 143.4174372,
+          "latitudeDeg": 0.6669334,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5010784958,
+          "julianDate": 2488069.501078496,
+          "outputTimeDifferenceSeconds": 0.00004023313522338867,
+          "longitudeDeg": 201.2063465,
+          "latitudeDeg": 1.2766069,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "saturn",
+      "target": 699,
+      "timeType": "TT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27699%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27TT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.4999769586%27+%272451545.0007428704%27+%272461338.5008007409%27+%272488069.5010784958%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/saturn-tt.json",
+      "rawSha256": "57800fa36838c4fe5100ea5ba13aae14d84c06e732243cc4d1afcc705b55b188",
+      "retrievedAt": "2026-10-25T11:37:05.768Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Saturn (699)                    {source: sat441l}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDTT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.4999769586,
+          "julianDate": 2415020.499976956,
+          "outputTimeDifferenceSeconds": -0.00024139881134033203,
+          "longitudeDeg": 267.7167386,
+          "latitudeDeg": 1.0076898,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545.0007428704,
+          "julianDate": 2451545.00074287,
+          "outputTimeDifferenceSeconds": -0.00004023313522338867,
+          "longitudeDeg": 40.3956366,
+          "latitudeDeg": -2.4448533,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.500800741,
+          "julianDate": 2461338.500800741,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 9.7516856,
+          "latitudeDeg": -2.6988235,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5010784958,
+          "julianDate": 2488069.501078496,
+          "outputTimeDifferenceSeconds": 0.00004023313522338867,
+          "longitudeDeg": 205.6316785,
+          "latitudeDeg": 2.4222196,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "uranus",
+      "target": 799,
+      "timeType": "TT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27799%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27TT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.4999769586%27+%272451545.0007428704%27+%272461338.5008007409%27+%272488069.5010784958%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/uranus-tt.json",
+      "rawSha256": "a6528fea654aae7524a0c5232fecad167a4fc25ec344e92e2f7d7083f5dd7461",
+      "retrievedAt": "2026-10-25T11:37:06.016Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Uranus (799)                    {source: ura184_merged}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDTT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.4999769586,
+          "julianDate": 2415020.499976956,
+          "outputTimeDifferenceSeconds": -0.00024139881134033203,
+          "longitudeDeg": 250.139159,
+          "latitudeDeg": 0.0634029,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545.0007428704,
+          "julianDate": 2451545.00074287,
+          "outputTimeDifferenceSeconds": -0.00004023313522338867,
+          "longitudeDeg": 314.809168,
+          "latitudeDeg": -0.658324,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.500800741,
+          "julianDate": 2461338.500800741,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 64.9186573,
+          "latitudeDeg": -0.1519361,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5010784958,
+          "julianDate": 2488069.501078496,
+          "outputTimeDifferenceSeconds": 0.00004023313522338867,
+          "longitudeDeg": 17.741307,
+          "latitudeDeg": -0.6294644,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "neptune",
+      "target": 899,
+      "timeType": "TT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27899%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27TT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.4999769586%27+%272451545.0007428704%27+%272461338.5008007409%27+%272488069.5010784958%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/neptune-tt.json",
+      "rawSha256": "43c181d0a43b348fa7db7c996618ed469a13edfd0083097382d9b6d5e3a2ff81",
+      "retrievedAt": "2026-10-25T11:37:06.275Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Neptune (899)                   {source: nep098_merged}",
+      "centerHeader": "Center body name: Earth (399)                     {source: nep098_merged}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDTT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.4999769586,
+          "julianDate": 2415020.499976956,
+          "outputTimeDifferenceSeconds": -0.00024139881134033203,
+          "longitudeDeg": 85.21866,
+          "latitudeDeg": -1.2996533,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545.0007428704,
+          "julianDate": 2451545.00074287,
+          "outputTimeDifferenceSeconds": -0.00004023313522338867,
+          "longitudeDeg": 303.1930007,
+          "latitudeDeg": 0.2350026,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.500800741,
+          "julianDate": 2461338.500800741,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 2.2389131,
+          "latitudeDeg": -1.4168874,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5010784958,
+          "julianDate": 2488069.501078496,
+          "outputTimeDifferenceSeconds": 0.00004023313522338867,
+          "longitudeDeg": 167.2905194,
+          "latitudeDeg": 0.9638821,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    },
+    {
+      "bodyId": "pluto",
+      "target": 999,
+      "timeType": "TT",
+      "requestUrl": "https://ssd.jpl.nasa.gov/api/horizons.api?format=json&COMMAND=%27999%27&OBJ_DATA=%27YES%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&TIME_TYPE=%27TT%27&TLIST_TYPE=%27JD%27&TLIST=%272415020.4999769586%27+%272451545.0007428704%27+%272461338.5008007409%27+%272488069.5010784958%27&QUANTITIES=%2730%2C31%27&CAL_FORMAT=%27JD%27&CAL_TYPE=%27GREGORIAN%27&TIME_DIGITS=%27FRACSEC%27&ANG_FORMAT=%27DEG%27&APPARENT=%27AIRLESS%27&REF_SYSTEM=%27ICRF%27&CSV_FORMAT=%27YES%27&EXTRA_PREC=%27YES%27",
+      "rawPath": "raw/pluto-tt.json",
+      "rawSha256": "6c6ee6d99d94945e027e90668604c630d40df147a7eaf2e4e41a5a306ff399f7",
+      "retrievedAt": "2026-10-25T11:37:06.520Z",
+      "signature": {
+        "version": "1.2",
+        "source": "NASA/JPL Horizons API"
+      },
+      "targetHeader": "Target body name: Pluto (999)                     {source: plu060_merged}",
+      "centerHeader": "Center body name: Earth (399)                     {source: DE441}",
+      "siteHeader": "Center-site name: GEOCENTRIC",
+      "eopHeader": "EOP file        : eop.261023.p270119                                           ",
+      "columns": [
+        "Date_________JDTT",
+        "",
+        "",
+        "TDB-UT",
+        "ObsEcLon",
+        "ObsEcLat",
+        ""
+      ],
+      "samples": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2415020.4999769586,
+          "julianDate": 2415020.499976956,
+          "outputTimeDifferenceSeconds": -0.00024139881134033203,
+          "longitudeDeg": 75.2513936,
+          "latitudeDeg": -9.7769715,
+          "tdbMinusUtSeconds": -1.944461
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "requestedJulianDate": 2451545.0007428704,
+          "julianDate": 2451545.00074287,
+          "outputTimeDifferenceSeconds": -0.00004023313522338867,
+          "longitudeDeg": 251.4547644,
+          "latitudeDeg": 10.8552605,
+          "tdbMinusUtSeconds": 64.183903
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "requestedJulianDate": 2461338.500800741,
+          "julianDate": 2461338.500800741,
+          "outputTimeDifferenceSeconds": 0,
+          "longitudeDeg": 303.0872075,
+          "latitudeDeg": -4.2775808,
+          "tdbMinusUtSeconds": 69.18246
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "requestedJulianDate": 2488069.5010784958,
+          "julianDate": 2488069.501078496,
+          "outputTimeDifferenceSeconds": 0.00004023313522338867,
+          "longitudeDeg": 32.4030223,
+          "latitudeDeg": -16.9212234,
+          "tdbMinusUtSeconds": 69.183912
+        }
+      ]
+    }
+  ]
+}

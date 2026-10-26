@@ -1,0 +1,541 @@
+<script lang="ts">
+  import { onMount, tick, untrack } from 'svelte';
+  import { HOUSE_SYSTEMS, type BodyPosition, type EphemerisSnapshot, type HouseResult } from './lib/astronomy/ephemeris';
+  import { ASPECT_TYPES, classifyLongitude, zodiacSign } from './lib/domain/chart';
+  import { createExplorerStore, type LayerKey } from './lib/state/explorer';
+  import FeatureObjectList from './lib/ui/FeatureObjectList.svelte';
+  import FeatureInspector from './lib/ui/FeatureInspector.svelte';
+  import CalculationProvenance from './lib/ui/CalculationProvenance.svelte';
+  import HouseControls from './lib/ui/HouseControls.svelte';
+  import HouseInspector from './lib/ui/HouseInspector.svelte';
+  import {DEFAULT_HOUSE_DISPLAY,compareHouseAssignments,type HouseDisplaySettings} from './lib/domain/house-geometry';
+  import {DEFAULT_CONSTRUCTION,buildHouseConstruction,type ConstructionSettings} from './lib/domain/house-construction';
+  import ConstructionGuide from './lib/ui/ConstructionGuide.svelte';
+  import {CONSTRUCTION_LEGEND} from './lib/scene/construction-style';
+  import { civilAtInstant, civilDateValue, civilTimeValue, exampleBirthContext, formatOffset, makeBirthContext, type GlobeDraft, type MomentCommit, type ObserverContext } from './lib/state/birth-context';
+  import type { CivilDateTime } from './lib/time/civil-time';
+  import MomentForm from './lib/ui/MomentForm.svelte';
+  import SceneCanvas from './lib/ui/SceneCanvas.svelte';
+  import AspectControls from './lib/ui/AspectControls.svelte';
+  import AspectInspector from './lib/ui/AspectInspector.svelte';
+  import BodyInterpretation from './lib/ui/BodyInterpretation.svelte';
+  import EvidencePanel from './lib/ui/EvidencePanel.svelte';
+  import ContentCard from './lib/ui/ContentCard.svelte';
+  import {DEFAULT_ASPECT_DISPLAY,getAspectDetails,getVisibleAspects,type AspectDisplaySettings} from './lib/domain/aspect-presentation';
+  import {ASPECT_LEGEND} from './lib/scene/aspect-style';
+  import Timeline from './lib/ui/Timeline.svelte';
+  import {PlaybackClock,TIMELINE_PRESETS,clampInstant,explorationOffset,stepInstant,timelineWindow,type StepUnit,type TimelinePreset} from './lib/domain/timeline';
+  import {DEFAULT_TRAIL_DISPLAY,DEFAULT_BOUNDARY_HISTORY,type TrailDisplaySettings,type BoundaryHistorySettings} from './lib/domain/trails';
+  import {createTrailService} from './lib/services/trails';
+  import TrailControls from './lib/ui/TrailControls.svelte';
+  import {TRAIL_LEGEND,TRAIL_REFERENCE_LABELS} from './lib/scene/trail-style';
+  import ControlGroup from './lib/ui/ControlGroup.svelte';
+  import DisplayControls from './lib/ui/DisplayControls.svelte';
+  import {DEFAULT_PREFERENCES,readPreferences,writePreferences,type DisplayPreferences} from './lib/state/preferences';
+  import {SOURCE_HREF,BUILD_REVISION} from './lib/source-access';
+  import FeaturePreview from './lib/ui/FeaturePreview.svelte';
+  import FeatureReading from './lib/ui/FeatureReading.svelte';
+  import { featureHit, type FeatureHit } from './lib/domain/scene-hit';
+  import { resolveHoverCard, type HoverCardContext } from './lib/domain/hover-card';
+  import { CATALOGUE_STARS } from './lib/scene/sky-data';
+  import { FIGURE_SUPPORT_STARS } from './lib/scene/constellation-figures';
+  import EarthProjectionControls from './lib/ui/EarthProjectionControls.svelte';
+  import GeographicLineKey from './lib/ui/GeographicLineKey.svelte';
+  import { DEFAULT_EARTH_PROJECTIONS, earthHouseAvailability, type EarthProjectionSettings } from './lib/domain/earth-projections';
+  import AspectCardPreview from './lib/ui/AspectCardPreview.svelte';
+  import FeatureNavigation from './lib/ui/FeatureNavigation.svelte';
+
+  const explorer = createExplorerStore();
+  const trailService=createTrailService();
+  const bodies = [
+    { id: 'sun', name: 'Sun', glyph: '☉', color: '#f1c576' },
+    { id: 'moon', name: 'Moon', glyph: '☽', color: '#d5deeb' },
+    { id: 'mercury', name: 'Mercury', glyph: '☿', color: '#bfc7dc' },
+    { id: 'venus', name: 'Venus', glyph: '♀', color: '#e9c7a3' },
+    { id: 'mars', name: 'Mars', glyph: '♂', color: '#ee958d' },
+    { id: 'jupiter', name: 'Jupiter', glyph: '♃', color: '#dbc18d' },
+    { id: 'saturn', name: 'Saturn', glyph: '♄', color: '#cbb88e' },
+    { id: 'uranus', name: 'Uranus', glyph: '♅', color: '#91d6d6' },
+    { id: 'neptune', name: 'Neptune', glyph: '♆', color: '#92a8ee' },
+    { id: 'pluto', name: 'Pluto', glyph: '♇', color: '#c8ade6' },
+  ];
+  const views = [{ id: 'overview', label: 'Earth overview' }, { id: 'observer', label: 'Observer sky' }, { id: 'outside', label: 'Outside sphere' }] as const;
+  const layerOptions = [
+    { id: 'bodies', label: 'Celestial bodies', color: '#e4c49a' },
+    { id: 'horizon', label: 'Horizon & compass', color: '#64c9c6' },
+    { id: 'ecliptic', label: 'Ecliptic', color: '#dcb879' },
+    { id: 'signs', label: 'Tropical signs', color: '#bd91db' },
+    { id: 'angles', label: 'Ascendant, MC & opposites', color: '#f0d7a8' },
+    { id: 'equator', label: 'Celestial equator', color: '#928bbf' },
+    { id: 'meridian', label: 'Local meridian', color: '#80a7d7' },
+    { id: 'primeVertical', label: 'Prime vertical', color: '#9aaeb3' },
+    { id: 'stars', label: 'Catalogue stars', color: '#cad8e8' },
+    { id: 'constellations', label: 'Constellation regions', color: '#7394b3' },
+    { id: 'asterisms', label: 'Constellation asterisms', color: '#89b3cc' },
+    { id: 'houses', label: 'Longitude houses', color: '#82a8c9' },
+  ] as const;
+  const initialBirthContext = exampleBirthContext();
+  const initialPreferences=readPreferences();
+  let preferences=$state<DisplayPreferences>(initialPreferences);
+  let systemReducedMotion=$state(false);
+  let compactPanels=$state(false);
+  let toolsCollapsed=$state(false);
+  let inspectorCollapsed=$state(true);
+  let inspectorPinned=$state(false);
+  let groups=$state<Record<string,boolean>>({view:true});
+  let isDemonstration=$state(true);
+  let announcement=$state('');
+  let birthContext = $state.raw(initialBirthContext);
+  let explorationObserver = $state<ObserverContext>(initialBirthContext.observer);
+  let displayedObserver = $state<ObserverContext>(initialBirthContext.observer);
+  let explorationTimeKnown = $state(true);
+  let displayedTimeKnown = $state(true);
+  let welcome = $state(true);
+  let formOpen = $state(false);
+  let leftOpen = $state(false);
+  let rightOpen = $state(false);
+  let formMode = $state<'birth' | 'moment' | 'location'>('birth');
+  let formInstant = $state(initialBirthContext.instantMs);
+  let formObserver = $state<ObserverContext>(initialBirthContext.observer);
+  let formTimeKnown = $state(true);
+  let formSession = $state(0);
+  let formCivil = $state<CivilDateTime | undefined>();
+  let formKeepLocal = $state(false);
+  let globePickMode = $state(false);
+  let sceneStatus = $state<string | null>(null);
+  let houseDisplay=$state<HouseDisplaySettings>({...DEFAULT_HOUSE_DISPLAY,mode:initialPreferences.houseMode});
+  let construction=$state<ConstructionSettings>({...DEFAULT_CONSTRUCTION});
+  let aspectSettings=$state<AspectDisplaySettings>({...DEFAULT_ASPECT_DISPLAY,types:{...DEFAULT_ASPECT_DISPLAY.types},orbs:{...DEFAULT_ASPECT_DISPLAY.orbs}});
+  const aspects=$derived({...aspectSettings,enabled:$explorer.layers.aspects});
+  let earthSettings=$state<EarthProjectionSettings>({...DEFAULT_EARTH_PROJECTIONS,bodies:{...DEFAULT_EARTH_PROJECTIONS.bodies},angles:{...DEFAULT_EARTH_PROJECTIONS.angles}});
+  let evidenceOpen=$state(false);
+  let evidenceDialog=$state<HTMLDialogElement>();
+  let timelinePreset=$state<TimelinePreset>('1d');
+  let timeWindow=$state(timelineWindow(initialBirthContext.instantMs,TIMELINE_PRESETS['1d']));
+  let stepUnit=$state<StepUnit>('day');
+  let playbackDirection=$state<1|-1>(1);
+  let playbackSpeed=$state(3600000);
+  let playing=$state(false);
+  let pauseReason=$state<string|null>(null);
+  let playbackClock:PlaybackClock|null=null;
+  let trails=$state<TrailDisplaySettings>({...DEFAULT_TRAIL_DISPLAY});
+  let history=$state<BoundaryHistorySettings>({...DEFAULT_BOUNDARY_HISTORY});
+  let trailKey:string|null=null,historyKey:string|null=null;
+  let trailInterval:{startMs:number;endMs:number}|null=null,historyInterval:{startMs:number;endMs:number}|null=null;
+  let formDialog=$state<HTMLDialogElement>();
+  let sceneCanvas: { focusSelection(): void; returnToObserver(): void } | undefined = $state();
+  let observedSnapshot: EphemerisSnapshot | null = null;
+  let hoveredFeature = $state<FeatureHit | null>(null);
+  let previewFocusOwned = false;
+  let lastPreviewPointer: {x:number;y:number} | null = null;
+  let lastScenePreview: FeatureHit | null = null;
+  let selectedFeature = $state<FeatureHit | null>(null);
+  const snapshotRevisions = new WeakMap<EphemerisSnapshot,number>();
+  const hoverStars = new Map([...CATALOGUE_STARS,...FIGURE_SUPPORT_STARS].map(star=>[star[0],star]));
+
+  const selectedSceneId = $derived(selectedFeature?.entityId ?? $explorer.selectedId);
+  const earthProjectionDisplay=$derived({...earthSettings,enabled:$explorer.layers.earthProjections,houses:$explorer.layers.earthHouses,astrocartography:$explorer.layers.astrocartography});
+  let cardDesignPreview=$state(typeof window!=='undefined'&&new URLSearchParams(window.location.hash.slice(1)).get('preview')==='aspects');
+  const selectedBody = $derived($explorer.snapshot?.bodies.find((body) => `body:${body.id}` === selectedSceneId));
+  const display=$derived({quality:preferences.quality,labelScale:preferences.labelScale,earthOpacity:preferences.earthOpacity,reducedMotion:preferences.motion==='reduced'||preferences.motion==='system'&&systemReducedMotion});
+  const selectedMeta = $derived(bodies.find((body) => body.id === selectedBody?.id));
+  const shownInstant = $derived($explorer.snapshot?.instantMs ?? $explorer.input.instantMs);
+  const selectedHouses = $derived($explorer.snapshot?.houses[0]);
+  const houseComparison=$derived($explorer.snapshot?.houses[1]?compareHouseAssignments($explorer.snapshot.bodies,$explorer.snapshot.houses[0]!,$explorer.snapshot.houses[1]):null);
+  const activeConstruction=$derived(construction.enabled&&$explorer.snapshot&&selectedHouses?buildHouseConstruction($explorer.snapshot,selectedHouses,construction):null);
+  const constructionLegend=$derived(CONSTRUCTION_LEGEND.filter(item=>activeConstruction?.status==='valid'&&(activeConstruction.lines.some(line=>line.kind===item.kind&&line.stage<=construction.stage)||activeConstruction.markers.some(marker=>marker.kind===item.kind&&marker.stage<=construction.stage))));
+  const busy = $derived($explorer.status === 'loading' || $explorer.status === 'pending');
+  const statusLabel = $derived($explorer.error ? 'Calculation needs attention' : busy ? 'Calculating requested moment…' : $explorer.snapshot ? 'Moment calculated' : 'Preparing observatory…');
+  const localContext = $derived(civilAtInstant(shownInstant, displayedObserver));
+  const visibleAspects=$derived(($explorer.snapshot?getVisibleAspects($explorer.snapshot.bodies,aspects,$explorer.selectedId):[]).filter(aspect=>!$explorer.selectedId?.startsWith('aspect:')||aspect.id===$explorer.selectedId));
+  const aspectLegend=$derived(ASPECT_LEGEND.filter(type=>visibleAspects.some(aspect=>aspect.type===type.id)));
+  const boundaryHouse=$derived(Number(/^(?:house|boundary):([1-9]|1[0-2])$/.exec(selectedSceneId??'')?.[1])||null);
+  const activeTrail=$derived(trails.enabled&&selectedBody&&$trailService.trail.result?.bodyId===selectedBody.id&&$trailService.trail.result.frame===trails.frame&&$trailService.trail.result.observer.latitudeDeg===$explorer.snapshot?.observer.latitudeDeg&&$trailService.trail.result.observer.longitudeDeg===$explorer.snapshot?.observer.longitudeDeg?$trailService.trail.result:null);
+  const activeHistory=$derived(history.enabled&&boundaryHouse&&$trailService.history.result?.house===boundaryHouse&&$trailService.history.result.system===selectedHouses?.system&&$trailService.history.result.observer.latitudeDeg===$explorer.snapshot?.observer.latitudeDeg&&$trailService.history.result.observer.longitudeDeg===$explorer.snapshot?.observer.longitudeDeg?$trailService.history.result:null);
+  const earthHouseState=$derived(earthHouseAvailability(selectedHouses));
+  const hoverLayers=$derived({
+    ...Object.fromEntries(Object.entries($explorer.layers).map(([id,enabled])=>[id,{enabled}])),
+    houses:{enabled:$explorer.layers.houses,available:earthHouseState.status==='valid',...(earthHouseState.status==='undefined'?{reason:earthHouseState.reason}:{})},
+    earthHouses:{enabled:$explorer.layers.earthHouses,available:earthHouseState.status==='valid'&&$explorer.viewpoint!=='observer'&&$explorer.layers.earthProjections,...(earthHouseState.status==='undefined'?{reason:earthHouseState.reason}:{reason:'Enable Earth projections in an exterior view to display house sections.'})},
+    earthProjections:{enabled:$explorer.layers.earthProjections,available:$explorer.viewpoint!=='observer',reason:'Earth projections are hidden in Observer sky.'},
+    astrocartography:{enabled:$explorer.layers.astrocartography,available:$explorer.viewpoint!=='observer'&&$explorer.layers.earthProjections,reason:'Enable Earth projections in an exterior view to display geographic lines.'},
+    aspects:{enabled:aspects.enabled},construction:{enabled:construction.enabled,available:activeConstruction?.status==='valid',reason:activeConstruction?.notes[0]??'Enable a construction guide to inspect its geometry.'},
+    trails:{enabled:trails.enabled,available:!!selectedBody,reason:'Select a body to display its trail.'},history:{enabled:history.enabled,available:!!boundaryHouse,reason:'Select a primary boundary to display its history.'},
+    ...Object.fromEntries(ASPECT_TYPES.map(type=>[`aspect-type:${type.id}`,{enabled:aspects.enabled&&aspects.types[type.id]}])),
+  });
+  const previewContext = $derived<HoverCardContext>({snapshot:$explorer.snapshot,revision:$explorer.snapshot?snapshotRevisions.get($explorer.snapshot):undefined,orbs:aspects.orbs,provisional:!displayedTimeKnown,pending:busy,stars:hoverStars,trail:activeTrail,history:activeHistory,construction:activeConstruction,localTime:{instantMs:shownInstant,label:`${civilDateValue(localContext.civil)} · ${civilTimeValue(localContext.civil)} local · ${formatOffset(localContext.offsetMinutes)}`},layers:hoverLayers});
+  const selectedReading = $derived(selectedFeature && (['star','asterism','construction','trail','history','earth-house','astro-line'].includes(selectedFeature.kind)||selectedFeature.representation==='comparison') ? resolveHoverCard(selectedFeature,previewContext) : null);
+  $effect(()=>{writePreferences({...preferences});document.documentElement.style.fontSize=preferences.textSize==='large'?'18px':'16px';});
+
+  $effect(()=>{
+    const snapshot=$explorer.snapshot,bodyId=selectedBody?.id,settings={...trails};
+    if(!settings.enabled||!snapshot||!bodyId){untrack(()=>{trailService.cancelTrail();trailKey=null;trailInterval=null;});return;}
+    const key=JSON.stringify({bodyId,observer:snapshot.observer,...settings});
+    const result=$trailService.trail.result;
+    const outside=!trailInterval||snapshot.instantMs<trailInterval.startMs||snapshot.instantMs>trailInterval.endMs;
+    const limitedOutside=result?.status==='limited'&&(snapshot.instantMs<result.startMs||snapshot.instantMs>result.endMs);
+    if(key!==trailKey||outside||limitedOutside)untrack(()=>{
+      trailKey=key;trailInterval={startMs:snapshot.instantMs-Math.floor(settings.windowMs/2),endMs:snapshot.instantMs+Math.ceil(settings.windowMs/2)};
+      trailService.requestTrail({bodyId,frame:settings.frame,observer:snapshot.observer,...trailInterval,anchorMs:snapshot.instantMs,maxVertices:settings.maxVertices,toleranceDeg:settings.toleranceDeg,maxComputeMs:settings.maxComputeMs});
+    });
+  });
+  $effect(()=>{
+    const snapshot=$explorer.snapshot,house=boundaryHouse,settings={...history};
+    if(!settings.enabled||!snapshot||!house){untrack(()=>{trailService.cancelHistory();historyKey=null;historyInterval=null;});return;}
+    const system=snapshot.houses[0]!.system,key=JSON.stringify({house,system,observer:snapshot.observer,...settings});
+    if(key!==historyKey||!historyInterval||snapshot.instantMs<historyInterval.startMs||snapshot.instantMs>historyInterval.endMs)untrack(()=>{
+      historyKey=key;historyInterval={startMs:snapshot.instantMs-Math.floor(settings.windowMs/2),endMs:snapshot.instantMs+Math.ceil(settings.windowMs/2)};
+      trailService.requestHistory({house,system,observer:snapshot.observer,...historyInterval,anchorMs:snapshot.instantMs,count:settings.count});
+    });
+  });
+
+  $effect(() => {
+    const snapshot = $explorer.snapshot;
+    if (snapshot && snapshot !== observedSnapshot) {
+      observedSnapshot = snapshot;
+      snapshotRevisions.set(snapshot,$explorer.revision);
+      if (snapshot.observer.latitudeDeg === explorationObserver.latitudeDeg && snapshot.observer.longitudeDeg === explorationObserver.longitudeDeg) {
+        displayedObserver = explorationObserver;
+        displayedTimeKnown = explorationTimeKnown;
+      }
+    }
+  });
+
+  onMount(() => {
+    explorer.init();
+    const motion=window.matchMedia('(prefers-reduced-motion: reduce)'),compact=window.matchMedia('(max-width: 1000px)');
+    const updateMotion=()=>systemReducedMotion=motion.matches,updateCompact=()=>compactPanels=compact.matches;
+    updateMotion();updateCompact();motion.addEventListener('change',updateMotion);compact.addEventListener('change',updateCompact);
+    const transport=setInterval(()=>{
+      if(!playing||!playbackClock)return;
+      if($explorer.status==='error'){pausePlayback('Playback paused because the calculation needs attention.');return;}
+      const next=playbackClock.tick(performance.now(),$explorer.status==='ready');
+      if(next.type==='request')requestTimelineInstant(next.instantMs);
+      else if(next.type==='pause'){if(next.instantMs!==undefined)requestTimelineInstant(next.instantMs);pausePlayback(next.reason);}
+    },80);
+    const hidden=()=>{if(document.hidden&&playing)pausePlayback('Playback paused while this tab was hidden.');};
+    document.addEventListener('visibilitychange',hidden);
+    return () => {clearInterval(transport);document.removeEventListener('visibilitychange',hidden);motion.removeEventListener('change',updateMotion);compact.removeEventListener('change',updateCompact);document.documentElement.style.fontSize='';trailService.destroy();explorer.destroy();};
+  });
+
+  function formatInstant(ms: number) {
+    return new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', timeZone: 'UTC' }).format(ms).replace(',', ' ·');
+  }
+  function coordinate(value: number, positive: string, negative: string) { return `${Math.abs(value).toFixed(2)}° ${value < 0 ? negative : positive}`; }
+  function deg(value: number, digits = 2) { return `${value.toFixed(digits)}°`; }
+  function sign(body: BodyPosition) { return zodiacSign(body.longitudeDeg).name; }
+  function houseFor(body: BodyPosition,houses:HouseResult|undefined=selectedHouses): string {
+    if (!houses) return 'Unavailable';
+    const result = classifyLongitude(houses, body.longitudeDeg);
+    return result.status === 'valid' ? String(result.house) : 'Unavailable';
+  }
+  function showInspector(){
+    const transferFocus=compactPanels&&leftOpen&&!!document.activeElement?.closest('#explorer-dock');
+    rightOpen=true;inspectorCollapsed=false;if(compactPanels)leftOpen=false;
+    if(transferFocus)void tick().then(()=>document.getElementById('inspector')?.focus());
+  }
+  function selectBody(id: string) { selectedFeature=null; explorer.select(`body:${id}`); explorer.setLayer('bodies',true);showInspector();announcement=`Selected ${bodies.find(body=>body.id===id)?.name??id}. Read its position and interpretation in the inspector.`; }
+  function selectFeature(id: string) {
+    selectedFeature=null;
+    if (id.startsWith('star:') || id.startsWith('asterism:') || id.startsWith('earth:') || id.startsWith('astro:')) { selectHit(featureHit(id,id)); return; }
+    if(id.startsWith('body:')){selectBody(id.slice(5));return;}
+    explorer.select(id);showInspector();announcement=`Selected ${id.replaceAll(':',' ').replaceAll('-',' ')}. Inspector updated.`;
+    const boundary=/^(?:house|boundary):([1-9]|1[0-2])$/.exec(id);
+    if(construction.enabled&&boundary)construction={...construction,boundaryHouse:Number(boundary[1])};
+    const kind=id.split(':')[0];
+    const referenceLayer:Record<string,LayerKey>={'reference:horizon':'horizon','reference:ecliptic':'ecliptic','reference:equator':'equator','reference:meridian':'meridian','reference:prime-vertical':'primeVertical','reference:zenith':'horizon','reference:nadir':'horizon','reference:north-pole':'equator','reference:south-pole':'equator'};
+    const layer:LayerKey|undefined=kind==='sign'?'signs':kind==='constellation'?'constellations':kind==='angle'?'angles':kind==='house'||kind==='boundary'?'houses':kind==='body'?'bodies':referenceLayer[id];
+    if(layer)explorer.setLayer(layer,true);
+    if(kind==='aspect'&&$explorer.snapshot){
+      const detail=getAspectDetails($explorer.snapshot.bodies,id,aspects.orbs);
+      if(detail)updateAspects({enabled:true,types:{...aspects.types,[detail.type]:true}});
+    }
+  }
+  function selectHit(hit: FeatureHit) {
+    if (['body','sign','angle','reference','constellation','aspect','house','boundary'].includes(hit.kind) && hit.representation!=='comparison') { selectFeature(hit.entityId); return; }
+    selectedFeature=hit; explorer.select(hit.id); showInspector(); announcement=`Selected ${hit.name}. Inspector updated.`;
+    if(hit.kind==='star'){
+      explorer.setLayer('stars',true);
+      if(FIGURE_SUPPORT_STARS.some(star=>hit.entityId===`star:hyg:${star[0]}`))explorer.setLayer('asterisms',true);
+    }
+    if(hit.kind==='asterism')explorer.setLayer('asterisms',true);
+    if(hit.kind==='earth-house'||hit.kind==='astro-line'){
+      if($explorer.viewpoint==='observer')explorer.setViewpoint('overview',false);
+      explorer.setLayer('earthProjections',true);
+      explorer.setLayer(hit.kind==='earth-house'?'earthHouses':'astrocartography',true);
+      if(hit.kind==='astro-line'){
+        const [,bodyId,angle]=hit.id.split(':');
+        if(bodyId&&bodyId in earthSettings.bodies&&angle&&angle in earthSettings.angles)earthSettings={...earthSettings,bodies:{...earthSettings.bodies,[bodyId]:true},angles:{...earthSettings.angles,[angle]:true}};
+      }
+    }
+  }
+  function updateEarthSettings(patch:Partial<EarthProjectionSettings>){
+    if(patch.enabled!==undefined)explorer.setLayer('earthProjections',patch.enabled);
+    if(patch.houses!==undefined)explorer.setLayer('earthHouses',patch.houses);
+    if(patch.astrocartography!==undefined)explorer.setLayer('astrocartography',patch.astrocartography);
+    earthSettings={...earthSettings,...patch};
+  }
+  function updateAspects(patch:Partial<AspectDisplaySettings>){
+    if(patch.enabled!==undefined)explorer.setLayer('aspects',patch.enabled);
+    aspectSettings={...aspectSettings,...patch};
+  }
+  function constructionLegendTarget(kind:string){
+    const element=activeConstruction&&[...activeConstruction.lines,...activeConstruction.markers].find(item=>item.kind===kind&&item.stage<=construction.stage);
+    if(!element||!activeConstruction)return featureHit('layer:construction','House construction guides');
+    return featureHit(element.id.toLowerCase(),element.label,{entityId:`boundary:${activeConstruction.house}`,kind:'construction',role:kind,system:activeConstruction.system,constructionId:element.id,representation:'guide'});
+  }
+  function previewControl(event: PointerEvent | FocusEvent) {
+    if(event instanceof PointerEvent&&previewFocusOwned)return;
+    const target=event.target instanceof Element?event.target.closest<HTMLElement>('[data-feature-id]'):null;
+    if (!target || target.closest('[data-feature-preview]')) return;
+    if(event instanceof FocusEvent)previewFocusOwned=true;
+    const id=target.dataset.featureId!; const rect=target.getBoundingClientRect();
+    let details:Partial<FeatureHit>={};
+    try{if(target.dataset.featureJson){const value=JSON.parse(target.dataset.featureJson);if(value.id===id)details=value;}}catch{/* Only registered feature metadata is used. */}
+    hoveredFeature=featureHit(id,target.dataset.featureName??target.textContent?.trim()??id,{...details,screen:{x:event instanceof PointerEvent?event.clientX:rect.right,y:event instanceof PointerEvent?event.clientY:rect.top+rect.height/2}});
+  }
+  function leaveControl(event: PointerEvent | FocusEvent) {
+    if(event instanceof PointerEvent&&previewFocusOwned)return;
+    const from=event.target instanceof Element?event.target.closest('[data-feature-id]'):null;
+    const to=event.relatedTarget instanceof Element?event.relatedTarget.closest('[data-feature-id]'):null;
+    if(from&&from!==to)hoveredFeature=null;
+  }
+  function previewPointerMove(event:PointerEvent){
+    const moved=!lastPreviewPointer||event.clientX!==lastPreviewPointer.x||event.clientY!==lastPreviewPointer.y;
+    lastPreviewPointer={x:event.clientX,y:event.clientY};
+    if(!moved)return;
+    previewFocusOwned=false;
+    if(event.target instanceof Element&&event.target.closest('[data-feature-preview]'))return;
+    if(event.target instanceof Element&&event.target.closest('[data-feature-id]'))previewControl(event);
+    else if(event.target instanceof Element&&event.target.closest('.scene-canvas'))hoveredFeature=lastScenePreview;
+    else hoveredFeature=null;
+  }
+  function previewScene(hit:FeatureHit|null){lastScenePreview=hit;if(!previewFocusOwned)hoveredFeature=hit;}
+  function showConstruction(house?:number){
+    groups={...groups,construction:true};toolsCollapsed=false;
+    const selected=/^(?:house|boundary):([1-9]|1[0-2])$/.exec($explorer.selectedId??'');
+    const boundaryHouse=house??(selected?Number(selected[1]):['P','K'].includes(selectedHouses?.system??$explorer.input.system)?11:1);
+    construction={...construction,enabled:true,boundaryHouse,stage:2,progress:1};
+    selectFeature(`boundary:${boundaryHouse}`);
+  }
+  async function focusConstruction(){selectFeature(`boundary:${construction.boundaryHouse}`);await tick();sceneCanvas?.focusSelection();}
+  function openForm(mode: 'birth' | 'moment' | 'location' = 'moment', observer?: ObserverContext) {
+    pausePlayback('Playback paused while editing the context.');
+    formMode = mode;
+    formInstant = mode === 'birth' ? birthContext.instantMs : $explorer.input.instantMs;
+    formObserver = observer ?? (mode === 'birth' ? birthContext.observer : explorationObserver);
+    formTimeKnown = mode === 'birth' ? birthContext.timeKnown : explorationTimeKnown;
+    formCivil = mode === 'birth' ? birthContext.civil : undefined;
+    formKeepLocal = false;
+    formSession += 1; formOpen = true;
+  }
+  $effect(() => {
+    if (!formDialog) return;
+    if (formOpen && !formDialog.open) formDialog.showModal();
+    if (!formOpen && formDialog.open) formDialog.close();
+  });
+  $effect(()=>{if(!evidenceDialog)return;if(evidenceOpen&&!evidenceDialog.open)evidenceDialog.showModal();if(!evidenceOpen&&evidenceDialog.open)evidenceDialog.close();});
+  function commitMoment(commit: MomentCommit) {
+    if (formMode === 'birth'){birthContext = makeBirthContext(commit);isDemonstration=false;}
+    explorationObserver = commit.observer;
+    explorationTimeKnown = commit.timeKnown;
+    const snapshot = $explorer.snapshot;
+    if (snapshot?.instantMs === commit.instantMs && snapshot.observer.latitudeDeg === commit.observer.latitudeDeg && snapshot.observer.longitudeDeg === commit.observer.longitudeDeg) {
+      displayedObserver = commit.observer; displayedTimeKnown = commit.timeKnown;
+    }
+    explorer.requestChart({ instantMs: commit.instantMs, observer: { latitudeDeg: commit.observer.latitudeDeg, longitudeDeg: commit.observer.longitudeDeg } });
+    keepInstantInWindow(commit.instantMs);
+    formOpen = false; welcome = false;
+    announcement=formMode==='birth'?'Birth anchor updated.':'Exploration context updated. The birth anchor is unchanged.';
+  }
+  function restoreBirthContext() {
+    pausePlayback();keepInstantInWindow(birthContext.instantMs);
+    explorationObserver = birthContext.observer;
+    explorationTimeKnown = birthContext.timeKnown;
+    explorer.requestChart({ instantMs: birthContext.instantMs, observer: { latitudeDeg: birthContext.observer.latitudeDeg, longitudeDeg: birthContext.observer.longitudeDeg } });
+    if ($explorer.snapshot?.instantMs === birthContext.instantMs && $explorer.snapshot.observer.latitudeDeg === birthContext.observer.latitudeDeg && $explorer.snapshot.observer.longitudeDeg === birthContext.observer.longitudeDeg) {
+      displayedObserver = birthContext.observer; displayedTimeKnown = birthContext.timeKnown;
+    }
+  }
+  function returnBirthInstant() {
+    pausePlayback();keepInstantInWindow(birthContext.instantMs);
+    explorationTimeKnown = birthContext.timeKnown;
+    if ($explorer.snapshot?.instantMs === birthContext.instantMs) displayedTimeKnown = birthContext.timeKnown;
+    explorer.requestChart({ instantMs: birthContext.instantMs });
+  }
+  function beginGlobePick(draft: GlobeDraft) { formInstant = draft.instantMs; formCivil = draft.civil; formObserver = draft.observer; formTimeKnown = draft.timeKnown; formKeepLocal = draft.keepLocal; formOpen = false; welcome = false; globePickMode = true; explorer.setViewpoint('overview',false); }
+  function observerPicked(coordinates: { latitudeDeg: number; longitudeDeg: number }) {
+    globePickMode = false;
+    formObserver = { ...formObserver, ...coordinates, label: 'Globe selection', source: 'globe', zoneOverride: true };
+    formSession += 1; formOpen = true;
+  }
+  function pausePlayback(reason:string|null=null){playing=false;playbackClock=null;pauseReason=reason;}
+  function updatePreferences(patch:Partial<DisplayPreferences>){preferences={...preferences,...patch};if(patch.houseMode)houseDisplay={...houseDisplay,mode:patch.houseMode};}
+  function resetPreferences(){preferences={...DEFAULT_PREFERENCES};houseDisplay={...DEFAULT_HOUSE_DISPLAY};earthSettings={...earthSettings,houseOpacity:DEFAULT_EARTH_PROJECTIONS.houseOpacity,astroOpacity:DEFAULT_EARTH_PROJECTIONS.astroOpacity};aspectSettings={...aspectSettings,backgroundOpacity:DEFAULT_ASPECT_DISPLAY.backgroundOpacity};}
+  function clearSelection(){selectedFeature=null;explorer.select(null);announcement='Selection cleared.';if(!inspectorPinned){if(document.activeElement?.closest('#inspector'))void collapseInspector();else{inspectorCollapsed=true;rightOpen=false;}}}
+  async function collapseInspector(){inspectorCollapsed=true;rightOpen=false;await tick();document.querySelector<HTMLButtonElement>('[aria-label="Expand inspector"]')?.focus();}
+  async function collapseTools(){toolsCollapsed=!compactPanels;leftOpen=false;await tick();document.querySelector<HTMLButtonElement>('.left-toggle')?.focus();}
+  async function openObjects(){toolsCollapsed=false;if(compactPanels){leftOpen=true;rightOpen=false;}await tick();document.getElementById('object-list')?.focus();}
+  async function findReference(){toolsCollapsed=false;groups={...groups,references:true};if(compactPanels){leftOpen=true;rightOpen=false;}await tick();document.querySelector<HTMLInputElement>('.feature-search input')?.focus();}
+  function togglePlayback(){
+    if(playing){pausePlayback();return;}
+    if(busy||$explorer.status==='error'){pauseReason='Wait for a valid calculated moment before playback.';return;}
+    playbackClock=new PlaybackClock(playbackSpeed,playbackDirection);playbackClock.start(shownInstant,performance.now());pauseReason=null;playing=true;announcement=`Playback ${playbackDirection===1?'forward':'backward'} started.`;
+  }
+  function keepInstantInWindow(instantMs:number){if(instantMs<timeWindow.startMs||instantMs>timeWindow.endMs)timeWindow=timelineWindow(instantMs,timeWindow.endMs-timeWindow.startMs);}
+  function requestTimelineInstant(instantMs:number){const value=clampInstant(instantMs);keepInstantInWindow(value);explorer.requestChart({instantMs:value});}
+  function seekInstant(instantMs:number){pausePlayback();requestTimelineInstant(instantMs);}
+  function stepTime(direction:1|-1,count=1){let instant=$explorer.input.instantMs;for(let index=0;index<Math.min(10,Math.max(1,count));index++)instant=stepInstant(instant,stepUnit,direction);seekInstant(instant);}
+  function changeWindow(preset:Exclude<TimelinePreset,'custom'>){timelinePreset=preset;timeWindow=timelineWindow(shownInstant,TIMELINE_PRESETS[preset]);}
+  function zoomWindow(factor:0.5|2){timelinePreset='custom';timeWindow=timelineWindow(shownInstant,(timeWindow.endMs-timeWindow.startMs)*factor);}
+  function changePlayback(patch:{speed?:number;direction?:1|-1}){const resume=playing;pausePlayback();if(patch.speed!==undefined)playbackSpeed=patch.speed;if(patch.direction)playbackDirection=patch.direction;if(resume)togglePlayback();}
+  function onKey(event: KeyboardEvent) {
+    if(event.defaultPrevented)return;
+    if(event.altKey||event.ctrlKey||event.metaKey)return;
+    const target = event.target;
+    if (formOpen || evidenceOpen || target instanceof HTMLInputElement || target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) return;
+    if (event.key === 'Escape') {const closeDrawer=compactPanels&&leftOpen;clearSelection();if(closeDrawer)void collapseTools();else leftOpen=false;if(!inspectorPinned)rightOpen=false;globePickMode=false; }
+    if(event.code==='Space'&&target instanceof HTMLElement&&(target.tagName==='CANVAS'||target.closest('.timeline'))&&target.tagName!=='BUTTON'){event.preventDefault();togglePlayback();}
+    if(event.key==='/'){event.preventDefault();void findReference();}
+  }
+</script>
+
+<svelte:window onkeydown={onKey} onhashchange={()=>cardDesignPreview=new URLSearchParams(window.location.hash.slice(1)).get('preview')==='aspects'} />
+<svelte:document onpointerover={previewControl} onpointerout={leaveControl} onpointermove={previewPointerMove} onfocusin={previewControl} onfocusout={leaveControl} />
+
+{#if cardDesignPreview}
+  <AspectCardPreview motion={!display.reducedMotion&&display.quality!=='low'} largeText={preferences.textSize==='large'}/>
+{:else}
+<FeaturePreview hit={formOpen||globePickMode||sceneStatus?null:hoveredFeature} suspended={formOpen||globePickMode||!!sceneStatus} resetKey={$explorer.viewRevision} context={previewContext} motion={!display.reducedMotion&&display.quality!=='low'} sparkles={preferences.cardSparkles} />
+
+<a class="skip-link" href="#object-list" onclick={event=>{event.preventDefault();void openObjects();}}>Skip to celestial objects</a>
+<div class="observatory" data-reduced-motion={display.reducedMotion}>
+  <span class="sr-only" data-testid="exploration-announcement" role="status" aria-live="polite" aria-atomic="true">{announcement}</span>
+  <header class="context-bar">
+    <button class="brand" onclick={() => welcome = true} aria-label="Spatial Astrology home">
+      <span class="brand-mark" aria-hidden="true"><span></span>✦</span>
+      <span><strong>SPATIAL</strong><small>ASTROLOGY EXPLORER</small></span>
+    </button>
+    <div class="context-details">
+      <span class="context-symbol" aria-hidden="true">◷</span>
+      <span><strong data-testid="displayed-local-moment">{civilDateValue(localContext.civil)} · {civilTimeValue(localContext.civil)} local</strong><small data-testid="displayed-utc-moment">{formatInstant(shownInstant)} UTC · {formatOffset(localContext.offsetMinutes)}</small><small class="exploration-badge">{explorationOffset(shownInstant,birthContext.instantMs)} · {HOUSE_SYSTEMS.find(system=>system.id===selectedHouses?.system)?.name??$explorer.input.system}</small>{#if !displayedTimeKnown}<small class="provisional-badge">Provisional time · local noon anchor</small>{/if}</span>
+      <span class="context-divider"></span>
+      <button class="context-location context-location-button" onclick={() => openForm('location')} title="Change observer location"><strong>{coordinate($explorer.snapshot?.observer.latitudeDeg ?? $explorer.input.observer.latitudeDeg, 'N', 'S')} <span class="dot">·</span> {coordinate($explorer.snapshot?.observer.longitudeDeg ?? $explorer.input.observer.longitudeDeg, 'E', 'W')}</strong><small>{displayedObserver.manualOffsetMinutes === null ? displayedObserver.zoneId : 'Explicit UTC offset'} · Change location ↗</small></button>
+    </div>
+    <button class="button secondary compact" onclick={() => openForm('moment')}><span aria-hidden="true">⌖</span> Edit moment</button>
+  </header>
+
+  <main class="workspace" class:tools-collapsed={toolsCollapsed} class:inspector-collapsed={inspectorCollapsed}>
+    <button class="mobile-panel-toggle left-toggle" aria-expanded={compactPanels?leftOpen:!toolsCollapsed} aria-controls="explorer-dock" onclick={() => { toolsCollapsed=false;leftOpen=!leftOpen;rightOpen=false; }}>☷ Explore</button>
+    <aside id="explorer-dock" class:drawer-open={leftOpen} class="explorer-dock panel" inert={toolsCollapsed}>
+      <div class="panel-heading"><span class="eyebrow">YOUR OBSERVATORY</span><button class="drawer-close icon-button" onclick={collapseTools} aria-label="Collapse explorer panel">×</button></div>
+      {#if isDemonstration}<div class="demo-badge">Demonstration example · not your birth chart</div>{/if}
+      <section class="dock-section birth-anchor-section"><div class="section-title"><h2>Birth anchor</h2><button class="text-button" onclick={() => openForm('birth')}>Birth details</button></div><p>{civilDateValue(birthContext.civil)} · {civilTimeValue(birthContext.civil)} local</p><small>{formatInstant(birthContext.instantMs)} UTC</small><small>{birthContext.observer.label}{birthContext.timeKnown ? '' : ' · provisional noon'}</small><div class="birth-context-actions"><button class="text-button" onclick={restoreBirthContext}>Restore birth context ↺</button><button class="text-button" onclick={() => openForm('location')}>Change observer ↗</button></div></section>
+      <section class="dock-section object-section">
+        <div class="section-title"><h2 id="object-list" tabindex="-1">Celestial objects</h2><button class="text-button" onclick={findReference} aria-label="Find a feature" title="Find a body, sign or reference (/)">Find /</button></div>
+        <div class="object-list" aria-label="Select celestial body">
+          {#each bodies as body (body.id)}
+            {@const position = $explorer.snapshot?.bodies.find((value) => value.id === body.id)}
+            <button class:chosen={$explorer.selectedId === `body:${body.id}`} data-feature-id={`body:${body.id}`} onclick={() => selectBody(body.id)} aria-pressed={$explorer.selectedId === `body:${body.id}`}><span class="body-glyph" style:color={body.color} aria-hidden="true">{body.glyph}</span><span>{body.name}</span><small>{position ? `${(position.longitudeDeg % 30).toFixed(1)}° ${sign(position).slice(0, 3)}` : '—'}</small></button>
+          {/each}
+        </div>
+      </section>
+      <ControlGroup id="view" title="Viewpoint" open={!!groups.view} onToggle={open=>groups={...groups,view:open}}><section class="dock-section">
+        <h2>Point of view</h2>
+        <div class="view-options" role="group" aria-label="Camera viewpoint">
+          {#each views as view, i (view.id)}
+            <button class:active={$explorer.viewpoint === view.id} onclick={() => explorer.setViewpoint(view.id)} aria-pressed={$explorer.viewpoint === view.id}><span class="view-icon" aria-hidden="true">{['◎', '⌖', '◈'][i]}</span>{view.label}<span class="view-check" aria-hidden="true">{$explorer.viewpoint === view.id ? '•' : ''}</span></button>
+          {/each}
+        </div>
+      </section></ControlGroup>
+      <ControlGroup id="layers" title="Reference layers" open={!!groups.layers} onToggle={open=>groups={...groups,layers:open}}><section class="dock-section">
+        <h2>Reference layers</h2>
+        <div class="layer-options">
+          {#each layerOptions as layer (layer.id)}
+            <label class="layer-row" data-feature-id={`layer:${layer.id}`}><span>{layer.label}</span><input type="checkbox" checked={$explorer.layers[layer.id]} onchange={(event) => explorer.setLayer(layer.id, event.currentTarget.checked)} /><span class="toggle-track" aria-hidden="true"></span></label>
+          {/each}
+        </div>
+      </section></ControlGroup>
+      <ControlGroup id="earth" title="Earth projections" open={!!groups.earth} onToggle={open=>groups={...groups,earth:open}}><EarthProjectionControls settings={earthProjectionDisplay} snapshot={$explorer.snapshot} onChange={updateEarthSettings}/></ControlGroup>
+      <ControlGroup id="houses" title="Houses" open={!!groups.houses} onToggle={open=>groups={...groups,houses:open}}><HouseControls system={$explorer.input.system} comparisonSystem={$explorer.input.comparisonSystem} display={houseDisplay} snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} {busy} onSystemChange={(system)=>explorer.requestChart({system,comparisonSystem:$explorer.input.comparisonSystem===system?null:$explorer.input.comparisonSystem})} onComparisonChange={(comparisonSystem)=>explorer.requestChart({comparisonSystem})} onDisplayChange={patch=>{houseDisplay={...houseDisplay,...patch};if(patch.mode)updatePreferences({houseMode:patch.mode});}} onSelect={selectFeature} onShowConstruction={showConstruction} /></ControlGroup>
+      {#if construction.enabled}<ControlGroup id="construction" title="Construction guide" open={!!groups.construction} onToggle={open=>groups={...groups,construction:open}}><ConstructionGuide snapshot={$explorer.snapshot} settings={construction} onChange={(patch)=>construction={...construction,...patch}} onSelect={selectFeature} onFocus={focusConstruction} /></ControlGroup>{/if}
+      <ControlGroup id="aspects" title="Aspects" open={!!groups.aspects} onToggle={open=>groups={...groups,aspects:open}}><AspectControls snapshot={$explorer.snapshot} settings={aspects} selectedId={$explorer.selectedId} onChange={updateAspects} onSelect={selectFeature} /></ControlGroup>
+      <ControlGroup id="trails" title="Motion history" open={!!groups.trails} onToggle={open=>groups={...groups,trails:open}}><TrailControls settings={trails} historySettings={history} bodyId={selectedBody?.id??null} {boundaryHouse} state={$trailService} onChange={patch=>trails={...trails,...patch}} onHistoryChange={patch=>history={...history,...patch}} onRetry={()=>trailService.retry()} onRetryHistory={()=>trailService.retry()} onCancel={()=>trailService.cancelTrail()} onCancelHistory={()=>trailService.cancelHistory()} /></ControlGroup>
+
+      <ControlGroup id="references" title="Signs and references" open={!!groups.references} onToggle={open=>groups={...groups,references:open}}><FeatureObjectList snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} onSelect={selectFeature} /><FeatureNavigation context={previewContext} selectedId={$explorer.selectedId} stage={construction.stage} onSelect={selectHit}/></ControlGroup>
+      <ControlGroup id="display" title="Display and access" open={!!groups.display} onToggle={open=>groups={...groups,display:open}}><DisplayControls cardSparkles={preferences.cardSparkles} onSparklesChange={cardSparkles=>updatePreferences({cardSparkles})} settings={display} motion={preferences.motion} textSize={preferences.textSize} onChange={patch=>updatePreferences({quality:patch.quality??preferences.quality,labelScale:patch.labelScale??preferences.labelScale,earthOpacity:patch.earthOpacity??preferences.earthOpacity})} onMotionChange={motion=>updatePreferences({motion})} onTextSizeChange={textSize=>updatePreferences({textSize})} onReset={resetPreferences} /></ControlGroup>
+      <div class="dock-footer"><span class="status-dot"></span> Browser calculation <a href="https://github.com/aloistr/swisseph" target="_blank" rel="noreferrer">Swiss Ephemeris ↗</a></div>
+    </aside>
+
+    <section class="scene-stage" aria-label="Spatial exploration">
+      <div class="scene-topline"><span class="scene-tag"><span class="status-dot"></span> CELESTIAL SPHERE</span><span class="scene-mode">{views.find((view) => view.id === $explorer.viewpoint)?.label}</span></div>
+      <span class="schematic-label">Schematic sky · distances not to scale</span>
+      <SceneCanvas bind:this={sceneCanvas} snapshot={$explorer.snapshot} presentation={{ viewpoint: $explorer.viewpoint, viewRevision:$explorer.viewRevision, earthProjections:earthProjectionDisplay, selectedId: selectedSceneId, layers: $explorer.layers,houseDisplay,construction,aspects,trails,trailResult:activeTrail,history,historyResult:activeHistory,display }} {globePickMode} onObserverPick={observerPicked} onHover={previewScene} onSelectHit={selectHit} onSelect={(id) => { if(id)selectFeature(id);else clearSelection(); }} onViewpoint={(viewpoint,applyPreset=true) => explorer.setViewpoint(viewpoint,applyPreset&&!globePickMode)} onStatus={(message) => sceneStatus = message} />
+      {#if globePickMode}<div class="globe-pick-banner" role="status"><span>Click Earth to choose observer coordinates. Drag to rotate.</span><button class="text-button" onclick={() => globePickMode = false}>Cancel</button></div>{/if}
+      {#if welcome}
+        <div class="welcome-card">
+          <span class="eyebrow">A DIFFERENT PERSPECTIVE</span>
+          <h1>See the chart.<br /><em>Understand the space.</em></h1>
+          <p>Explore how the sky, your horizon, and the zodiac fit together in one celestial sphere.</p>
+          <div class="welcome-actions"><button class="button primary" onclick={() => welcome = false}>Explore example <span aria-hidden="true">↗</span></button><button class="text-button" onclick={() => openForm('birth')}>Enter a birth moment <span aria-hidden="true">→</span></button></div>
+          <small>Example: 1 January 2000 · 12:00 UTC · Greenwich</small>
+        </div>
+      {/if}
+      {#if sceneStatus}<div class="scene-notice" role="status"><strong>3D view unavailable</strong><span>{sceneStatus}</span><span>The moment controls and celestial object list remain available.</span></div>{/if}
+      <details class="layer-key legend-disclosure"><summary>Layer key</summary><div class="scene-legend" aria-label="Active layer legend">{#each layerOptions.filter(layer=>$explorer.layers[layer.id]) as layer (layer.id)}<button class="legend-feature" data-feature-id={`layer:${layer.id}`}><i class="legend-line" style:background={layer.color}></i>{layer.label}</button>{/each}{#if $explorer.selectedId}<span><i class="legend-line" style:background="#f1d79d"></i>Selected feature</span>{/if}{#if $explorer.layers.houses && houseComparison?.status==='valid'}<button class="legend-feature" data-feature-id="layer:houses"><i class="legend-line" style:background="transparent" style:border-top="1px dashed #b0a4d7"></i>Comparison boundaries</button>{#if houseComparison.changedRegions.length}<span><i class="legend-line" style:background="#b0a4d7"></i>Changed assignments</span>{/if}{/if}{#if $explorer.layers.houses && selectedHouses?.status==='valid' && houseDisplay.mode==='shells' && houseDisplay.shellSeparation>0 && ($explorer.selectedId?.startsWith('house:')||selectedBody)}<span>Radial leaders: shell lift</span>{/if}<span class="legend-convention">Below horizon: dimmed body · distances schematic</span></div></details>
+      {#if construction.enabled}<details class="construction-key legend-disclosure" open={!!boundaryHouse}><summary>Construction key</summary><div aria-label="Construction legend">{#each constructionLegend as item (item.kind)}{@const target=constructionLegendTarget(item.kind)}<button class="legend-feature" data-feature-id={target.id} data-feature-json={JSON.stringify(target)}><i style:border-top={`1px ${item.dashed?'dashed':'solid'} ${item.color}`}></i>{item.label}</button>{/each}<small>C{construction.boundaryHouse} · {activeConstruction?.status==='valid'?`stage ${construction.stage+1} · sweep ${Math.round(construction.progress*100)}%`:'construction unavailable'}</small></div></details>{/if}
+      <div class="scene-reference-keys">
+        {#if earthProjectionDisplay.enabled&&earthProjectionDisplay.astrocartography&&$explorer.viewpoint!=='observer'}<div class="geographic-key-panel"><GeographicLineKey bodies={earthProjectionDisplay.bodies} angles={earthProjectionDisplay.angles}/></div>{/if}
+        {#if aspectLegend.length}<details class="aspect-key legend-disclosure" open={$explorer.selectedId?.startsWith('aspect:')}><summary>Aspect key</summary><div aria-label="Aspect legend">{#each aspectLegend as type (type.id)}<button class="legend-feature" data-feature-id={`layer:aspect-type:${type.id}`}><i style:border-top={`2px ${type.dashed?'dashed':'solid'} ${type.color}`}></i>{type.glyph} {type.label}</button>{/each}<small>Brighter core: closer to exact · curved strand: connection{aspects.glow?' · glow: emphasis':''}</small>{#if $explorer.selectedId?.startsWith('aspect:')&&aspects.measurement}<small>Gold arc: longitude separation · dashed leaders: latitude projection</small>{/if}</div></details>{/if}
+      </div>
+      {#if activeTrail||activeHistory}<details class="trail-key legend-disclosure" open><summary>Motion key</summary><div aria-label="Motion history legend">{#if activeTrail}<strong>{selectedMeta?.name} · {TRAIL_REFERENCE_LABELS[activeTrail.frame]}</strong>{#each TRAIL_LEGEND.filter(item=>['past','future','direction','tick'].includes(item.id)) as item (item.id)}<button class="legend-feature" data-feature-id="layer:trails"><i style:border-top={`1px ${item.dashed?'dashed':'solid'} ${item.color}`}></i>{item.label}</button>{/each}<small>{formatInstant(activeTrail.startMs)} → {formatInstant(activeTrail.endMs)} UTC</small>{#if activeTrail.status!=='complete'}<small>{activeTrail.status==='partial'?'Refining sampled path…':'Limited to the sampled interval · see trail controls'}</small>{/if}{/if}{#if activeHistory}<strong>C{activeHistory.house} · {activeHistory.samples.filter(sample=>sample.status!=='undefined').length} discrete boundary ghosts</strong><small>Dashed violet: history · gold: discrete boundary change · undefined samples omitted</small>{/if}</div></details>{/if}
+    </section>
+
+    <button class="mobile-panel-toggle right-toggle" aria-label="Expand inspector" aria-expanded={compactPanels?rightOpen:!inspectorCollapsed} aria-controls="inspector" onclick={() => { inspectorCollapsed=false;rightOpen=!rightOpen;leftOpen=false; }}>ⓘ Inspector</button>
+    <aside id="inspector" class:drawer-open={rightOpen} class="inspector panel" inert={inspectorCollapsed} tabindex="-1" aria-label="Selected feature inspector">
+      <div class="panel-heading"><span class="eyebrow">INSPECTOR</span><div class="inspector-actions"><button class="icon-button" aria-label="Pin inspector" aria-pressed={inspectorPinned} title="Keep this panel open when selection is cleared" onclick={()=>inspectorPinned=!inspectorPinned}>⌖</button><button class="icon-button" aria-label="Clear selection" disabled={!$explorer.selectedId} onclick={clearSelection}>↶</button><button class="drawer-close icon-button" onclick={collapseInspector} aria-label="Collapse inspector">×</button></div></div>
+      {#if selectedReading}
+        <FeatureReading model={selectedReading}/><button class="button secondary focus-button" onclick={()=>sceneCanvas?.focusSelection()}>Focus in the scene <kbd>F</kbd></button>
+      {:else if selectedFeature}
+        <div class="selected-heading"><span class="eyebrow">Selected feature unavailable</span><h2>{selectedFeature.name}</h2></div>
+        <section class="inspector-section" role="status"><p>This feature no longer matches the displayed snapshot or reference frame. Select an available feature to inspect its current context.</p></section>
+      {:else if selectedBody && selectedMeta}
+        <div class="selected-heading"><span class="selected-glyph" style:color={selectedMeta.color} aria-hidden="true">{selectedMeta.glyph}</span><span class="eyebrow">CELESTIAL BODY</span><h2>{selectedMeta.name}</h2><p>{sign(selectedBody)} <span class="dot">·</span> {deg(selectedBody.longitudeDeg % 30)}</p></div>
+        <div class="inspector-section"><h3>Position in the chart</h3><dl class="data-list"><div><dt>Ecliptic longitude</dt><dd>{deg(selectedBody.longitudeDeg)}</dd></div><div><dt>Ecliptic latitude</dt><dd>{deg(selectedBody.latitudeDeg)}</dd></div><div><dt>House · {HOUSE_SYSTEMS.find(s=>s.id===selectedHouses?.system)?.name??'Primary'}</dt><dd>{houseFor(selectedBody)}</dd></div>{#if $explorer.snapshot?.houses[1]}<div><dt>House · {HOUSE_SYSTEMS.find(s=>s.id===$explorer.snapshot?.houses[1]?.system)?.name}</dt><dd>{houseFor(selectedBody,$explorer.snapshot.houses[1])}</dd></div>{/if}<div><dt>Motion</dt><dd>{selectedBody.longitudeSpeedDegPerDay < 0 ? 'Retrograde' : 'Direct'}</dd></div></dl></div>
+        <div class="inspector-section"><h3>From the observer</h3><dl class="data-list"><div><dt>Altitude</dt><dd>{deg(selectedBody.horizon.altitudeDeg)}</dd></div><div><dt>Azimuth</dt><dd>{selectedBody.horizon.azimuthDeg === null ? 'Undefined' : deg(selectedBody.horizon.azimuthDeg)}</dd></div><div><dt>Horizon</dt><dd class:above={selectedBody.horizon.altitudeDeg >= 0}>{selectedBody.horizon.altitudeDeg >= 0 ? 'Above' : 'Below'}</dd></div></dl><p class="field-note">Geometric horizon; atmospheric refraction is excluded.</p></div>
+        <button class="button secondary focus-button" onclick={() => sceneCanvas?.focusSelection()}>Focus in the scene <kbd>F</kbd></button>
+        <BodyInterpretation body={selectedBody} houses={selectedHouses} provisional={!displayedTimeKnown} onSelect={selectFeature} />
+        <ContentCard id="concept:conventions" />
+      {:else if $explorer.selectedId?.startsWith('aspect:')}
+        <AspectInspector snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} settings={aspects} onSelect={selectFeature} onFocus={()=>sceneCanvas?.focusSelection()} />
+      {:else if $explorer.selectedId?.startsWith('house:')||$explorer.selectedId?.startsWith('boundary:')}
+        <HouseInspector snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} display={houseDisplay} onFocus={()=>sceneCanvas?.focusSelection()} onSelect={selectFeature} onShowConstruction={showConstruction} />
+      {:else if $explorer.selectedId}
+        <FeatureInspector snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} onFocus={()=>sceneCanvas?.focusSelection()} />
+      {:else}
+        <div class="inspector-empty"><div class="empty-orbit" aria-hidden="true"><span>✦</span></div><span class="eyebrow">FOLLOW YOUR CURIOSITY</span><h2>A sky full of connections.</h2><p>Select a body in the sphere or celestial objects list to inspect its position.</p><div class="empty-rule"></div><small>The same moment.<br />A new point of view.</small></div>
+      {/if}
+      {#if !displayedTimeKnown && !selectedBody}<div class="warning-note"><strong>Provisional birth time</strong><p>Local noon is an example when the birth time is unknown. Houses and angles depend on the actual time.</p></div>{/if}
+      {#if selectedHouses?.status === 'undefined'}<div class="warning-note"><strong>House system unavailable</strong><p>{selectedHouses.reason}</p></div>{/if}
+      {#if $explorer.snapshot}<CalculationProvenance snapshot={$explorer.snapshot} />{/if}
+      <div class="inspector-footer"><span class="tiny-cross" aria-hidden="true">✦</span><span>Astronomical positions<br />with explicit chart conventions.</span></div>
+    </aside>
+  </main>
+
+  <Timeline displayedInstantMs={shownInstant} requestedInstantMs={$explorer.input.instantMs} birthInstantMs={birthContext.instantMs} window={timeWindow} preset={timelinePreset} {stepUnit} direction={playbackDirection} speed={playbackSpeed} {playing} {busy} {pauseReason} onSeek={seekInstant} onStep={stepTime} onPresetChange={changeWindow} onZoom={zoomWindow} onPlayPause={togglePlayback} onDirectionChange={direction=>changePlayback({direction})} onSpeedChange={speed=>changePlayback({speed})} onStepUnitChange={unit=>stepUnit=unit} onReturnBirth={returnBirthInstant} onEditMoment={()=>openForm('moment')} />
+  <div class="app-status"><span role="status" aria-live={playing?'off':'polite'} aria-atomic="true"><span class:working={busy} class="status-dot"></span>{statusLabel}{busy && $explorer.snapshot ? ' · previous moment shown' : ''}</span><span class="status-links"><button onclick={()=>evidenceOpen=true}>Evidence & sources</button><span>Build {BUILD_REVISION.slice(0,7)}</span><a href={SOURCE_HREF} target="_blank" rel="noreferrer">Source & licences ↗</a></span></div>
+  {#if $explorer.error}<div class="error-toast" role="alert"><span>{$explorer.error}</span><button class="text-button" onclick={() => explorer.retry()}>Retry calculation</button></div>{/if}
+</div>
+
+<dialog bind:this={formDialog} class="moment-dialog" onclose={() => formOpen = false} oncancel={() => formOpen = false} aria-labelledby="moment-title">
+  {#if formOpen}{#key formSession}<MomentForm mode={formMode} initialInstantMs={formInstant} initialObserver={formObserver} initialTimeKnown={formTimeKnown} initialCivil={formCivil} initialKeepLocal={formKeepLocal} onCommit={commitMoment} onCancel={() => formOpen = false} onGlobePick={beginGlobePick} />{/key}{/if}
+</dialog>
+<dialog bind:this={evidenceDialog} class="evidence-dialog" aria-labelledby="evidence-title" onclose={()=>evidenceOpen=false} oncancel={()=>evidenceOpen=false}>{#if evidenceOpen}<EvidencePanel onClose={()=>evidenceOpen=false} />{/if}</dialog>
+{/if}
+
+<style>
+  .scene-reference-keys{position:absolute;right:24px;top:76px;display:grid;justify-items:end;gap:8px;width:min(350px,calc(100% - 48px));pointer-events:none;z-index:2}
+  .scene-reference-keys>.aspect-key{position:static;max-width:100%;box-sizing:border-box;pointer-events:auto}
+  .geographic-key-panel{padding:9px 11px;border:1px solid #3c526b;border-radius:7px;background:#091220e8;box-sizing:border-box;max-width:100%;pointer-events:auto}
+  @media(max-width:790px){.scene-reference-keys{top:95px;right:16px;width:min(330px,calc(100% - 32px))}}
+</style>

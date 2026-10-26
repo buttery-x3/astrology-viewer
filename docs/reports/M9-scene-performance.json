@@ -1,0 +1,571 @@
+{
+  "generatedAt": "2026-10-25T13:53:38.196Z",
+  "browserVersion": "156.0.8078.4",
+  "launchArgs": [
+    "--use-angle=d3d11",
+    "--enable-gpu",
+    "--disable-software-rasterizer"
+  ],
+  "host": {
+    "platform": "win32",
+    "osRelease": "10.0.26300",
+    "cpu": "AMD Ryzen 5 5600X 6-Core Processor             ",
+    "ramBytes": 34301444096
+  },
+  "windowsGpuDriver": {
+    "version": "32.0.16.1088",
+    "date": "2026-07-22",
+    "source": "Read-only Get-CimInstance Win32_VideoController"
+  },
+  "workload": {
+    "reducedMotion": true,
+    "cameraInput": "One canvas ArrowRight key activation per consecutive requestAnimationFrame",
+    "normalFrames": 120,
+    "mixedStressPasses": 3,
+    "casesPerStressPass": 42,
+    "denseTrailFrames": 60
+  },
+  "sourceHashes": {
+    "src/lib/scene/runtime.ts": "43f82193c4b106fe32e5d72848bd7359abc27391ba33f8e8114dfaae19c1fb20",
+    "src/lib/scene/house-renderer.ts": "da3f1282ec13bc6ab014cad68245579d8d1acde1b475865c85f16847fe9a3802",
+    "src/lib/scene/aspect-renderer.ts": "8d1af057cdfe3d403829231e78dab74748d63939b8a583e3a62f1bc82ac50f91",
+    "src/lib/scene/construction-renderer.ts": "360779ec1e3cf19c44f8e3344058c3c7e7a80376428559b438736a353d8d9a27",
+    "src/lib/scene/trail-renderer.ts": "a8a46d9a2c0f099b9df6f4cfa20c21e2effa9fafbcc3de300173f6fd8582d4ad"
+  },
+  "sourceHashesAfter": {
+    "src/lib/scene/runtime.ts": "43f82193c4b106fe32e5d72848bd7359abc27391ba33f8e8114dfaae19c1fb20",
+    "src/lib/scene/house-renderer.ts": "da3f1282ec13bc6ab014cad68245579d8d1acde1b475865c85f16847fe9a3802",
+    "src/lib/scene/aspect-renderer.ts": "8d1af057cdfe3d403829231e78dab74748d63939b8a583e3a62f1bc82ac50f91",
+    "src/lib/scene/construction-renderer.ts": "360779ec1e3cf19c44f8e3344058c3c7e7a80376428559b438736a353d8d9a27",
+    "src/lib/scene/trail-renderer.ts": "a8a46d9a2c0f099b9df6f4cfa20c21e2effa9fafbcc3de300173f6fd8582d4ad"
+  },
+  "sourceUnchanged": true,
+  "driver": {
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendor": "Google Inc. (NVIDIA)",
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "viewport": [
+      1920,
+      1080
+    ],
+    "devicePixelRatio": 1,
+    "maxTextureSize": 16384,
+    "timerQuerySupported": true
+  },
+  "isolation": {
+    "applicationPresent": false,
+    "viteClientPresent": false
+  },
+  "measurements": {
+    "default": {
+      "deliveredRAF": {
+        "count": 119,
+        "medianMs": 16.69999999999891,
+        "p95Ms": 16.700000000000728,
+        "maxMs": 16.80000000000109
+      },
+      "cpuSubmission": {
+        "count": 120,
+        "medianMs": 6.299999952316284,
+        "p95Ms": 9.899999976158142,
+        "maxMs": 17.799999952316284
+      },
+      "completedGPU": {
+        "count": 120,
+        "medianMs": 11.206656,
+        "p95Ms": 16.165888,
+        "maxMs": 18.659328
+      },
+      "idleRenderDelta": 0,
+      "resources": {
+        "geometries": 89,
+        "textures": 24,
+        "programs": 11,
+        "drawCalls": 142,
+        "triangles": 14398,
+        "lines": 9705,
+        "points": 2865,
+        "pixelRatio": 1
+      }
+    },
+    "cameraAuto": {
+      "deliveredRAF": {
+        "count": 119,
+        "medianMs": 16.69999999999891,
+        "p95Ms": 16.700000000000728,
+        "maxMs": 16.80000000000109
+      },
+      "cpuSubmission": {
+        "count": 120,
+        "medianMs": 5.100000023841858,
+        "p95Ms": 8.799999952316284,
+        "maxMs": 11.899999976158142
+      },
+      "completedGPU": {
+        "count": 120,
+        "medianMs": 0.241664,
+        "p95Ms": 6.332416,
+        "maxMs": 7.400448
+      },
+      "idleRenderDelta": 0,
+      "resources": {
+        "geometries": 89,
+        "textures": 37,
+        "programs": 11,
+        "drawCalls": 128,
+        "triangles": 14066,
+        "lines": 9679,
+        "points": 2865,
+        "pixelRatio": 1
+      }
+    },
+    "cameraLow": {
+      "deliveredRAF": {
+        "count": 119,
+        "medianMs": 16.69999999999891,
+        "p95Ms": 16.700000000000728,
+        "maxMs": 16.80000000000109
+      },
+      "cpuSubmission": {
+        "count": 120,
+        "medianMs": 4.900000095367432,
+        "p95Ms": 7.399999976158142,
+        "maxMs": 8.899999976158142
+      },
+      "completedGPU": {
+        "count": 120,
+        "medianMs": 0.4608,
+        "p95Ms": 1.95072,
+        "maxMs": 2.893824
+      },
+      "idleRenderDelta": 0,
+      "resources": {
+        "geometries": 89,
+        "textures": 37,
+        "programs": 11,
+        "drawCalls": 110,
+        "triangles": 10228,
+        "lines": 8097,
+        "points": 2865,
+        "pixelRatio": 1
+      }
+    },
+    "stress": {
+      "warm": {
+        "deliveredRAF": {
+          "count": 41,
+          "medianMs": 33.399999999999636,
+          "p95Ms": 66.79999999999927,
+          "maxMs": 133.29999999999927
+        },
+        "cpuSubmission": {
+          "count": 42,
+          "medianMs": 9.100000023841858,
+          "p95Ms": 25.200000047683716,
+          "maxMs": 89.60000002384186
+        },
+        "completedGPU": {
+          "count": 42,
+          "medianMs": 34.31424,
+          "p95Ms": 68.918272,
+          "maxMs": 92.79488
+        },
+        "idleRenderDelta": 0,
+        "resources": {
+          "geometries": 275,
+          "textures": 96,
+          "programs": 14,
+          "drawCalls": 316,
+          "triangles": 25636,
+          "lines": 24287,
+          "points": 2865,
+          "pixelRatio": 1
+        }
+      },
+      "first": {
+        "deliveredRAF": {
+          "count": 41,
+          "medianMs": 33.400000000001455,
+          "p95Ms": 50.099999999998545,
+          "maxMs": 100
+        },
+        "cpuSubmission": {
+          "count": 42,
+          "medianMs": 9.700000047683716,
+          "p95Ms": 13.899999976158142,
+          "maxMs": 75.39999997615814
+        },
+        "completedGPU": {
+          "count": 42,
+          "medianMs": 32.658432,
+          "p95Ms": 44.396544,
+          "maxMs": 64.354304
+        },
+        "idleRenderDelta": 0,
+        "resources": {
+          "geometries": 275,
+          "textures": 98,
+          "programs": 14,
+          "drawCalls": 316,
+          "triangles": 25636,
+          "lines": 24287,
+          "points": 2865,
+          "pixelRatio": 1
+        }
+      },
+      "second": {
+        "deliveredRAF": {
+          "count": 41,
+          "medianMs": 33.39999999999782,
+          "p95Ms": 50,
+          "maxMs": 50.099999999998545
+        },
+        "cpuSubmission": {
+          "count": 42,
+          "medianMs": 8.899999976158142,
+          "p95Ms": 11.700000047683716,
+          "maxMs": 13.800000071525574
+        },
+        "completedGPU": {
+          "count": 42,
+          "medianMs": 32.180224,
+          "p95Ms": 39.337984,
+          "maxMs": 41.184256
+        },
+        "idleRenderDelta": 0,
+        "resources": {
+          "geometries": 275,
+          "textures": 97,
+          "programs": 14,
+          "drawCalls": 316,
+          "triangles": 25636,
+          "lines": 24287,
+          "points": 2865,
+          "pixelRatio": 1
+        }
+      }
+    },
+    "denseTrail": {
+      "deliveredRAF": {
+        "count": 59,
+        "medianMs": 33.29999999999927,
+        "p95Ms": 33.400000000001455,
+        "maxMs": 50
+      },
+      "cpuSubmission": {
+        "count": 60,
+        "medianMs": 5.799999952316284,
+        "p95Ms": 8,
+        "maxMs": 9.299999952316284
+      },
+      "completedGPU": {
+        "count": 60,
+        "medianMs": 23.035904,
+        "p95Ms": 30.599168,
+        "maxMs": 31.891456
+      },
+      "idleRenderDelta": 0,
+      "resources": {
+        "geometries": 274,
+        "textures": 102,
+        "programs": 14,
+        "drawCalls": 150,
+        "triangles": 27026,
+        "lines": 8192,
+        "points": 2865,
+        "pixelRatio": 1
+      },
+      "preparationBudgetMs": 10000,
+      "sampledVertices": 1999,
+      "displayedVertices": 2000,
+      "status": "limited",
+      "limits": [
+        "Point budget reached; only the sampled interval is shown."
+      ]
+    },
+    "disjointQueries": 0,
+    "pendingQueries": 0,
+    "glError": 0
+  },
+  "recovery": {
+    "supported": true,
+    "beforeCamera": {
+      "position": [
+        11.058429396389203,
+        7.3722862642594675,
+        14.437393934174791
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "target": [
+        0,
+        0,
+        0
+      ],
+      "fov": 43,
+      "aspect": 1.7777777777777777
+    },
+    "restoredCamera": {
+      "position": [
+        11.058429396389208,
+        7.372286264259471,
+        14.4373939341748
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "target": [
+        0,
+        0,
+        0
+      ],
+      "fov": 43,
+      "aspect": 1.7777777777777777
+    },
+    "maxCameraPositionDeviation": 8.881784197001252e-15,
+    "visibleLabelsMatch": true,
+    "glErrorAfterRestore": 0,
+    "disposed": {
+      "geometries": 0,
+      "textures": 1,
+      "programs": 0
+    },
+    "canvasRemoved": true
+  },
+  "errors": [],
+  "limits": [
+    "RTX3060 desktop evidence does not establish integrated-laptop performance.",
+    "rAF intervals measure delivered callbacks, not physical display presentation.",
+    "GPU elapsed queries cover renderer commands, excluding compositor and display.",
+    "Source harness excludes App UI and worker; measure end-to-end release workflows separately."
+  ],
+  "rawEvidence": {
+    "path": ".cache/m9-scene-staging/performance-final.json",
+    "sha256": "68818ee9c9aed5119203f0bcbc5bcfa89ccd6cc20f0510e01f32143de43bdf91",
+    "bytes": 150658
+  },
+  "dependencyManifest": {
+    "capturedAt": "2026-10-25T13:57:58.926Z",
+    "method": "Static relative-import closure of isolated runtime and native engine, plus lockfile and selected Three/native assets. Captured after measurement; local source modification times must precede measurement. Zod/App/worker schema graph excluded.",
+    "allLocalSourcesPredateMeasurement": true,
+    "files": [
+      {
+        "path": "node_modules/three/examples/jsm/controls/OrbitControls.js",
+        "sha256": "3d79d07ecb686b4e5d93232eedab255331c1beef711e13164eaa1f68655a5f2b",
+        "modifiedAt": "2026-10-25T10:37:15.875Z"
+      },
+      {
+        "path": "node_modules/three/package.json",
+        "sha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de",
+        "modifiedAt": "2026-10-25T10:37:19.431Z"
+      },
+      {
+        "path": "node_modules/three/src/renderers/shaders/DFGLUTData.js",
+        "sha256": "280b75b70d9d55c39d4121d5244c22ee445d27cc05ed6b134c3a5bde6b81b3da",
+        "modifiedAt": "2026-10-25T10:37:14.118Z"
+      },
+      {
+        "path": "node_modules/three/src/renderers/webgl/WebGLTextures.js",
+        "sha256": "a1947fd09ac98b3a57e40018dc8eccfce9c40f2cf4b6200b3180a00af5406451",
+        "modifiedAt": "2026-10-25T10:37:18.920Z"
+      },
+      {
+        "path": "node_modules/three/src/renderers/WebGLRenderer.js",
+        "sha256": "9e8740aad691246b31b3704014e8f3bbd38a8e7bf4b1b4d23868541b023cc63a",
+        "modifiedAt": "2026-10-25T10:37:18.878Z"
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "0a22af2fdff0fc1a87322a767f002c0dd0592a440a0bab77e797d61177e8e3d2",
+        "modifiedAt": "2026-10-25T13:15:31.821Z"
+      },
+      {
+        "path": "public/data/ephemeris/semo_18.se1",
+        "sha256": "1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+        "modifiedAt": "2026-10-25T10:34:19.801Z"
+      },
+      {
+        "path": "public/data/ephemeris/sepl_18.se1",
+        "sha256": "ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+        "modifiedAt": "2026-10-25T10:34:19.806Z"
+      },
+      {
+        "path": "src/lib/astronomy/coordinates.ts",
+        "sha256": "cd9253904461c57460823184d34a2b89ff351a2935757bfd8fc8d96b98adf6f1",
+        "modifiedAt": "2026-10-25T10:34:19.813Z"
+      },
+      {
+        "path": "src/lib/astronomy/ephemeris.ts",
+        "sha256": "6bf2bed1040cf8021488a1e91f51f2fc1d72098a5fe9dddd3fd4b982b08a026b",
+        "modifiedAt": "2026-10-25T13:18:13.087Z"
+      },
+      {
+        "path": "src/lib/astronomy/generated/spatial-ephemeris.js",
+        "sha256": "7d76caf1b7ca95ddf03cff55194d414bf7689a94d1c73218fb224b1665f26059",
+        "modifiedAt": "2026-10-25T10:34:55.947Z"
+      },
+      {
+        "path": "src/lib/astronomy/generated/spatial-ephemeris.wasm",
+        "sha256": "a2aaedc3f371af501d2dfd61258a8160c873b0df3ea94ad568377df4353fb88e",
+        "modifiedAt": "2026-10-25T10:34:19.819Z"
+      },
+      {
+        "path": "src/lib/domain/aspect-presentation.ts",
+        "sha256": "a63f739987e206a5bf630845af5b1f4c5bdd258e70bc730ffcf03896c51d415e",
+        "modifiedAt": "2026-10-25T12:02:02.760Z"
+      },
+      {
+        "path": "src/lib/domain/chart.ts",
+        "sha256": "998a0a16a3b50d22f13f8c63df0fb0195a326ea9b2fae571eae9abca3be67555",
+        "modifiedAt": "2026-10-25T10:57:14.456Z"
+      },
+      {
+        "path": "src/lib/domain/display-settings.ts",
+        "sha256": "ce362663433e4bd69f9b736f307d9a60c49b7a09836eaed5d0066e1f4fbacaa9",
+        "modifiedAt": "2026-10-25T13:15:31.827Z"
+      },
+      {
+        "path": "src/lib/domain/house-construction.ts",
+        "sha256": "96ae07bdc8856fd0e7d17498bc4b63488eac043f4e56fd5298c115b72dd6c8b1",
+        "modifiedAt": "2026-10-25T13:19:59.868Z"
+      },
+      {
+        "path": "src/lib/domain/house-geometry.ts",
+        "sha256": "9251a10a8f6bb5849380b18c15563c26b38cc4043a8ca9e8617fae05fadcb2fb",
+        "modifiedAt": "2026-10-25T11:30:34.313Z"
+      },
+      {
+        "path": "src/lib/domain/sky-reference.ts",
+        "sha256": "6d5f041098e16096dc09e61c7736b6139e4d080a2aa9e67d9727164ab994a6f8",
+        "modifiedAt": "2026-10-25T11:14:34.249Z"
+      },
+      {
+        "path": "src/lib/domain/trails.ts",
+        "sha256": "1f497ffcf5f26c1a389079a1090659331946451655a1fe480623e20c6040da9a",
+        "modifiedAt": "2026-10-25T12:25:37.584Z"
+      },
+      {
+        "path": "src/lib/net/bounded-fetch.ts",
+        "sha256": "443ed1a49438db93002629cac9a5ea6f2bd3f4bda1cab86af30b84581a509f8d",
+        "modifiedAt": "2026-10-25T13:15:31.828Z"
+      },
+      {
+        "path": "src/lib/scene/aspect-curve.ts",
+        "sha256": "09b5aa66872babe163333066cab545231e0458d0c2d2c72e50196733b93a69f4",
+        "modifiedAt": "2026-10-25T12:02:19.825Z"
+      },
+      {
+        "path": "src/lib/scene/aspect-renderer.ts",
+        "sha256": "8d1af057cdfe3d403829231e78dab74748d63939b8a583e3a62f1bc82ac50f91",
+        "modifiedAt": "2026-10-25T12:08:49.042Z"
+      },
+      {
+        "path": "src/lib/scene/aspect-style.ts",
+        "sha256": "2e8214b03d5312a0d3420e44bfb737f55ed2be32b5301fc04dde71b2fc57ef08",
+        "modifiedAt": "2026-10-25T12:02:19.825Z"
+      },
+      {
+        "path": "src/lib/scene/construction-renderer.ts",
+        "sha256": "360779ec1e3cf19c44f8e3344058c3c7e7a80376428559b438736a353d8d9a27",
+        "modifiedAt": "2026-10-25T11:47:13.319Z"
+      },
+      {
+        "path": "src/lib/scene/construction-style.ts",
+        "sha256": "dfad17d54a5e99bb1cb4743a24d66dcfe867f3a9723dbf73061374551ac85fe8",
+        "modifiedAt": "2026-10-25T11:45:30.102Z"
+      },
+      {
+        "path": "src/lib/scene/data/bright-stars.json",
+        "sha256": "14606c209186bd9c144464f1123ff20ae9d0c855cf81d19ffa864a3d103a258d",
+        "modifiedAt": "2026-10-25T11:24:59.719Z"
+      },
+      {
+        "path": "src/lib/scene/data/constellation-boundaries.json",
+        "sha256": "75d14867d93f3620771d7536258f8ea527fa8fb7f598868eb700438740a65eae",
+        "modifiedAt": "2026-10-25T11:24:59.728Z"
+      },
+      {
+        "path": "src/lib/scene/data/natural-earth-coastline.json",
+        "sha256": "851f581ff5ffb844deed8ae1a9ce22e3c4bb3d74fa342cadb5d8e39b41ae7c3c",
+        "modifiedAt": "2026-10-25T10:58:40.018Z"
+      },
+      {
+        "path": "src/lib/scene/data/sky-data-manifest.json",
+        "sha256": "ebefe74b8cdaf85eb864fb528dde4e64272b2f045e1708bf97f04854f6ca1e93",
+        "modifiedAt": "2026-10-25T11:24:59.731Z"
+      },
+      {
+        "path": "src/lib/scene/display-policy.ts",
+        "sha256": "de85d97f972393f6ea4ad613575ff3bb4d78f108a96c44a74683636acee75f0b",
+        "modifiedAt": "2026-10-25T13:15:31.829Z"
+      },
+      {
+        "path": "src/lib/scene/house-renderer.ts",
+        "sha256": "da3f1282ec13bc6ab014cad68245579d8d1acde1b475865c85f16847fe9a3802",
+        "modifiedAt": "2026-10-25T11:45:39.820Z"
+      },
+      {
+        "path": "src/lib/scene/label-layout.ts",
+        "sha256": "4a93c3a9a25d286d958a48951c8ad6e76f1f9443f670f0391afddd063e74365a",
+        "modifiedAt": "2026-10-25T13:15:31.830Z"
+      },
+      {
+        "path": "src/lib/scene/line-buffer.ts",
+        "sha256": "290998acc36c9f89babade8ead8c80aca4137a31150b847d2979556551f13465",
+        "modifiedAt": "2026-10-25T11:45:30.102Z"
+      },
+      {
+        "path": "src/lib/scene/runtime.ts",
+        "sha256": "43f82193c4b106fe32e5d72848bd7359abc27391ba33f8e8114dfaae19c1fb20",
+        "modifiedAt": "2026-10-25T13:50:32.718Z"
+      },
+      {
+        "path": "src/lib/scene/sky-data.ts",
+        "sha256": "f617a811fd84528f2431f78bf36a5880d2bd7707b0d7fa6a7b8d3535bb6a50b8",
+        "modifiedAt": "2026-10-25T11:15:55.148Z"
+      },
+      {
+        "path": "src/lib/scene/trail-path.ts",
+        "sha256": "4385160fcee5a37ad99feb174d9ae04c13f6d495b7362d1171ab5644d50e4f81",
+        "modifiedAt": "2026-10-25T12:16:12.040Z"
+      },
+      {
+        "path": "src/lib/scene/trail-renderer.ts",
+        "sha256": "a8a46d9a2c0f099b9df6f4cfa20c21e2effa9fafbcc3de300173f6fd8582d4ad",
+        "modifiedAt": "2026-10-25T12:18:37.568Z"
+      },
+      {
+        "path": "src/lib/scene/trail-style.ts",
+        "sha256": "88e2d2cbf72a7bcbfd4e62ce1361787f18f20da022a5001028a6486c43e1ce70",
+        "modifiedAt": "2026-10-25T12:14:58.901Z"
+      },
+      {
+        "path": "src/lib/scene/wide-line-buffer.ts",
+        "sha256": "32c65b64694461d48069a1a71552c623477278cdf0bf0ebabaffec623cc630d5",
+        "modifiedAt": "2026-10-25T12:02:19.826Z"
+      }
+    ]
+  },
+  "coreCommitBinding": {
+    "revision": "e39a1f03c0f847d198ef59ba336789c12e015548",
+    "verifiedAt": "2026-10-25T14:06:11.193Z",
+    "allMatch": true,
+    "counts": {
+      "committed-bytes-match": 34,
+      "committed-LF-equivalent": 0,
+      "installed-bytes-match": 5,
+      "mismatch": 0
+    },
+    "method": "SHA256 of actual git show <revision>:<path> blobs compared with measured dependency hashes; installed Three files compared with measured bytes and the matching committed lockfile.",
+    "lineEndingOnlyEquivalences": 0,
+    "rawVerification": {
+      "path": ".cache/m9-scene-staging/core-source-verification.json",
+      "sha256": "4d28cb487816425aff8fb2d7f8f6778d5f497a1d5e13f2cb1472576632a0e369"
+    }
+  }
+}

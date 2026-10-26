@@ -1,0 +1,996 @@
+{
+  "engine": "2.10.03",
+  "revision": "f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0",
+  "assets": [
+    {
+      "name": "sepl_18.se1",
+      "sha256": "ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66"
+    },
+    {
+      "name": "semo_18.se1",
+      "sha256": "1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7"
+    }
+  ],
+  "epochs": [
+    {
+      "iso": "1900-01-01T00:00:00.000Z",
+      "instantMs": -2208988800000,
+      "inputJulianDate": 2415020.5,
+      "time": {
+        "julianDateTt": 2415020.4999769586,
+        "julianDateUt1": 2415020.5,
+        "inputJulianDate": 2415020.5,
+        "interpretation": "historical-ut1",
+        "deltaTSeconds": -1.9907640925827463,
+        "tidalAcceleration": -25.8
+      },
+      "bodies": [
+        {
+          "id": "sun",
+          "longitudeDeg": 280.1533609584524,
+          "latitudeDeg": 0.00005284161754049102,
+          "distanceAu": 0.983266272937911,
+          "longitudeSpeedDegPerDay": 1.0198499607198894,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 281.0459909505324,
+            "declinationDeg": -23.062918470736818
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 282.55300039011604,
+            "declinationDeg": -22.95006685454801
+          },
+          "horizon": {
+            "east": -0.013772620020228749,
+            "north": -0.39174173080861774,
+            "up": -0.9199721361437242,
+            "azimuthDeg": 182.01354120099282,
+            "altitudeDeg": -66.92200876930181
+          }
+        },
+        {
+          "id": "moon",
+          "longitudeDeg": 272.41632607666696,
+          "latitudeDeg": 1.1082550589515285,
+          "distanceAu": 0.0024625004552961912,
+          "longitudeSpeedDegPerDay": 14.322848211895316,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 272.6116957934229,
+            "declinationDeg": -22.32148324607213
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 274.1152805996995,
+            "declinationDeg": -22.289556515727657
+          },
+          "horizon": {
+            "east": 0.12197160400512086,
+            "north": -0.3798030433562431,
+            "up": -0.9169910447075008,
+            "azimuthDeg": 162.19587172671973,
+            "altitudeDeg": -66.49008318140558
+          }
+        },
+        {
+          "id": "mercury",
+          "longitudeDeg": 258.997769486205,
+          "latitudeDeg": 1.1264123621960116,
+          "distanceAu": 1.1420665793771463,
+          "longitudeSpeedDegPerDay": 1.276599320912868,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 258.1346777023363,
+            "declinationDeg": -21.872983178992754
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 259.6301251241685,
+            "declinationDeg": -21.9805972575424
+          },
+          "horizon": {
+            "east": 0.34844450572915586,
+            "north": -0.37255023619660016,
+            "up": -0.8601120554538355,
+            "azimuthDeg": 136.91491317335246,
+            "altitudeDeg": -59.329166798836
+          }
+        },
+        {
+          "id": "venus",
+          "longitudeDeg": 306.3744391293302,
+          "latitudeDeg": -1.6831030152637052,
+          "distanceAu": 1.4645963160041566,
+          "longitudeSpeedDegPerDay": 1.2435091171460333,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 309.20802573199603,
+            "declinationDeg": -20.31859600938529
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 310.6405657669819,
+            "declinationDeg": -19.962965366563427
+          },
+          "horizon": {
+            "east": -0.4549253490543881,
+            "north": -0.3472400360200442,
+            "up": -0.8200410259081808,
+            "azimuthDeg": 232.64586272339784,
+            "altitudeDeg": -55.08890081390821
+          }
+        },
+        {
+          "id": "mars",
+          "longitudeDeg": 283.8677423557233,
+          "latitudeDeg": -0.9254142927100549,
+          "distanceAu": 2.4009634363836923,
+          "longitudeSpeedDegPerDay": 0.7704248413051353,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 285.16634137723304,
+            "declinationDeg": -23.64953081280393
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 286.6755740996451,
+            "declinationDeg": -23.497923910288737
+          },
+          "horizon": {
+            "east": -0.07948638659814716,
+            "north": -0.40114105623545326,
+            "up": -0.912561103350277,
+            "azimuthDeg": 191.20801528014357,
+            "altitudeDeg": -65.86171163912083
+          }
+        },
+        {
+          "id": "jupiter",
+          "longitudeDeg": 241.13594566957218,
+          "latitudeDeg": 0.8142833897904025,
+          "distanceAu": 6.113063708757801,
+          "longitudeSpeedDegPerDay": 0.1956219494697557,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 239.1778908842938,
+            "declinationDeg": -19.600570350814667
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 240.62636921106863,
+            "declinationDeg": -19.87938064850134
+          },
+          "horizon": {
+            "east": 0.6181722316238591,
+            "north": -0.3354609474441784,
+            "up": -0.7108649975832486,
+            "azimuthDeg": 118.4871715418688,
+            "altitudeDeg": -45.305337556230626
+          }
+        },
+        {
+          "id": "saturn",
+          "longitudeDeg": 267.7168086449932,
+          "latitudeDeg": 1.0076827847613394,
+          "distanceAu": 11.024670001646458,
+          "longitudeSpeedDegPerDay": 0.1163600217438919,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 267.5303103119188,
+            "declinationDeg": -22.4243886120537
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 269.0356053270976,
+            "declinationDeg": -22.441644794782277
+          },
+          "horizon": {
+            "east": 0.20256097068924522,
+            "north": -0.38146388554149646,
+            "up": -0.901917045620613,
+            "azimuthDeg": 152.03127056800582,
+            "altitudeDeg": -64.41120977332237
+          }
+        },
+        {
+          "id": "uranus",
+          "longitudeDeg": 250.1393145811299,
+          "latitudeDeg": 0.06339441841829696,
+          "distanceAu": 19.8378177576679,
+          "longitudeSpeedDegPerDay": 0.05535926287642061,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 248.51823198960335,
+            "declinationDeg": -21.91859234883367
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 250.0043083018036,
+            "declinationDeg": -22.115672151704263
+          },
+          "horizon": {
+            "east": 0.48707557714717997,
+            "north": -0.3732888436659395,
+            "up": -0.7895649570119531,
+            "azimuthDeg": 127.46611987663128,
+            "altitudeDeg": -52.144874621312205
+          }
+        },
+        {
+          "id": "neptune",
+          "longitudeDeg": 85.21871478354203,
+          "latitudeDeg": -1.2996424453869224,
+          "distanceAu": 28.920226466788893,
+          "longitudeSpeedDegPerDay": -0.027201180856081142,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 84.84114297729481,
+            "declinationDeg": 22.06638570392942
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 86.34196183715054,
+            "declinationDeg": 22.109666074780705
+          },
+          "horizon": {
+            "east": -0.24527973751818213,
+            "north": 0.37568062247467415,
+            "up": 0.8937012477668658,
+            "azimuthDeg": 326.85970924999674,
+            "altitudeDeg": 63.34209341041033
+          }
+        },
+        {
+          "id": "pluto",
+          "longitudeDeg": 75.25145452202008,
+          "latitudeDeg": -9.776957648562027,
+          "distanceAu": 46.07902967530869,
+          "longitudeSpeedDegPerDay": -0.017267631881023784,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 75.08473873195834,
+            "declinationDeg": 12.913933090705802
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 76.48503483538659,
+            "declinationDeg": 13.050804308058689
+          },
+          "horizon": {
+            "east": -0.4135249178256611,
+            "north": 0.2234871501852983,
+            "up": 0.8826384514847143,
+            "azimuthDeg": 298.3887482127105,
+            "altitudeDeg": 61.96229474932484
+          }
+        }
+      ]
+    },
+    {
+      "iso": "2000-01-01T12:00:00.000Z",
+      "instantMs": 946728000000,
+      "inputJulianDate": 2451545,
+      "time": {
+        "julianDateTt": 2451545.0007428704,
+        "julianDateUt1": 2451545.00000411,
+        "inputJulianDate": 2451545,
+        "interpretation": "utc-leap-table",
+        "deltaTSeconds": 63.82891493563454,
+        "tidalAcceleration": -25.8
+      },
+      "bodies": [
+        {
+          "id": "sun",
+          "longitudeDeg": 280.36892285969753,
+          "latitudeDeg": 0.00022735344914254308,
+          "distanceAu": 0.9833276253322939,
+          "longitudeSpeedDegPerDay": 1.0194341633431199,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 281.27839011811307,
+            "declinationDeg": -23.03243007823738
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 281.28271573344125,
+            "declinationDeg": -23.033700738639805
+          },
+          "horizon": {
+            "east": 0.013167707189576383,
+            "north": -0.39125208233584985,
+            "up": 0.9201893389706441,
+            "azimuthDeg": 178.07242076453917,
+            "altitudeDeg": 66.9537777092995
+          }
+        },
+        {
+          "id": "moon",
+          "longitudeDeg": 223.32380085302708,
+          "latitudeDeg": 5.170739806820168,
+          "distanceAu": 0.0026899892350248115,
+          "longitudeSpeedDegPerDay": 12.021303158438936,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 222.45221589953653,
+            "declinationDeg": -10.900653718414679
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 222.45573878899015,
+            "declinationDeg": -10.902871269578668
+          },
+          "horizon": {
+            "east": -0.8328039630722118,
+            "north": -0.18910664667353413,
+            "up": 0.5202655430403873,
+            "azimuthDeg": 257.20665824616293,
+            "altitudeDeg": 31.350065284500246
+          }
+        },
+        {
+          "id": "mercury",
+          "longitudeDeg": 271.8892834423562,
+          "latitudeDeg": -0.9948290196700481,
+          "distanceAu": 1.4154694674989667,
+          "longitudeSpeedDegPerDay": 1.5562581424573214,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 272.07465233029524,
+            "declinationDeg": -24.418901652146683
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 272.078927659267,
+            "declinationDeg": -24.420447545086738
+          },
+          "horizon": {
+            "east": -0.13276244782169833,
+            "north": -0.41340483829499614,
+            "up": 0.9008166140356643,
+            "azimuthDeg": 197.80410528154923,
+            "altitudeDeg": 64.26561597963679
+          }
+        },
+        {
+          "id": "venus",
+          "longitudeDeg": 241.5657933520424,
+          "latitudeDeg": 2.066348932533074,
+          "distanceAu": 1.1375792406429401,
+          "longitudeSpeedDegPerDay": 1.2090430123736984,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 239.8927743202263,
+            "declinationDeg": -18.44891919781306
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 239.8965009128716,
+            "declinationDeg": -18.451077816345382
+          },
+          "horizon": {
+            "east": -0.6168981757433915,
+            "north": -0.3164590731517,
+            "up": 0.7206179957400748,
+            "azimuthDeg": 242.8428889493062,
+            "altitudeDeg": 46.10552690556488
+          }
+        },
+        {
+          "id": "mars",
+          "longitudeDeg": 327.96330571380315,
+          "latitudeDeg": -1.0677853902868144,
+          "distanceAu": 1.8496878599172089,
+          "longitudeSpeedDegPerDay": 0.7756739602724328,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 330.51681420870784,
+            "declinationDeg": -13.182481245444134
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 330.52086895426845,
+            "declinationDeg": -13.181930034372764
+          },
+          "horizon": {
+            "east": 0.7464941349570848,
+            "north": -0.22805317800656125,
+            "up": 0.6250905970143696,
+            "azimuthDeg": 106.98785718542516,
+            "altitudeDeg": 38.688837342262644
+          }
+        },
+        {
+          "id": "jupiter",
+          "longitudeDeg": 25.253087346468295,
+          "latitudeDeg": -1.2621878275720286,
+          "distanceAu": 4.621175136962716,
+          "longitudeSpeedDegPerDay": 0.04076116156239634,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 23.86785614533224,
+            "declinationDeg": 8.594263901889828
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 23.871279289956465,
+            "declinationDeg": 8.59632008195185
+          },
+          "horizon": {
+            "east": 0.9618157081528572,
+            "north": 0.14943635453765494,
+            "up": -0.22930180874322387,
+            "azimuthDeg": 81.1686214796478,
+            "altitudeDeg": -13.255969805029576
+          }
+        },
+        {
+          "id": "saturn",
+          "longitudeDeg": 40.395663413222316,
+          "latitudeDeg": -2.44485470998267,
+          "distanceAu": 8.652796396558648,
+          "longitudeSpeedDegPerDay": -0.01994513376104265,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 38.76541444259366,
+            "declinationDeg": 12.614764332678517
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 38.768901003577135,
+            "declinationDeg": 12.616968066308223
+          },
+          "horizon": {
+            "east": 0.8591677001838647,
+            "north": 0.21839471444975372,
+            "up": -0.4627468116164379,
+            "azimuthDeg": 75.73785244712712,
+            "altitudeDeg": -27.56449676421882
+          }
+        },
+        {
+          "id": "uranus",
+          "longitudeDeg": 314.8091879292927,
+          "latitudeDeg": -0.6583348604984579,
+          "distanceAu": 20.727170738105094,
+          "longitudeSpeedDegPerDay": 0.0503434579865509,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 317.4748319486732,
+            "declinationDeg": -17.02032826186444
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 317.4790625508709,
+            "declinationDeg": -17.02027706412494
+          },
+          "horizon": {
+            "east": 0.5756730119965402,
+            "north": -0.29271097855603934,
+            "up": 0.7634925450137657,
+            "azimuthDeg": 116.95185372228308,
+            "altitudeDeg": 49.773067953228086
+          }
+        },
+        {
+          "id": "neptune",
+          "longitudeDeg": 303.1930133715538,
+          "latitudeDeg": 0.23499184316409774,
+          "distanceAu": 31.02449769981374,
+          "longitudeSpeedDegPerDay": 0.03557013952842215,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 305.4328457504955,
+            "declinationDeg": -19.213240463813243
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 305.4371571938184,
+            "declinationDeg": -19.213653880078404
+          },
+          "horizon": {
+            "east": 0.39869449638846344,
+            "north": -0.32908487359628275,
+            "up": 0.8560057502842303,
+            "azimuthDeg": 129.5364736139262,
+            "altitudeDeg": 58.871023979854535
+          }
+        },
+        {
+          "id": "pluto",
+          "longitudeDeg": 251.45477943974672,
+          "latitudeDeg": 10.855231711113614,
+          "distanceAu": 31.064360964203868,
+          "longitudeSpeedDegPerDay": 0.03515294864345493,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 251.4191817002572,
+            "declinationDeg": -11.394295266981048
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 251.42292338379465,
+            "declinationDeg": -11.396304901939459
+          },
+          "horizon": {
+            "east": -0.4758435255630197,
+            "north": -0.19755973735303384,
+            "up": 0.8570548928492014,
+            "azimuthDeg": 247.45285291939723,
+            "altitudeDeg": 58.98749737805852
+          }
+        }
+      ]
+    },
+    {
+      "iso": "2026-10-25T00:00:00.000Z",
+      "instantMs": 1792886400000,
+      "inputJulianDate": 2461338.5,
+      "time": {
+        "julianDateTt": 2461338.500800741,
+        "julianDateUt1": 2461338.5000042906,
+        "inputJulianDate": 2461338.5,
+        "interpretation": "utc-leap-table",
+        "deltaTSeconds": 68.81330284019144,
+        "tidalAcceleration": -25.8
+      },
+      "bodies": [
+        {
+          "id": "sun",
+          "longitudeDeg": 211.59144819497803,
+          "latitudeDeg": 0.00015329085232346774,
+          "distanceAu": 0.994525456875395,
+          "longitudeSpeedDegPerDay": 0.99590823789902,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 209.4341550911789,
+            "declinationDeg": -12.02660478516899
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 209.0735024588849,
+            "declinationDeg": -11.894538281839312
+          },
+          "horizon": {
+            "east": 0.06767164900252204,
+            "north": -0.20836586251815797,
+            "up": -0.975707033518947,
+            "azimuthDeg": 162.00759215961114,
+            "altitudeDeg": -77.34503234205408
+          }
+        },
+        {
+          "id": "moon",
+          "longitudeDeg": 16.092206222690116,
+          "latitudeDeg": 3.7758614581839125,
+          "distanceAu": 0.002497789099911441,
+          "longitudeSpeedDegPerDay": 13.977669549834328,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 13.352829511444614,
+            "declinationDeg": 9.812963825295038
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 13.001804688480082,
+            "declinationDeg": 9.666281717159638
+          },
+          "horizon": {
+            "east": -0.3378048268975773,
+            "north": 0.17043245461247966,
+            "up": 0.9256568896407906,
+            "azimuthDeg": 296.77228558777233,
+            "altitudeDeg": 67.76761768490934
+          }
+        },
+        {
+          "id": "mercury",
+          "longitudeDeg": 230.94610938203311,
+          "latitudeDeg": -2.939134941381194,
+          "distanceAu": 0.773237425808878,
+          "longitudeSpeedDegPerDay": -0.09471592303932622,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 227.68525101538032,
+            "declinationDeg": -20.825165633694652
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 227.29831621712614,
+            "declinationDeg": -20.722088422778672
+          },
+          "horizon": {
+            "east": -0.23060342752625618,
+            "north": -0.35551752523539887,
+            "up": -0.9057755508202019,
+            "azimuthDeg": 212.96911636985064,
+            "altitudeDeg": -64.92794010326999
+          }
+        },
+        {
+          "id": "venus",
+          "longitudeDeg": 210.23343968614714,
+          "latitudeDeg": -6.366200230939236,
+          "distanceAu": 0.27279823417625587,
+          "longitudeSpeedDegPerDay": -0.6120218728852255,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 205.79657142941852,
+            "declinationDeg": -17.504395132678216
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 205.43129451234483,
+            "declinationDeg": -17.368060293011094
+          },
+          "horizon": {
+            "east": 0.12621569822009576,
+            "north": -0.3007789578045222,
+            "up": -0.9453050386329478,
+            "azimuthDeg": 157.23564573499874,
+            "altitudeDeg": -70.96245598000057
+          }
+        },
+        {
+          "id": "mars",
+          "longitudeDeg": 135.02052553612626,
+          "latitudeDeg": 1.4577687704462843,
+          "distanceAu": 1.4884208383095934,
+          "longitudeSpeedDegPerDay": 0.5247209856950296,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 137.93299270729906,
+            "declinationDeg": 17.722415447743845
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 137.55457655359143,
+            "declinationDeg": 17.832041310846822
+          },
+          "horizon": {
+            "east": 0.9220710831796493,
+            "north": 0.30440574108075596,
+            "up": -0.2390022225021855,
+            "azimuthDeg": 71.73025806288544,
+            "altitudeDeg": -13.82765821954724
+          }
+        },
+        {
+          "id": "jupiter",
+          "longitudeDeg": 143.4174473169698,
+          "latitudeDeg": 0.6669438628161262,
+          "distanceAu": 5.603528099146767,
+          "longitudeSpeedDegPerDay": 0.13691988666438182,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 145.97319805439346,
+            "declinationDeg": 14.342563217131449
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 145.60552706606344,
+            "declinationDeg": 14.465469448865296
+          },
+          "horizon": {
+            "east": 0.8946202749224657,
+            "north": 0.2477187955518231,
+            "up": -0.37187358339630133,
+            "azimuthDeg": 74.52268258867005,
+            "altitudeDeg": -21.83121251280618
+          }
+        },
+        {
+          "id": "saturn",
+          "longitudeDeg": 9.75169711186902,
+          "latitudeDeg": -2.6988250222095105,
+          "distanceAu": 8.497943978693213,
+          "longitudeSpeedDegPerDay": -0.06977043617538807,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 10.021070772762373,
+            "declinationDeg": 1.3807230695375483
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 9.675013837615193,
+            "declinationDeg": 1.232426413247858
+          },
+          "horizon": {
+            "east": -0.3967213725509816,
+            "north": 0.024095831302481406,
+            "up": 0.9176227675222032,
+            "azimuthDeg": 273.4757278038073,
+            "altitudeDeg": 66.5809843625012
+          }
+        },
+        {
+          "id": "uranus",
+          "longitudeDeg": 64.91865422964288,
+          "latitudeDeg": -0.15193089939966017,
+          "distanceAu": 18.598199799452196,
+          "longitudeSpeedDegPerDay": -0.032937384938537484,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 63.00203404445945,
+            "declinationDeg": 20.966176691114942
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 62.605827165930606,
+            "declinationDeg": 20.895588845579777
+          },
+          "horizon": {
+            "east": 0.4612444896293968,
+            "north": 0.35781676837090615,
+            "up": 0.8119240611406454,
+            "azimuthDeg": 52.19698565795358,
+            "altitudeDeg": 54.28434561643044
+          }
+        },
+        {
+          "id": "neptune",
+          "longitudeDeg": 2.238928720822342,
+          "latitudeDeg": -1.4168935001574223,
+          "distanceAu": 29.00700106246429,
+          "longitudeSpeedDegPerDay": -0.023308245879148624,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 2.617544894337607,
+            "declinationDeg": -0.40980799087363856
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 2.272059198650924,
+            "declinationDeg": -0.5598953850928728
+          },
+          "horizon": {
+            "east": -0.5117912788938889,
+            "north": -0.007152437757011407,
+            "up": 0.8590800483553844,
+            "azimuthDeg": 269.1993262933149,
+            "altitudeDeg": 59.213447165304046
+          }
+        },
+        {
+          "id": "pluto",
+          "longitudeDeg": 303.08720616788685,
+          "latitudeDeg": -4.277574625205123,
+          "distanceAu": 35.58711023281801,
+          "longitudeSpeedDegPerDay": 0.004191481456617024,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 306.4555358466681,
+            "declinationDeg": -23.625859836399886
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 306.0563743937396,
+            "declinationDeg": -23.712856579721603
+          },
+          "horizon": {
+            "east": -0.9148808368337509,
+            "north": -0.40076258226888745,
+            "up": 0.048809907268389074,
+            "azimuthDeg": 246.34422850473885,
+            "altitudeDeg": 2.7977133176731397
+          }
+        }
+      ]
+    },
+    {
+      "iso": "2100-01-01T00:00:00.000Z",
+      "instantMs": 4102444800000,
+      "inputJulianDate": 2488069.5,
+      "time": {
+        "julianDateTt": 2488069.5010784958,
+        "julianDateUt1": 2488069.5,
+        "inputJulianDate": 2488069.5,
+        "interpretation": "future-ut1-assumption",
+        "deltaTSeconds": 93.18204620799999,
+        "tidalAcceleration": -25.8
+      },
+      "bodies": [
+        {
+          "id": "sun",
+          "longitudeDeg": 280.6044259079972,
+          "latitudeDeg": 0.00007845114920586823,
+          "distanceAu": 0.9833577173801691,
+          "longitudeSpeedDegPerDay": 1.0188924375770498,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 281.5327287615243,
+            "declinationDeg": -23.00520835331805
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 280.0172918610019,
+            "declinationDeg": -23.10700602515181
+          },
+          "horizon": {
+            "east": -0.012759014234523663,
+            "north": -0.39081480344832303,
+            "up": -0.9203808977599502,
+            "azimuthDeg": 181.8698833890455,
+            "altitudeDeg": -66.98183025195218
+          }
+        },
+        {
+          "id": "moon",
+          "longitudeDeg": 157.4154493658468,
+          "latitudeDeg": 1.0914197006021578,
+          "distanceAu": 0.0024845173441721963,
+          "longitudeSpeedDegPerDay": 14.01191671261726,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 159.52198395260103,
+            "declinationDeg": 9.796486023320112
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 158.20361349375068,
+            "declinationDeg": 10.315129091142047
+          },
+          "horizon": {
+            "east": 0.8427444211699756,
+            "north": 0.17014906332339363,
+            "up": 0.5107162977985473,
+            "azimuthDeg": 78.58549852411642,
+            "altitudeDeg": 30.71155376441862
+          }
+        },
+        {
+          "id": "mercury",
+          "longitudeDeg": 288.00617301316737,
+          "latitudeDeg": -2.112694271972324,
+          "distanceAu": 1.3861061387852514,
+          "longitudeSpeedDegPerDay": 1.6228726570123637,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 289.81411283687885,
+            "declinationDeg": -24.311796855832288
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 288.29256846868645,
+            "declinationDeg": -24.491378277852547
+          },
+          "horizon": {
+            "east": -0.14374931948999378,
+            "north": -0.4117020023253097,
+            "up": -0.8999097701589279,
+            "azimuthDeg": 199.2470904366917,
+            "altitudeDeg": -64.14620946068399
+          }
+        },
+        {
+          "id": "venus",
+          "longitudeDeg": 320.07076947450963,
+          "latitudeDeg": -1.8524103193580996,
+          "distanceAu": 1.1257416735505192,
+          "longitudeSpeedDegPerDay": 1.2027374518199352,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 323.0853112677303,
+            "declinationDeg": -16.542526564744794
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 321.7000071248936,
+            "declinationDeg": -16.98231926216422
+          },
+          "horizon": {
+            "east": -0.6457346583124345,
+            "north": -0.28472692981097275,
+            "up": -0.708489468160636,
+            "azimuthDeg": 246.20564471972887,
+            "altitudeDeg": -45.11214683370007
+          }
+        },
+        {
+          "id": "mars",
+          "longitudeDeg": 29.525422597686468,
+          "latitudeDeg": 0.9517684185479043,
+          "distanceAu": 0.8699628896298975,
+          "longitudeSpeedDegPerDay": 0.40664160933335575,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 27.115827291166394,
+            "declinationDeg": 12.190263107984018
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 25.78145473723979,
+            "declinationDeg": 11.69053026293868
+          },
+          "horizon": {
+            "east": -0.9377923091825527,
+            "north": 0.211158690541628,
+            "up": 0.27560404976487646,
+            "azimuthDeg": 282.6894212860228,
+            "altitudeDeg": 15.99801481038126
+          }
+        },
+        {
+          "id": "jupiter",
+          "longitudeDeg": 201.20630826468943,
+          "latitudeDeg": 1.2766086325702257,
+          "distanceAu": 5.545839009586231,
+          "longitudeSpeedDegPerDay": 0.10631818886922688,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 200.0782097376965,
+            "declinationDeg": -7.0853119087593806
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 198.77395366014173,
+            "declinationDeg": -6.559258702432423
+          },
+          "horizon": {
+            "east": 0.9792083073012073,
+            "north": -0.12334708287916918,
+            "up": -0.16104840284058616,
+            "azimuthDeg": 97.1795135177562,
+            "altitudeDeg": -9.267754498328818
+          }
+        },
+        {
+          "id": "saturn",
+          "longitudeDeg": 205.63163600730763,
+          "latitudeDeg": 2.422221737496362,
+          "distanceAu": 9.874000748310213,
+          "longitudeSpeedDegPerDay": 0.05799296345780439,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 204.6502547292877,
+            "declinationDeg": -7.646782326985715
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 203.33879058563969,
+            "declinationDeg": -7.136976627001018
+          },
+          "horizon": {
+            "east": 0.9620352579905136,
+            "north": -0.1330656791574926,
+            "up": -0.2382890837060757,
+            "azimuthDeg": 97.87500463470948,
+            "altitudeDeg": -13.785582674532291
+          }
+        },
+        {
+          "id": "uranus",
+          "longitudeDeg": 17.741177127245653,
+          "latitudeDeg": -0.629467917104783,
+          "distanceAu": 19.824769436457373,
+          "longitudeSpeedDegPerDay": 0.004545338270018511,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 16.60156694400685,
+            "declinationDeg": 6.377008196850887
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 15.303066121904703,
+            "declinationDeg": 5.840833075903139
+          },
+          "horizon": {
+            "east": -0.988613811938543,
+            "north": 0.1110701414023219,
+            "up": 0.10151923233167023,
+            "azimuthDeg": 276.41026412922224,
+            "altitudeDeg": 5.826661345222803
+          }
+        },
+        {
+          "id": "neptune",
+          "longitudeDeg": 167.29049834064847,
+          "latitudeDeg": 0.9638909268193053,
+          "distanceAu": 29.804973434342138,
+          "longitudeSpeedDegPerDay": -0.00719130324441756,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 168.68552609748932,
+            "declinationDeg": 5.906170135739534
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 167.39041649862494,
+            "declinationDeg": 6.450555348727445
+          },
+          "horizon": {
+            "east": 0.9219172027629107,
+            "north": 0.10289965492564725,
+            "up": 0.37347065783805966,
+            "azimuthDeg": 83.6312994132919,
+            "altitudeDeg": 21.92982165269295
+          }
+        },
+        {
+          "id": "pluto",
+          "longitudeDeg": 32.40298121964834,
+          "latitudeDeg": -16.921210638462405,
+          "distanceAu": 48.57476886477094,
+          "longitudeSpeedDegPerDay": -0.0054215628869014555,
+          "effectiveFlags": 258,
+          "equatorial": {
+            "rightAscensionDeg": 35.965981814026705,
+            "declinationDeg": -3.624610121096582
+          },
+          "fixedEquatorial": {
+            "rightAscensionDeg": 34.70518245111977,
+            "declinationDeg": -4.080348741003474
+          },
+          "horizon": {
+            "east": -0.9028131938900552,
+            "north": -0.06321919379165881,
+            "up": 0.4253606357837668,
+            "azimuthDeg": 265.9944206049515,
+            "altitudeDeg": 25.173492614555006
+          }
+        }
+      ]
+    }
+  ]
+}

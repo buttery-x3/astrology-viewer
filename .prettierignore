@@ -1,0 +1,9 @@
+node_modules
+dist
+.tools
+.cache
+vendor
+src/lib/astronomy/generated
+docs/source
+tests/fixtures
+package-lock.json

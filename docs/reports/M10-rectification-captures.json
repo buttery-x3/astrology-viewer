@@ -1,0 +1,122 @@
+{
+  "browser": "156.0.8078.47",
+  "date": "2026-10-26T05:27:48.804Z",
+  "cards": [
+    {
+      "text": "CELESTIAL BODY\nSun\n\nTaurus · House 3\n\nTRADITIONAL INTERPRETATION\n\nThis tradition associates it with conscious identity, purpose and creative vitality.\n\nSun in Taurus\n\nA steady identity takes shape through tangible experiences, familiar comforts and dependable effort. Security supports persistence, while attachment can make necessary change difficult.\n\nSun in house 3\n\nLearning and sharing ideas provide a stage for confidence, curiosity and intellectual self-expression.",
+      "bounds": {
+        "x": 157.5,
+        "y": 406.875,
+        "width": 460,
+        "height": 349.359375
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollHeight": 347,
+      "clientHeight": 347,
+      "scrollWidth": 458,
+      "clientWidth": 458,
+      "overflow": "visible",
+      "wrapperOverflow": "visible",
+      "sparkles": 12,
+      "accent": "#f4c976",
+      "font": "13px",
+      "name": "sun-card"
+    },
+    {
+      "text": "Venus\nNeptune\n\nSquare\n\nTRADITIONAL INTERPRETATION\n\nThis tradition reads square as competing demands or tension that can provoke effort, adaptation and action when an easy accommodation is unavailable.\n\nVenus in \nAries\n\nAffection begins directly and playfully, seeking spontaneity while learning patience beyond pursuit.\n\nand\nNeptune in \nCapricorn\n\nPractical ideals favor responsible order, while attainable expectations give aspiration a durable structure.",
+      "bounds": {
+        "x": 157.5,
+        "y": 406.921875,
+        "width": 460,
+        "height": 318.9375
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollHeight": 317,
+      "clientHeight": 317,
+      "scrollWidth": 458,
+      "clientWidth": 458,
+      "overflow": "visible",
+      "wrapperOverflow": "visible",
+      "sparkles": 12,
+      "accent": "#dfad89",
+      "font": "13px",
+      "name": "venus-neptune-card"
+    },
+    {
+      "text": "ASTROCARTOGRAPHY LINE\nVenus · AC — Rising\n\nRising across the geometric horizon\n\nTRADITIONAL INTERPRETATION\n\nVenus lines are associated with affection, beauty, comfort and abundance.\n\nThe AC theme concerns personal presentation and how one meets the world.",
+      "bounds": {
+        "x": 157.5,
+        "y": 439.15625,
+        "width": 460,
+        "height": 228.84375
+      },
+      "innerWidth": 1440,
+      "innerHeight": 900,
+      "scrollHeight": 227,
+      "clientHeight": 227,
+      "scrollWidth": 458,
+      "clientWidth": 458,
+      "overflow": "visible",
+      "wrapperOverflow": "visible",
+      "sparkles": 12,
+      "accent": "#e5ba9f",
+      "font": "13px",
+      "name": "venus-ac-card"
+    },
+    {
+      "text": "CELESTIAL BODY\nSun\n\nTaurus · House 3\n\nTRADITIONAL INTERPRETATION\n\nThis tradition associates it with conscious identity, purpose and creative vitality.\n\nSun in Taurus \n\nA steady identity takes shape through tangible experiences, familiar comforts and dependable effort. Security supports persistence, while attachment can make necessary change difficult.\n\nSun in house 3 \n\nLearning and sharing ideas provide a stage for confidence, curiosity and intellectual self-expression.",
+      "bounds": {
+        "x": 12,
+        "y": 12,
+        "width": 480,
+        "height": 294.328125
+      },
+      "innerWidth": 504,
+      "innerHeight": 450,
+      "scrollHeight": 292,
+      "clientHeight": 292,
+      "scrollWidth": 478,
+      "clientWidth": 478,
+      "overflow": "visible",
+      "wrapperOverflow": "visible",
+      "sparkles": 12,
+      "accent": "#f4c976",
+      "font": "14.625px",
+      "name": "sun-card-constrained-large"
+    },
+    {
+      "text": "Venus\nNeptune\n\nSquare\n\nTRADITIONAL INTERPRETATION\n\nThis tradition reads square as competing demands or tension that can provoke effort, adaptation and action when an easy accommodation is unavailable.\n\nVenus in \nAries\n\nAffection begins directly and playfully, seeking spontaneity while learning patience beyond pursuit.\n\nand\nNeptune in \nCapricorn\n\nPractical ideals favor responsible order, while attainable expectations give aspiration a durable structure.",
+      "bounds": {
+        "x": 12,
+        "y": 12,
+        "width": 480,
+        "height": 262
+      },
+      "innerWidth": 504,
+      "innerHeight": 450,
+      "scrollHeight": 260,
+      "clientHeight": 260,
+      "scrollWidth": 478,
+      "clientWidth": 478,
+      "overflow": "visible",
+      "wrapperOverflow": "visible",
+      "sparkles": 12,
+      "accent": "#dfad89",
+      "font": "14.625px",
+      "name": "aspect-card-constrained-large"
+    }
+  ],
+  "captures": [
+    "outside-relationships.png",
+    "sun-card.png",
+    "venus-neptune-card.png",
+    "earth-geographic.png",
+    "venus-ac-card.png",
+    "observer-asterisms.png",
+    "sun-card-constrained-large.png",
+    "aspect-card-constrained-large.png"
+  ],
+  "errors": []
+}

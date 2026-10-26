@@ -1,0 +1,2861 @@
+{
+  "schemaVersion": 1,
+  "provenance": {
+    "generator": "scripts/generate-native-fixtures.mjs",
+    "engine": "Swiss Ephemeris",
+    "version": "2.10.03",
+    "sourceRevision": "f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0",
+    "sourceRootUrl": "https://github.com/aloistr/swisseph/tree/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0",
+    "binary": {
+      "path": ".tools/swetest.exe",
+      "sourceUrl": "https://raw.githubusercontent.com/aloistr/swisseph/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/windows/programs/swetest.exe",
+      "sha256": "86e8903a5e763e37887c12a3f16092cc1d59ccfd523bc1be7c1375f46c04d750"
+    },
+    "dataFiles": [
+      {
+        "name": "sepl_18.se1",
+        "sha256": "ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+        "bytes": 484061,
+        "sourceUrl": "https://raw.githubusercontent.com/aloistr/swisseph/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/ephe/sepl_18.se1"
+      },
+      {
+        "name": "semo_18.se1",
+        "sha256": "1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+        "bytes": 1304771,
+        "sourceUrl": "https://raw.githubusercontent.com/aloistr/swisseph/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/ephe/semo_18.se1"
+      }
+    ],
+    "comparison": "Native versus WASM integration reference using the same Swiss model; not an independent astronomical model.",
+    "inputTime": "UTC via -utc; Swiss swe_utc_to_jd derives TT and UT1, matching the application binding.",
+    "deltaTModel": "Swiss Ephemeris default delta-T model with lunar tidal acceleration explicitly fixed to SE_TIDAL_DE431 (-25.8 arcseconds/century squared) using -tidacc-25.8; matches the application initialization and prevents model changes after ephemeris-file loading.",
+    "conventions": "Apparent geocentric tropical ecliptic/equatorial of date; Swiss ephemeris with high-precision speed; longitude-based house cusps.",
+    "units": {
+      "angles": "degrees",
+      "rightAscension": "degrees",
+      "distance": "AU",
+      "speed": "degrees/day",
+      "time": "UTC-labelled ISO 8601 and Unix milliseconds"
+    },
+    "rightAscensionNote": "Pinned swetest.c case 'a' prints xequ[0] directly in degrees; its help text incorrectly says hours. Source: https://github.com/aloistr/swisseph/blob/f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0/swetest.c",
+    "polarPolicy": "Native Porphyry substitute cusps are discarded when the requested construction reports failure."
+  },
+  "cases": [
+    {
+      "id": "1900-01-01",
+      "instantIso": "1900-01-01T12:00:00.000Z",
+      "instantMs": -2208945600000,
+      "commandArguments": [
+        "-b1.1.1900greg",
+        "-utc12:00:00",
+        "-ep",
+        "-eswe",
+        "-speed",
+        "-tidacc-25.8",
+        "-p0123456789",
+        "-fPlbRsad",
+        "-g,",
+        "-head",
+        "-edirpublic/data/ephemeris"
+      ],
+      "bodies": [
+        {
+          "id": "sun",
+          "longitudeDeg": 280.66328773736,
+          "latitudeDeg": 0.00007230518,
+          "distanceAu": 0.98326444718341,
+          "longitudeSpeedDegPerDay": 1.0198554634246906,
+          "equatorial": {
+            "rightAscensionDeg": 281.59843669467,
+            "declinationDeg": -23.02305934166
+          }
+        },
+        {
+          "id": "moon",
+          "longitudeDeg": 279.6163785915,
+          "latitudeDeg": 1.74426374167,
+          "distanceAu": 0.00245051860818,
+          "longitudeSpeedDegPerDay": 14.473645539576621,
+          "equatorial": {
+            "rightAscensionDeg": 280.32853790098,
+            "declinationDeg": -21.36309412936
+          }
+        },
+        {
+          "id": "mercury",
+          "longitudeDeg": 259.63935004523,
+          "latitudeDeg": 1.05591204272,
+          "distanceAu": 1.15056091769206,
+          "longitudeSpeedDegPerDay": 1.2896033397740436,
+          "equatorial": {
+            "rightAscensionDeg": 258.81796308987,
+            "declinationDeg": -21.99427127209
+          }
+        },
+        {
+          "id": "venus",
+          "longitudeDeg": 306.99615197826,
+          "latitudeDeg": -1.68643871434,
+          "distanceAu": 1.46241012171182,
+          "longitudeSpeedDegPerDay": 1.243343461234664,
+          "equatorial": {
+            "rightAscensionDeg": 309.84965758974,
+            "declinationDeg": -20.16434660723
+          }
+        },
+        {
+          "id": "mars",
+          "longitudeDeg": 284.25303522781,
+          "latitudeDeg": -0.92824421728,
+          "distanceAu": 2.40070817251764,
+          "longitudeSpeedDegPerDay": 0.7707463409389341,
+          "equatorial": {
+            "rightAscensionDeg": 285.58482165898,
+            "declinationDeg": -23.61169068751
+          }
+        },
+        {
+          "id": "jupiter",
+          "longitudeDeg": 241.23361354571,
+          "latitudeDeg": 0.81441225688,
+          "distanceAu": 6.10782727931618,
+          "longitudeSpeedDegPerDay": 0.19504795477709358,
+          "equatorial": {
+            "rightAscensionDeg": 239.27941752241,
+            "declinationDeg": -19.62033230496
+          }
+        },
+        {
+          "id": "saturn",
+          "longitudeDeg": 267.77495460351,
+          "latitudeDeg": 1.00731924445,
+          "distanceAu": 11.02282274167538,
+          "longitudeSpeedDegPerDay": 0.11622242974596003,
+          "equatorial": {
+            "rightAscensionDeg": 267.5931875775,
+            "declinationDeg": -22.42573892727
+          }
+        },
+        {
+          "id": "uranus",
+          "longitudeDeg": 250.16694406781,
+          "latitudeDeg": 0.06333191515,
+          "distanceAu": 19.83355072372458,
+          "longitudeSpeedDegPerDay": 0.05515757923163352,
+          "equatorial": {
+            "rightAscensionDeg": 248.54768695544,
+            "declinationDeg": -21.92268049197
+          }
+        },
+        {
+          "id": "neptune",
+          "longitudeDeg": 85.20513428876,
+          "latitudeDeg": -1.29947165914,
+          "distanceAu": 28.92251677453022,
+          "longitudeSpeedDegPerDay": -0.02712032382044919,
+          "equatorial": {
+            "rightAscensionDeg": 84.82649558027,
+            "declinationDeg": 22.06607207062
+          }
+        },
+        {
+          "id": "pluto",
+          "longitudeDeg": 75.24284102913,
+          "latitudeDeg": -9.77583993447,
+          "distanceAu": 46.08250193083811,
+          "longitudeSpeedDegPerDay": -0.01718551101386095,
+          "equatorial": {
+            "rightAscensionDeg": 75.0759578835,
+            "declinationDeg": 12.91416445554
+          }
+        }
+      ],
+      "observers": [
+        {
+          "id": "greenwich",
+          "latitudeDeg": 51.5,
+          "longitudeDeg": 0,
+          "houses": [
+            {
+              "system": "W",
+              "status": "valid",
+              "cusps": [
+                0,
+                30,
+                60,
+                90,
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330
+              ],
+              "ascendantDeg": 24.79681902457,
+              "midheavenDeg": 279.81675258951,
+              "armcDeg": 280.68114287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,W"
+              ]
+            },
+            {
+              "system": "E",
+              "status": "valid",
+              "cusps": [
+                24.79681902457,
+                54.79681902457,
+                84.79681902457,
+                114.79681902457,
+                144.79681902457,
+                174.79681902457,
+                204.79681902457,
+                234.79681902457,
+                264.79681902457,
+                294.79681902457,
+                324.79681902457,
+                354.79681902457
+              ],
+              "ascendantDeg": 24.79681902457,
+              "midheavenDeg": 279.81675258951,
+              "armcDeg": 280.68114287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,E"
+              ]
+            },
+            {
+              "system": "O",
+              "status": "valid",
+              "cusps": [
+                24.79681902457,
+                49.80346354621,
+                74.81010806786,
+                99.81675258951,
+                134.81010806786,
+                169.80346354621,
+                204.79681902457,
+                229.80346354621,
+                254.81010806786,
+                279.81675258951,
+                314.81010806786,
+                349.80346354621
+              ],
+              "ascendantDeg": 24.79681902457,
+              "midheavenDeg": 279.81675258951,
+              "armcDeg": 280.68114287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,O"
+              ]
+            },
+            {
+              "system": "P",
+              "status": "valid",
+              "cusps": [
+                24.79681902457,
+                61.45251065389,
+                82.25174306452,
+                99.81675258951,
+                119.28400093564,
+                148.02022641221,
+                204.79681902457,
+                241.45251065389,
+                262.25174306452,
+                279.81675258951,
+                299.28400093564,
+                328.02022641221
+              ],
+              "ascendantDeg": 24.79681902457,
+              "midheavenDeg": 279.81675258951,
+              "armcDeg": 280.68114287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,P"
+              ]
+            },
+            {
+              "system": "K",
+              "status": "valid",
+              "cusps": [
+                24.79681902457,
+                59.35604477839,
+                82.41505830614,
+                99.81675258951,
+                123.84180072462,
+                160.0028769592,
+                204.79681902457,
+                239.35604477839,
+                262.41505830614,
+                279.81675258951,
+                303.84180072462,
+                340.0028769592
+              ],
+              "ascendantDeg": 24.79681902457,
+              "midheavenDeg": 279.81675258951,
+              "armcDeg": 280.68114287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,K"
+              ]
+            },
+            {
+              "system": "R",
+              "status": "valid",
+              "cusps": [
+                24.79681902457,
+                68.07184472501,
+                86.76517732085,
+                99.81675258951,
+                114.64013476702,
+                142.58374893864,
+                204.79681902457,
+                248.07184472501,
+                266.76517732085,
+                279.81675258951,
+                294.64013476702,
+                322.58374893864
+              ],
+              "ascendantDeg": 24.79681902457,
+              "midheavenDeg": 279.81675258951,
+              "armcDeg": 280.68114287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,R"
+              ]
+            },
+            {
+              "system": "C",
+              "status": "valid",
+              "cusps": [
+                24.79681902457,
+                77.4829011958,
+                91.41103169158,
+                99.81675258951,
+                108.93261715601,
+                127.58770345274,
+                204.79681902457,
+                257.4829011958,
+                271.41103169158,
+                279.81675258951,
+                288.93261715601,
+                307.58770345274
+              ],
+              "ascendantDeg": 24.79681902457,
+              "midheavenDeg": 279.81675258951,
+              "armcDeg": 280.68114287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,C"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sydney",
+          "latitudeDeg": -33.8688,
+          "longitudeDeg": 151.2093,
+          "houses": [
+            {
+              "system": "W",
+              "status": "valid",
+              "cusps": [
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90,
+                120
+              ],
+              "ascendantDeg": 152.8007236091,
+              "midheavenDeg": 73.29966867523,
+              "armcDeg": 71.89044287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,W"
+              ]
+            },
+            {
+              "system": "E",
+              "status": "valid",
+              "cusps": [
+                152.8007236091,
+                182.8007236091,
+                212.8007236091,
+                242.8007236091,
+                272.8007236091,
+                302.8007236091,
+                332.8007236091,
+                2.8007236091,
+                32.8007236091,
+                62.8007236091,
+                92.8007236091,
+                122.8007236091
+              ],
+              "ascendantDeg": 152.8007236091,
+              "midheavenDeg": 73.29966867523,
+              "armcDeg": 71.89044287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,E"
+              ]
+            },
+            {
+              "system": "O",
+              "status": "valid",
+              "cusps": [
+                152.8007236091,
+                186.30037196448,
+                219.80002031985,
+                253.29966867523,
+                279.80002031985,
+                306.30037196448,
+                332.8007236091,
+                6.30037196448,
+                39.80002031985,
+                73.29966867523,
+                99.80002031985,
+                126.30037196448
+              ],
+              "ascendantDeg": 152.8007236091,
+              "midheavenDeg": 73.29966867523,
+              "armcDeg": 71.89044287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,O"
+              ]
+            },
+            {
+              "system": "P",
+              "status": "valid",
+              "cusps": [
+                152.8007236091,
+                195.97899534549,
+                228.37673055828,
+                253.29966867523,
+                275.76744490101,
+                300.21090382653,
+                332.8007236091,
+                15.97899534549,
+                48.37673055828,
+                73.29966867523,
+                95.76744490101,
+                120.21090382653
+              ],
+              "ascendantDeg": 152.8007236091,
+              "midheavenDeg": 73.29966867523,
+              "armcDeg": 71.89044287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,P"
+              ]
+            },
+            {
+              "system": "K",
+              "status": "valid",
+              "cusps": [
+                152.8007236091,
+                190.01739157118,
+                224.99809369155,
+                253.29966867523,
+                275.288261142,
+                300.91353436437,
+                332.8007236091,
+                10.01739157118,
+                44.99809369155,
+                73.29966867523,
+                95.288261142,
+                120.91353436437
+              ],
+              "ascendantDeg": 152.8007236091,
+              "midheavenDeg": 73.29966867523,
+              "armcDeg": 71.89044287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,K"
+              ]
+            },
+            {
+              "system": "R",
+              "status": "valid",
+              "cusps": [
+                152.8007236091,
+                197.18120211663,
+                230.55329942676,
+                253.29966867523,
+                273.24408256257,
+                297.11740540209,
+                332.8007236091,
+                17.18120211663,
+                50.55329942676,
+                73.29966867523,
+                93.24408256257,
+                117.11740540209
+              ],
+              "ascendantDeg": 152.8007236091,
+              "midheavenDeg": 73.29966867523,
+              "armcDeg": 71.89044287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,R"
+              ]
+            },
+            {
+              "system": "C",
+              "status": "valid",
+              "cusps": [
+                152.8007236091,
+                203.55111421923,
+                234.33753129784,
+                253.29966867523,
+                270.24963598017,
+                292.70368837468,
+                332.8007236091,
+                23.55111421923,
+                54.33753129784,
+                73.29966867523,
+                90.24963598017,
+                112.70368837468
+              ],
+              "ascendantDeg": 152.8007236091,
+              "midheavenDeg": 73.29966867523,
+              "armcDeg": 71.89044287604,
+              "commandArguments": [
+                "-b1.1.1900greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,C"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2000-01-01",
+      "instantIso": "2000-01-01T12:00:00.000Z",
+      "instantMs": 946728000000,
+      "commandArguments": [
+        "-b1.1.2000greg",
+        "-utc12:00:00",
+        "-ep",
+        "-eswe",
+        "-speed",
+        "-tidacc-25.8",
+        "-p0123456789",
+        "-fPlbRsad",
+        "-g,",
+        "-head",
+        "-edirpublic/data/ephemeris"
+      ],
+      "bodies": [
+        {
+          "id": "sun",
+          "longitudeDeg": 280.3689228597,
+          "latitudeDeg": 0.00022735345,
+          "distanceAu": 0.98332762533229,
+          "longitudeSpeedDegPerDay": 1.0194341633431199,
+          "equatorial": {
+            "rightAscensionDeg": 281.27839011811,
+            "declinationDeg": -23.03243007824
+          }
+        },
+        {
+          "id": "moon",
+          "longitudeDeg": 223.32380085303,
+          "latitudeDeg": 5.17073980682,
+          "distanceAu": 0.00268998923502,
+          "longitudeSpeedDegPerDay": 12.021303158438936,
+          "equatorial": {
+            "rightAscensionDeg": 222.45221589954,
+            "declinationDeg": -10.90065371841
+          }
+        },
+        {
+          "id": "mercury",
+          "longitudeDeg": 271.88928344236,
+          "latitudeDeg": -0.99482901967,
+          "distanceAu": 1.41546946749897,
+          "longitudeSpeedDegPerDay": 1.5562581424573214,
+          "equatorial": {
+            "rightAscensionDeg": 272.0746523303,
+            "declinationDeg": -24.41890165215
+          }
+        },
+        {
+          "id": "venus",
+          "longitudeDeg": 241.56579335204,
+          "latitudeDeg": 2.06634893253,
+          "distanceAu": 1.13757924064294,
+          "longitudeSpeedDegPerDay": 1.2090430123736984,
+          "equatorial": {
+            "rightAscensionDeg": 239.89277432023,
+            "declinationDeg": -18.44891919781
+          }
+        },
+        {
+          "id": "mars",
+          "longitudeDeg": 327.9633057138,
+          "latitudeDeg": -1.06778539029,
+          "distanceAu": 1.84968785991721,
+          "longitudeSpeedDegPerDay": 0.7756739602724328,
+          "equatorial": {
+            "rightAscensionDeg": 330.51681420871,
+            "declinationDeg": -13.18248124544
+          }
+        },
+        {
+          "id": "jupiter",
+          "longitudeDeg": 25.25308734647,
+          "latitudeDeg": -1.26218782757,
+          "distanceAu": 4.62117513696272,
+          "longitudeSpeedDegPerDay": 0.04076116156239636,
+          "equatorial": {
+            "rightAscensionDeg": 23.86785614533,
+            "declinationDeg": 8.59426390189
+          }
+        },
+        {
+          "id": "saturn",
+          "longitudeDeg": 40.39566341322,
+          "latitudeDeg": -2.44485470998,
+          "distanceAu": 8.65279639655865,
+          "longitudeSpeedDegPerDay": -0.01994513376104265,
+          "equatorial": {
+            "rightAscensionDeg": 38.76541444259,
+            "declinationDeg": 12.61476433268
+          }
+        },
+        {
+          "id": "uranus",
+          "longitudeDeg": 314.80918792929,
+          "latitudeDeg": -0.6583348605,
+          "distanceAu": 20.72717073810509,
+          "longitudeSpeedDegPerDay": 0.0503434579865509,
+          "equatorial": {
+            "rightAscensionDeg": 317.47483194867,
+            "declinationDeg": -17.02032826186
+          }
+        },
+        {
+          "id": "neptune",
+          "longitudeDeg": 303.19301337155,
+          "latitudeDeg": 0.23499184316,
+          "distanceAu": 31.02449769981374,
+          "longitudeSpeedDegPerDay": 0.03557013952842215,
+          "equatorial": {
+            "rightAscensionDeg": 305.4328457505,
+            "declinationDeg": -19.21324046381
+          }
+        },
+        {
+          "id": "pluto",
+          "longitudeDeg": 251.45477943975,
+          "latitudeDeg": 10.85523171111,
+          "distanceAu": 31.06436096420387,
+          "longitudeSpeedDegPerDay": 0.03515294864345493,
+          "equatorial": {
+            "rightAscensionDeg": 251.41918170026,
+            "declinationDeg": -11.39429526698
+          }
+        }
+      ],
+      "observers": [
+        {
+          "id": "greenwich",
+          "latitudeDeg": 51.5,
+          "longitudeDeg": 0,
+          "houses": [
+            {
+              "system": "W",
+              "status": "valid",
+              "cusps": [
+                0,
+                30,
+                60,
+                90,
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330
+              ],
+              "ascendantDeg": 24.29054905105,
+              "midheavenDeg": 279.61245614805,
+              "armcDeg": 280.45855606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,W"
+              ]
+            },
+            {
+              "system": "E",
+              "status": "valid",
+              "cusps": [
+                24.29054905105,
+                54.29054905105,
+                84.29054905105,
+                114.29054905105,
+                144.29054905105,
+                174.29054905105,
+                204.29054905105,
+                234.29054905105,
+                264.29054905105,
+                294.29054905105,
+                324.29054905105,
+                354.29054905105
+              ],
+              "ascendantDeg": 24.29054905105,
+              "midheavenDeg": 279.61245614805,
+              "armcDeg": 280.45855606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,E"
+              ]
+            },
+            {
+              "system": "O",
+              "status": "valid",
+              "cusps": [
+                24.29054905105,
+                49.39785141672,
+                74.50515378238,
+                99.61245614805,
+                134.50515378238,
+                169.39785141672,
+                204.29054905105,
+                229.39785141672,
+                254.50515378238,
+                279.61245614805,
+                314.50515378238,
+                349.39785141672
+              ],
+              "ascendantDeg": 24.29054905105,
+              "midheavenDeg": 279.61245614805,
+              "armcDeg": 280.45855606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,O"
+              ]
+            },
+            {
+              "system": "P",
+              "status": "valid",
+              "cusps": [
+                24.29054905105,
+                61.16360116965,
+                82.03142419231,
+                99.61245614805,
+                119.05496226624,
+                147.68966839037,
+                204.29054905105,
+                241.16360116965,
+                262.03142419231,
+                279.61245614805,
+                299.05496226624,
+                327.68966839037
+              ],
+              "ascendantDeg": 24.29054905105,
+              "midheavenDeg": 279.61245614805,
+              "armcDeg": 280.45855606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,P"
+              ]
+            },
+            {
+              "system": "K",
+              "status": "valid",
+              "cusps": [
+                24.29054905105,
+                59.00209388107,
+                82.16162659339,
+                99.61245614805,
+                123.53905736811,
+                159.52108536389,
+                204.29054905105,
+                239.00209388107,
+                262.16162659339,
+                279.61245614805,
+                303.53905736811,
+                339.52108536389
+              ],
+              "ascendantDeg": 24.29054905105,
+              "midheavenDeg": 279.61245614805,
+              "armcDeg": 280.45855606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,K"
+              ]
+            },
+            {
+              "system": "R",
+              "status": "valid",
+              "cusps": [
+                24.29054905105,
+                67.78192219485,
+                86.54661469425,
+                99.61245614805,
+                114.41186477411,
+                142.22420286249,
+                204.29054905105,
+                247.78192219485,
+                266.54661469425,
+                279.61245614805,
+                294.41186477411,
+                322.22420286249
+              ],
+              "ascendantDeg": 24.29054905105,
+              "midheavenDeg": 279.61245614805,
+              "armcDeg": 280.45855606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,R"
+              ]
+            },
+            {
+              "system": "C",
+              "status": "valid",
+              "cusps": [
+                24.29054905105,
+                77.23524195885,
+                91.20132674974,
+                99.61245614805,
+                108.71845813393,
+                127.30836038234,
+                204.29054905105,
+                257.23524195885,
+                271.20132674974,
+                279.61245614805,
+                288.71845813393,
+                307.30836038234
+              ],
+              "ascendantDeg": 24.29054905105,
+              "midheavenDeg": 279.61245614805,
+              "armcDeg": 280.45855606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,C"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sydney",
+          "latitudeDeg": -33.8688,
+          "longitudeDeg": 151.2093,
+          "houses": [
+            {
+              "system": "W",
+              "status": "valid",
+              "cusps": [
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90,
+                120
+              ],
+              "ascendantDeg": 152.4910338647,
+              "midheavenDeg": 73.09056968353,
+              "armcDeg": 71.66785606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,W"
+              ]
+            },
+            {
+              "system": "E",
+              "status": "valid",
+              "cusps": [
+                152.4910338647,
+                182.4910338647,
+                212.4910338647,
+                242.4910338647,
+                272.4910338647,
+                302.4910338647,
+                332.4910338647,
+                2.4910338647,
+                32.4910338647,
+                62.4910338647,
+                92.4910338647,
+                122.4910338647
+              ],
+              "ascendantDeg": 152.4910338647,
+              "midheavenDeg": 73.09056968353,
+              "armcDeg": 71.66785606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,E"
+              ]
+            },
+            {
+              "system": "O",
+              "status": "valid",
+              "cusps": [
+                152.4910338647,
+                186.02421247098,
+                219.55739107725,
+                253.09056968353,
+                279.55739107725,
+                306.02421247098,
+                332.4910338647,
+                6.02421247098,
+                39.55739107725,
+                73.09056968353,
+                99.55739107725,
+                126.02421247098
+              ],
+              "ascendantDeg": 152.4910338647,
+              "midheavenDeg": 73.09056968353,
+              "armcDeg": 71.66785606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,O"
+              ]
+            },
+            {
+              "system": "P",
+              "status": "valid",
+              "cusps": [
+                152.4910338647,
+                195.67953653481,
+                228.13313439648,
+                253.09056968353,
+                275.56478689604,
+                299.98103318117,
+                332.4910338647,
+                15.67953653481,
+                48.13313439648,
+                73.09056968353,
+                95.56478689604,
+                119.98103318117
+              ],
+              "ascendantDeg": 152.4910338647,
+              "midheavenDeg": 73.09056968353,
+              "armcDeg": 71.66785606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,P"
+              ]
+            },
+            {
+              "system": "K",
+              "status": "valid",
+              "cusps": [
+                152.4910338647,
+                189.69094112227,
+                224.72646710104,
+                253.09056968353,
+                275.06868918565,
+                300.65883648504,
+                332.4910338647,
+                9.69094112227,
+                44.72646710104,
+                73.09056968353,
+                95.06868918565,
+                120.65883648504
+              ],
+              "ascendantDeg": 152.4910338647,
+              "midheavenDeg": 73.09056968353,
+              "armcDeg": 71.66785606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,K"
+              ]
+            },
+            {
+              "system": "R",
+              "status": "valid",
+              "cusps": [
+                152.4910338647,
+                196.85953487454,
+                230.30209055345,
+                253.09056968353,
+                273.04348322612,
+                296.88672093504,
+                332.4910338647,
+                16.85953487454,
+                50.30209055345,
+                73.09056968353,
+                93.04348322612,
+                116.88672093504
+              ],
+              "ascendantDeg": 152.4910338647,
+              "midheavenDeg": 73.09056968353,
+              "armcDeg": 71.66785606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,R"
+              ]
+            },
+            {
+              "system": "C",
+              "status": "valid",
+              "cusps": [
+                152.4910338647,
+                203.23982120986,
+                234.0948646286,
+                253.09056968353,
+                270.04982420959,
+                292.48130283922,
+                332.4910338647,
+                23.23982120986,
+                54.0948646286,
+                73.09056968353,
+                90.04982420959,
+                112.48130283922
+              ],
+              "ascendantDeg": 152.4910338647,
+              "midheavenDeg": 73.09056968353,
+              "armcDeg": 71.66785606252,
+              "commandArguments": [
+                "-b1.1.2000greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,C"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2026-10-25",
+      "instantIso": "2026-10-25T00:00:00.000Z",
+      "instantMs": 1792886400000,
+      "commandArguments": [
+        "-b25.10.2026greg",
+        "-utc00:00:00",
+        "-ep",
+        "-eswe",
+        "-speed",
+        "-tidacc-25.8",
+        "-p0123456789",
+        "-fPlbRsad",
+        "-g,",
+        "-head",
+        "-edirpublic/data/ephemeris"
+      ],
+      "bodies": [
+        {
+          "id": "sun",
+          "longitudeDeg": 211.59144819498,
+          "latitudeDeg": 0.00015329085,
+          "distanceAu": 0.99452545687539,
+          "longitudeSpeedDegPerDay": 0.99590823789902,
+          "equatorial": {
+            "rightAscensionDeg": 209.43415509118,
+            "declinationDeg": -12.02660478517
+          }
+        },
+        {
+          "id": "moon",
+          "longitudeDeg": 16.09220622269,
+          "latitudeDeg": 3.77586145818,
+          "distanceAu": 0.00249778909991,
+          "longitudeSpeedDegPerDay": 13.977669549834328,
+          "equatorial": {
+            "rightAscensionDeg": 13.35282951144,
+            "declinationDeg": 9.8129638253
+          }
+        },
+        {
+          "id": "mercury",
+          "longitudeDeg": 230.94610938203,
+          "latitudeDeg": -2.93913494138,
+          "distanceAu": 0.77323742580888,
+          "longitudeSpeedDegPerDay": -0.09471592303932622,
+          "equatorial": {
+            "rightAscensionDeg": 227.68525101538,
+            "declinationDeg": -20.82516563369
+          }
+        },
+        {
+          "id": "venus",
+          "longitudeDeg": 210.23343968615,
+          "latitudeDeg": -6.36620023094,
+          "distanceAu": 0.27279823417626,
+          "longitudeSpeedDegPerDay": -0.6120218728852254,
+          "equatorial": {
+            "rightAscensionDeg": 205.79657142942,
+            "declinationDeg": -17.50439513268
+          }
+        },
+        {
+          "id": "mars",
+          "longitudeDeg": 135.02052553613,
+          "latitudeDeg": 1.45776877045,
+          "distanceAu": 1.48842083830959,
+          "longitudeSpeedDegPerDay": 0.5247209856950296,
+          "equatorial": {
+            "rightAscensionDeg": 137.9329927073,
+            "declinationDeg": 17.72241544774
+          }
+        },
+        {
+          "id": "jupiter",
+          "longitudeDeg": 143.41744731697,
+          "latitudeDeg": 0.66694386282,
+          "distanceAu": 5.60352809914677,
+          "longitudeSpeedDegPerDay": 0.13691988666438182,
+          "equatorial": {
+            "rightAscensionDeg": 145.97319805439,
+            "declinationDeg": 14.34256321713
+          }
+        },
+        {
+          "id": "saturn",
+          "longitudeDeg": 9.75169711187,
+          "latitudeDeg": -2.69882502221,
+          "distanceAu": 8.49794397869321,
+          "longitudeSpeedDegPerDay": -0.06977043617538807,
+          "equatorial": {
+            "rightAscensionDeg": 10.02107077276,
+            "declinationDeg": 1.38072306954
+          }
+        },
+        {
+          "id": "uranus",
+          "longitudeDeg": 64.91865422964,
+          "latitudeDeg": -0.1519308994,
+          "distanceAu": 18.5981997994522,
+          "longitudeSpeedDegPerDay": -0.03293738493853748,
+          "equatorial": {
+            "rightAscensionDeg": 63.00203404446,
+            "declinationDeg": 20.96617669111
+          }
+        },
+        {
+          "id": "neptune",
+          "longitudeDeg": 2.23892872082,
+          "latitudeDeg": -1.41689350016,
+          "distanceAu": 29.00700106246429,
+          "longitudeSpeedDegPerDay": -0.02330824587914862,
+          "equatorial": {
+            "rightAscensionDeg": 2.61754489434,
+            "declinationDeg": -0.40980799087
+          }
+        },
+        {
+          "id": "pluto",
+          "longitudeDeg": 303.08720616789,
+          "latitudeDeg": -4.27757462521,
+          "distanceAu": 35.58711023281801,
+          "longitudeSpeedDegPerDay": 0.00419148145661702,
+          "equatorial": {
+            "rightAscensionDeg": 306.45553584667,
+            "declinationDeg": -23.6258598364
+          }
+        }
+      ],
+      "observers": [
+        {
+          "id": "greenwich",
+          "latitudeDeg": 51.5,
+          "longitudeDeg": 0,
+          "houses": [
+            {
+              "system": "W",
+              "status": "valid",
+              "cusps": [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ],
+              "ascendantDeg": 140.28799722776,
+              "midheavenDeg": 35.70557568511,
+              "armcDeg": 33.40163774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,W"
+              ]
+            },
+            {
+              "system": "E",
+              "status": "valid",
+              "cusps": [
+                140.28799722776,
+                170.28799722776,
+                200.28799722776,
+                230.28799722776,
+                260.28799722776,
+                290.28799722776,
+                320.28799722776,
+                350.28799722776,
+                20.28799722776,
+                50.28799722776,
+                80.28799722776,
+                110.28799722776
+              ],
+              "ascendantDeg": 140.28799722776,
+              "midheavenDeg": 35.70557568511,
+              "armcDeg": 33.40163774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,E"
+              ]
+            },
+            {
+              "system": "O",
+              "status": "valid",
+              "cusps": [
+                140.28799722776,
+                165.42719004688,
+                190.56638286599,
+                215.70557568511,
+                250.56638286599,
+                285.42719004688,
+                320.28799722776,
+                345.42719004688,
+                10.56638286599,
+                35.70557568511,
+                70.56638286599,
+                105.42719004688
+              ],
+              "ascendantDeg": 140.28799722776,
+              "midheavenDeg": 35.70557568511,
+              "armcDeg": 33.40163774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,O"
+              ]
+            },
+            {
+              "system": "P",
+              "status": "valid",
+              "cusps": [
+                140.28799722776,
+                158.80794425131,
+                183.13718591636,
+                215.70557568511,
+                255.19429904167,
+                291.66291448217,
+                320.28799722776,
+                338.80794425131,
+                3.13718591636,
+                35.70557568511,
+                75.19429904167,
+                111.66291448217
+              ],
+              "ascendantDeg": 140.28799722776,
+              "midheavenDeg": 35.70557568511,
+              "armcDeg": 33.40163774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,P"
+              ]
+            },
+            {
+              "system": "K",
+              "status": "valid",
+              "cusps": [
+                140.28799722776,
+                165.35819228634,
+                190.60458892172,
+                215.70557568511,
+                265.06531150178,
+                294.78500122846,
+                320.28799722776,
+                345.35819228634,
+                10.60458892172,
+                35.70557568511,
+                85.06531150178,
+                114.78500122846
+              ],
+              "ascendantDeg": 140.28799722776,
+              "midheavenDeg": 35.70557568511,
+              "armcDeg": 33.40163774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,K"
+              ]
+            },
+            {
+              "system": "R",
+              "status": "valid",
+              "cusps": [
+                140.28799722776,
+                160.34315171675,
+                182.91338267994,
+                215.70557568511,
+                259.80738080597,
+                296.02877813894,
+                320.28799722776,
+                340.34315171675,
+                2.91338267994,
+                35.70557568511,
+                79.80738080597,
+                116.02877813894
+              ],
+              "ascendantDeg": 140.28799722776,
+              "midheavenDeg": 35.70557568511,
+              "armcDeg": 33.40163774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,R"
+              ]
+            },
+            {
+              "system": "C",
+              "status": "valid",
+              "cusps": [
+                140.28799722776,
+                169.2961897342,
+                192.52728628343,
+                215.70557568511,
+                244.55459245406,
+                282.35721475072,
+                320.28799722776,
+                349.2961897342,
+                12.52728628343,
+                35.70557568511,
+                64.55459245406,
+                102.35721475072
+              ],
+              "ascendantDeg": 140.28799722776,
+              "midheavenDeg": 35.70557568511,
+              "armcDeg": 33.40163774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,C"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sydney",
+          "latitudeDeg": -33.8688,
+          "longitudeDeg": 151.2093,
+          "houses": [
+            {
+              "system": "W",
+              "status": "valid",
+              "cusps": [
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90,
+                120,
+                150,
+                180,
+                210,
+                240
+              ],
+              "ascendantDeg": 288.87195622922,
+              "midheavenDeg": 185.0235598778,
+              "armcDeg": 184.61093774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,W"
+              ]
+            },
+            {
+              "system": "E",
+              "status": "valid",
+              "cusps": [
+                288.87195622922,
+                318.87195622922,
+                348.87195622922,
+                18.87195622922,
+                48.87195622922,
+                78.87195622922,
+                108.87195622922,
+                138.87195622922,
+                168.87195622922,
+                198.87195622922,
+                228.87195622922,
+                258.87195622922
+              ],
+              "ascendantDeg": 288.87195622922,
+              "midheavenDeg": 185.0235598778,
+              "armcDeg": 184.61093774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,E"
+              ]
+            },
+            {
+              "system": "O",
+              "status": "valid",
+              "cusps": [
+                288.87195622922,
+                314.25582411208,
+                339.63969199494,
+                5.0235598778,
+                39.63969199494,
+                74.25582411208,
+                108.87195622922,
+                134.25582411208,
+                159.63969199494,
+                185.0235598778,
+                219.63969199494,
+                254.25582411208
+              ],
+              "ascendantDeg": 288.87195622922,
+              "midheavenDeg": 185.0235598778,
+              "armcDeg": 184.61093774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,O"
+              ]
+            },
+            {
+              "system": "P",
+              "status": "valid",
+              "cusps": [
+                288.87195622922,
+                310.37688188162,
+                334.96548510569,
+                5.0235598778,
+                40.47202998591,
+                76.67030610673,
+                108.87195622922,
+                130.37688188162,
+                154.96548510569,
+                185.0235598778,
+                220.47202998591,
+                256.67030610673
+              ],
+              "ascendantDeg": 288.87195622922,
+              "midheavenDeg": 185.0235598778,
+              "armcDeg": 184.61093774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,P"
+              ]
+            },
+            {
+              "system": "K",
+              "status": "valid",
+              "cusps": [
+                288.87195622922,
+                314.1260473448,
+                339.37936409953,
+                5.0235598778,
+                48.20716388918,
+                81.60231200784,
+                108.87195622922,
+                134.1260473448,
+                159.37936409953,
+                185.0235598778,
+                228.20716388918,
+                261.60231200784
+              ],
+              "ascendantDeg": 288.87195622922,
+              "midheavenDeg": 185.0235598778,
+              "armcDeg": 184.61093774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,K"
+              ]
+            },
+            {
+              "system": "R",
+              "status": "valid",
+              "cusps": [
+                288.87195622922,
+                312.43066469124,
+                335.98548663744,
+                5.0235598778,
+                42.41849850013,
+                79.82241323497,
+                108.87195622922,
+                132.43066469124,
+                155.98548663744,
+                185.0235598778,
+                222.41849850013,
+                259.82241323497
+              ],
+              "ascendantDeg": 288.87195622922,
+              "midheavenDeg": 185.0235598778,
+              "armcDeg": 184.61093774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,R"
+              ]
+            },
+            {
+              "system": "C",
+              "status": "valid",
+              "cusps": [
+                288.87195622922,
+                316.06838457279,
+                339.75938852875,
+                5.0235598778,
+                36.61680845241,
+                74.335898568,
+                108.87195622922,
+                136.06838457279,
+                159.75938852875,
+                185.0235598778,
+                216.61680845241,
+                254.335898568
+              ],
+              "ascendantDeg": 288.87195622922,
+              "midheavenDeg": 185.0235598778,
+              "armcDeg": 184.61093774965,
+              "commandArguments": [
+                "-b25.10.2026greg",
+                "-utc00:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,C"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2100-12-31",
+      "instantIso": "2100-12-31T12:00:00.000Z",
+      "instantMs": 4133937600000,
+      "commandArguments": [
+        "-b31.12.2100greg",
+        "-utc12:00:00",
+        "-ep",
+        "-eswe",
+        "-speed",
+        "-tidacc-25.8",
+        "-p0123456789",
+        "-fPlbRsad",
+        "-g,",
+        "-head",
+        "-edirpublic/data/ephemeris"
+      ],
+      "bodies": [
+        {
+          "id": "sun",
+          "longitudeDeg": 279.85431907224,
+          "latitudeDeg": -0.00001890471,
+          "distanceAu": 0.9834304854836,
+          "longitudeSpeedDegPerDay": 1.019515206773918,
+          "equatorial": {
+            "rightAscensionDeg": 280.72001096566,
+            "declinationDeg": -23.06241731326
+          }
+        },
+        {
+          "id": "moon",
+          "longitudeDeg": 286.69555933072,
+          "latitudeDeg": -3.50995451603,
+          "distanceAu": 0.00244376949592,
+          "longitudeSpeedDegPerDay": 14.592344512868067,
+          "equatorial": {
+            "rightAscensionDeg": 288.58301922223,
+            "declinationDeg": -25.86797998276
+          }
+        },
+        {
+          "id": "mercury",
+          "longitudeDeg": 297.58945291138,
+          "latitudeDeg": -1.86875501905,
+          "distanceAu": 1.14381383306012,
+          "longitudeSpeedDegPerDay": 1.418683279458622,
+          "equatorial": {
+            "rightAscensionDeg": 300.05948999377,
+            "declinationDeg": -22.46520762907
+          }
+        },
+        {
+          "id": "venus",
+          "longitudeDeg": 265.18960772065,
+          "latitudeDeg": 0.32627503088,
+          "distanceAu": 1.63240939616247,
+          "longitudeSpeedDegPerDay": 1.2562796715725117,
+          "equatorial": {
+            "rightAscensionDeg": 264.77258379306,
+            "declinationDeg": -23.01471637046
+          }
+        },
+        {
+          "id": "mars",
+          "longitudeDeg": 253.65124449881,
+          "latitudeDeg": -0.14506148193,
+          "distanceAu": 2.3568476562905,
+          "longitudeSpeedDegPerDay": 0.7109338983237404,
+          "equatorial": {
+            "rightAscensionDeg": 252.25185759163,
+            "declinationDeg": -22.5720480165
+          }
+        },
+        {
+          "id": "jupiter",
+          "longitudeDeg": 226.922526214,
+          "latitudeDeg": 1.05257507428,
+          "distanceAu": 5.96797498102506,
+          "longitudeSpeedDegPerDay": 0.17002681632075958,
+          "equatorial": {
+            "rightAscensionDeg": 224.76971868003,
+            "declinationDeg": -15.87350876763
+          }
+        },
+        {
+          "id": "saturn",
+          "longitudeDeg": 216.91781929179,
+          "latitudeDeg": 2.36345371621,
+          "distanceAu": 10.17599610489875,
+          "longitudeSpeedDegPerDay": 0.07532720821008,
+          "equatorial": {
+            "rightAscensionDeg": 215.37074931079,
+            "declinationDeg": -11.58280247466
+          }
+        },
+        {
+          "id": "uranus",
+          "longitudeDeg": 21.73121889502,
+          "latitudeDeg": -0.59876187431,
+          "distanceAu": 19.71118626846234,
+          "longitudeSpeedDegPerDay": 0.00052380192324099,
+          "equatorial": {
+            "rightAscensionDeg": 20.31422273544,
+            "declinationDeg": 7.90990109761
+          }
+        },
+        {
+          "id": "neptune",
+          "longitudeDeg": 169.50578861082,
+          "latitudeDeg": 1.01826674377,
+          "distanceAu": 29.85842967316059,
+          "longitudeSpeedDegPerDay": -0.00553448304942312,
+          "equatorial": {
+            "rightAscensionDeg": 170.7546801662,
+            "declinationDeg": 5.08950942109
+          }
+        },
+        {
+          "id": "pluto",
+          "longitudeDeg": 33.38159909622,
+          "latitudeDeg": -16.87259583212,
+          "distanceAu": 48.60162127891532,
+          "longitudeSpeedDegPerDay": -0.00595690391782292,
+          "equatorial": {
+            "rightAscensionDeg": 36.83371157142,
+            "declinationDeg": -3.26587856731
+          }
+        }
+      ],
+      "observers": [
+        {
+          "id": "greenwich",
+          "latitudeDeg": 51.5,
+          "longitudeDeg": 0,
+          "houses": [
+            {
+              "system": "W",
+              "status": "valid",
+              "cusps": [
+                0,
+                30,
+                60,
+                90,
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330
+              ],
+              "ascendantDeg": 23.28942082328,
+              "midheavenDeg": 279.19796856506,
+              "armcDeg": 280.00834843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,W"
+              ]
+            },
+            {
+              "system": "E",
+              "status": "valid",
+              "cusps": [
+                23.28942082328,
+                53.28942082328,
+                83.28942082328,
+                113.28942082328,
+                143.28942082328,
+                173.28942082328,
+                203.28942082328,
+                233.28942082328,
+                263.28942082328,
+                293.28942082328,
+                323.28942082328,
+                353.28942082328
+              ],
+              "ascendantDeg": 23.28942082328,
+              "midheavenDeg": 279.19796856506,
+              "armcDeg": 280.00834843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,E"
+              ]
+            },
+            {
+              "system": "O",
+              "status": "valid",
+              "cusps": [
+                23.28942082328,
+                48.59227007054,
+                73.8951193178,
+                99.19796856506,
+                133.8951193178,
+                168.59227007054,
+                203.28942082328,
+                228.59227007054,
+                253.8951193178,
+                279.19796856506,
+                313.8951193178,
+                348.59227007054
+              ],
+              "ascendantDeg": 23.28942082328,
+              "midheavenDeg": 279.19796856506,
+              "armcDeg": 280.00834843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,O"
+              ]
+            },
+            {
+              "system": "P",
+              "status": "valid",
+              "cusps": [
+                23.28942082328,
+                60.6025218461,
+                81.59660497872,
+                99.19796856506,
+                118.57956593218,
+                147.00491603358,
+                203.28942082328,
+                240.6025218461,
+                261.59660497872,
+                279.19796856506,
+                298.57956593218,
+                327.00491603358
+              ],
+              "ascendantDeg": 23.28942082328,
+              "midheavenDeg": 279.19796856506,
+              "armcDeg": 280.00834843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,P"
+              ]
+            },
+            {
+              "system": "K",
+              "status": "valid",
+              "cusps": [
+                23.28942082328,
+                58.30801540375,
+                81.65998717136,
+                99.19796856506,
+                122.92056602568,
+                158.55222886643,
+                203.28942082328,
+                238.30801540375,
+                261.65998717136,
+                279.19796856506,
+                302.92056602568,
+                338.55222886643
+              ],
+              "ascendantDeg": 23.28942082328,
+              "midheavenDeg": 279.19796856506,
+              "armcDeg": 280.00834843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,K"
+              ]
+            },
+            {
+              "system": "R",
+              "status": "valid",
+              "cusps": [
+                23.28942082328,
+                67.22489514032,
+                86.11776524434,
+                99.19796856506,
+                113.93436601449,
+                141.47266223704,
+                203.28942082328,
+                247.22489514032,
+                266.11776524434,
+                279.19796856506,
+                293.93436601449,
+                321.47266223704
+              ],
+              "ascendantDeg": 23.28942082328,
+              "midheavenDeg": 279.19796856506,
+              "armcDeg": 280.00834843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,R"
+              ]
+            },
+            {
+              "system": "C",
+              "status": "valid",
+              "cusps": [
+                23.28942082328,
+                76.75670053136,
+                90.78530284348,
+                99.19796856506,
+                108.27454307546,
+                126.71997014247,
+                203.28942082328,
+                256.75670053136,
+                270.78530284348,
+                279.19796856506,
+                288.27454307546,
+                306.71997014247
+              ],
+              "ascendantDeg": 23.28942082328,
+              "midheavenDeg": 279.19796856506,
+              "armcDeg": 280.00834843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house0,51.5,C"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "sydney",
+          "latitudeDeg": -33.8688,
+          "longitudeDeg": 151.2093,
+          "houses": [
+            {
+              "system": "W",
+              "status": "valid",
+              "cusps": [
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90,
+                120
+              ],
+              "ascendantDeg": 151.853823627,
+              "midheavenDeg": 72.66961222298,
+              "armcDeg": 71.21764843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,W"
+              ]
+            },
+            {
+              "system": "E",
+              "status": "valid",
+              "cusps": [
+                151.853823627,
+                181.853823627,
+                211.853823627,
+                241.853823627,
+                271.853823627,
+                301.853823627,
+                331.853823627,
+                1.853823627,
+                31.853823627,
+                61.853823627,
+                91.853823627,
+                121.853823627
+              ],
+              "ascendantDeg": 151.853823627,
+              "midheavenDeg": 72.66961222298,
+              "armcDeg": 71.21764843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,E"
+              ]
+            },
+            {
+              "system": "O",
+              "status": "valid",
+              "cusps": [
+                151.853823627,
+                185.45908649233,
+                219.06434935765,
+                252.66961222298,
+                279.06434935765,
+                305.45908649233,
+                331.853823627,
+                5.45908649233,
+                39.06434935765,
+                72.66961222298,
+                99.06434935765,
+                125.45908649233
+              ],
+              "ascendantDeg": 151.853823627,
+              "midheavenDeg": 72.66961222298,
+              "armcDeg": 71.21764843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,O"
+              ]
+            },
+            {
+              "system": "P",
+              "status": "valid",
+              "cusps": [
+                151.853823627,
+                195.07890537936,
+                227.64767042949,
+                252.66961222298,
+                275.14953960313,
+                299.50423311716,
+                331.853823627,
+                15.07890537936,
+                47.64767042949,
+                72.66961222298,
+                95.14953960313,
+                119.50423311716
+              ],
+              "ascendantDeg": 151.853823627,
+              "midheavenDeg": 72.66961222298,
+              "armcDeg": 71.21764843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,P"
+              ]
+            },
+            {
+              "system": "K",
+              "status": "valid",
+              "cusps": [
+                151.853823627,
+                189.02819823407,
+                224.18086366643,
+                252.66961222298,
+                274.61892069027,
+                300.13232639685,
+                331.853823627,
+                9.02819823407,
+                44.18086366643,
+                72.66961222298,
+                94.61892069027,
+                120.13232639685
+              ],
+              "ascendantDeg": 151.853823627,
+              "midheavenDeg": 72.66961222298,
+              "armcDeg": 71.21764843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,K"
+              ]
+            },
+            {
+              "system": "R",
+              "status": "valid",
+              "cusps": [
+                151.853823627,
+                196.21557197143,
+                229.80322047001,
+                252.66961222298,
+                272.63064390816,
+                296.40543108165,
+                331.853823627,
+                16.21557197143,
+                49.80322047001,
+                72.66961222298,
+                92.63064390816,
+                116.40543108165
+              ],
+              "ascendantDeg": 151.853823627,
+              "midheavenDeg": 72.66961222298,
+              "armcDeg": 71.21764843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,R"
+              ]
+            },
+            {
+              "system": "C",
+              "status": "valid",
+              "cusps": [
+                151.853823627,
+                202.61852900231,
+                233.61251323801,
+                252.66961222298,
+                269.63990922571,
+                292.01765925682,
+                331.853823627,
+                22.61852900231,
+                53.61251323801,
+                72.66961222298,
+                89.63990922571,
+                112.01765925682
+              ],
+              "ascendantDeg": 151.853823627,
+              "midheavenDeg": 72.66961222298,
+              "armcDeg": 71.21764843213,
+              "commandArguments": [
+                "-b31.12.2100greg",
+                "-utc12:00:00",
+                "-ep",
+                "-eswe",
+                "-speed",
+                "-tidacc-25.8",
+                "-p0123456789",
+                "-fPlbRsad",
+                "-g,",
+                "-head",
+                "-edirpublic/data/ephemeris",
+                "-house151.2093,-33.8688,C"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "polarCase": {
+    "id": "polar-80n",
+    "instantIso": "2026-10-25T00:00:00.000Z",
+    "instantMs": 1792886400000,
+    "observer": {
+      "id": "arctic-80n",
+      "latitudeDeg": 80,
+      "longitudeDeg": 0
+    },
+    "houses": [
+      {
+        "system": "W",
+        "status": "valid",
+        "cusps": [
+          150,
+          180,
+          210,
+          240,
+          270,
+          300,
+          330,
+          0,
+          30,
+          60,
+          90,
+          120
+        ],
+        "ascendantDeg": 163.1757463332,
+        "midheavenDeg": 35.70557568511,
+        "armcDeg": 33.40163774965,
+        "commandArguments": [
+          "-b25.10.2026greg",
+          "-utc00:00:00",
+          "-ep",
+          "-eswe",
+          "-speed",
+          "-tidacc-25.8",
+          "-p0123456789",
+          "-fPlbRsad",
+          "-g,",
+          "-head",
+          "-edirpublic/data/ephemeris",
+          "-house0,80,W"
+        ]
+      },
+      {
+        "system": "E",
+        "status": "valid",
+        "cusps": [
+          163.1757463332,
+          193.1757463332,
+          223.1757463332,
+          253.1757463332,
+          283.1757463332,
+          313.1757463332,
+          343.1757463332,
+          13.1757463332,
+          43.1757463332,
+          73.1757463332,
+          103.1757463332,
+          133.1757463332
+        ],
+        "ascendantDeg": 163.1757463332,
+        "midheavenDeg": 35.70557568511,
+        "armcDeg": 33.40163774965,
+        "commandArguments": [
+          "-b25.10.2026greg",
+          "-utc00:00:00",
+          "-ep",
+          "-eswe",
+          "-speed",
+          "-tidacc-25.8",
+          "-p0123456789",
+          "-fPlbRsad",
+          "-g,",
+          "-head",
+          "-edirpublic/data/ephemeris",
+          "-house0,80,E"
+        ]
+      },
+      {
+        "system": "O",
+        "status": "valid",
+        "cusps": [
+          163.1757463332,
+          180.6856894505,
+          198.19563256781,
+          215.70557568511,
+          258.19563256781,
+          300.6856894505,
+          343.1757463332,
+          0.6856894505,
+          18.19563256781,
+          35.70557568511,
+          78.19563256781,
+          120.6856894505
+        ],
+        "ascendantDeg": 163.1757463332,
+        "midheavenDeg": 35.70557568511,
+        "armcDeg": 33.40163774965,
+        "commandArguments": [
+          "-b25.10.2026greg",
+          "-utc00:00:00",
+          "-ep",
+          "-eswe",
+          "-speed",
+          "-tidacc-25.8",
+          "-p0123456789",
+          "-fPlbRsad",
+          "-g,",
+          "-head",
+          "-edirpublic/data/ephemeris",
+          "-house0,80,O"
+        ]
+      },
+      {
+        "system": "P",
+        "status": "undefined",
+        "reason": "House method Placidus failed, Porphyry calculated instead",
+        "discardedNativeSubstitute": "Porphyry",
+        "commandArguments": [
+          "-b25.10.2026greg",
+          "-utc00:00:00",
+          "-ep",
+          "-eswe",
+          "-speed",
+          "-tidacc-25.8",
+          "-p0123456789",
+          "-fPlbRsad",
+          "-g,",
+          "-head",
+          "-edirpublic/data/ephemeris",
+          "-house0,80,P"
+        ]
+      },
+      {
+        "system": "K",
+        "status": "undefined",
+        "reason": "House method Koch failed, Porphyry calculated instead",
+        "discardedNativeSubstitute": "Porphyry",
+        "commandArguments": [
+          "-b25.10.2026greg",
+          "-utc00:00:00",
+          "-ep",
+          "-eswe",
+          "-speed",
+          "-tidacc-25.8",
+          "-p0123456789",
+          "-fPlbRsad",
+          "-g,",
+          "-head",
+          "-edirpublic/data/ephemeris",
+          "-house0,80,K"
+        ]
+      },
+      {
+        "system": "R",
+        "status": "valid",
+        "cusps": [
+          163.1757463332,
+          170.83120407061,
+          181.66294931464,
+          215.70557568511,
+          308.72889709419,
+          333.56674868287,
+          343.1757463332,
+          350.83120407061,
+          1.66294931464,
+          35.70557568511,
+          128.72889709419,
+          153.56674868287
+        ],
+        "ascendantDeg": 163.1757463332,
+        "midheavenDeg": 35.70557568511,
+        "armcDeg": 33.40163774965,
+        "commandArguments": [
+          "-b25.10.2026greg",
+          "-utc00:00:00",
+          "-ep",
+          "-eswe",
+          "-speed",
+          "-tidacc-25.8",
+          "-p0123456789",
+          "-fPlbRsad",
+          "-g,",
+          "-head",
+          "-edirpublic/data/ephemeris",
+          "-house0,80,R"
+        ]
+      },
+      {
+        "system": "C",
+        "status": "valid",
+        "cusps": [
+          163.1757463332,
+          190.62319396699,
+          204.11673954454,
+          215.70557568511,
+          232.35712322139,
+          274.59539051705,
+          343.1757463332,
+          10.62319396699,
+          24.11673954454,
+          35.70557568511,
+          52.35712322139,
+          94.59539051705
+        ],
+        "ascendantDeg": 163.1757463332,
+        "midheavenDeg": 35.70557568511,
+        "armcDeg": 33.40163774965,
+        "commandArguments": [
+          "-b25.10.2026greg",
+          "-utc00:00:00",
+          "-ep",
+          "-eswe",
+          "-speed",
+          "-tidacc-25.8",
+          "-p0123456789",
+          "-fPlbRsad",
+          "-g,",
+          "-head",
+          "-edirpublic/data/ephemeris",
+          "-house0,80,C"
+        ]
+      }
+    ]
+  },
+  "knownAnswerCases": [
+    {
+      "id": "solar-civil-roundtrip-1987",
+      "civil": {
+        "year": 1987,
+        "month": 4,
+        "day": 27,
+        "hour": 2,
+        "minute": 0,
+        "second": 0
+      },
+      "zoneId": "Australia/Melbourne",
+      "offsetMinutes": 600,
+      "observer": {
+        "latitudeDeg": -37.814,
+        "longitudeDeg": 144.96332
+      },
+      "instantIso": "1987-04-26T16:00:00.000Z",
+      "instantMs": 546451200000,
+      "commandArguments": [
+        "-b26.4.1987greg",
+        "-utc16:00:00",
+        "-ep",
+        "-eswe",
+        "-speed",
+        "-tidacc-25.8",
+        "-p0123456789",
+        "-fPlbRsad",
+        "-g,",
+        "-head",
+        "-edirpublic/data/ephemeris"
+      ],
+      "sun": {
+        "id": "sun",
+        "longitudeDeg": 35.89199283139,
+        "latitudeDeg": -0.0000292087,
+        "distanceAu": 1.00633861889587,
+        "longitudeSpeedDegPerDay": 0.9735267852351699,
+        "equatorial": {
+          "rightAscensionDeg": 33.58137584415,
+          "declinationDeg": 13.48787171818
+        }
+      },
+      "expectedSign": "taurus"
+    }
+  ]
+}

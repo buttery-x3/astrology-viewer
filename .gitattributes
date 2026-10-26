@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.wasm binary
+*.se1 binary
+vendor/** -text -whitespace
+docs/source/** -whitespace
+source-revision.txt export-subst

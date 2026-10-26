@@ -1,0 +1,1749 @@
+{
+  "engine": "2.10.03",
+  "engineRevision": "f4dcd18e8005dde95fd8a8d2312ed12f9accd1b0",
+  "angularToleranceArcsec": 60,
+  "summary": [
+    {
+      "timeType": "UT",
+      "comparisons": 40,
+      "allWithinOneArcminute": true,
+      "maximumAngularSeparationArcsec": 13.879247232935597,
+      "worst": {
+        "bodyId": "moon",
+        "iso": "2100-01-01T00:00:00.000Z"
+      },
+      "maximumAbsLongitudeDifferenceArcsec": 13.831437048520456,
+      "maximumAbsLatitudeDifferenceArcsec": 1.1807978322320167,
+      "byEpoch": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "maximumAngularSeparationArcsec": 0.560563921781235
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "maximumAngularSeparationArcsec": 0.11648497523420866
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "maximumAngularSeparationArcsec": 0.06114159364434493
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "maximumAngularSeparationArcsec": 13.879247232935597
+        }
+      ]
+    },
+    {
+      "timeType": "TT",
+      "comparisons": 40,
+      "allWithinOneArcminute": true,
+      "maximumAngularSeparationArcsec": 0.560923387437102,
+      "worst": {
+        "bodyId": "uranus",
+        "iso": "1900-01-01T00:00:00.000Z"
+      },
+      "maximumAbsLongitudeDifferenceArcsec": 0.5600920675988164,
+      "maximumAbsLatitudeDifferenceArcsec": 0.10363999098927934,
+      "byEpoch": [
+        {
+          "iso": "1900-01-01T00:00:00.000Z",
+          "maximumAngularSeparationArcsec": 0.560923387437102
+        },
+        {
+          "iso": "2000-01-01T12:00:00.000Z",
+          "maximumAngularSeparationArcsec": 0.11648497523420866
+        },
+        {
+          "iso": "2026-10-25T00:00:00.000Z",
+          "maximumAngularSeparationArcsec": 0.06114159364434493
+        },
+        {
+          "iso": "2100-01-01T00:00:00.000Z",
+          "maximumAngularSeparationArcsec": 0.4676851242958526
+        }
+      ]
+    }
+  ],
+  "results": [
+    {
+      "bodyId": "sun",
+      "target": 10,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.5,
+      "reference": {
+        "longitudeDeg": 280.1532941,
+        "latitudeDeg": 0.0000648
+      },
+      "engine": {
+        "longitudeDeg": 280.1533609584524,
+        "latitudeDeg": 0.00005284161754049102
+      },
+      "longitudeDifferenceArcsec": 0.24069042879091285,
+      "latitudeDifferenceArcsec": -0.04305017685423235,
+      "angularSeparationArcsec": 0.24451012297791044,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "sun",
+      "target": 10,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545,
+      "reference": {
+        "longitudeDeg": 280.3689092,
+        "latitudeDeg": 0.0002381
+      },
+      "engine": {
+        "longitudeDeg": 280.36892285969753,
+        "latitudeDeg": 0.00022735344914254308
+      },
+      "longitudeDifferenceArcsec": 0.04917491105516092,
+      "latitudeDifferenceArcsec": -0.03868758308684486,
+      "angularSeparationArcsec": 0.0625691694234837,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "sun",
+      "target": 10,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.5,
+      "reference": {
+        "longitudeDeg": 211.5914352,
+        "latitudeDeg": 0.0001532
+      },
+      "engine": {
+        "longitudeDeg": 211.59144819497803,
+        "latitudeDeg": 0.00015329085232346774
+      },
+      "longitudeDifferenceArcsec": 0.04678192108258372,
+      "latitudeDifferenceArcsec": 0.0003270683644838101,
+      "angularSeparationArcsec": 0.04678306418705301,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "sun",
+      "target": 10,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.5,
+      "reference": {
+        "longitudeDeg": 280.6041925,
+        "latitudeDeg": 0.0000877
+      },
+      "engine": {
+        "longitudeDeg": 280.6044259079972,
+        "latitudeDeg": 0.00007845114920586823
+      },
+      "longitudeDifferenceArcsec": 0.8402687901252648,
+      "latitudeDifferenceArcsec": -0.0332958628588744,
+      "angularSeparationArcsec": 0.8409282096568695,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "moon",
+      "target": 301,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.5,
+      "reference": {
+        "longitudeDeg": 272.4162663,
+        "latitudeDeg": 1.1082671
+      },
+      "engine": {
+        "longitudeDeg": 272.41632607666696,
+        "latitudeDeg": 1.1082550589515285
+      },
+      "longitudeDifferenceArcsec": 0.2151960009996401,
+      "latitudeDifferenceArcsec": -0.04334777449708227,
+      "angularSeparationArcsec": 0.21947898350983008,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "moon",
+      "target": 301,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545,
+      "reference": {
+        "longitudeDeg": 223.323786,
+        "latitudeDeg": 5.1707422
+      },
+      "engine": {
+        "longitudeDeg": 223.32380085302708,
+        "latitudeDeg": 5.170739806820168
+      },
+      "longitudeDifferenceArcsec": 0.05347089754650369,
+      "latitudeDifferenceArcsec": -0.008615447395499132,
+      "angularSeparationArcsec": 0.05394571286522014,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "moon",
+      "target": 301,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.5,
+      "reference": {
+        "longitudeDeg": 16.0921937,
+        "latitudeDeg": 3.7758644
+      },
+      "engine": {
+        "longitudeDeg": 16.092206222690116,
+        "latitudeDeg": 3.7758614581839125
+      },
+      "longitudeDifferenceArcsec": 0.04508168435677362,
+      "latitudeDifferenceArcsec": -0.010590537915433629,
+      "angularSeparationArcsec": 0.046213678233159555,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "moon",
+      "target": 301,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.5,
+      "reference": {
+        "longitudeDeg": 157.4116073,
+        "latitudeDeg": 1.0917477
+      },
+      "engine": {
+        "longitudeDeg": 157.4154493658468,
+        "latitudeDeg": 1.0914197006021578
+      },
+      "longitudeDifferenceArcsec": 13.831437048520456,
+      "latitudeDifferenceArcsec": -1.1807978322320167,
+      "angularSeparationArcsec": 13.879247232935597,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mercury",
+      "target": 199,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.5,
+      "reference": {
+        "longitudeDeg": 258.9977026,
+        "latitudeDeg": 1.126422
+      },
+      "engine": {
+        "longitudeDeg": 258.997769486205,
+        "latitudeDeg": 1.1264123621960116
+      },
+      "longitudeDifferenceArcsec": 0.24079033796624572,
+      "latitudeDifferenceArcsec": -0.034696094358377394,
+      "angularSeparationArcsec": 0.2432311642228059,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mercury",
+      "target": 199,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545,
+      "reference": {
+        "longitudeDeg": 271.8892699,
+        "latitudeDeg": -0.994819
+      },
+      "engine": {
+        "longitudeDeg": 271.8892834423562,
+        "latitudeDeg": -0.9948290196700481
+      },
+      "longitudeDifferenceArcsec": 0.04875248237112828,
+      "latitudeDifferenceArcsec": -0.036070812173161215,
+      "angularSeparationArcsec": 0.06063985125079847,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mercury",
+      "target": 199,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.5,
+      "reference": {
+        "longitudeDeg": 230.9460969,
+        "latitudeDeg": -2.9391313
+      },
+      "engine": {
+        "longitudeDeg": 230.94610938203311,
+        "latitudeDeg": -2.939134941381194
+      },
+      "longitudeDifferenceArcsec": 0.04493531905609416,
+      "latitudeDifferenceArcsec": -0.013108972298070398,
+      "angularSeparationArcsec": 0.046751677774883385,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mercury",
+      "target": 199,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.5,
+      "reference": {
+        "longitudeDeg": 288.0057719,
+        "latitudeDeg": -2.1126781
+      },
+      "engine": {
+        "longitudeDeg": 288.00617301316737,
+        "latitudeDeg": -2.112694271972324
+      },
+      "longitudeDifferenceArcsec": 1.4440074022786575,
+      "latitudeDifferenceArcsec": -0.058219100366230236,
+      "angularSeparationArcsec": 1.4441997985786723,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "venus",
+      "target": 299,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.5,
+      "reference": {
+        "longitudeDeg": 306.3743725,
+        "latitudeDeg": -1.6830905
+      },
+      "engine": {
+        "longitudeDeg": 306.3744391293302,
+        "latitudeDeg": -1.6831030152637052
+      },
+      "longitudeDifferenceArcsec": 0.23986558853721363,
+      "latitudeDifferenceArcsec": -0.045054949338574346,
+      "angularSeparationArcsec": 0.2439586329625468,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "venus",
+      "target": 299,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545,
+      "reference": {
+        "longitudeDeg": 241.5657794,
+        "latitudeDeg": 2.0663548
+      },
+      "engine": {
+        "longitudeDeg": 241.5657933520424,
+        "latitudeDeg": 2.066348932533074
+      },
+      "longitudeDifferenceArcsec": 0.0502273527217767,
+      "latitudeDifferenceArcsec": -0.02112288093396586,
+      "angularSeparationArcsec": 0.05445808652662636,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "venus",
+      "target": 299,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.5,
+      "reference": {
+        "longitudeDeg": 210.2334277,
+        "latitudeDeg": -6.3662005
+      },
+      "engine": {
+        "longitudeDeg": 210.23343968614714,
+        "latitudeDeg": -6.366200230939236
+      },
+      "longitudeDifferenceArcsec": 0.043150129613422905,
+      "latitudeDifferenceArcsec": 0.0009686187500079768,
+      "angularSeparationArcsec": 0.04289498225396574,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "venus",
+      "target": 299,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.5,
+      "reference": {
+        "longitudeDeg": 320.0704851,
+        "latitudeDeg": -1.8524067
+      },
+      "engine": {
+        "longitudeDeg": 320.07076947450963,
+        "latitudeDeg": -1.8524103193580996
+      },
+      "longitudeDifferenceArcsec": 1.0237482347292826,
+      "latitudeDifferenceArcsec": -0.013029689158816637,
+      "angularSeparationArcsec": 1.0232961921934032,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mars",
+      "target": 499,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.5,
+      "reference": {
+        "longitudeDeg": 283.8676754,
+        "latitudeDeg": -0.9254021
+      },
+      "engine": {
+        "longitudeDeg": 283.8677423557233,
+        "latitudeDeg": -0.9254142927100549
+      },
+      "longitudeDifferenceArcsec": 0.2410406036688073,
+      "latitudeDifferenceArcsec": -0.043893756197732614,
+      "angularSeparationArcsec": 0.24497362973438544,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mars",
+      "target": 499,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545,
+      "reference": {
+        "longitudeDeg": 327.9632921,
+        "latitudeDeg": -1.0677752
+      },
+      "engine": {
+        "longitudeDeg": 327.96330571380315,
+        "latitudeDeg": -1.0677853902868144
+      },
+      "longitudeDifferenceArcsec": 0.04900969138361688,
+      "latitudeDifferenceArcsec": -0.03668503253173583,
+      "angularSeparationArcsec": 0.061211986851757744,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mars",
+      "target": 499,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.5,
+      "reference": {
+        "longitudeDeg": 135.0205124,
+        "latitudeDeg": 1.457758
+      },
+      "engine": {
+        "longitudeDeg": 135.02052553612626,
+        "latitudeDeg": 1.4577687704462843
+      },
+      "longitudeDifferenceArcsec": 0.047290054317272734,
+      "latitudeDifferenceArcsec": 0.03877360662301044,
+      "angularSeparationArcsec": 0.06114159364434493,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mars",
+      "target": 499,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.5,
+      "reference": {
+        "longitudeDeg": 29.5253593,
+        "latitudeDeg": 0.9517639
+      },
+      "engine": {
+        "longitudeDeg": 29.525422597686468,
+        "latitudeDeg": 0.9517684185479043
+      },
+      "longitudeDifferenceArcsec": 0.2278716711771267,
+      "latitudeDifferenceArcsec": 0.016266772455431067,
+      "angularSeparationArcsec": 0.22842018175727147,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "jupiter",
+      "target": 599,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.5,
+      "reference": {
+        "longitudeDeg": 241.135883,
+        "latitudeDeg": 0.8142907
+      },
+      "engine": {
+        "longitudeDeg": 241.13594566957218,
+        "latitudeDeg": 0.8142833897904025
+      },
+      "longitudeDifferenceArcsec": 0.22561045961992932,
+      "latitudeDifferenceArcsec": -0.026316754551158894,
+      "angularSeparationArcsec": 0.2271175268729266,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "jupiter",
+      "target": 599,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545,
+      "reference": {
+        "longitudeDeg": 25.2530685,
+        "latitudeDeg": -1.2621868
+      },
+      "engine": {
+        "longitudeDeg": 25.253087346468295,
+        "latitudeDeg": -1.2621878275720286
+      },
+      "longitudeDifferenceArcsec": 0.06784728575439658,
+      "latitudeDifferenceArcsec": -0.0036992593028806198,
+      "angularSeparationArcsec": 0.06793162121139226,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "jupiter",
+      "target": 599,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.5,
+      "reference": {
+        "longitudeDeg": 143.4174372,
+        "latitudeDeg": 0.6669334
+      },
+      "engine": {
+        "longitudeDeg": 143.4174473169698,
+        "latitudeDeg": 0.6669438628161262
+      },
+      "longitudeDifferenceArcsec": 0.036421091499505565,
+      "latitudeDifferenceArcsec": 0.03766613805415986,
+      "angularSeparationArcsec": 0.05239326407326635,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "jupiter",
+      "target": 599,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.5,
+      "reference": {
+        "longitudeDeg": 201.206317,
+        "latitudeDeg": 1.2766059
+      },
+      "engine": {
+        "longitudeDeg": 201.20630826468943,
+        "latitudeDeg": 1.2766086325702257
+      },
+      "longitudeDifferenceArcsec": -0.03144711790810106,
+      "latitudeDifferenceArcsec": 0.009837252812339159,
+      "angularSeparationArcsec": 0.03294240305043065,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "saturn",
+      "target": 699,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.5,
+      "reference": {
+        "longitudeDeg": 267.7167387,
+        "latitudeDeg": 1.0076898
+      },
+      "engine": {
+        "longitudeDeg": 267.7168086449932,
+        "latitudeDeg": 1.0076827847613394
+      },
+      "longitudeDifferenceArcsec": 0.2518019752642431,
+      "latitudeDifferenceArcsec": -0.025254859178325262,
+      "angularSeparationArcsec": 0.2530265454494404,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "saturn",
+      "target": 699,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545,
+      "reference": {
+        "longitudeDeg": 40.3956366,
+        "latitudeDeg": -2.4448533
+      },
+      "engine": {
+        "longitudeDeg": 40.395663413222316,
+        "latitudeDeg": -2.44485470998267
+      },
+      "longitudeDifferenceArcsec": 0.09652760045355535,
+      "latitudeDifferenceArcsec": -0.005075937611032089,
+      "angularSeparationArcsec": 0.09657322444993621,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "saturn",
+      "target": 699,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.5,
+      "reference": {
+        "longitudeDeg": 9.7516856,
+        "latitudeDeg": -2.6988235
+      },
+      "engine": {
+        "longitudeDeg": 9.75169711186902,
+        "latitudeDeg": -2.6988250222095105
+      },
+      "longitudeDifferenceArcsec": 0.041442728570473264,
+      "latitudeDifferenceArcsec": -0.005479954237586071,
+      "angularSeparationArcsec": 0.04175789500878821,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "saturn",
+      "target": 699,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.5,
+      "reference": {
+        "longitudeDeg": 205.6316624,
+        "latitudeDeg": 2.4222185
+      },
+      "engine": {
+        "longitudeDeg": 205.63163600730763,
+        "latitudeDeg": 2.422221737496362
+      },
+      "longitudeDifferenceArcsec": -0.09501369245299429,
+      "latitudeDifferenceArcsec": 0.011654986903586462,
+      "angularSeparationArcsec": 0.09564159997556304,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "uranus",
+      "target": 799,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.5,
+      "reference": {
+        "longitudeDeg": 250.1391591,
+        "latitudeDeg": 0.0634029
+      },
+      "engine": {
+        "longitudeDeg": 250.1393145811299,
+        "latitudeDeg": 0.06339441841829696
+      },
+      "longitudeDifferenceArcsec": 0.559732067722507,
+      "latitudeDifferenceArcsec": -0.030533694130935318,
+      "angularSeparationArcsec": 0.560563921781235,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "uranus",
+      "target": 799,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545,
+      "reference": {
+        "longitudeDeg": 314.809168,
+        "latitudeDeg": -0.658324
+      },
+      "engine": {
+        "longitudeDeg": 314.8091879292927,
+        "latitudeDeg": -0.6583348604984579
+      },
+      "longitudeDifferenceArcsec": 0.07174545353336725,
+      "latitudeDifferenceArcsec": -0.03909779444839501,
+      "angularSeparationArcsec": 0.08170292607488791,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "uranus",
+      "target": 799,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.5,
+      "reference": {
+        "longitudeDeg": 64.9186573,
+        "latitudeDeg": -0.1519361
+      },
+      "engine": {
+        "longitudeDeg": 64.91865422964288,
+        "latitudeDeg": -0.15193089939966017
+      },
+      "longitudeDifferenceArcsec": -0.011053285697926185,
+      "latitudeDifferenceArcsec": 0.01872216122333903,
+      "angularSeparationArcsec": 0.02174151754965571,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "uranus",
+      "target": 799,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.5,
+      "reference": {
+        "longitudeDeg": 17.7413057,
+        "latitudeDeg": -0.6294645
+      },
+      "engine": {
+        "longitudeDeg": 17.741177127245653,
+        "latitudeDeg": -0.629467917104783
+      },
+      "longitudeDifferenceArcsec": -0.4628619155027991,
+      "latitudeDifferenceArcsec": -0.012301577218876147,
+      "angularSeparationArcsec": 0.46299743450509234,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "neptune",
+      "target": 899,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.5,
+      "reference": {
+        "longitudeDeg": 85.2186599,
+        "latitudeDeg": -1.2996533
+      },
+      "engine": {
+        "longitudeDeg": 85.21871478354203,
+        "latitudeDeg": -1.2996424453869224
+      },
+      "longitudeDifferenceArcsec": 0.19758075127356278,
+      "latitudeDifferenceArcsec": 0.03907660707893612,
+      "angularSeparationArcsec": 0.20135801908414716,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "neptune",
+      "target": 899,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545,
+      "reference": {
+        "longitudeDeg": 303.1930007,
+        "latitudeDeg": 0.2350026
+      },
+      "engine": {
+        "longitudeDeg": 303.1930133715538,
+        "latitudeDeg": 0.23499184316409774
+      },
+      "longitudeDifferenceArcsec": 0.045617593696078984,
+      "latitudeDifferenceArcsec": -0.03872460924815302,
+      "angularSeparationArcsec": 0.059837489848522114,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "neptune",
+      "target": 899,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.5,
+      "reference": {
+        "longitudeDeg": 2.2389131,
+        "latitudeDeg": -1.4168874
+      },
+      "engine": {
+        "longitudeDeg": 2.238928720822342,
+        "latitudeDeg": -1.4168935001574223
+      },
+      "longitudeDifferenceArcsec": 0.0562349602660106,
+      "latitudeDifferenceArcsec": -0.021960566720302666,
+      "angularSeparationArcsec": 0.06035481532193493,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "neptune",
+      "target": 899,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.5,
+      "reference": {
+        "longitudeDeg": 167.2905214,
+        "latitudeDeg": 0.9638819
+      },
+      "engine": {
+        "longitudeDeg": 167.29049834064847,
+        "latitudeDeg": 0.9638909268193053
+      },
+      "longitudeDifferenceArcsec": -0.08301366547129874,
+      "latitudeDifferenceArcsec": 0.0324965494993279,
+      "angularSeparationArcsec": 0.08913666052419483,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "pluto",
+      "target": 999,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.5,
+      "reference": {
+        "longitudeDeg": 75.2513936,
+        "latitudeDeg": -9.7769714
+      },
+      "engine": {
+        "longitudeDeg": 75.25145452202008,
+        "latitudeDeg": -9.776957648562027
+      },
+      "longitudeDifferenceArcsec": 0.2193192724007531,
+      "latitudeDifferenceArcsec": 0.04950517670678778,
+      "angularSeparationArcsec": 0.22173100825345407,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "pluto",
+      "target": 999,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545,
+      "reference": {
+        "longitudeDeg": 251.4547644,
+        "latitudeDeg": 10.8552605
+      },
+      "engine": {
+        "longitudeDeg": 251.45477943974672,
+        "latitudeDeg": 10.855231711113614
+      },
+      "longitudeDifferenceArcsec": 0.054143088118507876,
+      "latitudeDifferenceArcsec": -0.10363999098927934,
+      "angularSeparationArcsec": 0.11648497523420866,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "pluto",
+      "target": 999,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.5,
+      "reference": {
+        "longitudeDeg": 303.0872075,
+        "latitudeDeg": -4.2775808
+      },
+      "engine": {
+        "longitudeDeg": 303.08720616788685,
+        "latitudeDeg": -4.277574625205123
+      },
+      "longitudeDifferenceArcsec": -0.004795607264895807,
+      "latitudeDifferenceArcsec": 0.022229261557882296,
+      "angularSeparationArcsec": 0.0227378532685877,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "pluto",
+      "target": 999,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "UT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.5,
+      "reference": {
+        "longitudeDeg": 32.4030239,
+        "latitudeDeg": -16.9212249
+      },
+      "engine": {
+        "longitudeDeg": 32.40298121964834,
+        "latitudeDeg": -16.921210638462405
+      },
+      "longitudeDifferenceArcsec": -0.15364926580332394,
+      "latitudeDifferenceArcsec": 0.05134153533674635,
+      "angularSeparationArcsec": 0.15570522322498012,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "sun",
+      "target": 10,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.499976956,
+      "reference": {
+        "longitudeDeg": 280.1532936,
+        "latitudeDeg": 0.0000648
+      },
+      "engine": {
+        "longitudeDeg": 280.1533609584524,
+        "latitudeDeg": 0.00005284161754049102
+      },
+      "longitudeDifferenceArcsec": 0.2424904289910046,
+      "latitudeDifferenceArcsec": -0.04305017685423235,
+      "angularSeparationArcsec": 0.246282207599565,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "sun",
+      "target": 10,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545.00074287,
+      "reference": {
+        "longitudeDeg": 280.3689092,
+        "latitudeDeg": 0.0002381
+      },
+      "engine": {
+        "longitudeDeg": 280.36892285969753,
+        "latitudeDeg": 0.00022735344914254308
+      },
+      "longitudeDifferenceArcsec": 0.04917491105516092,
+      "latitudeDifferenceArcsec": -0.03868758308684486,
+      "angularSeparationArcsec": 0.0625691694234837,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "sun",
+      "target": 10,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.500800741,
+      "reference": {
+        "longitudeDeg": 211.5914352,
+        "latitudeDeg": 0.0001532
+      },
+      "engine": {
+        "longitudeDeg": 211.59144819497803,
+        "latitudeDeg": 0.00015329085232346774
+      },
+      "longitudeDifferenceArcsec": 0.04678192108258372,
+      "latitudeDifferenceArcsec": 0.0003270683644838101,
+      "angularSeparationArcsec": 0.04678306418705301,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "sun",
+      "target": 10,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.501078496,
+      "reference": {
+        "longitudeDeg": 280.6044755,
+        "latitudeDeg": 0.0000877
+      },
+      "engine": {
+        "longitudeDeg": 280.6044259079972,
+        "latitudeDeg": 0.00007845114920586823
+      },
+      "longitudeDifferenceArcsec": -0.1785312101674208,
+      "latitudeDifferenceArcsec": -0.0332958628588744,
+      "angularSeparationArcsec": 0.18160949153121303,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "moon",
+      "target": 301,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.499976956,
+      "reference": {
+        "longitudeDeg": 272.4162586,
+        "latitudeDeg": 1.1082664
+      },
+      "engine": {
+        "longitudeDeg": 272.41632607666696,
+        "latitudeDeg": 1.1082550589515285
+      },
+      "longitudeDifferenceArcsec": 0.24291600129799917,
+      "latitudeDifferenceArcsec": -0.040827774497209646,
+      "angularSeparationArcsec": 0.24627833027120208,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "moon",
+      "target": 301,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545.00074287,
+      "reference": {
+        "longitudeDeg": 223.323786,
+        "latitudeDeg": 5.1707422
+      },
+      "engine": {
+        "longitudeDeg": 223.32380085302708,
+        "latitudeDeg": 5.170739806820168
+      },
+      "longitudeDifferenceArcsec": 0.05347089754650369,
+      "latitudeDifferenceArcsec": -0.008615447395499132,
+      "angularSeparationArcsec": 0.05394571286522014,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "moon",
+      "target": 301,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.500800741,
+      "reference": {
+        "longitudeDeg": 16.0921937,
+        "latitudeDeg": 3.7758644
+      },
+      "engine": {
+        "longitudeDeg": 16.092206222690116,
+        "latitudeDeg": 3.7758614581839125
+      },
+      "longitudeDifferenceArcsec": 0.04508168435677362,
+      "latitudeDifferenceArcsec": -0.010590537915433629,
+      "angularSeparationArcsec": 0.046213678233159555,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "moon",
+      "target": 301,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.501078496,
+      "reference": {
+        "longitudeDeg": 157.4154992,
+        "latitudeDeg": 1.0914112
+      },
+      "engine": {
+        "longitudeDeg": 157.4154493658468,
+        "latitudeDeg": 1.0914197006021578
+      },
+      "longitudeDifferenceArcsec": -0.17940295142579998,
+      "latitudeDifferenceArcsec": 0.030602167767845856,
+      "angularSeparationArcsec": 0.181962178522007,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mercury",
+      "target": 199,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.499976956,
+      "reference": {
+        "longitudeDeg": 258.9977019,
+        "latitudeDeg": 1.1264221
+      },
+      "engine": {
+        "longitudeDeg": 258.997769486205,
+        "latitudeDeg": 1.1264123621960116
+      },
+      "longitudeDifferenceArcsec": 0.24331033791895607,
+      "latitudeDifferenceArcsec": -0.035056094358587586,
+      "angularSeparationArcsec": 0.2457762648574247,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mercury",
+      "target": 199,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545.00074287,
+      "reference": {
+        "longitudeDeg": 271.8892699,
+        "latitudeDeg": -0.994819
+      },
+      "engine": {
+        "longitudeDeg": 271.8892834423562,
+        "latitudeDeg": -0.9948290196700481
+      },
+      "longitudeDifferenceArcsec": 0.04875248237112828,
+      "latitudeDifferenceArcsec": -0.036070812173161215,
+      "angularSeparationArcsec": 0.06063985125079847,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mercury",
+      "target": 199,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.500800741,
+      "reference": {
+        "longitudeDeg": 230.9460969,
+        "latitudeDeg": -2.9391313
+      },
+      "engine": {
+        "longitudeDeg": 230.94610938203311,
+        "latitudeDeg": -2.939134941381194
+      },
+      "longitudeDifferenceArcsec": 0.04493531905609416,
+      "latitudeDifferenceArcsec": -0.013108972298070398,
+      "angularSeparationArcsec": 0.046751677774883385,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mercury",
+      "target": 199,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.501078496,
+      "reference": {
+        "longitudeDeg": 288.0062227,
+        "latitudeDeg": -2.1126846
+      },
+      "engine": {
+        "longitudeDeg": 288.00617301316737,
+        "latitudeDeg": -2.112694271972324
+      },
+      "longitudeDifferenceArcsec": -0.17887259755298146,
+      "latitudeDifferenceArcsec": -0.034819100366156874,
+      "angularSeparationArcsec": 0.18211066188257616,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "venus",
+      "target": 299,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.499976956,
+      "reference": {
+        "longitudeDeg": 306.3743718,
+        "latitudeDeg": -1.6830905
+      },
+      "engine": {
+        "longitudeDeg": 306.3744391293302,
+        "latitudeDeg": -1.6831030152637052
+      },
+      "longitudeDifferenceArcsec": 0.2423855888991966,
+      "latitudeDifferenceArcsec": -0.045054949338574346,
+      "angularSeparationArcsec": 0.2464346549368734,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "venus",
+      "target": 299,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545.00074287,
+      "reference": {
+        "longitudeDeg": 241.5657794,
+        "latitudeDeg": 2.0663548
+      },
+      "engine": {
+        "longitudeDeg": 241.5657933520424,
+        "latitudeDeg": 2.066348932533074
+      },
+      "longitudeDifferenceArcsec": 0.0502273527217767,
+      "latitudeDifferenceArcsec": -0.02112288093396586,
+      "angularSeparationArcsec": 0.05445808652662636,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "venus",
+      "target": 299,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.500800741,
+      "reference": {
+        "longitudeDeg": 210.2334277,
+        "latitudeDeg": -6.3662005
+      },
+      "engine": {
+        "longitudeDeg": 210.23343968614714,
+        "latitudeDeg": -6.366200230939236
+      },
+      "longitudeDifferenceArcsec": 0.043150129613422905,
+      "latitudeDifferenceArcsec": 0.0009686187500079768,
+      "angularSeparationArcsec": 0.04289498225396574,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "venus",
+      "target": 299,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.501078496,
+      "reference": {
+        "longitudeDeg": 320.0708191,
+        "latitudeDeg": -1.8524005
+      },
+      "engine": {
+        "longitudeDeg": 320.07076947450963,
+        "latitudeDeg": -1.8524103193580996
+      },
+      "longitudeDifferenceArcsec": -0.1786517655091302,
+      "latitudeDifferenceArcsec": -0.035349689159058784,
+      "angularSeparationArcsec": 0.18202391109239607,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mars",
+      "target": 499,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.499976956,
+      "reference": {
+        "longitudeDeg": 283.867675,
+        "latitudeDeg": -0.9254021
+      },
+      "engine": {
+        "longitudeDeg": 283.8677423557233,
+        "latitudeDeg": -0.9254142927100549
+      },
+      "longitudeDifferenceArcsec": 0.24248060399258975,
+      "latitudeDifferenceArcsec": -0.043893756197732614,
+      "angularSeparationArcsec": 0.24639027607391942,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mars",
+      "target": 499,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545.00074287,
+      "reference": {
+        "longitudeDeg": 327.9632921,
+        "latitudeDeg": -1.0677752
+      },
+      "engine": {
+        "longitudeDeg": 327.96330571380315,
+        "latitudeDeg": -1.0677853902868144
+      },
+      "longitudeDifferenceArcsec": 0.04900969138361688,
+      "latitudeDifferenceArcsec": -0.03668503253173583,
+      "angularSeparationArcsec": 0.061211986851757744,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mars",
+      "target": 499,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.500800741,
+      "reference": {
+        "longitudeDeg": 135.0205124,
+        "latitudeDeg": 1.457758
+      },
+      "engine": {
+        "longitudeDeg": 135.02052553612626,
+        "latitudeDeg": 1.4577687704462843
+      },
+      "longitudeDifferenceArcsec": 0.047290054317272734,
+      "latitudeDifferenceArcsec": 0.03877360662301044,
+      "angularSeparationArcsec": 0.06114159364434493,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "mars",
+      "target": 499,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.501078496,
+      "reference": {
+        "longitudeDeg": 29.5254723,
+        "latitudeDeg": 0.9517693
+      },
+      "engine": {
+        "longitudeDeg": 29.525422597686468,
+        "latitudeDeg": 0.9517684185479043
+      },
+      "longitudeDifferenceArcsec": -0.17892832861434727,
+      "latitudeDifferenceArcsec": -0.003173227544728263,
+      "angularSeparationArcsec": 0.17893178204544027,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "jupiter",
+      "target": 599,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.499976956,
+      "reference": {
+        "longitudeDeg": 241.1358829,
+        "latitudeDeg": 0.8142907
+      },
+      "engine": {
+        "longitudeDeg": 241.13594566957218,
+        "latitudeDeg": 0.8142833897904025
+      },
+      "longitudeDifferenceArcsec": 0.22597045990551123,
+      "latitudeDifferenceArcsec": -0.026316754551158894,
+      "angularSeparationArcsec": 0.2274750696245226,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "jupiter",
+      "target": 599,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545.00074287,
+      "reference": {
+        "longitudeDeg": 25.2530685,
+        "latitudeDeg": -1.2621868
+      },
+      "engine": {
+        "longitudeDeg": 25.253087346468295,
+        "latitudeDeg": -1.2621878275720286
+      },
+      "longitudeDifferenceArcsec": 0.06784728575439658,
+      "latitudeDifferenceArcsec": -0.0036992593028806198,
+      "angularSeparationArcsec": 0.06793162121139226,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "jupiter",
+      "target": 599,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.500800741,
+      "reference": {
+        "longitudeDeg": 143.4174372,
+        "latitudeDeg": 0.6669334
+      },
+      "engine": {
+        "longitudeDeg": 143.4174473169698,
+        "latitudeDeg": 0.6669438628161262
+      },
+      "longitudeDifferenceArcsec": 0.036421091499505565,
+      "latitudeDifferenceArcsec": 0.03766613805415986,
+      "angularSeparationArcsec": 0.05239326407326635,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "jupiter",
+      "target": 599,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.501078496,
+      "reference": {
+        "longitudeDeg": 201.2063465,
+        "latitudeDeg": 1.2766069
+      },
+      "engine": {
+        "longitudeDeg": 201.20630826468943,
+        "latitudeDeg": 1.2766086325702257
+      },
+      "longitudeDifferenceArcsec": -0.13764711784460815,
+      "latitudeDifferenceArcsec": 0.006237252812635319,
+      "angularSeparationArcsec": 0.1377542304563068,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "saturn",
+      "target": 699,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.499976956,
+      "reference": {
+        "longitudeDeg": 267.7167386,
+        "latitudeDeg": 1.0076898
+      },
+      "engine": {
+        "longitudeDeg": 267.7168086449932,
+        "latitudeDeg": 1.0076827847613394
+      },
+      "longitudeDifferenceArcsec": 0.252161975549825,
+      "latitudeDifferenceArcsec": -0.025254859178325262,
+      "angularSeparationArcsec": 0.25338469498439775,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "saturn",
+      "target": 699,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545.00074287,
+      "reference": {
+        "longitudeDeg": 40.3956366,
+        "latitudeDeg": -2.4448533
+      },
+      "engine": {
+        "longitudeDeg": 40.395663413222316,
+        "latitudeDeg": -2.44485470998267
+      },
+      "longitudeDifferenceArcsec": 0.09652760045355535,
+      "latitudeDifferenceArcsec": -0.005075937611032089,
+      "angularSeparationArcsec": 0.09657322444993621,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "saturn",
+      "target": 699,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.500800741,
+      "reference": {
+        "longitudeDeg": 9.7516856,
+        "latitudeDeg": -2.6988235
+      },
+      "engine": {
+        "longitudeDeg": 9.75169711186902,
+        "latitudeDeg": -2.6988250222095105
+      },
+      "longitudeDifferenceArcsec": 0.041442728570473264,
+      "latitudeDifferenceArcsec": -0.005479954237586071,
+      "angularSeparationArcsec": 0.04175789500878821,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "saturn",
+      "target": 699,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.501078496,
+      "reference": {
+        "longitudeDeg": 205.6316785,
+        "latitudeDeg": 2.4222196
+      },
+      "engine": {
+        "longitudeDeg": 205.63163600730763,
+        "latitudeDeg": 2.422221737496362
+      },
+      "longitudeDifferenceArcsec": -0.1529736925931502,
+      "latitudeDifferenceArcsec": 0.0076949869036724294,
+      "angularSeparationArcsec": 0.1530306024394561,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "uranus",
+      "target": 799,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.499976956,
+      "reference": {
+        "longitudeDeg": 250.139159,
+        "latitudeDeg": 0.0634029
+      },
+      "engine": {
+        "longitudeDeg": 250.1393145811299,
+        "latitudeDeg": 0.06339441841829696
+      },
+      "longitudeDifferenceArcsec": 0.5600920675988164,
+      "latitudeDifferenceArcsec": -0.030533694130935318,
+      "angularSeparationArcsec": 0.560923387437102,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "uranus",
+      "target": 799,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545.00074287,
+      "reference": {
+        "longitudeDeg": 314.809168,
+        "latitudeDeg": -0.658324
+      },
+      "engine": {
+        "longitudeDeg": 314.8091879292927,
+        "latitudeDeg": -0.6583348604984579
+      },
+      "longitudeDifferenceArcsec": 0.07174545353336725,
+      "latitudeDifferenceArcsec": -0.03909779444839501,
+      "angularSeparationArcsec": 0.08170292607488791,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "uranus",
+      "target": 799,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.500800741,
+      "reference": {
+        "longitudeDeg": 64.9186573,
+        "latitudeDeg": -0.1519361
+      },
+      "engine": {
+        "longitudeDeg": 64.91865422964288,
+        "latitudeDeg": -0.15193089939966017
+      },
+      "longitudeDifferenceArcsec": -0.011053285697926185,
+      "latitudeDifferenceArcsec": 0.01872216122333903,
+      "angularSeparationArcsec": 0.02174151754965571,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "uranus",
+      "target": 799,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.501078496,
+      "reference": {
+        "longitudeDeg": 17.741307,
+        "latitudeDeg": -0.6294644
+      },
+      "engine": {
+        "longitudeDeg": 17.741177127245653,
+        "latitudeDeg": -0.629467917104783
+      },
+      "longitudeDifferenceArcsec": -0.4675419155319105,
+      "latitudeDifferenceArcsec": -0.01266157721868666,
+      "angularSeparationArcsec": 0.4676851242958526,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "neptune",
+      "target": 899,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.499976956,
+      "reference": {
+        "longitudeDeg": 85.21866,
+        "latitudeDeg": -1.2996533
+      },
+      "engine": {
+        "longitudeDeg": 85.21871478354203,
+        "latitudeDeg": -1.2996424453869224
+      },
+      "longitudeDifferenceArcsec": 0.19722075139725348,
+      "latitudeDifferenceArcsec": 0.03907660707893612,
+      "angularSeparationArcsec": 0.20100496619011357,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "neptune",
+      "target": 899,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545.00074287,
+      "reference": {
+        "longitudeDeg": 303.1930007,
+        "latitudeDeg": 0.2350026
+      },
+      "engine": {
+        "longitudeDeg": 303.1930133715538,
+        "latitudeDeg": 0.23499184316409774
+      },
+      "longitudeDifferenceArcsec": 0.045617593696078984,
+      "latitudeDifferenceArcsec": -0.03872460924815302,
+      "angularSeparationArcsec": 0.059837489848522114,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "neptune",
+      "target": 899,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.500800741,
+      "reference": {
+        "longitudeDeg": 2.2389131,
+        "latitudeDeg": -1.4168874
+      },
+      "engine": {
+        "longitudeDeg": 2.238928720822342,
+        "latitudeDeg": -1.4168935001574223
+      },
+      "longitudeDifferenceArcsec": 0.0562349602660106,
+      "latitudeDifferenceArcsec": -0.021960566720302666,
+      "angularSeparationArcsec": 0.06035481532193493,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "neptune",
+      "target": 899,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.501078496,
+      "reference": {
+        "longitudeDeg": 167.2905194,
+        "latitudeDeg": 0.9638821
+      },
+      "engine": {
+        "longitudeDeg": 167.29049834064847,
+        "latitudeDeg": 0.9638909268193053
+      },
+      "longitudeDifferenceArcsec": -0.07581366548947699,
+      "latitudeDifferenceArcsec": 0.031776549499307194,
+      "angularSeparationArcsec": 0.08219388328040125,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "pluto",
+      "target": 999,
+      "iso": "1900-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "historical-ut1",
+      "engineJulianDateTt": 2415020.4999769586,
+      "referenceJulianDate": 2415020.499976956,
+      "reference": {
+        "longitudeDeg": 75.2513936,
+        "latitudeDeg": -9.7769715
+      },
+      "engine": {
+        "longitudeDeg": 75.25145452202008,
+        "latitudeDeg": -9.776957648562027
+      },
+      "longitudeDifferenceArcsec": 0.2193192724007531,
+      "latitudeDifferenceArcsec": 0.04986517670459989,
+      "angularSeparationArcsec": 0.22181166185314716,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "pluto",
+      "target": 999,
+      "iso": "2000-01-01T12:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2451545.0007428704,
+      "referenceJulianDate": 2451545.00074287,
+      "reference": {
+        "longitudeDeg": 251.4547644,
+        "latitudeDeg": 10.8552605
+      },
+      "engine": {
+        "longitudeDeg": 251.45477943974672,
+        "latitudeDeg": 10.855231711113614
+      },
+      "longitudeDifferenceArcsec": 0.054143088118507876,
+      "latitudeDifferenceArcsec": -0.10363999098927934,
+      "angularSeparationArcsec": 0.11648497523420866,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "pluto",
+      "target": 999,
+      "iso": "2026-10-25T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "utc-leap-table",
+      "engineJulianDateTt": 2461338.500800741,
+      "referenceJulianDate": 2461338.500800741,
+      "reference": {
+        "longitudeDeg": 303.0872075,
+        "latitudeDeg": -4.2775808
+      },
+      "engine": {
+        "longitudeDeg": 303.08720616788685,
+        "latitudeDeg": -4.277574625205123
+      },
+      "longitudeDifferenceArcsec": -0.004795607264895807,
+      "latitudeDifferenceArcsec": 0.022229261557882296,
+      "angularSeparationArcsec": 0.0227378532685877,
+      "withinOneArcminute": true
+    },
+    {
+      "bodyId": "pluto",
+      "target": 999,
+      "iso": "2100-01-01T00:00:00.000Z",
+      "timeType": "TT",
+      "engineInputInterpretation": "future-ut1-assumption",
+      "engineJulianDateTt": 2488069.5010784958,
+      "referenceJulianDate": 2488069.501078496,
+      "reference": {
+        "longitudeDeg": 32.4030223,
+        "latitudeDeg": -16.9212234
+      },
+      "engine": {
+        "longitudeDeg": 32.40298121964834,
+        "latitudeDeg": -16.921210638462405
+      },
+      "longitudeDifferenceArcsec": -0.14788926614528464,
+      "latitudeDifferenceArcsec": 0.04594153533759027,
+      "angularSeparationArcsec": 0.1487584031298087,
+      "withinOneArcminute": true
+    }
+  ]
+}
