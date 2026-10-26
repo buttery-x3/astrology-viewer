@@ -1,6 +1,14 @@
 import {describe,expect,it} from 'vitest';
-import {DEFAULT_PREFERENCES,PREFERENCES_KEY,readPreferences,writePreferences} from '../../src/lib/state/preferences';
+import {DEFAULT_PREFERENCES,LEGACY_PREFERENCES_KEY,PREFERENCES_KEY,readPreferences,writePreferences} from '../../src/lib/state/preferences';
 describe('display-only preference persistence',()=>{
+  it('migrates the previous display whitelist without resetting saved choices',()=>{
+    const {cardSparkles: omitted,...prior}=DEFAULT_PREFERENCES;
+    expect(omitted).toBe(true);
+    const legacy={...prior,version:1,houseMode:'volumes',motion:'reduced',quality:'low'};
+    expect(readPreferences({getItem:key=>key===LEGACY_PREFERENCES_KEY?JSON.stringify(legacy):null})).toEqual({...legacy,version:2,cardSparkles:true});
+    expect(DEFAULT_PREFERENCES.houseMode).toBe('shells');
+    expect(readPreferences(null).cardSparkles).toBe(true);
+  });
   it('round-trips only the documented nonpersonal whitelist',()=>{
     const storage=new Map<string,string>(),adapter={getItem:(key:string)=>storage.get(key)??null,setItem:(key:string,value:string)=>{storage.set(key,value);}};
     const settings={...DEFAULT_PREFERENCES,quality:'low' as const,labelScale:1.5,motion:'reduced' as const};

@@ -4,7 +4,7 @@ import { calculationResponseSchema, chartInputSchema, explorerInputPatchSchema, 
 
 export type { ExplorerInput } from '../workers/protocol';
 export type Viewpoint = 'overview' | 'observer' | 'outside';
-export type LayerKey = 'bodies' | 'horizon' | 'ecliptic' | 'houses' | 'stars' | 'signs' | 'equator' | 'meridian' | 'primeVertical' | 'angles' | 'constellations';
+export type LayerKey = 'bodies' | 'horizon' | 'ecliptic' | 'houses' | 'stars' | 'signs' | 'equator' | 'meridian' | 'primeVertical' | 'angles' | 'constellations' | 'asterisms' | 'earthProjections' | 'earthHouses' | 'astrocartography';
 export type ExplorerInputPatch = Partial<Omit<ExplorerInput, 'observer'>> & { observer?: Partial<ExplorerInput['observer']> };
 export interface ExplorerState {
   status: 'loading' | 'ready' | 'pending' | 'error';
@@ -15,6 +15,7 @@ export interface ExplorerState {
   snapshot: EphemerisSnapshot | null;
   selectedId: string | null;
   viewpoint: Viewpoint;
+  viewRevision: number;
   layers: Record<LayerKey, boolean>;
 }
 
@@ -34,7 +35,7 @@ export interface ExplorerStore extends Readable<ExplorerState> {
   init(): void;
   requestChart(patch: ExplorerInputPatch): void;
   select(id: string | null): void;
-  setViewpoint(viewpoint: Viewpoint): void;
+  setViewpoint(viewpoint: Viewpoint, applyPreset?: boolean): void;
   setLayer(key: LayerKey, visible: boolean): void;
   retry(): void;
   destroy(): void;
@@ -72,7 +73,7 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
   const initial = chartInputSchema.parse(mergeInput({ ...DEFAULT_EXPLORER_INPUT }, options.initialInput ?? {}));
   let state: ExplorerState = {
     status: 'loading', error: null, revision: 0, input: initial, snapshot: null, selectedId: null,
-    viewpoint: 'overview', layers: { bodies: true, horizon: true, ecliptic: true, houses: true, stars: true, signs: true, equator: false, meridian: false, primeVertical: false, angles: true, constellations: false },
+    viewpoint: 'overview', viewRevision: 0, layers: { bodies: true, horizon: true, ecliptic: true, houses: true, stars: true, signs: true, equator: false, meridian: false, primeVertical: false, angles: true, constellations: false, asterisms: false, earthProjections: true, earthHouses: true, astrocartography: true },
   };
   const store = writable(freeze(state));
   let destroyed = false;
@@ -216,9 +217,12 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
       if (destroyed || (id !== null && !/^[a-z][a-z0-9]*(?::[a-z0-9_-]+)+$/.test(id))) return;
       if (state.selectedId !== id) publish({ selectedId: id });
     },
-    setViewpoint(viewpoint) {
-      if (destroyed || !['overview', 'observer', 'outside'].includes(viewpoint) || state.viewpoint === viewpoint) return;
-      publish({ viewpoint });
+    setViewpoint(viewpoint, applyPreset = true) {
+      if (destroyed || !['overview', 'observer', 'outside'].includes(viewpoint)) return;
+      if (!applyPreset) { if (state.viewpoint !== viewpoint) publish({ viewpoint }); return; }
+      const layers = { ...state.layers, earthProjections: viewpoint === 'overview' };
+      if (viewpoint === 'overview') { layers.earthHouses = true; layers.astrocartography = true; }
+      publish({ viewpoint, viewRevision: state.viewRevision + 1, layers });
     },
     setLayer(key, visible) {
       if (destroyed || !Object.hasOwn(state.layers, key) || typeof visible !== 'boolean' || state.layers[key] === visible) return;

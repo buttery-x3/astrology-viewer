@@ -17,7 +17,7 @@ export interface HouseDisplaySettings {
   comparisonChangesOnly: boolean;
 }
 export const DEFAULT_HOUSE_DISPLAY: Readonly<HouseDisplaySettings> = Object.freeze({
-  mode: 'arcs', opacity: 0.14, hybrid: true, shellSeparation: 0.04,
+  mode: 'shells', opacity: 0.14, hybrid: true, shellSeparation: 0,
   contextFill: false, comparisonChangesOnly: true,
 });
 export const HOUSE_PICKING_MAX_ABS_LATITUDE_DEG = 88;

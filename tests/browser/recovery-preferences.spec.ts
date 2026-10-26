@@ -24,10 +24,10 @@ test('persists display choices while personal context stays in session memory',a
   await page.getByRole('button',{name:/Apply exploration/}).click();
   await expect(page.locator('.context-details')).toContainText('15 Jun 2034');
   const stored=await page.evaluate(()=>Object.fromEntries(Object.keys(localStorage).map(key=>[key,localStorage.getItem(key)])));
-  expect(Object.keys(stored)).toEqual(['spatial.display-preferences.v1']);
-  const preferences=JSON.parse(stored['spatial.display-preferences.v1']!);
+  expect(Object.keys(stored)).toEqual(['spatial.display-preferences.v2']);
+  const preferences=JSON.parse(stored['spatial.display-preferences.v2']!);
   expect(preferences).toMatchObject({quality:'low',motion:'reduced',textSize:'large'});
-  expect(Object.keys(preferences).sort()).toEqual(['version','quality','labelScale','earthOpacity','motion','textSize','houseMode'].sort());
+  expect(Object.keys(preferences).sort()).toEqual(['version','quality','labelScale','earthOpacity','motion','textSize','houseMode','cardSparkles'].sort());
   await page.reload();await page.getByRole('button',{name:/Explore example/}).click();
   await expect(page.locator('.context-details')).toContainText('01 Jan 2000');
   await expect(page.locator('.demo-badge')).toContainText('not your birth chart');
