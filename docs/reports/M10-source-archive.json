@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-26T03:41:18.048Z",
+  "scope": "Independent frontend source archive extraction/install/build and retained data/content provenance; no browser, server rebuild or engine recompilation in this audit",
+  "revision": "6cfa912f72eafce86b2f17c205e5c65d4d21c172",
+  "tree": "1067f95f63a1980b225cf57eb800fc0360ac3248",
+  "environment": {
+    "platform": "win32",
+    "node": "v24.15.0",
+    "npm": "11.12.1",
+    "vite": "8.3.5",
+    "noGitAncestor": true,
+    "noRepositoryNodeModulesLink": true
+  },
+  "archive": {
+    "path": "source/source-6cfa912f72eafce86b2f17c205e5c65d4d21c172.tar.gz",
+    "sha256": "cf63f28bedfea91b1c8a270c67c5923b861320a7ec1728468a3e3dc3acadf3ef",
+    "bytes": 4945060,
+    "entries": 435,
+    "sourceRevisionFile": {
+      "sha256": "8ac77de97fc531d342d175714fa701d7f205d2d10287f4b124af69857bb821e5",
+      "bytes": 41
+    }
+  },
+  "releaseManifest": {
+    "sha256": "d093bf31ded93fbbb3cdaf22a1e9a7bbb29511e3d0e20c06d81c2adf5a23d18d",
+    "bytes": 27691
+  },
+  "releaseFilesVerified": 108,
+  "commands": [
+    {
+      "command": "npm ci --no-audit --no-fund",
+      "exitCode": 0,
+      "packages": 217
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "revisionOverride": false,
+      "localSourceOverride": false
+    },
+    {
+      "command": "node scripts/verify-assets.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run validate:content",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run validate:notices",
+      "exitCode": 0,
+      "productionNoticeRecords": 53,
+      "fullNoticeFiles": 50,
+      "upstreamShorthandCases": 3
+    }
+  ],
+  "build": {
+    "main": {
+      "path": "dist/assets/index-Dm5fR8Uo.js",
+      "sha256": "6f1ec01b59b3ecfec5c1605ccf0a56343e09bc7ea5ba975ba08e07a02802b14c",
+      "bytes": 2606870
+    },
+    "compiledRevisionVariable": "XV",
+    "compiledRevision": "6cfa912f72eafce86b2f17c205e5c65d4d21c172",
+    "footerExpression": "XV.slice(0,7)",
+    "footerText": "Build 6cfa912",
+    "sourceHref": "https://github.com/buttery-x3/astrology-viewer/tree/6cfa912f72eafce86b2f17c205e5c65d4d21c172",
+    "wasm": {
+      "sourcePath": "src/lib/astronomy/generated/spatial-ephemeris.wasm",
+      "rebuiltPath": "dist/assets/spatial-ephemeris-DKdbe1a_.wasm",
+      "releasedPath": "app/assets/spatial-ephemeris-DKdbe1a_.wasm",
+      "sha256": "a2aaedc3f371af501d2dfd61258a8160c873b0df3ea94ad568377df4353fb88e",
+      "bytes": 392316,
+      "sourceRebuiltReleasedEqual": true
+    },
+    "javascriptByteIdentity": "Ordinary npm run build uses the exact GitHub source link; packaged release uses /source. Main JavaScript byte identity is not claimed."
+  },
+  "manifestIdentities": {
+    "engineManifest": {
+      "path": "src/lib/astronomy/generated/build-manifest.json",
+      "sha256": "aaba0a4eb49495c2939482c479995c5b503072b9f7d0bd9fa1d1b077ae9d449c",
+      "bytes": 1647
+    },
+    "ephemerisManifest": {
+      "path": "public/data/ephemeris/manifest.json",
+      "sha256": "1166f94b057cfe7ae2ec1178b1f04c82cf70d2493df84849b358c1e7e6a43b24",
+      "bytes": 984
+    },
+    "timezoneManifest": {
+      "path": "src/lib/time/data/manifest.json",
+      "sha256": "a7ade6f0661e2ea08f4b7f80e202a8a8c4c2bef09c8404233b33b720d7e5e7be",
+      "bytes": 1789
+    },
+    "skyManifest": {
+      "path": "src/lib/scene/data/sky-data-manifest.json",
+      "sha256": "ebefe74b8cdaf85eb864fb528dde4e64272b2f045e1708bf97f04854f6ca1e93",
+      "bytes": 3188
+    },
+    "coastlineManifest": {
+      "path": "src/lib/scene/data/coastline-manifest.json",
+      "sha256": "65541f5ee3cb905928209fb1eda084b4ea27db32c2f1421c6be77ef0f47779df",
+      "bytes": 831
+    },
+    "contentManifest": {
+      "path": "src/lib/content/data/manifest.json",
+      "sha256": "52bfac87aa065d37a3a28b228b7b2f58b413347b783f999c4f13923563a8f5ab",
+      "bytes": 2261
+    },
+    "geographyManifest": {
+      "path": "api/data-manifest.json",
+      "sha256": "1667a1a3d3048d52ba72efd8fc6b47d2f4c8b3fa5985d7c5d04b77f7bad22671",
+      "bytes": 1072
+    },
+    "packageLock": {
+      "path": "package-lock.json",
+      "sha256": "0a22af2fdff0fc1a87322a767f002c0dd0592a440a0bab77e797d61177e8e3d2",
+      "bytes": 135265
+    }
+  },
+  "figures": {
+    "version": "Stellarium-26.2-modern-HYG-4.1",
+    "revision": "2b10b1a3bb534eb4e7586751054bf67b36c22e53",
+    "license": "CC-BY-SA-4.0",
+    "counts": {
+      "figures": 88,
+      "polylines": 219,
+      "segments": 695,
+      "endpoints": 710,
+      "supportStars": 9
+    },
+    "sourceTopologyPreserved": true,
+    "hipEndpointsAllJoined": true,
+    "brightCatalogueStars": 2865,
+    "figureManifest": {
+      "sha256": "51d35106279fdac2bd5245e88cb57f24be7750546686039d676fb6db19e98d04",
+      "bytes": 2322
+    },
+    "files": [
+      {
+        "path": "vendor/stellarium-modern/index.json",
+        "sha256": "1f2f5ffd6c9e25a7d0dcfdbf1f756e2db03dd3b8ed4ec016a2839b09f6b0fe1e",
+        "bytes": 205767,
+        "gitBlob": "09872ba40293423bd15e37706866cc4782178554"
+      },
+      {
+        "path": "vendor/stellarium-modern/description.md",
+        "sha256": "4b58344f63168d7c816fdfef405103b5770fda2e1f4a4bf5c8871041ce042586",
+        "bytes": 53269,
+        "gitBlob": "2b8f761ff31b56537d38794667f66827b3e07976"
+      },
+      {
+        "path": "src/lib/scene/data/constellation-figures.json",
+        "sha256": "cc67ca70fcee802d658d62a39a138ecdc67884e6cca6bb4ee38389762b98c958",
+        "bytes": 34915
+      }
+    ],
+    "packagedNotice": {
+      "sha256": "1aa96696c6ff75c016a3535e68c587ebbc8d8a3f96a81e3d55e72496335ffc03",
+      "bytes": 896
+    }
+  },
+  "notices": {
+    "manifest": {
+      "sha256": "60bc2782acc209e07b19a65231ddfe6a1185e1bb9501c74fb12dca302a139f3a",
+      "bytes": 3316
+    },
+    "files": [
+      {
+        "path": "vendor/emscripten/LICENSE",
+        "sha256": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86",
+        "bytes": 5093
+      },
+      {
+        "path": "vendor/emscripten/AUTHORS",
+        "sha256": "8585fa1b981f576f52806833481323007ccac5c00f31a873215e31c0f42820f0",
+        "bytes": 29004
+      },
+      {
+        "path": "vendor/emscripten/musl-COPYRIGHT",
+        "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+        "bytes": 6204
+      },
+      {
+        "path": "vendor/emscripten/compiler-rt-LICENSE.TXT",
+        "sha256": "1a8f1058753f1ba890de984e48f0242a3a5c29a6a8f2ed9fd813f36985387e8d",
+        "bytes": 16708
+      },
+      {
+        "path": "vendor/notices/ODbL-1.0.txt",
+        "sha256": "607680718977f6f6c9607972afd98f208573f19251315ed1362a8589b51beaf5",
+        "bytes": 25278
+      },
+      {
+        "path": "vendor/notices/CC-BY-SA-4.0.txt",
+        "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5",
+        "bytes": 20138
+      },
+      {
+        "path": "vendor/notices/IANA-tz-2026e-LICENSE",
+        "sha256": "0613408568889f5739e5ae252b722a2659c02002839ad970a63dc5e9174b27cf",
+        "bytes": 252
+      },
+      {
+        "path": "vendor/notices/Stellarium-modern-NOTICE.txt",
+        "sha256": "1aa96696c6ff75c016a3535e68c587ebbc8d8a3f96a81e3d55e72496335ffc03",
+        "bytes": 896
+      }
+    ]
+  },
+  "content": {
+    "version": "1.1.0",
+    "entries": 320,
+    "sources": 90,
+    "canonicalPages": 96,
+    "bodyInSign": 120,
+    "bodyInHouse": 120,
+    "astrocartography": 15,
+    "original305SemanticSha256": "4bb6fa0c4329ce21bb9bc8c0814ebf62640248394c671fe94f4d03e60623775b",
+    "almanac": {
+      "url": "https://www.almanac.com/astrocartography-explained-find-your-best-places-live",
+      "words": 154,
+      "editorialBudget": 180,
+      "sourceWordLimit": 200
+    },
+    "files": [
+      {
+        "path": "src/lib/content/data/catalogue.json",
+        "sha256": "bb0e78fb120ac42ee5fdc843d7682fa0838a0907cc457426f907d74a0038822d",
+        "bytes": 237732
+      },
+      {
+        "path": "src/lib/content/data/sources.json",
+        "sha256": "37805111a74f71be880f9f942678bc31efd1876cebe5fd23ba7f4203226eb13a",
+        "bytes": 67265
+      },
+      {
+        "path": "src/lib/content/data/supplemental-claims.json",
+        "sha256": "318be27fc08431a4511628512216baa7b7961eaede537ad2b7039f19834d174d",
+        "bytes": 20219
+      },
+      {
+        "path": "src/lib/content/data/curation-provenance.json",
+        "sha256": "91f4c952ea0e713f76887250a91e2c64773b38bc925d3b97189b2ce6e906f931",
+        "bytes": 2777
+      },
+      {
+        "path": "src/lib/content/data/wikipedia-links.json",
+        "sha256": "dc419bb4bea4443d6ad6b6715c172c2e3407e75367dd840e8531dbbcbaa82e12",
+        "bytes": 14982
+      },
+      {
+        "path": "src/lib/content/data/word-budgets.json",
+        "sha256": "73c9a6db474f5d65debff9db6cf96c12012c6843293212b1321b773c3e86297e",
+        "bytes": 33403
+      }
+    ],
+    "humanClaimToPassageReview": "Not performed by this audit; remains an external release gate."
+  },
+  "limitations": [
+    "No browser rendering or server integration was exercised by this archive audit. Root runs packaged browser validation separately.",
+    "Retained upstream source hashes and licence notices were verified; this is not legal clearance.",
+    "The original 33 MB HYG CSV was not downloaded or reimported; the retained HIP-to-HYG map, source hash and catalogue endpoint coverage were verified.",
+    "The native engine binary was verified byte-for-byte and not recompiled."
+  ]
+}
