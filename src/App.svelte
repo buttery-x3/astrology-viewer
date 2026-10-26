@@ -104,7 +104,8 @@
   let sceneStatus = $state<string | null>(null);
   let houseDisplay=$state<HouseDisplaySettings>({...DEFAULT_HOUSE_DISPLAY,mode:initialPreferences.houseMode});
   let construction=$state<ConstructionSettings>({...DEFAULT_CONSTRUCTION});
-  let aspects=$state<AspectDisplaySettings>({...DEFAULT_ASPECT_DISPLAY,types:{...DEFAULT_ASPECT_DISPLAY.types},orbs:{...DEFAULT_ASPECT_DISPLAY.orbs}});
+  let aspectSettings=$state<AspectDisplaySettings>({...DEFAULT_ASPECT_DISPLAY,types:{...DEFAULT_ASPECT_DISPLAY.types},orbs:{...DEFAULT_ASPECT_DISPLAY.orbs}});
+  const aspects=$derived({...aspectSettings,enabled:$explorer.layers.aspects});
   let earthSettings=$state<EarthProjectionSettings>({...DEFAULT_EARTH_PROJECTIONS,bodies:{...DEFAULT_EARTH_PROJECTIONS.bodies},angles:{...DEFAULT_EARTH_PROJECTIONS.angles}});
   let evidenceOpen=$state(false);
   let evidenceDialog=$state<HTMLDialogElement>();
@@ -246,7 +247,7 @@
     if(layer)explorer.setLayer(layer,true);
     if(kind==='aspect'&&$explorer.snapshot){
       const detail=getAspectDetails($explorer.snapshot.bodies,id,aspects.orbs);
-      if(detail)aspects={...aspects,enabled:true,types:{...aspects.types,[detail.type]:true}};
+      if(detail)updateAspects({enabled:true,types:{...aspects.types,[detail.type]:true}});
     }
   }
   function selectHit(hit: FeatureHit) {
@@ -272,6 +273,10 @@
     if(patch.houses!==undefined)explorer.setLayer('earthHouses',patch.houses);
     if(patch.astrocartography!==undefined)explorer.setLayer('astrocartography',patch.astrocartography);
     earthSettings={...earthSettings,...patch};
+  }
+  function updateAspects(patch:Partial<AspectDisplaySettings>){
+    if(patch.enabled!==undefined)explorer.setLayer('aspects',patch.enabled);
+    aspectSettings={...aspectSettings,...patch};
   }
   function constructionLegendTarget(kind:string){
     const element=activeConstruction&&[...activeConstruction.lines,...activeConstruction.markers].find(item=>item.kind===kind&&item.stage<=construction.stage);
@@ -365,7 +370,7 @@
   }
   function pausePlayback(reason:string|null=null){playing=false;playbackClock=null;pauseReason=reason;}
   function updatePreferences(patch:Partial<DisplayPreferences>){preferences={...preferences,...patch};if(patch.houseMode)houseDisplay={...houseDisplay,mode:patch.houseMode};}
-  function resetPreferences(){preferences={...DEFAULT_PREFERENCES};houseDisplay={...DEFAULT_HOUSE_DISPLAY};}
+  function resetPreferences(){preferences={...DEFAULT_PREFERENCES};houseDisplay={...DEFAULT_HOUSE_DISPLAY};earthSettings={...earthSettings,houseOpacity:DEFAULT_EARTH_PROJECTIONS.houseOpacity,astroOpacity:DEFAULT_EARTH_PROJECTIONS.astroOpacity};aspectSettings={...aspectSettings,backgroundOpacity:DEFAULT_ASPECT_DISPLAY.backgroundOpacity};}
   function clearSelection(){selectedFeature=null;explorer.select(null);announcement='Selection cleared.';if(!inspectorPinned){if(document.activeElement?.closest('#inspector'))void collapseInspector();else{inspectorCollapsed=true;rightOpen=false;}}}
   async function collapseInspector(){inspectorCollapsed=true;rightOpen=false;await tick();document.querySelector<HTMLButtonElement>('[aria-label="Expand inspector"]')?.focus();}
   async function collapseTools(){toolsCollapsed=!compactPanels;leftOpen=false;await tick();document.querySelector<HTMLButtonElement>('.left-toggle')?.focus();}
@@ -453,7 +458,7 @@
       <ControlGroup id="earth" title="Earth projections" open={!!groups.earth} onToggle={open=>groups={...groups,earth:open}}><EarthProjectionControls settings={earthProjectionDisplay} snapshot={$explorer.snapshot} onChange={updateEarthSettings}/></ControlGroup>
       <ControlGroup id="houses" title="Houses" open={!!groups.houses} onToggle={open=>groups={...groups,houses:open}}><HouseControls system={$explorer.input.system} comparisonSystem={$explorer.input.comparisonSystem} display={houseDisplay} snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} {busy} onSystemChange={(system)=>explorer.requestChart({system,comparisonSystem:$explorer.input.comparisonSystem===system?null:$explorer.input.comparisonSystem})} onComparisonChange={(comparisonSystem)=>explorer.requestChart({comparisonSystem})} onDisplayChange={patch=>{houseDisplay={...houseDisplay,...patch};if(patch.mode)updatePreferences({houseMode:patch.mode});}} onSelect={selectFeature} onShowConstruction={showConstruction} /></ControlGroup>
       {#if construction.enabled}<ControlGroup id="construction" title="Construction guide" open={!!groups.construction} onToggle={open=>groups={...groups,construction:open}}><ConstructionGuide snapshot={$explorer.snapshot} settings={construction} onChange={(patch)=>construction={...construction,...patch}} onSelect={selectFeature} onFocus={focusConstruction} /></ControlGroup>{/if}
-      <ControlGroup id="aspects" title="Aspects" open={!!groups.aspects} onToggle={open=>groups={...groups,aspects:open}}><AspectControls snapshot={$explorer.snapshot} settings={aspects} selectedId={$explorer.selectedId} onChange={patch=>aspects={...aspects,...patch}} onSelect={selectFeature} /></ControlGroup>
+      <ControlGroup id="aspects" title="Aspects" open={!!groups.aspects} onToggle={open=>groups={...groups,aspects:open}}><AspectControls snapshot={$explorer.snapshot} settings={aspects} selectedId={$explorer.selectedId} onChange={updateAspects} onSelect={selectFeature} /></ControlGroup>
       <ControlGroup id="trails" title="Motion history" open={!!groups.trails} onToggle={open=>groups={...groups,trails:open}}><TrailControls settings={trails} historySettings={history} bodyId={selectedBody?.id??null} {boundaryHouse} state={$trailService} onChange={patch=>trails={...trails,...patch}} onHistoryChange={patch=>history={...history,...patch}} onRetry={()=>trailService.retry()} onRetryHistory={()=>trailService.retry()} onCancel={()=>trailService.cancelTrail()} onCancelHistory={()=>trailService.cancelHistory()} /></ControlGroup>
 
       <ControlGroup id="references" title="Signs and references" open={!!groups.references} onToggle={open=>groups={...groups,references:open}}><FeatureObjectList snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} onSelect={selectFeature} /><FeatureNavigation context={previewContext} selectedId={$explorer.selectedId} stage={construction.stage} onSelect={selectHit}/></ControlGroup>

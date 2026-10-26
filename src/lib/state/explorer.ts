@@ -1,10 +1,11 @@
 import { writable, type Readable } from 'svelte/store';
 import type { EphemerisSnapshot } from '../astronomy/ephemeris';
 import { calculationResponseSchema, chartInputSchema, explorerInputPatchSchema, type CalculationRequest, type ExplorerInput } from '../workers/protocol';
+import { INITIAL_VIEWPOINT, VIEW_PRESETS, type Viewpoint } from './view-presets';
 
 export type { ExplorerInput } from '../workers/protocol';
-export type Viewpoint = 'overview' | 'observer' | 'outside';
-export type LayerKey = 'bodies' | 'horizon' | 'ecliptic' | 'houses' | 'stars' | 'signs' | 'equator' | 'meridian' | 'primeVertical' | 'angles' | 'constellations' | 'asterisms' | 'earthProjections' | 'earthHouses' | 'astrocartography';
+export type { Viewpoint } from './view-presets';
+export type LayerKey = 'bodies' | 'horizon' | 'ecliptic' | 'houses' | 'stars' | 'signs' | 'equator' | 'meridian' | 'primeVertical' | 'angles' | 'constellations' | 'asterisms' | 'earthProjections' | 'earthHouses' | 'astrocartography' | 'aspects';
 export type ExplorerInputPatch = Partial<Omit<ExplorerInput, 'observer'>> & { observer?: Partial<ExplorerInput['observer']> };
 export interface ExplorerState {
   status: 'loading' | 'ready' | 'pending' | 'error';
@@ -73,7 +74,7 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
   const initial = chartInputSchema.parse(mergeInput({ ...DEFAULT_EXPLORER_INPUT }, options.initialInput ?? {}));
   let state: ExplorerState = {
     status: 'loading', error: null, revision: 0, input: initial, snapshot: null, selectedId: null,
-    viewpoint: 'overview', viewRevision: 0, layers: { bodies: true, horizon: true, ecliptic: true, houses: true, stars: true, signs: true, equator: false, meridian: false, primeVertical: false, angles: true, constellations: false, asterisms: false, earthProjections: true, earthHouses: true, astrocartography: true },
+    viewpoint: INITIAL_VIEWPOINT, viewRevision: 0, layers: { bodies: true, horizon: true, ecliptic: true, houses: true, stars: true, signs: true, equator: false, meridian: false, primeVertical: false, angles: true, constellations: false, asterisms: false, earthProjections: false, earthHouses: false, astrocartography: true, aspects: true },
   };
   const store = writable(freeze(state));
   let destroyed = false;
@@ -220,8 +221,7 @@ export function createExplorerStore(options: ExplorerStoreOptions = {}): Explore
     setViewpoint(viewpoint, applyPreset = true) {
       if (destroyed || !['overview', 'observer', 'outside'].includes(viewpoint)) return;
       if (!applyPreset) { if (state.viewpoint !== viewpoint) publish({ viewpoint }); return; }
-      const layers = { ...state.layers, earthProjections: viewpoint === 'overview' };
-      if (viewpoint === 'overview') { layers.earthHouses = true; layers.astrocartography = true; }
+      const layers = { ...state.layers, ...VIEW_PRESETS[viewpoint] };
       publish({ viewpoint, viewRevision: state.viewRevision + 1, layers });
     },
     setLayer(key, visible) {

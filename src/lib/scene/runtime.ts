@@ -29,6 +29,7 @@ import { createEarthProjectionRenderer } from './earth-projection-renderer';
 import { DEFAULT_EARTH_PROJECTIONS, classifyEarthHouse, type EarthProjectionSettings } from '../domain/earth-projections';
 import { findConstellationRegion } from '../domain/constellation-picking';
 import { primaryHouseLink } from '../domain/house-links';
+import { INITIAL_VIEWPOINT } from '../state/view-presets';
 
 const catalogueStarIds=new Set(CATALOGUE_STARS.map(star=>star[0]));
 const figureStarIds=new Set(FIGURE_STARS.map(star=>star[0]));
@@ -482,7 +483,7 @@ export function mountScene(container: HTMLElement, options: SceneOptions = {}): 
   scene.add(selection);
 
   let snapshot: EphemerisSnapshot | null = null;
-  let presentation: ScenePresentation = { viewpoint: 'overview', selectedId: null, houseDisplay: { ...DEFAULT_HOUSE_DISPLAY }, construction: { ...DEFAULT_CONSTRUCTION }, aspects: { ...DEFAULT_ASPECT_DISPLAY }, trails: { ...DEFAULT_TRAIL_DISPLAY }, trailResult: null, history: { ...DEFAULT_BOUNDARY_HISTORY }, historyResult: null, display: { ...DEFAULT_SCENE_DISPLAY }, layers: { bodies: true, horizon: true, ecliptic: true, houses: false, stars: true, signs: true, angles: true } };
+  let presentation: ScenePresentation = { viewpoint: INITIAL_VIEWPOINT, selectedId: null, houseDisplay: { ...DEFAULT_HOUSE_DISPLAY }, construction: { ...DEFAULT_CONSTRUCTION }, aspects: { ...DEFAULT_ASPECT_DISPLAY }, trails: { ...DEFAULT_TRAIL_DISPLAY }, trailResult: null, history: { ...DEFAULT_BOUNDARY_HISTORY }, historyResult: null, display: { ...DEFAULT_SCENE_DISPLAY }, layers: { bodies: true, horizon: true, ecliptic: true, houses: false, stars: true, signs: true, angles: true } };
   let observerEast = new THREE.Vector3(0, 0, -1);
   let observerNorth = new THREE.Vector3(0, 1, 0);
   let observerUp = new THREE.Vector3(1, 0, 0);
