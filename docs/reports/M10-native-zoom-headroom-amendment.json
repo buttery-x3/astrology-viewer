@@ -1,0 +1,906 @@
+{
+  "title": "M10 terminal relationship headroom — scoped Windows amendment",
+  "sourceRevision": "ca39e0f25602b4ca32b5a04793cdfde326ec7e62",
+  "finalSourceRevision": "ca39e0f25602b4ca32b5a04793cdfde326ec7e62",
+  "sourceRevisionChanged": false,
+  "startedAt": "2026-10-26T06:36:36.588Z",
+  "completedAt": "2026-10-26T06:36:56.789Z",
+  "sourceFiles": {
+    "src/App.svelte": "d10d26200502c4f37dd678741b044b87fce36185990f676462b19aac79d5cbd1",
+    "src/app.css": "b8bfe088f0868fc8f93bef5a5cb3ac2cc8b9eddc3e1328d2d6af77fbb51f2657",
+    "src/lib/ui/HoverCard.svelte": "3f56b97dc3bfda61583f298f0acda9e8d3b97e301ac764f3d6b406fc314fdd6b",
+    "src/lib/ui/FeaturePreview.svelte": "da05ddbd8f715e71c7e7d9153a8b858e0d4919882c0906057a6a9685e6968cb3",
+    "src/lib/ui/AspectControls.svelte": "42dbff6745b19a135867442b9a23d573ac0f7821b38689a6a5b1c07e1faf756e",
+    "src/lib/domain/hover-card.ts": "cb8268e1fb78fe8f773eb38d4f12ea609eb9daa2047d054e8720adfa3f4d3bf1",
+    "src/lib/domain/hover-preview.ts": "9e10bfbc86fdd60eeb6f9c4434bae5cf4134b56d9fa38fbd47b96810bed28a04",
+    "src/lib/domain/hover-card-themes.ts": "dda62eef73c5246ba35c93c7699e7a2c600ac3557dce04ef628e623f06a4fbe9",
+    "src/lib/content/data/catalogue.json": "bb0e78fb120ac42ee5fdc843d7682fa0838a0907cc457426f907d74a0038822d",
+    "src/lib/content/data/supplemental-claims.json": "318be27fc08431a4511628512216baa7b7961eaede537ad2b7039f19834d174d"
+  },
+  "finalSourceFiles": {
+    "src/App.svelte": "d10d26200502c4f37dd678741b044b87fce36185990f676462b19aac79d5cbd1",
+    "src/app.css": "b8bfe088f0868fc8f93bef5a5cb3ac2cc8b9eddc3e1328d2d6af77fbb51f2657",
+    "src/lib/ui/HoverCard.svelte": "3f56b97dc3bfda61583f298f0acda9e8d3b97e301ac764f3d6b406fc314fdd6b",
+    "src/lib/ui/FeaturePreview.svelte": "da05ddbd8f715e71c7e7d9153a8b858e0d4919882c0906057a6a9685e6968cb3",
+    "src/lib/ui/AspectControls.svelte": "42dbff6745b19a135867442b9a23d573ac0f7821b38689a6a5b1c07e1faf756e",
+    "src/lib/domain/hover-card.ts": "cb8268e1fb78fe8f773eb38d4f12ea609eb9daa2047d054e8720adfa3f4d3bf1",
+    "src/lib/domain/hover-preview.ts": "9e10bfbc86fdd60eeb6f9c4434bae5cf4134b56d9fa38fbd47b96810bed28a04",
+    "src/lib/domain/hover-card-themes.ts": "dda62eef73c5246ba35c93c7699e7a2c600ac3557dce04ef628e623f06a4fbe9",
+    "src/lib/content/data/catalogue.json": "bb0e78fb120ac42ee5fdc843d7682fa0838a0907cc457426f907d74a0038822d",
+    "src/lib/content/data/supplemental-claims.json": "318be27fc08431a4511628512216baa7b7961eaede537ad2b7039f19834d174d"
+  },
+  "sourceUnchanged": true,
+  "servedSource": {
+    "src/App.svelte": {
+      "status": 200,
+      "responseSHA256": "5fc7298a1a947899535a3900c1078f98aa686d19c5c28189716c0d870d992965",
+      "decodedSourceSHA256": "d10d26200502c4f37dd678741b044b87fce36185990f676462b19aac79d5cbd1",
+      "matchesDisk": true,
+      "file": "served-src_App.svelte.txt"
+    },
+    "src/app.css": {
+      "status": 200,
+      "responseSHA256": "18eb2ae29d00fb0b610631b53a17c108eeba3d198c845f43c25f2bf8c3c1f604",
+      "decodedSourceSHA256": "b8bfe088f0868fc8f93bef5a5cb3ac2cc8b9eddc3e1328d2d6af77fbb51f2657",
+      "matchesDisk": true,
+      "file": "served-src_app.css.txt"
+    },
+    "src/lib/ui/HoverCard.svelte": {
+      "status": 200,
+      "responseSHA256": "cb31171bf6685f55fadbeda5ecdbff61dee4501927c6ab2a27c682e293b46a50",
+      "decodedSourceSHA256": "3f56b97dc3bfda61583f298f0acda9e8d3b97e301ac764f3d6b406fc314fdd6b",
+      "matchesDisk": true,
+      "file": "served-src_lib_ui_HoverCard.svelte.txt"
+    },
+    "src/lib/ui/FeaturePreview.svelte": {
+      "status": 200,
+      "responseSHA256": "e06411aa77a5792584e97037ec118980a917fc1dc39eaf8d32f609bc87ee9be8",
+      "decodedSourceSHA256": "da05ddbd8f715e71c7e7d9153a8b858e0d4919882c0906057a6a9685e6968cb3",
+      "matchesDisk": true,
+      "file": "served-src_lib_ui_FeaturePreview.svelte.txt"
+    },
+    "src/lib/ui/AspectControls.svelte": {
+      "status": 200,
+      "responseSHA256": "4f418afd57ccd3632b7c9e850af244b3693f33372a4d49a3e5e2b7b6ac4c3ce2",
+      "decodedSourceSHA256": "42dbff6745b19a135867442b9a23d573ac0f7821b38689a6a5b1c07e1faf756e",
+      "matchesDisk": true,
+      "file": "served-src_lib_ui_AspectControls.svelte.txt"
+    },
+    "src/lib/domain/hover-card.ts": {
+      "status": 200,
+      "responseSHA256": "534a5c0a67144793ee48e113371f728c7dbaa6c3152a66ffd9bbfd2a114cdbee",
+      "decodedSourceSHA256": "cb8268e1fb78fe8f773eb38d4f12ea609eb9daa2047d054e8720adfa3f4d3bf1",
+      "matchesDisk": true,
+      "file": "served-src_lib_domain_hover-card.ts.txt"
+    },
+    "src/lib/domain/hover-preview.ts": {
+      "status": 200,
+      "responseSHA256": "482574657fa4c00765ef74c6ad0dbe7b26f0c1d1c2881e40da27c7fe42f8cc3e",
+      "decodedSourceSHA256": "9e10bfbc86fdd60eeb6f9c4434bae5cf4134b56d9fa38fbd47b96810bed28a04",
+      "matchesDisk": true,
+      "file": "served-src_lib_domain_hover-preview.ts.txt"
+    },
+    "src/lib/domain/hover-card-themes.ts": {
+      "status": 200,
+      "responseSHA256": "a8743a8b850ea19cd029e3772ab51998a5c3a91e5eb6c7b7c3f47234134b30ac",
+      "decodedSourceSHA256": "dda62eef73c5246ba35c93c7699e7a2c600ac3557dce04ef628e623f06a4fbe9",
+      "matchesDisk": true,
+      "file": "served-src_lib_domain_hover-card-themes.ts.txt"
+    }
+  },
+  "scope": {
+    "nativeCase": "1024x768-large",
+    "windows": [
+      {
+        "width": 1024,
+        "height": 768
+      }
+    ],
+    "views": ["earth", "outside"],
+    "textSizes": ["large"],
+    "states": 2,
+    "previews": 6,
+    "otherSixStatesRerun": false,
+    "linuxValidation": "Pending separate CI rerun; Windows results do not establish Linux acceptance."
+  },
+  "browser": {
+    "channel": "chrome",
+    "version": "156.0.8078.47",
+    "headless": false,
+    "viewport": null,
+    "closed": true
+  },
+  "method": "Actual chrome://settings/appearance Page zoom combobox selectOption(label=200%); CDP Browser window bounds only; no emulated viewport, device scale, CSS zoom or pinch zoom.",
+  "nativeSummary": {
+    "native200Proven": true,
+    "stateCount": 2,
+    "expectedStates": 2,
+    "allExpectedStatesPass": true,
+    "servedSourceMatches": true,
+    "sourceUnchanged": true,
+    "pageErrors": 0,
+    "allEightStatesPass": false,
+    "passed": true
+  },
+  "errors": [],
+  "cleanup": [
+    {
+      "path": "D:\\dev\\astrology-viewer\\.cache\\m10-native-zoom-rectified\\ca39e0f2-2026-10-26T06-36-36-581Z\\owned-native-chrome-profile",
+      "removed": true
+    }
+  ],
+  "zoom": [
+    {
+      "nativeWindow": {
+        "width": 1024,
+        "height": 768
+      },
+      "before": {
+        "dpr": 1,
+        "innerWidth": 1008,
+        "innerHeight": 617,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 993,
+        "visualViewportHeight": 617,
+        "documentWidth": 993,
+        "documentHeight": 720,
+        "rootFont": "16px",
+        "compact": false,
+        "buildText": "Moment calculatedEvidence & sourcesBuild ca39e0fSource & licences ↗"
+      },
+      "after": {
+        "dpr": 2,
+        "innerWidth": 504,
+        "innerHeight": 308,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 496.5,
+        "visualViewportHeight": 308.5,
+        "documentWidth": 496,
+        "documentHeight": 800,
+        "rootFont": "16px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild ca39e0fSource & licences ↗"
+      },
+      "dprRatio": 2,
+      "cssWidthRatio": 2,
+      "nativeBoundsBefore": {
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "width": 1024,
+          "height": 768,
+          "windowState": "normal"
+        }
+      },
+      "nativeBoundsAfter": {
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "width": 1024,
+          "height": 768,
+          "windowState": "normal"
+        }
+      }
+    }
+  ],
+  "states": [
+    {
+      "nativeWindow": {
+        "width": 1024,
+        "height": 768
+      },
+      "view": "earth",
+      "textSize": "large",
+      "passed": true,
+      "cssViewport": {
+        "dpr": 2,
+        "innerWidth": 504,
+        "innerHeight": 308,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 496.5,
+        "visualViewportHeight": 308.5,
+        "documentWidth": 496,
+        "documentHeight": 800,
+        "rootFont": "18px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild ca39e0fSource & licences ↗"
+      },
+      "compactLayout": {
+        "viewport": {
+          "width": 504,
+          "height": 308,
+          "visualWidth": 496.5
+        },
+        "documentWidth": 496,
+        "noHorizontalOverflow": true,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 496.5,
+          "height": 83,
+          "right": 496.5,
+          "bottom": 83,
+          "scrollWidth": 497,
+          "clientWidth": 497,
+          "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+        },
+        "headerChildren": [
+          {
+            "className": "brand svelte-1n46o8q",
+            "x": 18,
+            "y": 25,
+            "width": 141.84375,
+            "height": 32,
+            "right": 159.84375,
+            "bottom": 57,
+            "scrollWidth": 142,
+            "clientWidth": 142,
+            "text": "✦ SPATIALASTROLOGY EXPLORER"
+          },
+          {
+            "className": "context-details svelte-1n46o8q",
+            "x": 177.84375,
+            "y": 2.25,
+            "width": 180.9609375,
+            "height": 77.5,
+            "right": 358.8046875,
+            "bottom": 79.75,
+            "scrollWidth": 181,
+            "clientWidth": 181,
+            "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+          },
+          {
+            "className": "button secondary compact svelte-1n46o8q",
+            "x": 376.8046875,
+            "y": 23,
+            "width": 101.6953125,
+            "height": 36,
+            "right": 478.5,
+            "bottom": 59,
+            "scrollWidth": 100,
+            "clientWidth": 100,
+            "text": "⌖ Edit moment"
+          }
+        ],
+        "headerChildrenWithinViewport": true,
+        "headerOverlaps": [],
+        "inspectorToggle": {
+          "x": 385.9296875,
+          "y": 95,
+          "width": 94.5703125,
+          "height": 34,
+          "right": 480.5,
+          "bottom": 129,
+          "scrollWidth": 93,
+          "clientWidth": 93,
+          "text": "ⓘ Inspector"
+        },
+        "inspectorToggleWithinViewport": true,
+        "openInspector": {
+          "x": 124.5,
+          "width": 360,
+          "right": 484.5,
+          "viewportWidth": 504,
+          "fitsHorizontally": true
+        },
+        "inspectorImage": "1024x768-200-large-earth-inspector.png",
+        "passed": true
+      },
+      "cards": {
+        "body": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 294.2890625,
+            "right": 492,
+            "bottom": 306.2890625
+          },
+          "pointerBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 294.2890625,
+            "right": 492,
+            "bottom": 306.2890625
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 294.2890625,
+            "right": 492,
+            "bottom": 306.2890625
+          },
+          "fonts": ["14.625px"],
+          "claimIds": ["body:sun:1", "body-in-sign:sun:capricorn:0", "body-in-house:sun:10:0"],
+          "sections": ["body:sun", "body-in-sign:sun:capricorn", "body-in-house:sun:10"],
+          "registeredProseUnchanged": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-large-earth-body-hover.png",
+            "1024x768-200-large-earth-body-keyboard.png"
+          ]
+        },
+        "aspect": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 261.4375,
+            "right": 492,
+            "bottom": 273.4375
+          },
+          "pointerBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 261.4375,
+            "right": 492,
+            "bottom": 273.4375
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 261.4375,
+            "right": 492,
+            "bottom": 273.4375
+          },
+          "fonts": ["14.625px"],
+          "claimIds": [
+            "aspect-type:sextile:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-sign:moon:scorpio:0"
+          ],
+          "sections": [
+            "aspect-type:sextile",
+            "body-in-sign:sun:capricorn",
+            "body-in-sign:moon:scorpio"
+          ],
+          "registeredProseUnchanged": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-large-earth-aspect-hover.png",
+            "1024x768-200-large-earth-aspect-keyboard.png"
+          ]
+        },
+        "geographic": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 210.140625,
+            "right": 492,
+            "bottom": 222.140625
+          },
+          "pointerBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 210.140625,
+            "right": 492,
+            "bottom": 222.140625
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 43.7734375,
+            "width": 480,
+            "height": 210.140625,
+            "right": 492,
+            "bottom": 253.9140625
+          },
+          "fonts": ["14.625px"],
+          "claimIds": ["astro:body:venus:0", "astro:angle:ac:0"],
+          "sections": ["astro:body:venus", "astro:angle:ac"],
+          "registeredProseUnchanged": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-large-earth-geographic-hover.png",
+            "1024x768-200-large-earth-geographic-keyboard.png"
+          ]
+        }
+      }
+    },
+    {
+      "nativeWindow": {
+        "width": 1024,
+        "height": 768
+      },
+      "view": "outside",
+      "textSize": "large",
+      "passed": true,
+      "cssViewport": {
+        "dpr": 2,
+        "innerWidth": 504,
+        "innerHeight": 308,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 496.5,
+        "visualViewportHeight": 308.5,
+        "documentWidth": 496,
+        "documentHeight": 800,
+        "rootFont": "18px",
+        "compact": true,
+        "buildText": "Moment calculatedEvidence & sourcesBuild ca39e0fSource & licences ↗"
+      },
+      "compactLayout": {
+        "viewport": {
+          "width": 504,
+          "height": 308,
+          "visualWidth": 496.5
+        },
+        "documentWidth": 496,
+        "noHorizontalOverflow": true,
+        "header": {
+          "x": 0,
+          "y": 0,
+          "width": 496.5,
+          "height": 83,
+          "right": 496.5,
+          "bottom": 83,
+          "scrollWidth": 497,
+          "clientWidth": 497,
+          "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+        },
+        "headerChildren": [
+          {
+            "className": "brand svelte-1n46o8q",
+            "x": 18,
+            "y": 25,
+            "width": 141.84375,
+            "height": 32,
+            "right": 159.84375,
+            "bottom": 57,
+            "scrollWidth": 142,
+            "clientWidth": 142,
+            "text": "✦ SPATIALASTROLOGY EXPLORER"
+          },
+          {
+            "className": "context-details svelte-1n46o8q",
+            "x": 177.84375,
+            "y": 2.25,
+            "width": 180.9609375,
+            "height": 77.5,
+            "right": 358.8046875,
+            "bottom": 79.75,
+            "scrollWidth": 181,
+            "clientWidth": 181,
+            "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+          },
+          {
+            "className": "button secondary compact svelte-1n46o8q",
+            "x": 376.8046875,
+            "y": 23,
+            "width": 101.6953125,
+            "height": 36,
+            "right": 478.5,
+            "bottom": 59,
+            "scrollWidth": 100,
+            "clientWidth": 100,
+            "text": "⌖ Edit moment"
+          }
+        ],
+        "headerChildrenWithinViewport": true,
+        "headerOverlaps": [],
+        "inspectorToggle": {
+          "x": 385.9296875,
+          "y": 95,
+          "width": 94.5703125,
+          "height": 34,
+          "right": 480.5,
+          "bottom": 129,
+          "scrollWidth": 93,
+          "clientWidth": 93,
+          "text": "ⓘ Inspector"
+        },
+        "inspectorToggleWithinViewport": true,
+        "openInspector": {
+          "x": 124.5,
+          "width": 360,
+          "right": 484.5,
+          "viewportWidth": 504,
+          "fitsHorizontally": true
+        },
+        "inspectorImage": "1024x768-200-large-outside-inspector.png",
+        "passed": true
+      },
+      "cards": {
+        "body": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 294.2890625,
+            "right": 492,
+            "bottom": 306.2890625
+          },
+          "pointerBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 294.2890625,
+            "right": 492,
+            "bottom": 306.2890625
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 294.2890625,
+            "right": 492,
+            "bottom": 306.2890625
+          },
+          "fonts": ["14.625px"],
+          "claimIds": ["body:sun:1", "body-in-sign:sun:capricorn:0", "body-in-house:sun:10:0"],
+          "sections": ["body:sun", "body-in-sign:sun:capricorn", "body-in-house:sun:10"],
+          "registeredProseUnchanged": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-large-outside-body-hover.png",
+            "1024x768-200-large-outside-body-keyboard.png"
+          ]
+        },
+        "aspect": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 261.4375,
+            "right": 492,
+            "bottom": 273.4375
+          },
+          "pointerBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 261.4375,
+            "right": 492,
+            "bottom": 273.4375
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 12,
+            "width": 480,
+            "height": 261.4375,
+            "right": 492,
+            "bottom": 273.4375
+          },
+          "fonts": ["14.625px"],
+          "claimIds": [
+            "aspect-type:sextile:1",
+            "body-in-sign:sun:capricorn:0",
+            "body-in-sign:moon:scorpio:0"
+          ],
+          "sections": [
+            "aspect-type:sextile",
+            "body-in-sign:sun:capricorn",
+            "body-in-sign:moon:scorpio"
+          ],
+          "registeredProseUnchanged": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-large-outside-aspect-hover.png",
+            "1024x768-200-large-outside-aspect-keyboard.png"
+          ]
+        },
+        "geographic": {
+          "passed": true,
+          "bounds": {
+            "x": 12,
+            "y": 66.765625,
+            "width": 480,
+            "height": 210.140625,
+            "right": 492,
+            "bottom": 276.90625
+          },
+          "pointerBounds": {
+            "x": 12,
+            "y": 66.765625,
+            "width": 480,
+            "height": 210.140625,
+            "right": 492,
+            "bottom": 276.90625
+          },
+          "keyboardBounds": {
+            "x": 12,
+            "y": 20.2734375,
+            "width": 480,
+            "height": 210.140625,
+            "right": 492,
+            "bottom": 230.4140625
+          },
+          "fonts": ["14.625px"],
+          "claimIds": ["astro:body:venus:0", "astro:angle:ac:0"],
+          "sections": ["astro:body:venus", "astro:angle:ac"],
+          "registeredProseUnchanged": true,
+          "completeFits": true,
+          "noHiddenText": true,
+          "noScrollOrClip": true,
+          "noTechnicalFooter": true,
+          "noScrollOnlyTabStop": true,
+          "sameFeatureRetained": true,
+          "textSelectionWorks": true,
+          "descriptionRestored": true,
+          "originStillFocused": true,
+          "staysClosedAfterEscape": true,
+          "images": [
+            "1024x768-200-large-outside-geographic-hover.png",
+            "1024x768-200-large-outside-geographic-keyboard.png"
+          ]
+        }
+      }
+    }
+  ],
+  "focusedEngines": {
+    "platform": "Windows",
+    "sourceRevision": "ca39e0f25602b4ca32b5a04793cdfde326ec7e62",
+    "test": "complete long relationship fits the 504 by 308 native zoom layout with Large text",
+    "statistics": {
+      "startTime": "2026-10-26T06:35:55.718Z",
+      "duration": 22027.48,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "name": "complete long relationship fits the 504 by 308 native zoom layout with Large text",
+        "engine": "chromium",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 4872,
+            "retry": 0,
+            "startedAt": "2026-10-26T06:35:56.302Z",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "name": "complete long relationship fits the 504 by 308 native zoom layout with Large text",
+        "engine": "firefox",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 8216,
+            "retry": 0,
+            "startedAt": "2026-10-26T06:36:01.895Z",
+            "errors": []
+          }
+        ]
+      },
+      {
+        "name": "complete long relationship fits the 504 by 308 native zoom layout with Large text",
+        "engine": "webkit",
+        "status": "expected",
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 5020,
+            "retry": 0,
+            "startedAt": "2026-10-26T06:36:12.402Z",
+            "errors": []
+          }
+        ]
+      }
+    ],
+    "rawRecord": {
+      "localPath": ".cache/m10-terminal-headroom-engines.json",
+      "sha256": "d63870845bfc21099d355a19fb3330298d5cfe008e99254d63b76c46647583b2",
+      "bytes": 9323
+    }
+  },
+  "regression": {
+    "ciRun": "https://github.com/buttery-x3/astrology-viewer/actions/runs/40279259335",
+    "finding": "Parent review recorded Linux Chromium card bottom 318.8125 against an allowed 309 at a 504 by 308 CSS viewport with Large text.",
+    "previousNativeSource": "79b585b8007537e41bafefb6f40449fa0e431e45",
+    "previousNativeRelationshipHeight": 285.75,
+    "repairSourceCommit": "ca39e0f25602b4ca32b5a04793cdfde326ec7e62",
+    "repair": "Terminal full-width composition only: line-height 1.25 for reading container, paragraph and inline heading; card padding 5px; reading padding 4px; inter-reading margins 3px.",
+    "readingFont": "14.625px",
+    "previousClaimRegistriesUnchanged": true,
+    "previousEightStateEvidence": "M10-native-zoom-rectified.json"
+  },
+  "rawRecord": {
+    "localPath": ".cache/m10-native-zoom-rectified/ca39e0f2-2026-10-26T06-36-36-581Z/native-zoom-report.json",
+    "sha256": "11b932da56ec6a4243a33aa6d32f02a6d2432d4d65a08cd22875762d2ce804bf",
+    "bytes": 138091
+  },
+  "validator": {
+    "retained": "M10-native-zoom-headroom-validator.mjs",
+    "sha256": "cc4064cbaea59afc9519cdfc8325d79932cf58440d3af6b381fdc93474a5c7a1",
+    "nativeCase": "--native-case=1024x768-large",
+    "expectedRevision": "ca39e0f25602b4ca32b5a04793cdfde326ec7e62"
+  },
+  "screenshots": {
+    "total": 17,
+    "all": [
+      {
+        "file": "settings-200-1024.png",
+        "width": 1008,
+        "height": 673,
+        "sha256": "3a1831e5807ba6ba1ee8af19b108e876a4c44a99fe0b64b54a18da4535fe3326"
+      },
+      {
+        "file": "1024x768-200-large-earth-body-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "6575a0b6746acd3485c28ece5895b67f7a9020edbf94a7ebff379b4547fec734"
+      },
+      {
+        "file": "1024x768-200-large-earth-body-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "a3f78a4feaf00f95e0c2c221f3040e76635c547301bc10d7de2811b284bafe31"
+      },
+      {
+        "file": "1024x768-200-large-earth-aspect-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "9f79fe480e06a4be211d813bb11764a9d4c2317b96e23a34b58d0d4e0c55829d"
+      },
+      {
+        "file": "1024x768-200-large-earth-aspect-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "222115b90d1fbb68f969760b8b5df924d32978e354177c9899760fe7e13bbe4f"
+      },
+      {
+        "file": "1024x768-200-large-earth-geographic-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "0e08d7428d73d7b43d0456ec7a35d139a217a0f544b6f6a6a3264d6d5f518f35"
+      },
+      {
+        "file": "1024x768-200-large-earth-geographic-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "659b5fdde6894c74dcde9a88711ac8b1adfa2927b1d0780f8846bd7c2a8d268c"
+      },
+      {
+        "file": "1024x768-200-large-earth-scene.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "323365d2c1a3f4fd11d0af5bcb5591b7074ef6653ab37f87ad6d48fa712bfb4d"
+      },
+      {
+        "file": "1024x768-200-large-earth-inspector.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "4773e0c1ccd2dc2d0d7d65b7a347d77ed33e75130ce953d31f6e9926202d09aa"
+      },
+      {
+        "file": "1024x768-200-large-outside-body-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "b0b6fdc1d71ddd9aaf7f26c95f339a7c0ec53ebabe357829cf1b127a75d7a222"
+      },
+      {
+        "file": "1024x768-200-large-outside-body-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "8d4bdf0833d7da19efb6b923a9df068af7fb6188d8cf406e1ebfe42750f2ebf6"
+      },
+      {
+        "file": "1024x768-200-large-outside-aspect-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "10562744dbe08373689370f2f5addd4a1332502f7b0752202f79e2d6c3d1d988"
+      },
+      {
+        "file": "1024x768-200-large-outside-aspect-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "dd59b771e7b3d0912944ae4743373dcde1a44042a4b710d6fb1f0f73f7d8cd7f"
+      },
+      {
+        "file": "1024x768-200-large-outside-geographic-hover.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "e3a3e97790f4b033887fb7630f9bebd887c41e15c3b16acc2c3dc8398b6657cd"
+      },
+      {
+        "file": "1024x768-200-large-outside-geographic-keyboard.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "6d247d1a569b78daa1f6b57040e0bb78c2458bdb2a87ac8d9dc700eb7c125c95"
+      },
+      {
+        "file": "1024x768-200-large-outside-scene.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "44049ead7ed5d13e085ebc79096df309cb19bd19f4fc22462b246aef3d47af55"
+      },
+      {
+        "file": "1024x768-200-large-outside-inspector.png",
+        "width": 1008,
+        "height": 617,
+        "sha256": "1f37d0a032c73d0ba3d3cb2fe7337ed1f57c174f5897f35c20e439e40acd02f4"
+      }
+    ],
+    "retained": [
+      {
+        "original": "settings-200-1024.png",
+        "retained": "assets/m10-headroom-native-200-settings-1024.png",
+        "sha256": "3a1831e5807ba6ba1ee8af19b108e876a4c44a99fe0b64b54a18da4535fe3326",
+        "width": 1008,
+        "height": 673
+      },
+      {
+        "original": "1024x768-200-large-earth-aspect-keyboard.png",
+        "retained": "assets/m10-headroom-native-200-earth-aspect.png",
+        "sha256": "222115b90d1fbb68f969760b8b5df924d32978e354177c9899760fe7e13bbe4f",
+        "width": 1008,
+        "height": 617
+      },
+      {
+        "original": "1024x768-200-large-outside-aspect-keyboard.png",
+        "retained": "assets/m10-headroom-native-200-outside-aspect.png",
+        "sha256": "dd59b771e7b3d0912944ae4743373dcde1a44042a4b710d6fb1f0f73f7d8cd7f",
+        "width": 1008,
+        "height": 617
+      }
+    ]
+  }
+}

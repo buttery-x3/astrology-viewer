@@ -1,5 +1,7 @@
 # M10 iteration checkpoint
 
+**Historical checkpoint, superseded.** This records the earlier product-iteration hold. The user subsequently approved the visuals, final validation and M10 development merge. Current results and outstanding gates are in [M10 final validation](M10-final-validation.md); the original evidence and canonical-file contents at this checkpoint remain available in the [recorded revision](https://github.com/buttery-x3/astrology-viewer/blob/7c70d664893d81664a8d47dc4874e98168d79cd8/docs/reports/M10-iteration-status.md).
+
 The features are implemented on [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18). On 26 October 2026 the user requested product iteration before landing and asked to prune repeated broad test runs. Integration is therefore held; main remains untouched.
 
 The approved rectifications are now implemented on [PR #19](https://github.com/buttery-x3/astrology-viewer/pull/19), with separate card and geographic packages reviewed on PRs #21 and #20. The [visual review report](M10-rectification-visual-review.md) records the compact all-family cards, new defaults, clearer line identities and focused evidence. The current step is the user's visual review; no M10/development/main integration or new full release validation has been performed.

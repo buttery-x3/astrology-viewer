@@ -1,66 +1,97 @@
 {
   "schemaVersion": 1,
-  "verifiedAt": "2026-10-26T04:23:08.898Z",
+  "verifiedAt": "2026-10-26T06:42:16.605Z",
   "scope": "Independent frontend source archive extraction/install/build and retained data/content provenance; no browser, server rebuild or engine recompilation in this audit",
-  "revision": "da1404f27ec1d470e9ff7a763ee26ddeddcdf336",
-  "tree": "ddc00d91a47752a5da1848226ddec04412d2a576",
+  "revision": "6c1a0cbc9632944db7e1a8916c2b9c12befc9cfd",
+  "tree": "02970a9f388aa475c656ba9920b05feae92d8d0e",
   "environment": {
     "platform": "win32",
     "node": "v24.15.0",
     "npm": "11.12.1",
     "vite": "8.3.5",
     "noGitAncestor": true,
-    "noRepositoryNodeModulesLink": true
+    "noRepositoryNodeModulesLink": true,
+    "ancestorDirectoriesChecked": 8,
+    "extractedWithoutDependencies": true,
+    "filteredBuildEnvironment": true
   },
   "archive": {
-    "path": "source/source-da1404f27ec1d470e9ff7a763ee26ddeddcdf336.tar.gz",
-    "sha256": "0fa1964c17357c023e53406848afeb0f44322b23834ac21401ac787fd05c2626",
-    "bytes": 6359007,
-    "entries": 449,
+    "path": "source/source-6c1a0cbc9632944db7e1a8916c2b9c12befc9cfd.tar.gz",
+    "sha256": "883420968c5a6d4b4b4a6eff397f5c1fac94d920afc6122079613de76acc3ef3",
+    "bytes": 10575489,
+    "entries": 493,
     "sourceRevisionFile": {
-      "sha256": "031a4d77d106927af5efb6e13d6c5c6c9d9c7acbbcd90de24924845b02e5a957",
+      "sha256": "d559a6c8f9b231180db1feda0262db8aa5974c2a5eb37a45ddbff08f84c361ef",
       "bytes": 41
     },
     "inventory": {
-      "archivePaths": 449,
-      "files": 399,
+      "archivePaths": 493,
+      "files": 443,
       "directories": 50,
-      "exactGitBlobs": 398,
+      "exactGitBlobs": 442,
       "exportSubstitutions": [
         "source-revision.txt"
       ],
       "allSourcePathsMatched": true,
-      "inventorySha256": "a8af1a0c4ec239f851fb3419b6acb26577bd3bf7fa3f34afdb338a580f1158a5"
+      "inventorySha256": "6b6344428ab5e2352ff6a625bf8c95aba86da88d08fe103414bbc42a0a6098f3",
+      "uniqueSafePaths": true,
+      "onlyRegularFilesAndDirectories": true,
+      "directoryPathsMatched": true
     }
   },
   "releaseManifest": {
-    "sha256": "4dc2635bc0fdedd9264e24a74403ff0c573f63053805a1b33bed7e647c330d1f",
-    "bytes": 27691
+    "sha256": "161997ac33ec307a556a8999a9989f7c5f8e69a340364f718a789a5b0eb16c00",
+    "bytes": 27692
   },
   "releaseFilesVerified": 108,
   "commands": [
     {
       "command": "npm ci --no-audit --no-fund",
       "exitCode": 0,
+      "durationMs": 27922,
+      "stdoutSha256": "04b194662ae0496c66bf3d6ec59212be7b32605f3eac49ffb6fc4620357cad05",
+      "stdoutBytes": 27,
+      "stderrSha256": "10942c28ad0eec38b36163b9bfec991751ab9643b9806a1f752f639de5b80739",
+      "stderrBytes": 62,
       "packages": 217
     },
     {
       "command": "npm run build",
       "exitCode": 0,
+      "durationMs": 4376,
+      "stdoutSha256": "b8398d0450b779547c5b9544dffd593b26a2d5768a8c9a282e46daaddb7be89d",
+      "stdoutBytes": 820,
+      "stderrSha256": "c5f0c72334607022714466b412ad31fe0b932b75dbfaeda678ddac311c7ef526",
+      "stderrBytes": 2528,
       "revisionOverride": false,
       "localSourceOverride": false
     },
     {
       "command": "node scripts/verify-assets.mjs",
-      "exitCode": 0
+      "exitCode": 0,
+      "durationMs": 165,
+      "stdoutSha256": "51178a7f0c1989b7885bdfa24d0deb5939663d6791ad4744be7eabc043a1bf2e",
+      "stdoutBytes": 102,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrBytes": 0
     },
     {
       "command": "npm run validate:content",
-      "exitCode": 0
+      "exitCode": 0,
+      "durationMs": 2005,
+      "stdoutSha256": "3a9ffb3a2561809c162a843f333dbdb9afa4c350078fef61b3252aabce58d4af",
+      "stdoutBytes": 186,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrBytes": 0
     },
     {
       "command": "npm run validate:notices",
       "exitCode": 0,
+      "durationMs": 723,
+      "stdoutSha256": "bd9a8a6f72378b02383ecf317c7f79b19a6842974d5f416fdab37a536dc7b44c",
+      "stdoutBytes": 247,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrBytes": 0,
       "productionNoticeRecords": 53,
       "fullNoticeFiles": 50,
       "upstreamShorthandCases": 3
@@ -68,15 +99,15 @@
   ],
   "build": {
     "main": {
-      "path": "dist/assets/index-BagjKoyv.js",
-      "sha256": "5eaac1d148026a70efea21c296bc2c679e31e8b9de57091b59500a7d054f866e",
-      "bytes": 2608724
+      "path": "dist/assets/index-BggKAtth.js",
+      "sha256": "e452891c59e306040c00d54330451a6e85fdfbb16380c344443165b5216645f5",
+      "bytes": 2619847
     },
-    "compiledRevisionVariable": "XV",
-    "compiledRevision": "da1404f27ec1d470e9ff7a763ee26ddeddcdf336",
-    "footerExpression": "XV.slice(0,7)",
-    "footerText": "Build da1404f",
-    "sourceHref": "https://github.com/buttery-x3/astrology-viewer/tree/da1404f27ec1d470e9ff7a763ee26ddeddcdf336",
+    "compiledRevisionVariable": "_H",
+    "compiledRevision": "6c1a0cbc9632944db7e1a8916c2b9c12befc9cfd",
+    "footerExpression": "_H.slice(0,7)",
+    "footerText": "Build 6c1a0cb",
+    "sourceHref": "https://github.com/buttery-x3/astrology-viewer/tree/6c1a0cbc9632944db7e1a8916c2b9c12befc9cfd",
     "wasm": {
       "sourcePath": "src/lib/astronomy/generated/spatial-ephemeris.wasm",
       "rebuiltPath": "dist/assets/spatial-ephemeris-DKdbe1a_.wasm",
@@ -91,42 +122,58 @@
     "engineManifest": {
       "path": "src/lib/astronomy/generated/build-manifest.json",
       "sha256": "aaba0a4eb49495c2939482c479995c5b503072b9f7d0bd9fa1d1b077ae9d449c",
-      "bytes": 1647
+      "bytes": 1647,
+      "releasedPath": "licences/manifests/engineManifest.json",
+      "sourceReleasedEqual": true
     },
     "ephemerisManifest": {
       "path": "public/data/ephemeris/manifest.json",
       "sha256": "1166f94b057cfe7ae2ec1178b1f04c82cf70d2493df84849b358c1e7e6a43b24",
-      "bytes": 984
+      "bytes": 984,
+      "releasedPath": "licences/manifests/ephemerisManifest.json",
+      "sourceReleasedEqual": true
     },
     "timezoneManifest": {
       "path": "src/lib/time/data/manifest.json",
       "sha256": "a7ade6f0661e2ea08f4b7f80e202a8a8c4c2bef09c8404233b33b720d7e5e7be",
-      "bytes": 1789
+      "bytes": 1789,
+      "releasedPath": "licences/manifests/timezoneManifest.json",
+      "sourceReleasedEqual": true
     },
     "skyManifest": {
       "path": "src/lib/scene/data/sky-data-manifest.json",
       "sha256": "ebefe74b8cdaf85eb864fb528dde4e64272b2f045e1708bf97f04854f6ca1e93",
-      "bytes": 3188
+      "bytes": 3188,
+      "releasedPath": "licences/manifests/skyManifest.json",
+      "sourceReleasedEqual": true
     },
     "coastlineManifest": {
       "path": "src/lib/scene/data/coastline-manifest.json",
       "sha256": "65541f5ee3cb905928209fb1eda084b4ea27db32c2f1421c6be77ef0f47779df",
-      "bytes": 831
+      "bytes": 831,
+      "releasedPath": "licences/manifests/coastlineManifest.json",
+      "sourceReleasedEqual": true
     },
     "contentManifest": {
       "path": "src/lib/content/data/manifest.json",
       "sha256": "52bfac87aa065d37a3a28b228b7b2f58b413347b783f999c4f13923563a8f5ab",
-      "bytes": 2261
+      "bytes": 2261,
+      "releasedPath": "licences/manifests/contentManifest.json",
+      "sourceReleasedEqual": true
     },
     "geographyManifest": {
       "path": "api/data-manifest.json",
       "sha256": "1667a1a3d3048d52ba72efd8fc6b47d2f4c8b3fa5985d7c5d04b77f7bad22671",
-      "bytes": 1072
+      "bytes": 1072,
+      "releasedPath": "licences/manifests/geographyManifest.json",
+      "sourceReleasedEqual": true
     },
     "packageLock": {
       "path": "package-lock.json",
       "sha256": "0a22af2fdff0fc1a87322a767f002c0dd0592a440a0bab77e797d61177e8e3d2",
-      "bytes": 135265
+      "bytes": 135265,
+      "releasedPath": "licences/manifests/packageLock.json",
+      "sourceReleasedEqual": true
     }
   },
   "figures": {
@@ -180,44 +227,69 @@
       {
         "path": "vendor/emscripten/LICENSE",
         "sha256": "620a78084fc7ca97c0b5dea9abf891f3ffcadfdbf305276f099c9c4e12fc1d86",
-        "bytes": 5093
+        "bytes": 5093,
+        "releasedPath": "licences/emscripten/LICENSE",
+        "sourceReleasedEqual": true
       },
       {
         "path": "vendor/emscripten/AUTHORS",
         "sha256": "8585fa1b981f576f52806833481323007ccac5c00f31a873215e31c0f42820f0",
-        "bytes": 29004
+        "bytes": 29004,
+        "releasedPath": "licences/emscripten/AUTHORS",
+        "sourceReleasedEqual": true
       },
       {
         "path": "vendor/emscripten/musl-COPYRIGHT",
         "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
-        "bytes": 6204
+        "bytes": 6204,
+        "releasedPath": "licences/emscripten/musl-COPYRIGHT",
+        "sourceReleasedEqual": true
       },
       {
         "path": "vendor/emscripten/compiler-rt-LICENSE.TXT",
         "sha256": "1a8f1058753f1ba890de984e48f0242a3a5c29a6a8f2ed9fd813f36985387e8d",
-        "bytes": 16708
+        "bytes": 16708,
+        "releasedPath": "licences/emscripten/compiler-rt-LICENSE.TXT",
+        "sourceReleasedEqual": true
       },
       {
         "path": "vendor/notices/ODbL-1.0.txt",
         "sha256": "607680718977f6f6c9607972afd98f208573f19251315ed1362a8589b51beaf5",
-        "bytes": 25278
+        "bytes": 25278,
+        "releasedPath": "licences/data-terms/ODbL-1.0.txt",
+        "sourceReleasedEqual": true
       },
       {
         "path": "vendor/notices/CC-BY-SA-4.0.txt",
         "sha256": "28a9529c7d0bb4dc51f4bf5c116a3d16ef247a052f7591466768ddf563fd1cf5",
-        "bytes": 20138
+        "bytes": 20138,
+        "releasedPath": "licences/data-terms/CC-BY-SA-4.0.txt",
+        "sourceReleasedEqual": true
       },
       {
         "path": "vendor/notices/IANA-tz-2026e-LICENSE",
         "sha256": "0613408568889f5739e5ae252b722a2659c02002839ad970a63dc5e9174b27cf",
-        "bytes": 252
+        "bytes": 252,
+        "releasedPath": "licences/data-terms/IANA-tz-2026e-LICENSE",
+        "sourceReleasedEqual": true
       },
       {
         "path": "vendor/notices/Stellarium-modern-NOTICE.txt",
         "sha256": "1aa96696c6ff75c016a3535e68c587ebbc8d8a3f96a81e3d55e72496335ffc03",
-        "bytes": 896
+        "bytes": 896,
+        "releasedPath": "licences/data-terms/Stellarium-modern-NOTICE.txt",
+        "sourceReleasedEqual": true
       }
-    ]
+    ],
+    "productionDependencies": {
+      "path": "licences/dependency-notices.json",
+      "sha256": "29bcd093dc1dab6ae0759b29928d624f72bc6975dfd6a125f7c3aa4196d30484",
+      "bytes": 32195,
+      "packages": 53,
+      "files": 56,
+      "archiveInventoryLockfileMatches": true,
+      "releasedNoticesMatchIndependentInstallation": true
+    }
   },
   "content": {
     "version": "1.1.0",
@@ -275,7 +347,8 @@
     "The native engine binary was verified byte-for-byte and not recompiled."
   ],
   "supersedes": {
-    "revision": "a2ac392c0991558faaea3de2f557fa129c856586",
-    "reason": "The final source updates Escape suppression to use the active hit and explicitly restored keyboard origin rather than the last displayed card ID, allowing legitimate pointer re-entry. The previous archive audit remains valid only for its earlier revision."
+    "revision": "a2ef959acc4cf42526245ef0362b70ac5e2f4056",
+    "evidenceCommit": "58221c9",
+    "reason": "This exact final archive includes the terminal card spacing repair and complete CI result collection. The successful earlier archive audit remains scoped to a2ef959."
   }
 }
