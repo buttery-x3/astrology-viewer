@@ -232,7 +232,7 @@ export function createHouseRenderer(radius: number, caption: CaptionFactory): Ho
         const active = selected || interaction.hoveredId === target.entity.id;
         const start = Number(target.entity.id.slice(9));
         const adjacent = geometry?.status === 'valid' && selectedHouse && (selectedHouse === `house:${start}` || selectedHouse === `house:${start === 1 ? 12 : start - 1}`);
-        styleLine(target.line, selected ? SELECTED : active || adjacent ? HOVERED : PRIMARY, active || adjacent ? 0.92 : 0.44);
+        styleLine(target.line, selected ? SELECTED : active || adjacent ? HOVERED : PRIMARY, active || adjacent ? 0.88 : 0.22);
         target.label.userData.labelEnabled = group.visible && primary.visible && active;
         target.label.visible = target.label.userData.labelEnabled;
         target.picking.visible = true;
@@ -240,7 +240,7 @@ export function createHouseRenderer(radius: number, caption: CaptionFactory): Ho
       for (const [index, ghost] of ghosts.entries()) {
         ghost.visible = !settings.comparisonChangesOnly || comparison?.changedBoundaryHouses.includes(index + 1) === true;
         const active=interaction.selectedId===`boundary:comparison:${index+1}`||interaction.hoveredId===`boundary:comparison:${index+1}`;
-        (ghost.material as THREE.Material).opacity = active?0.95:interaction.quietComparison ? 0.18 : 0.58;
+        (ghost.material as THREE.Material).opacity = active?0.88:interaction.quietComparison ? 0.12 : 0.25;
       }
       changed.visible = comparison?.status === 'valid' && comparison.changedRegions.length > 0 && opacity > 0;
       changed.material.opacity = opacity * (interaction.quietComparison ? 0.1 : 0.55);

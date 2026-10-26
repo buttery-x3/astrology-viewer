@@ -46,6 +46,7 @@ async function example(page:Page){
     const upload=proto.uniformMatrix4fv;proto.uniformMatrix4fv=function(...args:Parameters<typeof upload>){const name=args[0]&&locations.get(args[0]);if(name==='viewMatrix')probe.view=Array.from(args[2]);if(name==='projectionMatrix')probe.projection=Array.from(args[2]);return Reflect.apply(upload,this,args);};
   });
   await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+  await page.getByRole('button',{name:'Earth overview',exact:true}).click();
   await expect.poll(()=>page.evaluate(()=>(window as any).geographicCrossingCamera.view.length)).toBe(16);
   await openControlGroup(page,'earth');await page.getByRole('checkbox',{name:'Projected house sections',exact:true}).uncheck();
   const filters=page.locator('.earth-controls details');await filters.locator('summary').click();

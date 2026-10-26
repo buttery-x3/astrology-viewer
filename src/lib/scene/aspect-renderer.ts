@@ -118,10 +118,10 @@ export function createAspectRenderer(radius: number, captionFactory: CaptionFact
         const isSelected = interaction.selectedId === aspect.id, hovered = interaction.hoveredId === aspect.id;
         const bodySelected = interaction.selectedId?.startsWith('body:');
         const related = interaction.selectedId === `body:${aspect.bodyA}` || interaction.selectedId === `body:${aspect.bodyB}`;
-        const emphasis = isSelected ? 0.98 : hovered ? 0.88 : related ? 0.66 : THREE.MathUtils.clamp(settings.backgroundOpacity, 0, 1) * (bodySelected ? 0.2 : 1);
+        const emphasis = isSelected ? 1 : hovered ? 0.95 : related ? 0.85 : THREE.MathUtils.clamp(settings.backgroundOpacity, 0, 1) * (bodySelected ? 0.5 : 1);
         // Brightness always encodes longitude closeness; width and endpoint rings
         // additionally identify selection without changing the underlying value.
-        const alpha = emphasis * (0.35 + 0.65 * THREE.MathUtils.clamp(aspect.closeness, 0, 1));
+        const alpha = emphasis * (0.8 + 0.2 * THREE.MathUtils.clamp(aspect.closeness, 0, 1));
         target.group.visible = true; target.entity.valid = true;
         target.entity.id = aspect.id; target.entity.name = `${bodyName(aspect.bodyA)} — ${bodyName(aspect.bodyB)} · ${aspect.type}`;
         target.entity.objects = [target.core, target.caption, ...target.endpoints];
@@ -140,7 +140,7 @@ export function createAspectRenderer(radius: number, captionFactory: CaptionFact
           line.material.color.set(style.color); line.material.dashed = style.dashed;
           line.material.dashSize = style.dashSize; line.material.gapSize = style.gapSize;
         }
-        target.core.material.opacity = alpha; target.core.material.linewidth = isSelected ? 2.8 : hovered || related ? 2 : 1.25;
+        target.core.material.opacity = alpha; target.core.material.linewidth = isSelected ? 2.8 : hovered || related ? 2.2 : 1.7;
         target.glow.visible = settings.glow; target.glow.material.opacity = alpha * 0.13;
         target.glow.material.linewidth = isSelected ? 9 : hovered || related ? 7 : 5;
         label(target.caption, style.glyph, style.color);

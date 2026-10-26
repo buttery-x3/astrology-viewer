@@ -14,7 +14,7 @@ export interface EarthProjectionSettings {
   bodies: Record<BodyId, boolean>; angles: Record<AstroAngle, boolean>;
 }
 export const DEFAULT_EARTH_PROJECTIONS: Readonly<EarthProjectionSettings> = Object.freeze({
-  enabled: true, houses: true, astrocartography: true, houseOpacity: 0.14, astroOpacity: 0.55,
+  enabled: false, houses: false, astrocartography: true, houseOpacity: 0.14, astroOpacity: 0.75,
   bodies: Object.freeze(Object.fromEntries(BODY_IDS.map(id => [id, true])) as Record<BodyId, boolean>),
   angles: Object.freeze(Object.fromEntries(ASTRO_ANGLES.map(id => [id, true])) as Record<AstroAngle, boolean>),
 });

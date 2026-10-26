@@ -143,7 +143,7 @@ describe('longitude aspect rendering', () => {
       display.update(sky([['sun', 0], ['moon', separation]]), settings(), interaction(selected));
       values.push((display.entities[0]!.objects[0] as Line2).material.opacity);
     }
-    expect(values[0]).toBeGreaterThan(0);
+    expect(values[0]).toBeGreaterThanOrEqual(selected ? 0.68 : 0.52);
     expect(values[0]).toBeLessThan(values[1]!); expect(values[1]).toBeLessThan(values[2]!);
   });
 

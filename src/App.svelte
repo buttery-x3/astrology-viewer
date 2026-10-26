@@ -40,6 +40,7 @@
   import { CATALOGUE_STARS } from './lib/scene/sky-data';
   import { FIGURE_SUPPORT_STARS } from './lib/scene/constellation-figures';
   import EarthProjectionControls from './lib/ui/EarthProjectionControls.svelte';
+  import GeographicLineKey from './lib/ui/GeographicLineKey.svelte';
   import { DEFAULT_EARTH_PROJECTIONS, earthHouseAvailability, type EarthProjectionSettings } from './lib/domain/earth-projections';
   import AspectCardPreview from './lib/ui/AspectCardPreview.svelte';
   import FeatureNavigation from './lib/ui/FeatureNavigation.svelte';
@@ -104,7 +105,8 @@
   let sceneStatus = $state<string | null>(null);
   let houseDisplay=$state<HouseDisplaySettings>({...DEFAULT_HOUSE_DISPLAY,mode:initialPreferences.houseMode});
   let construction=$state<ConstructionSettings>({...DEFAULT_CONSTRUCTION});
-  let aspects=$state<AspectDisplaySettings>({...DEFAULT_ASPECT_DISPLAY,types:{...DEFAULT_ASPECT_DISPLAY.types},orbs:{...DEFAULT_ASPECT_DISPLAY.orbs}});
+  let aspectSettings=$state<AspectDisplaySettings>({...DEFAULT_ASPECT_DISPLAY,types:{...DEFAULT_ASPECT_DISPLAY.types},orbs:{...DEFAULT_ASPECT_DISPLAY.orbs}});
+  const aspects=$derived({...aspectSettings,enabled:$explorer.layers.aspects});
   let earthSettings=$state<EarthProjectionSettings>({...DEFAULT_EARTH_PROJECTIONS,bodies:{...DEFAULT_EARTH_PROJECTIONS.bodies},angles:{...DEFAULT_EARTH_PROJECTIONS.angles}});
   let evidenceOpen=$state(false);
   let evidenceDialog=$state<HTMLDialogElement>();
@@ -246,7 +248,7 @@
     if(layer)explorer.setLayer(layer,true);
     if(kind==='aspect'&&$explorer.snapshot){
       const detail=getAspectDetails($explorer.snapshot.bodies,id,aspects.orbs);
-      if(detail)aspects={...aspects,enabled:true,types:{...aspects.types,[detail.type]:true}};
+      if(detail)updateAspects({enabled:true,types:{...aspects.types,[detail.type]:true}});
     }
   }
   function selectHit(hit: FeatureHit) {
@@ -258,7 +260,7 @@
     }
     if(hit.kind==='asterism')explorer.setLayer('asterisms',true);
     if(hit.kind==='earth-house'||hit.kind==='astro-line'){
-      if($explorer.viewpoint==='observer')explorer.setViewpoint('overview');
+      if($explorer.viewpoint==='observer')explorer.setViewpoint('overview',false);
       explorer.setLayer('earthProjections',true);
       explorer.setLayer(hit.kind==='earth-house'?'earthHouses':'astrocartography',true);
       if(hit.kind==='astro-line'){
@@ -272,6 +274,10 @@
     if(patch.houses!==undefined)explorer.setLayer('earthHouses',patch.houses);
     if(patch.astrocartography!==undefined)explorer.setLayer('astrocartography',patch.astrocartography);
     earthSettings={...earthSettings,...patch};
+  }
+  function updateAspects(patch:Partial<AspectDisplaySettings>){
+    if(patch.enabled!==undefined)explorer.setLayer('aspects',patch.enabled);
+    aspectSettings={...aspectSettings,...patch};
   }
   function constructionLegendTarget(kind:string){
     const element=activeConstruction&&[...activeConstruction.lines,...activeConstruction.markers].find(item=>item.kind===kind&&item.stage<=construction.stage);
@@ -365,7 +371,7 @@
   }
   function pausePlayback(reason:string|null=null){playing=false;playbackClock=null;pauseReason=reason;}
   function updatePreferences(patch:Partial<DisplayPreferences>){preferences={...preferences,...patch};if(patch.houseMode)houseDisplay={...houseDisplay,mode:patch.houseMode};}
-  function resetPreferences(){preferences={...DEFAULT_PREFERENCES};houseDisplay={...DEFAULT_HOUSE_DISPLAY};}
+  function resetPreferences(){preferences={...DEFAULT_PREFERENCES};houseDisplay={...DEFAULT_HOUSE_DISPLAY};earthSettings={...earthSettings,houseOpacity:DEFAULT_EARTH_PROJECTIONS.houseOpacity,astroOpacity:DEFAULT_EARTH_PROJECTIONS.astroOpacity};aspectSettings={...aspectSettings,backgroundOpacity:DEFAULT_ASPECT_DISPLAY.backgroundOpacity};}
   function clearSelection(){selectedFeature=null;explorer.select(null);announcement='Selection cleared.';if(!inspectorPinned){if(document.activeElement?.closest('#inspector'))void collapseInspector();else{inspectorCollapsed=true;rightOpen=false;}}}
   async function collapseInspector(){inspectorCollapsed=true;rightOpen=false;await tick();document.querySelector<HTMLButtonElement>('[aria-label="Expand inspector"]')?.focus();}
   async function collapseTools(){toolsCollapsed=!compactPanels;leftOpen=false;await tick();document.querySelector<HTMLButtonElement>('.left-toggle')?.focus();}
@@ -453,7 +459,7 @@
       <ControlGroup id="earth" title="Earth projections" open={!!groups.earth} onToggle={open=>groups={...groups,earth:open}}><EarthProjectionControls settings={earthProjectionDisplay} snapshot={$explorer.snapshot} onChange={updateEarthSettings}/></ControlGroup>
       <ControlGroup id="houses" title="Houses" open={!!groups.houses} onToggle={open=>groups={...groups,houses:open}}><HouseControls system={$explorer.input.system} comparisonSystem={$explorer.input.comparisonSystem} display={houseDisplay} snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} {busy} onSystemChange={(system)=>explorer.requestChart({system,comparisonSystem:$explorer.input.comparisonSystem===system?null:$explorer.input.comparisonSystem})} onComparisonChange={(comparisonSystem)=>explorer.requestChart({comparisonSystem})} onDisplayChange={patch=>{houseDisplay={...houseDisplay,...patch};if(patch.mode)updatePreferences({houseMode:patch.mode});}} onSelect={selectFeature} onShowConstruction={showConstruction} /></ControlGroup>
       {#if construction.enabled}<ControlGroup id="construction" title="Construction guide" open={!!groups.construction} onToggle={open=>groups={...groups,construction:open}}><ConstructionGuide snapshot={$explorer.snapshot} settings={construction} onChange={(patch)=>construction={...construction,...patch}} onSelect={selectFeature} onFocus={focusConstruction} /></ControlGroup>{/if}
-      <ControlGroup id="aspects" title="Aspects" open={!!groups.aspects} onToggle={open=>groups={...groups,aspects:open}}><AspectControls snapshot={$explorer.snapshot} settings={aspects} selectedId={$explorer.selectedId} onChange={patch=>aspects={...aspects,...patch}} onSelect={selectFeature} /></ControlGroup>
+      <ControlGroup id="aspects" title="Aspects" open={!!groups.aspects} onToggle={open=>groups={...groups,aspects:open}}><AspectControls snapshot={$explorer.snapshot} settings={aspects} selectedId={$explorer.selectedId} onChange={updateAspects} onSelect={selectFeature} /></ControlGroup>
       <ControlGroup id="trails" title="Motion history" open={!!groups.trails} onToggle={open=>groups={...groups,trails:open}}><TrailControls settings={trails} historySettings={history} bodyId={selectedBody?.id??null} {boundaryHouse} state={$trailService} onChange={patch=>trails={...trails,...patch}} onHistoryChange={patch=>history={...history,...patch}} onRetry={()=>trailService.retry()} onRetryHistory={()=>trailService.retry()} onCancel={()=>trailService.cancelTrail()} onCancelHistory={()=>trailService.cancelHistory()} /></ControlGroup>
 
       <ControlGroup id="references" title="Signs and references" open={!!groups.references} onToggle={open=>groups={...groups,references:open}}><FeatureObjectList snapshot={$explorer.snapshot} selectedId={$explorer.selectedId} onSelect={selectFeature} /><FeatureNavigation context={previewContext} selectedId={$explorer.selectedId} stage={construction.stage} onSelect={selectHit}/></ControlGroup>
@@ -478,7 +484,10 @@
       {#if sceneStatus}<div class="scene-notice" role="status"><strong>3D view unavailable</strong><span>{sceneStatus}</span><span>The moment controls and celestial object list remain available.</span></div>{/if}
       <details class="layer-key legend-disclosure"><summary>Layer key</summary><div class="scene-legend" aria-label="Active layer legend">{#each layerOptions.filter(layer=>$explorer.layers[layer.id]) as layer (layer.id)}<button class="legend-feature" data-feature-id={`layer:${layer.id}`}><i class="legend-line" style:background={layer.color}></i>{layer.label}</button>{/each}{#if $explorer.selectedId}<span><i class="legend-line" style:background="#f1d79d"></i>Selected feature</span>{/if}{#if $explorer.layers.houses && houseComparison?.status==='valid'}<button class="legend-feature" data-feature-id="layer:houses"><i class="legend-line" style:background="transparent" style:border-top="1px dashed #b0a4d7"></i>Comparison boundaries</button>{#if houseComparison.changedRegions.length}<span><i class="legend-line" style:background="#b0a4d7"></i>Changed assignments</span>{/if}{/if}{#if $explorer.layers.houses && selectedHouses?.status==='valid' && houseDisplay.mode==='shells' && houseDisplay.shellSeparation>0 && ($explorer.selectedId?.startsWith('house:')||selectedBody)}<span>Radial leaders: shell lift</span>{/if}<span class="legend-convention">Below horizon: dimmed body · distances schematic</span></div></details>
       {#if construction.enabled}<details class="construction-key legend-disclosure" open={!!boundaryHouse}><summary>Construction key</summary><div aria-label="Construction legend">{#each constructionLegend as item (item.kind)}{@const target=constructionLegendTarget(item.kind)}<button class="legend-feature" data-feature-id={target.id} data-feature-json={JSON.stringify(target)}><i style:border-top={`1px ${item.dashed?'dashed':'solid'} ${item.color}`}></i>{item.label}</button>{/each}<small>C{construction.boundaryHouse} · {activeConstruction?.status==='valid'?`stage ${construction.stage+1} · sweep ${Math.round(construction.progress*100)}%`:'construction unavailable'}</small></div></details>{/if}
-      {#if aspectLegend.length}<details class="aspect-key legend-disclosure" open={$explorer.selectedId?.startsWith('aspect:')}><summary>Aspect key</summary><div aria-label="Aspect legend">{#each aspectLegend as type (type.id)}<button class="legend-feature" data-feature-id={`layer:aspect-type:${type.id}`}><i style:border-top={`2px ${type.dashed?'dashed':'solid'} ${type.color}`}></i>{type.glyph} {type.label}</button>{/each}<small>Brighter core: closer to exact · curved strand: connection{aspects.glow?' · glow: emphasis':''}</small>{#if $explorer.selectedId?.startsWith('aspect:')&&aspects.measurement}<small>Gold arc: longitude separation · dashed leaders: latitude projection</small>{/if}</div></details>{/if}
+      <div class="scene-reference-keys">
+        {#if earthProjectionDisplay.enabled&&earthProjectionDisplay.astrocartography&&$explorer.viewpoint!=='observer'}<div class="geographic-key-panel"><GeographicLineKey bodies={earthProjectionDisplay.bodies} angles={earthProjectionDisplay.angles}/></div>{/if}
+        {#if aspectLegend.length}<details class="aspect-key legend-disclosure" open={$explorer.selectedId?.startsWith('aspect:')}><summary>Aspect key</summary><div aria-label="Aspect legend">{#each aspectLegend as type (type.id)}<button class="legend-feature" data-feature-id={`layer:aspect-type:${type.id}`}><i style:border-top={`2px ${type.dashed?'dashed':'solid'} ${type.color}`}></i>{type.glyph} {type.label}</button>{/each}<small>Brighter core: closer to exact · curved strand: connection{aspects.glow?' · glow: emphasis':''}</small>{#if $explorer.selectedId?.startsWith('aspect:')&&aspects.measurement}<small>Gold arc: longitude separation · dashed leaders: latitude projection</small>{/if}</div></details>{/if}
+      </div>
       {#if activeTrail||activeHistory}<details class="trail-key legend-disclosure" open><summary>Motion key</summary><div aria-label="Motion history legend">{#if activeTrail}<strong>{selectedMeta?.name} · {TRAIL_REFERENCE_LABELS[activeTrail.frame]}</strong>{#each TRAIL_LEGEND.filter(item=>['past','future','direction','tick'].includes(item.id)) as item (item.id)}<button class="legend-feature" data-feature-id="layer:trails"><i style:border-top={`1px ${item.dashed?'dashed':'solid'} ${item.color}`}></i>{item.label}</button>{/each}<small>{formatInstant(activeTrail.startMs)} → {formatInstant(activeTrail.endMs)} UTC</small>{#if activeTrail.status!=='complete'}<small>{activeTrail.status==='partial'?'Refining sampled path…':'Limited to the sampled interval · see trail controls'}</small>{/if}{/if}{#if activeHistory}<strong>C{activeHistory.house} · {activeHistory.samples.filter(sample=>sample.status!=='undefined').length} discrete boundary ghosts</strong><small>Dashed violet: history · gold: discrete boundary change · undefined samples omitted</small>{/if}</div></details>{/if}
     </section>
 
@@ -523,3 +532,10 @@
 </dialog>
 <dialog bind:this={evidenceDialog} class="evidence-dialog" aria-labelledby="evidence-title" onclose={()=>evidenceOpen=false} oncancel={()=>evidenceOpen=false}>{#if evidenceOpen}<EvidencePanel onClose={()=>evidenceOpen=false} />{/if}</dialog>
 {/if}
+
+<style>
+  .scene-reference-keys{position:absolute;right:24px;top:76px;display:grid;justify-items:end;gap:8px;width:min(350px,calc(100% - 48px));pointer-events:none;z-index:2}
+  .scene-reference-keys>.aspect-key{position:static;max-width:100%;box-sizing:border-box;pointer-events:auto}
+  .geographic-key-panel{padding:9px 11px;border:1px solid #3c526b;border-radius:7px;background:#091220e8;box-sizing:border-box;max-width:100%;pointer-events:auto}
+  @media(max-width:790px){.scene-reference-keys{top:95px;right:16px;width:min(330px,calc(100% - 32px))}}
+</style>

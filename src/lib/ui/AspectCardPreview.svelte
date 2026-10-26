@@ -2,25 +2,32 @@
   import HoverCard from './HoverCard.svelte';
   import { aspectPreviewModel } from '../domain/hover-card';
   import { ASPECT_TYPES } from '../domain/chart';
+  import { featurePreviewStudies } from '../domain/hover-preview';
+  const featureStudies = featurePreviewStudies();
   let { motion = true, largeText = false }: { motion?: boolean; largeText?: boolean } = $props();
 </script>
 
 <section
   class:large-text={largeText}
   class="aspect-preview"
-  aria-label="Five aspect card design studies"
+  aria-label="Compact feature card design studies"
 >
   <header>
     <span>Visual studies · illustrative positions</span>
-    <h1>Five relationships, one celestial language.</h1>
+    <h1>A celestial language for every feature.</h1>
     <p>
-      Static theme studies and the animated Venus–Neptune square. These fixtures do not represent a
-      calculated birth chart.
+      Compact relationships, planetary identities and geographic themes. These fixtures do not
+      represent a calculated birth chart.
     </p>
   </header>
   <div class="theme-grid">
     {#each ASPECT_TYPES as aspect (aspect.id)}<div class="study">
-        <HoverCard model={aspectPreviewModel(aspect.id)} motion={false} sparkles={false} />
+        <HoverCard model={aspectPreviewModel(aspect.id)} motion={false} sparkles={true} />
+      </div>{/each}
+  </div>
+  <div class="feature-grid" aria-label="Body, sign, house and geographic studies">
+    {#each featureStudies as model (model.id)}<div class="study">
+        <HoverCard {model} {motion} sparkles={true} />
       </div>{/each}
   </div>
   <div class="animated-study">
@@ -61,17 +68,23 @@
   .aspect-preview p {
     color: #b9c7d9;
   }
-  .theme-grid {
+  .theme-grid,
+  .feature-grid {
     display: flex;
     gap: 28px;
     flex-wrap: wrap;
     align-items: flex-start;
   }
   .study {
+    width: 460px;
     max-width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, #081224, #506b83);
-    border-radius: 25px;
+    padding: 0;
+  }
+  .feature-grid {
+    margin-top: 28px;
+  }
+  .animated-study :global(.hover-card) {
+    max-width: 460px;
   }
   .animated-study {
     margin-top: 55px;
@@ -80,12 +93,6 @@
     font:
       400 1.8rem Georgia,
       serif;
-  }
-  .large-text :global(.hover-card) {
-    font-size: 1.25rem;
-  }
-  .large-text :global(.reading-panel p) {
-    font-size: 1.25rem;
   }
   .large-text :global(.hover-card) {
     max-height: none;

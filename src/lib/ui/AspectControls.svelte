@@ -39,7 +39,7 @@
       <button class="button secondary" type="submit">Apply orb settings</button>
       <button type="button" class="text-button" onclick={()=>{draft={};error='';onChange({orbs:{...DEFAULT_ORBS}});}}>Reset 6° preset</button>
     </form>
-    <label class="aspect-field">Background strand opacity<input type="range" min="0.04" max="0.5" step="0.01" value={settings.backgroundOpacity} oninput={event=>onChange({backgroundOpacity:Number(event.currentTarget.value)})} /></label>
+    <label class="aspect-field">Background strand opacity <output>{Math.round(settings.backgroundOpacity*100)}%</output><input type="range" min="0.04" max="1" step="0.01" value={settings.backgroundOpacity} oninput={event=>onChange({backgroundOpacity:Number(event.currentTarget.value)})} /></label>
     <label class="aspect-check"><input type="checkbox" checked={settings.glow} onchange={event=>onChange({glow:event.currentTarget.checked})} />Soft strand glow</label>
     <label class="aspect-check"><input type="checkbox" checked={settings.measurement} onchange={event=>onChange({measurement:event.currentTarget.checked})} />Selected longitude measurement</label>
   </details>

@@ -3,8 +3,9 @@ import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { astronomicalToThree, threeToAstronomical, type Vector3 } from '../astronomy/coordinates';
 import { BODY_IDS, type BodyId, type EphemerisSnapshot } from '../astronomy/ephemeris';
-import { buildAstrocartography, ASTRO_ANGLES, type AstroLine } from '../domain/astrocartography';
+import { buildAstrocartography, ASTRO_ANGLES, type AstroAngle, type AstroLine } from '../domain/astrocartography';
 import { buildEarthHouseProjection, classifyEarthHouse, type EarthHouseProjection, type EarthProjectionSettings } from '../domain/earth-projections';
+import { GEOGRAPHIC_ANGLE_STYLE, GEOGRAPHIC_BODY_STYLE, GEOGRAPHIC_LINE_WIDTH, GEOGRAPHIC_MARKER_FRACTIONS, GEOGRAPHIC_MARKER_REFERENCE, GEOGRAPHIC_MARKER_STROKE } from '../domain/geographic-line-style';
 import type { HouseMesh } from '../domain/house-geometry';
 import { createWideLineGeometry, writeWideLine } from './wide-line-buffer';
 import { primaryHouseLink } from '../domain/house-links';
@@ -32,14 +33,57 @@ export interface EarthProjectionRenderer {
   intersectHouse(ray:THREE.Ray,snapshot:EphemerisSnapshot):THREE.Intersection|null;
   dispose(): void;
 }
-const BODY_COLOURS: Record<BodyId, number> = {
-  sun: 0xf4c976, moon: 0xe0e8f3, mercury: 0xa6c3cb, venus: 0xe5ba9f, mars: 0xe18e7c,
-  jupiter: 0xd5b690, saturn: 0xc4bfa1, uranus: 0x8cc4c4, neptune: 0x8fa9d8, pluto: 0xb8a8ca,
-};
-const BODY_GLYPHS = ['☉', '☽', '☿', '♀', '♂', '♃', '♄', '♅', '♆', '♇'];
 const capacity = (size: number) => 2 ** Math.ceil(Math.log2(Math.max(4, size)));
 function local(value: Vector3, radius = 1): THREE.Vector3 {
   const point = astronomicalToThree(value); return new THREE.Vector3(point.x, point.y, point.z).multiplyScalar(radius);
+}
+
+/** Keep captions in the shared Sprite layout/picking system, with identical icon footprints. */
+function geographicCaption(factory: CaptionFactory, bodyId: BodyId, angle: AstroAngle, expanded = false): THREE.Sprite {
+  const body = GEOGRAPHIC_BODY_STYLE[bodyId], style = GEOGRAPHIC_ANGLE_STYLE[angle];
+  const text = `${body.glyph} ${expanded ? style.label : style.short}`, size = 0.065;
+  const caption = factory(text, body.color, size);
+  caption.userData.geographicMarker = angle;
+  caption.userData.geographicMarkerPath = style.path;
+  caption.userData.geographicExpanded = expanded;
+  // The factory owns the texture lifecycle. Paint once before its first upload;
+  // no canvas/texture allocation occurs on hover, orbit, filters or playback.
+  const texture = caption.material.map;
+  const canvas = texture?.image as HTMLCanvasElement | undefined;
+  const context = canvas?.getContext?.('2d');
+  if (canvas && context) {
+    const font = '32px "Segoe UI Symbol", "Arial Unicode MS", sans-serif';
+    context.font = font;
+    canvas.width = expanded ? Math.ceil(context.measureText(text).width) + 98 : 192;
+    canvas.height = 96;
+    context.font = font; context.textAlign = 'left'; context.textBaseline = 'middle';
+    context.fillStyle = context.strokeStyle = body.color;
+    context.shadowColor = '#050b16'; context.shadowBlur = 7;
+    context.save(); context.translate(14, 24); context.scale(2, 2);
+    context.lineWidth = GEOGRAPHIC_MARKER_STROKE; context.lineCap = 'round'; context.lineJoin = 'round';
+    context.stroke(new Path2D(GEOGRAPHIC_MARKER_REFERENCE)); context.stroke(new Path2D(style.path));
+    context.restore(); context.fillText(text, 76, 49);
+    caption.scale.set(size * canvas.width / 96, size, 1);
+    texture!.needsUpdate = true;
+  }
+  return caption;
+}
+
+/** Choose only actual samples from the existing paths; never offset a curve. */
+function markerSamples(line: AstroLine): Vector3[] {
+  const points = line.segments.flat().map(sample => sample.point);
+  if (!points.length) return [];
+  const cumulative = [0];
+  for (let index = 1; index < points.length; index++) {
+    const a = points[index - 1]!, b = points[index]!;
+    cumulative.push(cumulative[index - 1]! + Math.acos(THREE.MathUtils.clamp(a.x * b.x + a.y * b.y + a.z * b.z, -1, 1)));
+  }
+  const length = cumulative.at(-1)!;
+  return GEOGRAPHIC_MARKER_FRACTIONS.map(fraction => {
+    const distance = length * fraction;
+    const index = cumulative.findIndex(value => value >= distance);
+    return points[index < 0 ? points.length - 1 : index]!;
+  });
 }
 function writeMesh(target: Fill, mesh: HouseMesh): void {
   let positions = target.geometry.getAttribute('position'), indices = target.geometry.getIndex();
@@ -61,6 +105,7 @@ export function createEarthProjectionRenderer(radius: number, captionFactory: Ca
   const group = new THREE.Group(); group.name = 'Earth projections';
   const houses = new THREE.Group(), astro = new THREE.Group(); group.add(houses, astro);
   const entities: EarthSceneEntity[] = [], allLines: Line2[] = [];
+  const surfaceCaptions: THREE.Sprite[] = [];
   const cameraLocal = new THREE.Vector3(0, 0, radius * 10);
   let lastCamera: THREE.Camera | null = null;
   let width = 1, height = 1, disposed = false, previousHouseKey = '', previousAstroKey = '';
@@ -73,8 +118,8 @@ export function createEarthProjectionRenderer(radius: number, captionFactory: Ca
     cameraLocal.copy(lastCamera.getWorldPosition(new THREE.Vector3())); group.worldToLocal(cameraLocal);
   }
 
-  function wideLine(colour: number, dashed = false): Line2 {
-    const material = new LineMaterial({ color: colour, linewidth: 1.15, transparent: true, opacity: 0.55, depthWrite: false, dashed, dashSize: 0.035, gapSize: 0.025 });
+  function wideLine(colour: THREE.ColorRepresentation): Line2 {
+    const material = new LineMaterial({ color: colour, linewidth: GEOGRAPHIC_LINE_WIDTH, transparent: true, opacity: 0.75, depthWrite: false, dashed: false });
     material.resolution.set(width, height);
     // Keep geographic curves on the visible side even when Earth is translucent.
     // instanceStart/End are Earth-local positions; varying interpolation clips at the limb.
@@ -102,6 +147,7 @@ export function createEarthProjectionRenderer(radius: number, captionFactory: Ca
   }
   const regions = Array.from({ length: 12 }, (_, index) => {
     const caption = captionFactory(`H${index + 1}`, '#c6dce7', 0.08);
+    surfaceCaptions.push(caption);
     const target = entity(`earth:house:primary:${index + 1}`, `Projected chart house ${index + 1}`, 'earth-house', caption);
     const surface = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({ color: index % 2 ? 0x647e9b : 0x618d9a, side: THREE.FrontSide, transparent: true, opacity: 0.14, depthWrite: false }));
     surface.scale.setScalar(radius * 1.003); surface.renderOrder = 3;
@@ -113,20 +159,24 @@ export function createEarthProjectionRenderer(radius: number, captionFactory: Ca
     const target = entity(`earth:boundary:primary:${index + 1}`, `Projected cusp ${index + 1}`, 'earth-house');
     const line = wideLine(0xa5c9dd); target.objects.push(line); houses.add(line); identify(line, target, 'boundary', { house: index + 1 }); return { target, line };
   });
-  const curves = BODY_IDS.flatMap((bodyId, bodyIndex) => ASTRO_ANGLES.map(angle => {
-    const caption = captionFactory(`${BODY_GLYPHS[bodyIndex]} ${angle.toUpperCase()}`, `#${BODY_COLOURS[bodyId].toString(16).padStart(6, '0')}`, 0.065);
+  const curves = BODY_IDS.flatMap(bodyId => ASTRO_ANGLES.map(angle => {
+    const captions = GEOGRAPHIC_MARKER_FRACTIONS.map(() => geographicCaption(captionFactory, bodyId, angle));
+    const caption = captions[2]!;
+    const emphasis = geographicCaption(captionFactory, bodyId, angle, true);
     const name = `${bodyId[0]!.toUpperCase()}${bodyId.slice(1)} ${angle.toUpperCase()} · geographic line`;
     const target = entity(`astro:${bodyId}:${angle}`, name, 'astro-line', caption);
-    const lines = [wideLine(BODY_COLOURS[bodyId], angle === 'dc' || angle === 'ic'), wideLine(BODY_COLOURS[bodyId], angle === 'dc' || angle === 'ic')];
-    for (const line of lines) { line.material.dashScale = angle === 'ic' ? 1.7 : 1; astro.add(line); identify(line, target, 'line', { bodyId, angle }); }
-    target.objects.push(...lines, caption); astro.add(caption); identify(caption, target, 'badge', { bodyId, angle });
-    return { target, lines, caption, bodyId, angle, data: null as AstroLine | null };
+    const lines = [wideLine(GEOGRAPHIC_BODY_STYLE[bodyId].color), wideLine(GEOGRAPHIC_BODY_STYLE[bodyId].color)];
+    for (const line of lines) { astro.add(line); identify(line, target, 'line', { bodyId, angle }); }
+    // Reserve the full focused identity before this line's compact labels in
+    // the existing equal-priority collision layout. Every badge keeps its ID.
+    target.objects.push(...lines, emphasis, ...captions); astro.add(emphasis, ...captions);
+    for (const marker of [emphasis, ...captions]) {
+      identify(marker, target, 'badge', { bodyId, angle }); surfaceCaptions.push(marker);
+      marker.visible = marker.userData.labelEnabled = marker.userData.earthLabelActive = false;
+    }
+    return { target, lines, captions, emphasis, bodyId, angle, focused: false, data: null as AstroLine | null };
   }));
 
-  function setLabel(caption: THREE.Sprite, target: EarthSceneEntity, point: Vector3, active: boolean): void {
-    target.anchor.copy(local(point, radius * 1.014)); caption.position.copy(target.anchor);
-    caption.userData.earthLabelActive = active; caption.userData.labelEnabled = active; caption.visible = active;
-  }
   function updateMetadata(target: EarthSceneEntity, roleData: Record<string, unknown>): void {
     for (const object of target.objects) {
       object.userData.featureHit = { ...object.userData.featureHit, name: target.name, ...roleData };
@@ -171,7 +221,14 @@ export function createEarthProjectionRenderer(radius: number, captionFactory: Ca
             const segment = slot.data?.segments[index] ?? [];
             writeWideLine(line.geometry, segment.map(sample => ({ x: sample.point.x * radius * 1.006, y: sample.point.y * radius * 1.006, z: sample.point.z * radius * 1.006 })));
           }
-          if (slot.data?.anchor) setLabel(slot.caption, slot.target, slot.data.anchor.point, false);
+          if (slot.data?.anchor) {
+            const points = markerSamples(slot.data);
+            slot.target.anchor.copy(local(slot.data.anchor.point, radius * 1.014));
+            for (const [index, caption] of slot.captions.entries()) caption.position.copy(local(points[index] ?? slot.data.anchor.point, radius * 1.014));
+            // Preserve the declared equatorial focus anchor and midpoint badge.
+            slot.target.label!.position.copy(slot.target.anchor);
+            slot.emphasis.position.copy(slot.target.anchor);
+          }
           updateMetadata(slot.target, { bodyId: slot.bodyId, angle: slot.angle, instantMs: snapshot.instantMs, convention: result.convention });
         }
       } else if (!snapshot) { previousAstroKey = ''; for (const slot of curves) { slot.target.valid = false; slot.data = null; } }
@@ -197,28 +254,40 @@ export function createEarthProjectionRenderer(radius: number, captionFactory: Ca
       }
       for (const slot of curves) {
         const selected = interaction.selectedId === slot.target.id, hovered = interaction.hoveredId === slot.target.id;
+        slot.focused = selected || hovered;
         const active = group.visible && astro.visible && slot.target.valid && settings.bodies[slot.bodyId] && settings.angles[slot.angle];
         const quiet = !!interaction.selectedId?.startsWith('astro:') && !selected && !hovered;
         for (const line of slot.lines) {
           line.visible = active && line.geometry.instanceCount > 0;
           line.material.opacity = selected || hovered ? 1 : astroOpacity * (quiet ? 0.22 : 1);
-          line.material.linewidth = selected ? 2.8 : hovered ? 2.1 : 1.1;
+          line.material.linewidth = selected ? 2.8 : hovered ? 2.1 : GEOGRAPHIC_LINE_WIDTH;
           if (line.visible) hitTargets.push(line);
         }
-        slot.caption.visible = slot.caption.userData.labelEnabled = active && (!quiet || hovered);
-        slot.caption.userData.earthLabelActive = slot.caption.visible;
-        slot.caption.userData.labelPriority = selected ? 100 : hovered ? 90 : 40;
-        if (slot.caption.visible) hitTargets.push(slot.caption);
+        for (const caption of [slot.emphasis, ...slot.captions]) {
+          caption.visible = caption.userData.labelEnabled = active && (!quiet || hovered) && (!caption.userData.geographicExpanded || slot.focused);
+          caption.userData.earthLabelActive = caption.visible;
+          caption.userData.labelPriority = selected ? 100 : hovered ? 90 : 40;
+          caption.material.opacity = slot.focused ? 1 : Math.max(0.7, astroOpacity);
+          if (caption.visible) hitTargets.push(caption);
+        }
       }
     },
     resize(nextWidth, nextHeight) { if (disposed) return; width = Math.max(1, nextWidth); height = Math.max(1, nextHeight); for (const line of allLines) line.material.resolution.set(width, height); },
     faceCamera(camera) {
       if (disposed) return;
       lastCamera = camera; refreshCameraLocal();
-      for (const target of entities) if (target.label) {
-        const front = target.anchor.dot(cameraLocal.clone().sub(target.anchor)) > 0;
-        target.label.visible = Boolean(target.label.userData.earthLabelActive) && front;
-        target.label.userData.labelEnabled = target.label.visible;
+      for (const slot of curves) if (slot.focused && slot.data) {
+        let nearest = -Infinity;
+        for (const segment of slot.data.segments) for (const sample of segment) {
+          const point = local(sample.point, radius * 1.014);
+          const facing = point.dot(cameraLocal) - point.lengthSq();
+          if (facing > nearest) { nearest = facing; slot.emphasis.position.copy(point); }
+        }
+      }
+      for (const caption of surfaceCaptions) {
+        const front = caption.position.dot(cameraLocal) > caption.position.lengthSq();
+        caption.visible = Boolean(caption.userData.earthLabelActive) && front;
+        caption.userData.labelEnabled = caption.visible;
       }
     },
     isSurfaceHitVisible(worldPoint) { refreshCameraLocal(); const point = group.worldToLocal(worldPoint.clone()); return !disposed && point.dot(cameraLocal.clone().sub(point)) >= 0; },

@@ -2,6 +2,8 @@
 
 The features are implemented on [PR #18](https://github.com/buttery-x3/astrology-viewer/pull/18). On 26 October 2026 the user requested product iteration before landing and asked to prune repeated broad test runs. Integration is therefore held; main remains untouched.
 
+The approved rectifications are now implemented on [PR #19](https://github.com/buttery-x3/astrology-viewer/pull/19), with separate card and geographic packages reviewed on PRs #21 and #20. The [visual review report](M10-rectification-visual-review.md) records the compact all-family cards, new defaults, clearer line identities and focused evidence. The current step is the user's visual review; no M10/development/main integration or new full release validation has been performed.
+
 Completed evidence remains scoped to the source actually tested:
 
 - 892 source tests across 49 files; type/Svelte checking, lint, content, notices and asset checks pass at the recorded candidate revisions.

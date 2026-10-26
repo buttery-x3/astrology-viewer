@@ -59,27 +59,57 @@ function setup() {
 }
 
 describe('exploration state and worker coordination', () => {
-  it('applies geographic presets only on explicit view entry, including same-view re-entry', () => {
+  it('starts each view with its own defaults and restores independent layer choices', () => {
     const {store}=setup();
     const revision=get(store).revision;
-    store.setLayer('earthHouses',false);store.setLayer('astrocartography',false);
-    store.setViewpoint('overview',false);
-    expect(get(store).layers.earthHouses).toBe(false);
+    expect(get(store).layers).toMatchObject({asterisms:false,aspects:true,earthProjections:false});
+    store.setLayer('stars',false);store.setLayer('equator',true);
     store.setViewpoint('overview');
-    expect(get(store)).toMatchObject({revision,viewRevision:1,layers:{earthProjections:true,earthHouses:true,astrocartography:true}});
-    store.setViewpoint('outside');expect(get(store).layers.earthProjections).toBe(false);
-    store.setViewpoint('overview',false);expect(get(store).layers.earthProjections).toBe(false);
-    const pickingViewRevision=get(store).viewRevision;
-    store.setViewpoint('overview',false); // Runtime confirms temporary globe-pick framing.
-    expect(get(store).viewRevision).toBe(pickingViewRevision);
-    expect(get(store).layers.earthProjections).toBe(false);
-    store.setViewpoint('overview');expect(get(store).layers.earthProjections).toBe(true);
-    store.setViewpoint('observer');expect(get(store).layers.earthProjections).toBe(false);
+    expect(get(store)).toMatchObject({revision,viewRevision:1,layers:{earthProjections:true,earthHouses:false,astrocartography:true,aspects:false,asterisms:false,stars:true,equator:false}});
+    store.setLayer('earthHouses',true);store.setLayer('aspects',true);
+    store.setViewpoint('overview');
+    expect(get(store).layers).toMatchObject({earthHouses:true,aspects:true});
+    store.setViewpoint('observer');expect(get(store).layers).toMatchObject({earthProjections:false,aspects:false,asterisms:true});
+    store.setLayer('horizon',false);
+    store.setViewpoint('outside');
+    expect(get(store).layers).toMatchObject({asterisms:false,aspects:true,earthProjections:false,stars:false,equator:true,horizon:true});
+    store.setViewpoint('overview');
+    expect(get(store).layers).toMatchObject({asterisms:false,aspects:true,earthHouses:true,stars:true,equator:false,horizon:true});
+    store.setViewpoint('observer');
+    expect(get(store).layers).toMatchObject({asterisms:true,aspects:false,horizon:false});
+    store.destroy();
+  });
+  it('temporary camera transitions do not copy carried layers into another view memory', () => {
+    const {store}=setup();
+    const outside=get(store).layers;
+    store.setViewpoint('observer');store.setLayer('aspects',true);
+    const observer=get(store).layers,viewRevision=get(store).viewRevision;
+    store.setViewpoint('overview',false);
+    expect(get(store).layers).toBe(observer);
+    expect(get(store).viewRevision).toBe(viewRevision);
+    // A focused geographic feature enables its own layer, not every carried bit.
+    store.setLayer('earthProjections',true);store.setLayer('astrocartography',true);
+    store.setViewpoint('outside');expect(get(store).layers).toEqual(outside);
+    store.setViewpoint('overview');
+    expect(get(store).layers).toMatchObject({earthProjections:true,earthHouses:false,aspects:false,asterisms:false});
+    store.setViewpoint('observer');expect(get(store).layers).toEqual(observer);
+    store.destroy();
+  });
+  it('snapshot updates preserve layer memories without requesting calculations for view switches', () => {
+    const {store,start}=setup();const worker=start();
+    store.setLayer('asterisms',true);store.setLayer('horizon',false);
+    const outside=get(store).layers,count=worker.sent.length;
+    store.setViewpoint('observer');store.setLayer('asterisms',false);
+    store.setViewpoint('overview');store.setViewpoint('outside');
+    expect(get(store).layers).toEqual(outside);expect(worker.sent).toHaveLength(count);
+    store.requestChart({instantMs:Date.UTC(2000,0,2,12)});worker.complete();
+    expect(get(store).layers).toEqual(outside);
+    store.setViewpoint('observer');expect(get(store).layers.asterisms).toBe(false);
     store.destroy();
   });
   it('provides a synchronous Svelte readable and loads the deterministic example once', () => {
     const { store, workers } = setup();
-    expect(get(store)).toMatchObject({ status: 'loading', revision: 0, snapshot: null, error: null, input: { instantMs: Date.UTC(2000, 0, 1, 12), observer: { latitudeDeg: 51.5, longitudeDeg: 0 }, system: 'W' } });
+    expect(get(store)).toMatchObject({ status: 'loading', revision: 0, snapshot: null, error: null, viewpoint:'outside', layers:{aspects:true,earthProjections:false,earthHouses:false,asterisms:false}, input: { instantMs: Date.UTC(2000, 0, 1, 12), observer: { latitudeDeg: 51.5, longitudeDeg: 0 }, system: 'W' } });
     expect(workers).toHaveLength(0);
     store.init(); store.init();
     expect(workers).toHaveLength(1);
