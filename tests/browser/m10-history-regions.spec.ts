@@ -41,6 +41,9 @@ async function example(page: Page) {
   await page.goto('/');
   await page.getByRole('button', { name: /Explore example/ }).click();
   await expect(page.getByText('Moment calculated', { exact: true })).toBeVisible();
+  // All projected picks below use Observer sky. Enter its independent profile
+  // before isolating layers, so later focus/re-entry retains those choices.
+  await page.getByRole('button', { name: 'Observer sky', exact: true }).click();
   await expect.poll(() => page.evaluate(() => (window as any).__m10RegionCamera.view.length)).toBe(16);
   await openControlGroup(page, 'display');
   await page.getByLabel('Motion preference', { exact: true }).selectOption('reduced');
@@ -101,7 +104,8 @@ test('a true Orion region interior is a background canvas target and disappears 
   await page.mouse.move(point.x, point.y);
   const card = page.getByTestId('hover-card');
   await expect(card).toHaveAttribute('data-feature-kind', 'constellation');
-  await expect(card).toContainText('Region interior');
+  await expect(card).toHaveAttribute('data-feature-role', 'Region interior');
+  await expect(card.locator('[data-claim-section="hover:constellation"]')).toHaveCount(1);
   await expect(card.getByRole('heading', { name: 'Orion', exact: true })).toBeVisible();
   await page.mouse.click(point.x, point.y);
   await expect(page.locator('#inspector .selected-heading')).toContainText('CONSTELLATION REGION');
@@ -134,7 +138,8 @@ test('a real comparison boundary pick retains its secondary system and full sele
   const card = page.getByTestId('hover-card');
   await expect(card).toHaveAttribute('data-feature-kind', 'boundary');
   await expect(card).toContainText('Comparison · Equal');
-  await expect(card).toContainText(`${houses.cusps[6]!.toFixed(2)}°`);
+  await expect(card.getByRole('heading', { name: 'Cusp 7', exact: true })).toBeVisible();
+  await expect(card.locator('[data-claim-section="hover:house-boundary"]')).toHaveCount(1);
   await page.mouse.click(point.x, point.y);
   await expect(control).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('#inspector .feature-reading')).toContainText('Comparison · Equal');
@@ -158,11 +163,12 @@ test('a real past trail sample caption keeps its exact sample context after canv
   await page.mouse.move(point.x, point.y);
   const card = page.getByTestId('hover-card');
   await expect(card).toHaveAttribute('data-feature-kind', 'trail');
-  await expect(card).toContainText('Sample time');
+  await expect(card.getByRole('heading', { name: 'Moon trail', exact: true })).toBeVisible();
   await expect(card).toContainText(date(sampleMs));
   await expect(card).toContainText('Past');
   await expect(card).toContainText('Relative to stars');
   await page.mouse.click(point.x, point.y);
+  await expect(page.locator('#inspector .feature-reading')).toContainText('Sample time');
   await expect(page.locator('#inspector .feature-reading')).toContainText(date(sampleMs));
   await expect(page.locator('#inspector .feature-reading')).toContainText(`${moon.horizon.altitudeDeg.toFixed(2)}°`);
   await expect(page.locator('#inspector .feature-reading [data-content-id^="body-in-"]')).toHaveCount(0);
@@ -189,7 +195,8 @@ test('a real historical cusp line retains its sample time, frame and old cusp af
   const card = page.getByTestId('hover-card');
   await expect(card).toHaveAttribute('data-feature-kind', 'history');
   await expect(card).toContainText(date(sampleMs));
-  await expect(card).toContainText(`${houses.cusps[6]!.toFixed(2)}°`);
+  await expect(card.getByRole('heading', { name: 'Cusp 7 history', exact: true })).toBeVisible();
+  await expect(card).toContainText('Equal');
   await expect(card).toContainText('Relative to stars');
   await expect(card).toContainText('Past');
   await page.mouse.click(point.x, point.y);
