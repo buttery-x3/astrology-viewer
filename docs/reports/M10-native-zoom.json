@@ -1,0 +1,5668 @@
+{
+  "startedAt": "2026-10-26T04:33:37.233Z",
+  "sourceRevision": "da1404f27ec1d470e9ff7a763ee26ddeddcdf336",
+  "sourceFiles": {
+    "src/App.svelte": "69f6ea8918b92d20d7c11d31d470ab3d6d11fcabdc65c6b9b7d07f9c5aab1dbb",
+    "src/app.css": "b8bfe088f0868fc8f93bef5a5cb3ac2cc8b9eddc3e1328d2d6af77fbb51f2657",
+    "src/lib/ui/HoverCard.svelte": "1c178efcc86b35bca584e989d02038398b79d81d0743c38e32c5c48193a1287d",
+    "src/lib/ui/FeaturePreview.svelte": "b7d0d505b3967bd57e4fbc23df538e6262943d06d2fbfdf7eaa8e39c99b56d90"
+  },
+  "baseURL": "http://127.0.0.1:5196/",
+  "browser": {
+    "channel": "chrome",
+    "headless": false,
+    "viewport": null,
+    "profile": "D:\\dev\\astrology-viewer\\.cache\\m10-native-zoom\\owned-validation-profile-1792989217233",
+    "version": "156.0.8078.47",
+    "closed": true
+  },
+  "method": "Actual chrome://settings/appearance Page zoom combobox selectOption(label=200%); native CDP Browser window bounds only, no viewport/device-scale emulation.",
+  "cases": [
+    {
+      "targetNativeWindow": {
+        "width": 1440,
+        "height": 900
+      },
+      "states": [
+        {
+          "textSize": "standard",
+          "view": "earth",
+          "metrics": {
+            "dpr": 2,
+            "innerWidth": 712,
+            "innerHeight": 374,
+            "outerWidth": 1440,
+            "outerHeight": 900,
+            "screenWidth": 3440,
+            "screenHeight": 1440,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 704.5,
+            "documentWidth": 704,
+            "documentHeight": 800,
+            "rootFont": "16px",
+            "compact": true,
+            "footer": "‹ ▶Play › Step1 minute1 hour1 dayCalendar monthCalendar year DirectionForward →← Backward Speed1 minute / real second1 hour / real second1 day / real second30 days / real second365 days / real second WindowCustom window1 hour1 day1 week30 days365 daysAbout 10 years ＋− ↺ Return to birth instantEdit moment ↗ Displayed 2000-01-01 12:00:00 UTCPaused    01 Jan 2000, 00:00 UTC◆ Birth marker02 Jan 2000, 00:00 UTC Thumb: requested · line: displayed · arrows: step · Shift+arrow: 10 steps · Space: play/pauseDay step = 24 elapsed hours; the local clock can shift at DST.   "
+          },
+          "panels": {
+            ".workspace": {
+              "x": 0,
+              "y": -168.5,
+              "width": 704.5,
+              "height": 479.328125,
+              "bottom": 310.828125,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 479,
+              "clientHeight": 479,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -168.5,
+              "width": 704.5,
+              "height": 479.328125,
+              "bottom": 310.828125,
+              "right": 704.5,
+              "display": "block",
+              "scrollHeight": 479,
+              "clientHeight": 479,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -120.5,
+              "width": 340,
+              "height": 416.328125,
+              "bottom": 295.828125,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 1183,
+              "clientHeight": 414,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 595.5,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -156.5,
+              "width": 75.0859375,
+              "height": 32,
+              "bottom": -124.5,
+              "right": 91.0859375,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 73,
+              "clientWidth": 73,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 601.9921875,
+              "y": -156.5,
+              "width": 86.5078125,
+              "height": 32,
+              "bottom": -124.5,
+              "right": 688.5,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 310.828125,
+              "width": 704.5,
+              "height": 207.671875,
+              "bottom": 518.5,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 207,
+              "clientHeight": 207,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "card": {
+            "before": {
+              "bounds": {
+                "x": 195,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 605,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 195,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 615,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1025,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerAfter": {
+              "bounds": {
+                "x": 195,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 605,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 195,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 615,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1025,
+              "scrollTop": 600,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerScrolled": true,
+            "keyboardBefore": {
+              "bounds": {
+                "x": 12,
+                "y": 15.008487701416016,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 422,
+                "bottom": 333.328800201416
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 432,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1025,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardAfter": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 422,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 432,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1025,
+              "scrollTop": 276,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardScrolled": true,
+            "end": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 422,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 432,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1025,
+              "scrollTop": 709.5,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "endReached": true,
+            "focusRestored": true,
+            "images": [
+              "1440x900-200-standard-earth-hover.png",
+              "1440x900-200-standard-earth-pointer-scrolled.png",
+              "1440x900-200-standard-earth-keyboard-scrolled.png",
+              "1440x900-200-standard-earth-keyboard-end.png"
+            ]
+          },
+          "afterPanels": {
+            ".workspace": {
+              "x": 0,
+              "y": -168.5,
+              "width": 704.5,
+              "height": 479.328125,
+              "bottom": 310.828125,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 479,
+              "clientHeight": 479,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -168.5,
+              "width": 704.5,
+              "height": 479.328125,
+              "bottom": 310.828125,
+              "right": 704.5,
+              "display": "block",
+              "scrollHeight": 479,
+              "clientHeight": 479,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -120.5,
+              "width": 340,
+              "height": 416.328125,
+              "bottom": 295.828125,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 1979,
+              "clientHeight": 414,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 1324.5,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -156.5,
+              "width": 75.0859375,
+              "height": 32,
+              "bottom": -124.5,
+              "right": 91.0859375,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 73,
+              "clientWidth": 73,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 601.9921875,
+              "y": -156.5,
+              "width": 86.5078125,
+              "height": 32,
+              "bottom": -124.5,
+              "right": 688.5,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 310.828125,
+              "width": 704.5,
+              "height": 207.671875,
+              "bottom": 518.5,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 207,
+              "clientHeight": 207,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "sceneImage": "1440x900-200-standard-earth-scene.png",
+          "scenePanels": {
+            ".workspace": {
+              "x": 0,
+              "y": 83,
+              "width": 704.5,
+              "height": 479.328125,
+              "bottom": 562.328125,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 479,
+              "clientHeight": 479,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": 83,
+              "width": 704.5,
+              "height": 479.328125,
+              "bottom": 562.328125,
+              "right": 704.5,
+              "display": "block",
+              "scrollHeight": 479,
+              "clientHeight": 479,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "explorer-dock panel"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": 95,
+              "width": 75.0859375,
+              "height": 32,
+              "bottom": 127,
+              "right": 91.0859375,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 73,
+              "clientWidth": 73,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 601.9921875,
+              "y": 95,
+              "width": 86.5078125,
+              "height": 32,
+              "bottom": 127,
+              "right": 688.5,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 562.328125,
+              "width": 704.5,
+              "height": 207.671875,
+              "bottom": 770,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 207,
+              "clientHeight": 207,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "compactLayout": {
+            "viewport": {
+              "width": 712,
+              "height": 374,
+              "visualWidth": 704.5
+            },
+            "documentWidth": 704,
+            "noHorizontalOverflow": true,
+            "header": {
+              "x": 0,
+              "y": 0,
+              "width": 704.5,
+              "height": 83,
+              "right": 704.5,
+              "bottom": 83,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+            },
+            "headerChildren": [
+              {
+                "tag": "BUTTON",
+                "className": "brand",
+                "x": 18,
+                "y": 25,
+                "width": 133.75,
+                "height": 32,
+                "right": 151.75,
+                "bottom": 57,
+                "scrollWidth": 134,
+                "clientWidth": 134,
+                "text": "✦ SPATIALASTROLOGY EXPLORER"
+              },
+              {
+                "tag": "DIV",
+                "className": "context-details",
+                "x": 385.1953125,
+                "y": 13,
+                "width": 190.40625,
+                "height": 56,
+                "right": 575.6015625,
+                "bottom": 69,
+                "scrollWidth": 190,
+                "clientWidth": 190,
+                "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+              },
+              {
+                "tag": "BUTTON",
+                "className": "button secondary compact",
+                "x": 593.6015625,
+                "y": 24,
+                "width": 92.8984375,
+                "height": 34,
+                "right": 686.5,
+                "bottom": 58,
+                "scrollWidth": 91,
+                "clientWidth": 91,
+                "text": "⌖ Edit moment"
+              }
+            ],
+            "headerChildrenWithinViewport": true,
+            "headerOverlaps": [],
+            "inspectorToggle": {
+              "x": 601.9921875,
+              "y": 95,
+              "width": 86.5078125,
+              "height": 32,
+              "right": 688.5,
+              "bottom": 127,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "text": "ⓘ Inspector"
+            },
+            "inspectorToggleWithinViewport": true,
+            "openInspector": {
+              "x": 332.5,
+              "width": 360,
+              "right": 692.5,
+              "viewportWidth": 712,
+              "fitsHorizontally": true
+            },
+            "inspectorImage": "1440x900-200-standard-earth-inspector.png"
+          }
+        },
+        {
+          "textSize": "standard",
+          "view": "outside",
+          "metrics": {
+            "dpr": 2,
+            "innerWidth": 712,
+            "innerHeight": 374,
+            "outerWidth": 1440,
+            "outerHeight": 900,
+            "screenWidth": 3440,
+            "screenHeight": 1440,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 704.5,
+            "documentWidth": 704,
+            "documentHeight": 800,
+            "rootFont": "16px",
+            "compact": true,
+            "footer": "‹ ▶Play › Step1 minute1 hour1 dayCalendar monthCalendar year DirectionForward →← Backward Speed1 minute / real second1 hour / real second1 day / real second30 days / real second365 days / real second WindowCustom window1 hour1 day1 week30 days365 daysAbout 10 years ＋− ↺ Return to birth instantEdit moment ↗ Displayed 2000-01-01 12:00:00 UTCPaused    01 Jan 2000, 00:00 UTC◆ Birth marker02 Jan 2000, 00:00 UTC Thumb: requested · line: displayed · arrows: step · Shift+arrow: 10 steps · Space: play/pauseDay step = 24 elapsed hours; the local clock can shift at DST.   "
+          },
+          "panels": {
+            ".workspace": {
+              "x": 0,
+              "y": -220,
+              "width": 704.5,
+              "height": 479.328125,
+              "bottom": 259.328125,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 479,
+              "clientHeight": 479,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -220,
+              "width": 704.5,
+              "height": 479.328125,
+              "bottom": 259.328125,
+              "right": 704.5,
+              "display": "block",
+              "scrollHeight": 479,
+              "clientHeight": 479,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -172,
+              "width": 340,
+              "height": 416.328125,
+              "bottom": 244.328125,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 1979,
+              "clientHeight": 414,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 532.5,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -208,
+              "width": 75.0859375,
+              "height": 32,
+              "bottom": -176,
+              "right": 91.0859375,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 73,
+              "clientWidth": 73,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 601.9921875,
+              "y": -208,
+              "width": 86.5078125,
+              "height": 32,
+              "bottom": -176,
+              "right": 688.5,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 259.328125,
+              "width": 704.5,
+              "height": 207.671875,
+              "bottom": 467,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 207,
+              "clientHeight": 207,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "card": {
+            "before": {
+              "bounds": {
+                "x": 195,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 605,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 195,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 615,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1025,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerAfter": {
+              "bounds": {
+                "x": 195,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 605,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 195,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 615,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1025,
+              "scrollTop": 600,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerScrolled": true,
+            "keyboardBefore": {
+              "bounds": {
+                "x": 12,
+                "y": 14.709017753601074,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 422,
+                "bottom": 333.0293302536011
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 432,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1025,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardAfter": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 422,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 432,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1025,
+              "scrollTop": 276,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardScrolled": true,
+            "end": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 422,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 432,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1025,
+              "scrollTop": 709.5,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "endReached": true,
+            "focusRestored": true,
+            "images": [
+              "1440x900-200-standard-outside-hover.png",
+              "1440x900-200-standard-outside-pointer-scrolled.png",
+              "1440x900-200-standard-outside-keyboard-scrolled.png",
+              "1440x900-200-standard-outside-keyboard-end.png"
+            ]
+          },
+          "afterPanels": {
+            ".workspace": {
+              "x": 0,
+              "y": -220,
+              "width": 704.5,
+              "height": 479.328125,
+              "bottom": 259.328125,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 479,
+              "clientHeight": 479,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -220,
+              "width": 704.5,
+              "height": 479.328125,
+              "bottom": 259.328125,
+              "right": 704.5,
+              "display": "block",
+              "scrollHeight": 479,
+              "clientHeight": 479,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -172,
+              "width": 340,
+              "height": 416.328125,
+              "bottom": 244.328125,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 1979,
+              "clientHeight": 414,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 1324.5,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -208,
+              "width": 75.0859375,
+              "height": 32,
+              "bottom": -176,
+              "right": 91.0859375,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 73,
+              "clientWidth": 73,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 601.9921875,
+              "y": -208,
+              "width": 86.5078125,
+              "height": 32,
+              "bottom": -176,
+              "right": 688.5,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 259.328125,
+              "width": 704.5,
+              "height": 207.671875,
+              "bottom": 467,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 207,
+              "clientHeight": 207,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "sceneImage": "1440x900-200-standard-outside-scene.png",
+          "scenePanels": {
+            ".workspace": {
+              "x": 0,
+              "y": 83,
+              "width": 704.5,
+              "height": 479.328125,
+              "bottom": 562.328125,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 479,
+              "clientHeight": 479,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": 83,
+              "width": 704.5,
+              "height": 479.328125,
+              "bottom": 562.328125,
+              "right": 704.5,
+              "display": "block",
+              "scrollHeight": 479,
+              "clientHeight": 479,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "explorer-dock panel"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": 95,
+              "width": 75.0859375,
+              "height": 32,
+              "bottom": 127,
+              "right": 91.0859375,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 73,
+              "clientWidth": 73,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 601.9921875,
+              "y": 95,
+              "width": 86.5078125,
+              "height": 32,
+              "bottom": 127,
+              "right": 688.5,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 562.328125,
+              "width": 704.5,
+              "height": 207.671875,
+              "bottom": 770,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 207,
+              "clientHeight": 207,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "compactLayout": {
+            "viewport": {
+              "width": 712,
+              "height": 374,
+              "visualWidth": 704.5
+            },
+            "documentWidth": 704,
+            "noHorizontalOverflow": true,
+            "header": {
+              "x": 0,
+              "y": 0,
+              "width": 704.5,
+              "height": 83,
+              "right": 704.5,
+              "bottom": 83,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+            },
+            "headerChildren": [
+              {
+                "tag": "BUTTON",
+                "className": "brand",
+                "x": 18,
+                "y": 25,
+                "width": 133.75,
+                "height": 32,
+                "right": 151.75,
+                "bottom": 57,
+                "scrollWidth": 134,
+                "clientWidth": 134,
+                "text": "✦ SPATIALASTROLOGY EXPLORER"
+              },
+              {
+                "tag": "DIV",
+                "className": "context-details",
+                "x": 385.1953125,
+                "y": 13,
+                "width": 190.40625,
+                "height": 56,
+                "right": 575.6015625,
+                "bottom": 69,
+                "scrollWidth": 190,
+                "clientWidth": 190,
+                "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+              },
+              {
+                "tag": "BUTTON",
+                "className": "button secondary compact",
+                "x": 593.6015625,
+                "y": 24,
+                "width": 92.8984375,
+                "height": 34,
+                "right": 686.5,
+                "bottom": 58,
+                "scrollWidth": 91,
+                "clientWidth": 91,
+                "text": "⌖ Edit moment"
+              }
+            ],
+            "headerChildrenWithinViewport": true,
+            "headerOverlaps": [],
+            "inspectorToggle": {
+              "x": 601.9921875,
+              "y": 95,
+              "width": 86.5078125,
+              "height": 32,
+              "right": 688.5,
+              "bottom": 127,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "text": "ⓘ Inspector"
+            },
+            "inspectorToggleWithinViewport": true,
+            "openInspector": {
+              "x": 332.5,
+              "width": 360,
+              "right": 692.5,
+              "viewportWidth": 712,
+              "fitsHorizontally": true
+            },
+            "inspectorImage": "1440x900-200-standard-outside-inspector.png"
+          }
+        },
+        {
+          "textSize": "large",
+          "view": "earth",
+          "metrics": {
+            "dpr": 2,
+            "innerWidth": 712,
+            "innerHeight": 374,
+            "outerWidth": 1440,
+            "outerHeight": 900,
+            "screenWidth": 3440,
+            "screenHeight": 1440,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 704.5,
+            "documentWidth": 704,
+            "documentHeight": 800,
+            "rootFont": "18px",
+            "compact": true,
+            "footer": "‹ ▶Play › Step1 minute1 hour1 dayCalendar monthCalendar year DirectionForward →← Backward Speed1 minute / real second1 hour / real second1 day / real second30 days / real second365 days / real second WindowCustom window1 hour1 day1 week30 days365 daysAbout 10 years ＋− ↺ Return to birth instantEdit moment ↗ Displayed 2000-01-01 12:00:00 UTCPaused    01 Jan 2000, 00:00 UTC◆ Birth marker02 Jan 2000, 00:00 UTC Thumb: requested · line: displayed · arrows: step · Shift+arrow: 10 steps · Space: play/pauseDay step = 24 elapsed hours; the local clock can shift at DST.   "
+          },
+          "panels": {
+            ".workspace": {
+              "x": 0,
+              "y": -196,
+              "width": 704.5,
+              "height": 465.734375,
+              "bottom": 269.734375,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 466,
+              "clientHeight": 466,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -196,
+              "width": 704.5,
+              "height": 465.734375,
+              "bottom": 269.734375,
+              "right": 704.5,
+              "display": "block",
+              "scrollHeight": 466,
+              "clientHeight": 466,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -148,
+              "width": 340,
+              "height": 402.734375,
+              "bottom": 254.734375,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 2078,
+              "clientHeight": 401,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 556,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -184,
+              "width": 81.71875,
+              "height": 34,
+              "bottom": -150,
+              "right": 97.71875,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 80,
+              "clientWidth": 80,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 593.9296875,
+              "y": -184,
+              "width": 94.5703125,
+              "height": 34,
+              "bottom": -150,
+              "right": 688.5,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 269.734375,
+              "width": 704.5,
+              "height": 221.265625,
+              "bottom": 491,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 220,
+              "clientHeight": 220,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "card": {
+            "before": {
+              "bounds": {
+                "x": 195,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 605,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 195,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 615,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1130,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerAfter": {
+              "bounds": {
+                "x": 195,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 605,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 195,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 615,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1130,
+              "scrollTop": 600,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerScrolled": true,
+            "keyboardBefore": {
+              "bounds": {
+                "x": 12,
+                "y": 15.00950813293457,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 422,
+                "bottom": 333.32982063293457
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 432,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1130,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardAfter": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 422,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 432,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1130,
+              "scrollTop": 276,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardScrolled": true,
+            "end": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 422,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 432,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1130,
+              "scrollTop": 815,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "endReached": true,
+            "focusRestored": true,
+            "images": [
+              "1440x900-200-large-earth-hover.png",
+              "1440x900-200-large-earth-pointer-scrolled.png",
+              "1440x900-200-large-earth-keyboard-scrolled.png",
+              "1440x900-200-large-earth-keyboard-end.png"
+            ]
+          },
+          "afterPanels": {
+            ".workspace": {
+              "x": 0,
+              "y": -196,
+              "width": 704.5,
+              "height": 465.734375,
+              "bottom": 269.734375,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 466,
+              "clientHeight": 466,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -196,
+              "width": 704.5,
+              "height": 465.734375,
+              "bottom": 269.734375,
+              "right": 704.5,
+              "display": "block",
+              "scrollHeight": 466,
+              "clientHeight": 466,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -148,
+              "width": 340,
+              "height": 402.734375,
+              "bottom": 254.734375,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 2078,
+              "clientHeight": 401,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 1423,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -184,
+              "width": 81.71875,
+              "height": 34,
+              "bottom": -150,
+              "right": 97.71875,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 80,
+              "clientWidth": 80,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 593.9296875,
+              "y": -184,
+              "width": 94.5703125,
+              "height": 34,
+              "bottom": -150,
+              "right": 688.5,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 269.734375,
+              "width": 704.5,
+              "height": 221.265625,
+              "bottom": 491,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 220,
+              "clientHeight": 220,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "sceneImage": "1440x900-200-large-earth-scene.png",
+          "scenePanels": {
+            ".workspace": {
+              "x": 0,
+              "y": 83,
+              "width": 704.5,
+              "height": 465.734375,
+              "bottom": 548.734375,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 466,
+              "clientHeight": 466,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": 83,
+              "width": 704.5,
+              "height": 465.734375,
+              "bottom": 548.734375,
+              "right": 704.5,
+              "display": "block",
+              "scrollHeight": 466,
+              "clientHeight": 466,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "explorer-dock panel"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": 95,
+              "width": 81.71875,
+              "height": 34,
+              "bottom": 129,
+              "right": 97.71875,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 80,
+              "clientWidth": 80,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 593.9296875,
+              "y": 95,
+              "width": 94.5703125,
+              "height": 34,
+              "bottom": 129,
+              "right": 688.5,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 548.734375,
+              "width": 704.5,
+              "height": 221.265625,
+              "bottom": 770,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 220,
+              "clientHeight": 220,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "compactLayout": {
+            "viewport": {
+              "width": 712,
+              "height": 374,
+              "visualWidth": 704.5
+            },
+            "documentWidth": 704,
+            "noHorizontalOverflow": true,
+            "header": {
+              "x": 0,
+              "y": 0,
+              "width": 704.5,
+              "height": 83,
+              "right": 704.5,
+              "bottom": 83,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+            },
+            "headerChildren": [
+              {
+                "tag": "BUTTON",
+                "className": "brand",
+                "x": 18,
+                "y": 25,
+                "width": 141.84375,
+                "height": 32,
+                "right": 159.84375,
+                "bottom": 57,
+                "scrollWidth": 142,
+                "clientWidth": 142,
+                "text": "✦ SPATIALASTROLOGY EXPLORER"
+              },
+              {
+                "tag": "DIV",
+                "className": "context-details",
+                "x": 352.59375,
+                "y": 10.5,
+                "width": 214.2109375,
+                "height": 61,
+                "right": 566.8046875,
+                "bottom": 71.5,
+                "scrollWidth": 214,
+                "clientWidth": 214,
+                "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+              },
+              {
+                "tag": "BUTTON",
+                "className": "button secondary compact",
+                "x": 584.8046875,
+                "y": 23,
+                "width": 101.6953125,
+                "height": 36,
+                "right": 686.5,
+                "bottom": 59,
+                "scrollWidth": 100,
+                "clientWidth": 100,
+                "text": "⌖ Edit moment"
+              }
+            ],
+            "headerChildrenWithinViewport": true,
+            "headerOverlaps": [],
+            "inspectorToggle": {
+              "x": 593.9296875,
+              "y": 95,
+              "width": 94.5703125,
+              "height": 34,
+              "right": 688.5,
+              "bottom": 129,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "text": "ⓘ Inspector"
+            },
+            "inspectorToggleWithinViewport": true,
+            "openInspector": {
+              "x": 332.5,
+              "width": 360,
+              "right": 692.5,
+              "viewportWidth": 712,
+              "fitsHorizontally": true
+            },
+            "inspectorImage": "1440x900-200-large-earth-inspector.png"
+          }
+        },
+        {
+          "textSize": "large",
+          "view": "outside",
+          "metrics": {
+            "dpr": 2,
+            "innerWidth": 712,
+            "innerHeight": 374,
+            "outerWidth": 1440,
+            "outerHeight": 900,
+            "screenWidth": 3440,
+            "screenHeight": 1440,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 704.5,
+            "documentWidth": 704,
+            "documentHeight": 800,
+            "rootFont": "18px",
+            "compact": true,
+            "footer": "‹ ▶Play › Step1 minute1 hour1 dayCalendar monthCalendar year DirectionForward →← Backward Speed1 minute / real second1 hour / real second1 day / real second30 days / real second365 days / real second WindowCustom window1 hour1 day1 week30 days365 daysAbout 10 years ＋− ↺ Return to birth instantEdit moment ↗ Displayed 2000-01-01 12:00:00 UTCPaused    01 Jan 2000, 00:00 UTC◆ Birth marker02 Jan 2000, 00:00 UTC Thumb: requested · line: displayed · arrows: step · Shift+arrow: 10 steps · Space: play/pauseDay step = 24 elapsed hours; the local clock can shift at DST.   "
+          },
+          "panels": {
+            ".workspace": {
+              "x": 0,
+              "y": -220,
+              "width": 704.5,
+              "height": 465.734375,
+              "bottom": 245.734375,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 466,
+              "clientHeight": 466,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -220,
+              "width": 704.5,
+              "height": 465.734375,
+              "bottom": 245.734375,
+              "right": 704.5,
+              "display": "block",
+              "scrollHeight": 466,
+              "clientHeight": 466,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -172,
+              "width": 340,
+              "height": 402.734375,
+              "bottom": 230.734375,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 2078,
+              "clientHeight": 401,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 556,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -208,
+              "width": 81.71875,
+              "height": 34,
+              "bottom": -174,
+              "right": 97.71875,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 80,
+              "clientWidth": 80,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 593.9296875,
+              "y": -208,
+              "width": 94.5703125,
+              "height": 34,
+              "bottom": -174,
+              "right": 688.5,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 245.734375,
+              "width": 704.5,
+              "height": 221.265625,
+              "bottom": 467,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 220,
+              "clientHeight": 220,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "card": {
+            "before": {
+              "bounds": {
+                "x": 195,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 605,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 195,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 615,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1130,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerAfter": {
+              "bounds": {
+                "x": 195,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 605,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 195,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 615,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1130,
+              "scrollTop": 600,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerScrolled": true,
+            "keyboardBefore": {
+              "bounds": {
+                "x": 12,
+                "y": 15.008363723754883,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 422,
+                "bottom": 333.3286762237549
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 432,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1130,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardAfter": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 422,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 432,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1130,
+              "scrollTop": 276,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardScrolled": true,
+            "end": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 318.3203125,
+                "right": 422,
+                "bottom": 330.3203125
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 318.3203125,
+                "right": 432,
+                "bottom": 330.3203125
+              },
+              "viewport": {
+                "width": 712,
+                "height": 374
+              },
+              "fits": true,
+              "clientHeight": 315,
+              "scrollHeight": 1130,
+              "scrollTop": 815,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "endReached": true,
+            "focusRestored": true,
+            "images": [
+              "1440x900-200-large-outside-hover.png",
+              "1440x900-200-large-outside-pointer-scrolled.png",
+              "1440x900-200-large-outside-keyboard-scrolled.png",
+              "1440x900-200-large-outside-keyboard-end.png"
+            ]
+          },
+          "afterPanels": {
+            ".workspace": {
+              "x": 0,
+              "y": -220,
+              "width": 704.5,
+              "height": 465.734375,
+              "bottom": 245.734375,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 466,
+              "clientHeight": 466,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -220,
+              "width": 704.5,
+              "height": 465.734375,
+              "bottom": 245.734375,
+              "right": 704.5,
+              "display": "block",
+              "scrollHeight": 466,
+              "clientHeight": 466,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -172,
+              "width": 340,
+              "height": 402.734375,
+              "bottom": 230.734375,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 2078,
+              "clientHeight": 401,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 1423,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -208,
+              "width": 81.71875,
+              "height": 34,
+              "bottom": -174,
+              "right": 97.71875,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 80,
+              "clientWidth": 80,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 593.9296875,
+              "y": -208,
+              "width": 94.5703125,
+              "height": 34,
+              "bottom": -174,
+              "right": 688.5,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 245.734375,
+              "width": 704.5,
+              "height": 221.265625,
+              "bottom": 467,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 220,
+              "clientHeight": 220,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "sceneImage": "1440x900-200-large-outside-scene.png",
+          "scenePanels": {
+            ".workspace": {
+              "x": 0,
+              "y": 83,
+              "width": 704.5,
+              "height": 465.734375,
+              "bottom": 548.734375,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 466,
+              "clientHeight": 466,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": 83,
+              "width": 704.5,
+              "height": 465.734375,
+              "bottom": 548.734375,
+              "right": 704.5,
+              "display": "block",
+              "scrollHeight": 466,
+              "clientHeight": 466,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "explorer-dock panel"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": 95,
+              "width": 81.71875,
+              "height": 34,
+              "bottom": 129,
+              "right": 97.71875,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 80,
+              "clientWidth": 80,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 593.9296875,
+              "y": 95,
+              "width": 94.5703125,
+              "height": 34,
+              "bottom": 129,
+              "right": 688.5,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 548.734375,
+              "width": 704.5,
+              "height": 221.265625,
+              "bottom": 770,
+              "right": 704.5,
+              "display": "grid",
+              "scrollHeight": 220,
+              "clientHeight": 220,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "compactLayout": {
+            "viewport": {
+              "width": 712,
+              "height": 374,
+              "visualWidth": 704.5
+            },
+            "documentWidth": 704,
+            "noHorizontalOverflow": true,
+            "header": {
+              "x": 0,
+              "y": 0,
+              "width": 704.5,
+              "height": 83,
+              "right": 704.5,
+              "bottom": 83,
+              "scrollWidth": 705,
+              "clientWidth": 705,
+              "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+            },
+            "headerChildren": [
+              {
+                "tag": "BUTTON",
+                "className": "brand",
+                "x": 18,
+                "y": 25,
+                "width": 141.84375,
+                "height": 32,
+                "right": 159.84375,
+                "bottom": 57,
+                "scrollWidth": 142,
+                "clientWidth": 142,
+                "text": "✦ SPATIALASTROLOGY EXPLORER"
+              },
+              {
+                "tag": "DIV",
+                "className": "context-details",
+                "x": 352.59375,
+                "y": 10.5,
+                "width": 214.2109375,
+                "height": 61,
+                "right": 566.8046875,
+                "bottom": 71.5,
+                "scrollWidth": 214,
+                "clientWidth": 214,
+                "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+              },
+              {
+                "tag": "BUTTON",
+                "className": "button secondary compact",
+                "x": 584.8046875,
+                "y": 23,
+                "width": 101.6953125,
+                "height": 36,
+                "right": 686.5,
+                "bottom": 59,
+                "scrollWidth": 100,
+                "clientWidth": 100,
+                "text": "⌖ Edit moment"
+              }
+            ],
+            "headerChildrenWithinViewport": true,
+            "headerOverlaps": [],
+            "inspectorToggle": {
+              "x": 593.9296875,
+              "y": 95,
+              "width": 94.5703125,
+              "height": 34,
+              "right": 688.5,
+              "bottom": 129,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "text": "ⓘ Inspector"
+            },
+            "inspectorToggleWithinViewport": true,
+            "openInspector": {
+              "x": 332.5,
+              "width": 360,
+              "right": 692.5,
+              "viewportWidth": 712,
+              "fitsHorizontally": true
+            },
+            "inspectorImage": "1440x900-200-large-outside-inspector.png"
+          }
+        }
+      ],
+      "before": {
+        "dpr": 1,
+        "innerWidth": 1424,
+        "innerHeight": 749,
+        "outerWidth": 1440,
+        "outerHeight": 900,
+        "screenWidth": 3440,
+        "screenHeight": 1440,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 1424,
+        "documentWidth": 1424,
+        "documentHeight": 749,
+        "rootFont": "16px",
+        "compact": false,
+        "footer": "‹ ▶Play › Step1 minute1 hour1 dayCalendar monthCalendar year DirectionForward →← Backward Speed1 minute / real second1 hour / real second1 day / real second30 days / real second365 days / real second WindowCustom window1 hour1 day1 week30 days365 daysAbout 10 years ＋− ↺ Return to birth instantEdit moment ↗ Displayed 2000-01-01 12:00:00 UTCPaused    01 Jan 2000, 00:00 UTC◆ Birth marker02 Jan 2000, 00:00 UTC Thumb: requested · line: displayed · arrows: step · Shift+arrow: 10 steps · Space: play/pauseDay step = 24 elapsed hours; the local clock can shift at DST.   "
+      },
+      "nativeBoundsBefore": {
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "width": 1440,
+          "height": 900,
+          "windowState": "normal"
+        }
+      },
+      "zoomSettingsImage": "settings-200-1440.png",
+      "after": {
+        "dpr": 2,
+        "innerWidth": 712,
+        "innerHeight": 374,
+        "outerWidth": 1440,
+        "outerHeight": 900,
+        "screenWidth": 3440,
+        "screenHeight": 1440,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 704.5,
+        "documentWidth": 704,
+        "documentHeight": 800,
+        "rootFont": "16px",
+        "compact": true,
+        "footer": "‹ ▶Play › Step1 minute1 hour1 dayCalendar monthCalendar year DirectionForward →← Backward Speed1 minute / real second1 hour / real second1 day / real second30 days / real second365 days / real second WindowCustom window1 hour1 day1 week30 days365 daysAbout 10 years ＋− ↺ Return to birth instantEdit moment ↗ Displayed 2000-01-01 12:00:00 UTCPaused    01 Jan 2000, 00:00 UTC◆ Birth marker02 Jan 2000, 00:00 UTC Thumb: requested · line: displayed · arrows: step · Shift+arrow: 10 steps · Space: play/pauseDay step = 24 elapsed hours; the local clock can shift at DST.   "
+      },
+      "zoomRatio": 2,
+      "widthRatio": 2,
+      "nativeBoundsAfter": {
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "width": 1440,
+          "height": 900,
+          "windowState": "normal"
+        }
+      }
+    },
+    {
+      "targetNativeWindow": {
+        "width": 1024,
+        "height": 768
+      },
+      "states": [
+        {
+          "textSize": "standard",
+          "view": "earth",
+          "metrics": {
+            "dpr": 2,
+            "innerWidth": 504,
+            "innerHeight": 308,
+            "outerWidth": 1024,
+            "outerHeight": 768,
+            "screenWidth": 3440,
+            "screenHeight": 1440,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 496.5,
+            "documentWidth": 496,
+            "documentHeight": 800,
+            "rootFont": "16px",
+            "compact": true,
+            "footer": "‹ ▶Play › Step1 minute1 hour1 dayCalendar monthCalendar year DirectionForward →← Backward Speed1 minute / real second1 hour / real second1 day / real second30 days / real second365 days / real second WindowCustom window1 hour1 day1 week30 days365 daysAbout 10 years ＋− ↺ Return to birth instantEdit moment ↗ Displayed 2000-01-01 12:00:00 UTCPaused    01 Jan 2000, 00:00 UTC◆ Birth marker02 Jan 2000, 00:00 UTC Thumb: requested · line: displayed · arrows: step · Shift+arrow: 10 steps · Space: play/pauseDay step = 24 elapsed hours; the local clock can shift at DST.   "
+          },
+          "panels": {
+            ".workspace": {
+              "x": 0,
+              "y": -150,
+              "width": 496.5,
+              "height": 442.328125,
+              "bottom": 292.328125,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 442,
+              "clientHeight": 442,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -150,
+              "width": 496.5,
+              "height": 442.328125,
+              "bottom": 292.328125,
+              "right": 496.5,
+              "display": "block",
+              "scrollHeight": 442,
+              "clientHeight": 442,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -102,
+              "width": 340,
+              "height": 379.328125,
+              "bottom": 277.328125,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 1183,
+              "clientHeight": 377,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 614,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -138,
+              "width": 75.0859375,
+              "height": 32,
+              "bottom": -106,
+              "right": 91.0859375,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 73,
+              "clientWidth": 73,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 393.9921875,
+              "y": -138,
+              "width": 86.5078125,
+              "height": 32,
+              "bottom": -106,
+              "right": 480.5,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 292.328125,
+              "width": 496.5,
+              "height": 244.671875,
+              "bottom": 537,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 244,
+              "clientHeight": 244,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "card": {
+            "before": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1025,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerAfter": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1025,
+              "scrollTop": 600,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerScrolled": true,
+            "keyboardBefore": {
+              "bounds": {
+                "x": 12,
+                "y": 14.736467361450195,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 276.9552173614502
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1025,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardAfter": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1025,
+              "scrollTop": 226.5,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardScrolled": true,
+            "end": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1025,
+              "scrollTop": 766,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "endReached": true,
+            "focusRestored": true,
+            "images": [
+              "1024x768-200-standard-earth-hover.png",
+              "1024x768-200-standard-earth-pointer-scrolled.png",
+              "1024x768-200-standard-earth-keyboard-scrolled.png",
+              "1024x768-200-standard-earth-keyboard-end.png"
+            ]
+          },
+          "afterPanels": {
+            ".workspace": {
+              "x": 0,
+              "y": -150,
+              "width": 496.5,
+              "height": 442.328125,
+              "bottom": 292.328125,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 442,
+              "clientHeight": 442,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -150,
+              "width": 496.5,
+              "height": 442.328125,
+              "bottom": 292.328125,
+              "right": 496.5,
+              "display": "block",
+              "scrollHeight": 442,
+              "clientHeight": 442,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -102,
+              "width": 340,
+              "height": 379.328125,
+              "bottom": 277.328125,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 1979,
+              "clientHeight": 377,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 1343,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -138,
+              "width": 75.0859375,
+              "height": 32,
+              "bottom": -106,
+              "right": 91.0859375,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 73,
+              "clientWidth": 73,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 393.9921875,
+              "y": -138,
+              "width": 86.5078125,
+              "height": 32,
+              "bottom": -106,
+              "right": 480.5,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 292.328125,
+              "width": 496.5,
+              "height": 244.671875,
+              "bottom": 537,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 244,
+              "clientHeight": 244,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "sceneImage": "1024x768-200-standard-earth-scene.png",
+          "scenePanels": {
+            ".workspace": {
+              "x": 0,
+              "y": 77.5,
+              "width": 496.5,
+              "height": 442.328125,
+              "bottom": 519.828125,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 442,
+              "clientHeight": 442,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": 77.5,
+              "width": 496.5,
+              "height": 442.328125,
+              "bottom": 519.828125,
+              "right": 496.5,
+              "display": "block",
+              "scrollHeight": 442,
+              "clientHeight": 442,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "explorer-dock panel"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": 89.5,
+              "width": 75.0859375,
+              "height": 32,
+              "bottom": 121.5,
+              "right": 91.0859375,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 73,
+              "clientWidth": 73,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 393.9921875,
+              "y": 89.5,
+              "width": 86.5078125,
+              "height": 32,
+              "bottom": 121.5,
+              "right": 480.5,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 519.828125,
+              "width": 496.5,
+              "height": 244.671875,
+              "bottom": 764.5,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 244,
+              "clientHeight": 244,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "compactLayout": {
+            "viewport": {
+              "width": 504,
+              "height": 308,
+              "visualWidth": 496.5
+            },
+            "documentWidth": 496,
+            "noHorizontalOverflow": true,
+            "header": {
+              "x": 0,
+              "y": 0,
+              "width": 496.5,
+              "height": 83,
+              "right": 496.5,
+              "bottom": 83,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+            },
+            "headerChildren": [
+              {
+                "tag": "BUTTON",
+                "className": "brand",
+                "x": 18,
+                "y": 25,
+                "width": 133.75,
+                "height": 32,
+                "right": 151.75,
+                "bottom": 57,
+                "scrollWidth": 134,
+                "clientWidth": 134,
+                "text": "✦ SPATIALASTROLOGY EXPLORER"
+              },
+              {
+                "tag": "DIV",
+                "className": "context-details",
+                "x": 177.1953125,
+                "y": 13,
+                "width": 190.40625,
+                "height": 56,
+                "right": 367.6015625,
+                "bottom": 69,
+                "scrollWidth": 190,
+                "clientWidth": 190,
+                "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+              },
+              {
+                "tag": "BUTTON",
+                "className": "button secondary compact",
+                "x": 385.6015625,
+                "y": 24,
+                "width": 92.8984375,
+                "height": 34,
+                "right": 478.5,
+                "bottom": 58,
+                "scrollWidth": 91,
+                "clientWidth": 91,
+                "text": "⌖ Edit moment"
+              }
+            ],
+            "headerChildrenWithinViewport": true,
+            "headerOverlaps": [],
+            "inspectorToggle": {
+              "x": 393.9921875,
+              "y": 95,
+              "width": 86.5078125,
+              "height": 32,
+              "right": 480.5,
+              "bottom": 127,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "text": "ⓘ Inspector"
+            },
+            "inspectorToggleWithinViewport": true,
+            "openInspector": {
+              "x": 124.5,
+              "width": 360,
+              "right": 484.5,
+              "viewportWidth": 504,
+              "fitsHorizontally": true
+            },
+            "inspectorImage": "1024x768-200-standard-earth-inspector.png"
+          }
+        },
+        {
+          "textSize": "standard",
+          "view": "outside",
+          "metrics": {
+            "dpr": 2,
+            "innerWidth": 504,
+            "innerHeight": 308,
+            "outerWidth": 1024,
+            "outerHeight": 768,
+            "screenWidth": 3440,
+            "screenHeight": 1440,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 496.5,
+            "documentWidth": 496,
+            "documentHeight": 800,
+            "rootFont": "16px",
+            "compact": true,
+            "footer": "‹ ▶Play › Step1 minute1 hour1 dayCalendar monthCalendar year DirectionForward →← Backward Speed1 minute / real second1 hour / real second1 day / real second30 days / real second365 days / real second WindowCustom window1 hour1 day1 week30 days365 daysAbout 10 years ＋− ↺ Return to birth instantEdit moment ↗ Displayed 2000-01-01 12:00:00 UTCPaused    01 Jan 2000, 00:00 UTC◆ Birth marker02 Jan 2000, 00:00 UTC Thumb: requested · line: displayed · arrows: step · Shift+arrow: 10 steps · Space: play/pauseDay step = 24 elapsed hours; the local clock can shift at DST.   "
+          },
+          "panels": {
+            ".workspace": {
+              "x": 0,
+              "y": -213,
+              "width": 496.5,
+              "height": 442.328125,
+              "bottom": 229.328125,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 442,
+              "clientHeight": 442,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -213,
+              "width": 496.5,
+              "height": 442.328125,
+              "bottom": 229.328125,
+              "right": 496.5,
+              "display": "block",
+              "scrollHeight": 442,
+              "clientHeight": 442,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -165,
+              "width": 340,
+              "height": 379.328125,
+              "bottom": 214.328125,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 1979,
+              "clientHeight": 377,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 551,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -201,
+              "width": 75.0859375,
+              "height": 32,
+              "bottom": -169,
+              "right": 91.0859375,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 73,
+              "clientWidth": 73,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 393.9921875,
+              "y": -201,
+              "width": 86.5078125,
+              "height": 32,
+              "bottom": -169,
+              "right": 480.5,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 229.328125,
+              "width": 496.5,
+              "height": 244.671875,
+              "bottom": 474,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 244,
+              "clientHeight": 244,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "card": {
+            "before": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1025,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerAfter": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1025,
+              "scrollTop": 600,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerScrolled": true,
+            "keyboardBefore": {
+              "bounds": {
+                "x": 12,
+                "y": 14.70669937133789,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 276.9254493713379
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1025,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardAfter": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1025,
+              "scrollTop": 226.5,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardScrolled": true,
+            "end": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1025,
+              "scrollTop": 766,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "16px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "endReached": true,
+            "focusRestored": true,
+            "images": [
+              "1024x768-200-standard-outside-hover.png",
+              "1024x768-200-standard-outside-pointer-scrolled.png",
+              "1024x768-200-standard-outside-keyboard-scrolled.png",
+              "1024x768-200-standard-outside-keyboard-end.png"
+            ]
+          },
+          "afterPanels": {
+            ".workspace": {
+              "x": 0,
+              "y": -211,
+              "width": 496.5,
+              "height": 442.328125,
+              "bottom": 231.328125,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 442,
+              "clientHeight": 442,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -211,
+              "width": 496.5,
+              "height": 442.328125,
+              "bottom": 231.328125,
+              "right": 496.5,
+              "display": "block",
+              "scrollHeight": 442,
+              "clientHeight": 442,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -163,
+              "width": 340,
+              "height": 379.328125,
+              "bottom": 216.328125,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 1979,
+              "clientHeight": 377,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 1343,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -199,
+              "width": 75.0859375,
+              "height": 32,
+              "bottom": -167,
+              "right": 91.0859375,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 73,
+              "clientWidth": 73,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 393.9921875,
+              "y": -199,
+              "width": 86.5078125,
+              "height": 32,
+              "bottom": -167,
+              "right": 480.5,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 231.328125,
+              "width": 496.5,
+              "height": 244.671875,
+              "bottom": 476,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 244,
+              "clientHeight": 244,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "sceneImage": "1024x768-200-standard-outside-scene.png",
+          "scenePanels": {
+            ".workspace": {
+              "x": 0,
+              "y": 77.5,
+              "width": 496.5,
+              "height": 442.328125,
+              "bottom": 519.828125,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 442,
+              "clientHeight": 442,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": 77.5,
+              "width": 496.5,
+              "height": 442.328125,
+              "bottom": 519.828125,
+              "right": 496.5,
+              "display": "block",
+              "scrollHeight": 442,
+              "clientHeight": 442,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "explorer-dock panel"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": 89.5,
+              "width": 75.0859375,
+              "height": 32,
+              "bottom": 121.5,
+              "right": 91.0859375,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 73,
+              "clientWidth": 73,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 393.9921875,
+              "y": 89.5,
+              "width": 86.5078125,
+              "height": 32,
+              "bottom": 121.5,
+              "right": 480.5,
+              "display": "block",
+              "scrollHeight": 30,
+              "clientHeight": 30,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 519.828125,
+              "width": 496.5,
+              "height": 244.671875,
+              "bottom": 764.5,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 244,
+              "clientHeight": 244,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "compactLayout": {
+            "viewport": {
+              "width": 504,
+              "height": 308,
+              "visualWidth": 496.5
+            },
+            "documentWidth": 496,
+            "noHorizontalOverflow": true,
+            "header": {
+              "x": 0,
+              "y": 0,
+              "width": 496.5,
+              "height": 83,
+              "right": 496.5,
+              "bottom": 83,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+            },
+            "headerChildren": [
+              {
+                "tag": "BUTTON",
+                "className": "brand",
+                "x": 18,
+                "y": 25,
+                "width": 133.75,
+                "height": 32,
+                "right": 151.75,
+                "bottom": 57,
+                "scrollWidth": 134,
+                "clientWidth": 134,
+                "text": "✦ SPATIALASTROLOGY EXPLORER"
+              },
+              {
+                "tag": "DIV",
+                "className": "context-details",
+                "x": 177.1953125,
+                "y": 13,
+                "width": 190.40625,
+                "height": 56,
+                "right": 367.6015625,
+                "bottom": 69,
+                "scrollWidth": 190,
+                "clientWidth": 190,
+                "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+              },
+              {
+                "tag": "BUTTON",
+                "className": "button secondary compact",
+                "x": 385.6015625,
+                "y": 24,
+                "width": 92.8984375,
+                "height": 34,
+                "right": 478.5,
+                "bottom": 58,
+                "scrollWidth": 91,
+                "clientWidth": 91,
+                "text": "⌖ Edit moment"
+              }
+            ],
+            "headerChildrenWithinViewport": true,
+            "headerOverlaps": [],
+            "inspectorToggle": {
+              "x": 393.9921875,
+              "y": 95,
+              "width": 86.5078125,
+              "height": 32,
+              "right": 480.5,
+              "bottom": 127,
+              "scrollWidth": 85,
+              "clientWidth": 85,
+              "text": "ⓘ Inspector"
+            },
+            "inspectorToggleWithinViewport": true,
+            "openInspector": {
+              "x": 124.5,
+              "width": 360,
+              "right": 484.5,
+              "viewportWidth": 504,
+              "fitsHorizontally": true
+            },
+            "inspectorImage": "1024x768-200-standard-outside-inspector.png"
+          }
+        },
+        {
+          "textSize": "large",
+          "view": "earth",
+          "metrics": {
+            "dpr": 2,
+            "innerWidth": 504,
+            "innerHeight": 308,
+            "outerWidth": 1024,
+            "outerHeight": 768,
+            "screenWidth": 3440,
+            "screenHeight": 1440,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 496.5,
+            "documentWidth": 496,
+            "documentHeight": 800,
+            "rootFont": "18px",
+            "compact": true,
+            "footer": "‹ ▶Play › Step1 minute1 hour1 dayCalendar monthCalendar year DirectionForward →← Backward Speed1 minute / real second1 hour / real second1 day / real second30 days / real second365 days / real second WindowCustom window1 hour1 day1 week30 days365 daysAbout 10 years ＋− ↺ Return to birth instantEdit moment ↗ Displayed 2000-01-01 12:00:00 UTCPaused    01 Jan 2000, 00:00 UTC◆ Birth marker02 Jan 2000, 00:00 UTC Thumb: requested · line: displayed · arrows: step · Shift+arrow: 10 steps · Space: play/pauseDay step = 24 elapsed hours; the local clock can shift at DST.   "
+          },
+          "panels": {
+            ".workspace": {
+              "x": 0,
+              "y": -190,
+              "width": 496.5,
+              "height": 408.9375,
+              "bottom": 218.9375,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 409,
+              "clientHeight": 409,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -190,
+              "width": 496.5,
+              "height": 408.9375,
+              "bottom": 218.9375,
+              "right": 496.5,
+              "display": "block",
+              "scrollHeight": 409,
+              "clientHeight": 409,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -142,
+              "width": 340,
+              "height": 345.9375,
+              "bottom": 203.9375,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 2078,
+              "clientHeight": 344,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 584.5,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -178,
+              "width": 81.71875,
+              "height": 34,
+              "bottom": -144,
+              "right": 97.71875,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 80,
+              "clientWidth": 80,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 385.9296875,
+              "y": -178,
+              "width": 94.5703125,
+              "height": 34,
+              "bottom": -144,
+              "right": 480.5,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 218.9375,
+              "width": 496.5,
+              "height": 278.0625,
+              "bottom": 497,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 277,
+              "clientHeight": 277,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "card": {
+            "before": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1130,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerAfter": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1130,
+              "scrollTop": 600,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerScrolled": true,
+            "keyboardBefore": {
+              "bounds": {
+                "x": 12,
+                "y": 15.32269287109375,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 277.54144287109375
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1130,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardAfter": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1130,
+              "scrollTop": 226.5,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardScrolled": true,
+            "end": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1130,
+              "scrollTop": 871.5,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "endReached": true,
+            "focusRestored": true,
+            "images": [
+              "1024x768-200-large-earth-hover.png",
+              "1024x768-200-large-earth-pointer-scrolled.png",
+              "1024x768-200-large-earth-keyboard-scrolled.png",
+              "1024x768-200-large-earth-keyboard-end.png"
+            ]
+          },
+          "afterPanels": {
+            ".workspace": {
+              "x": 0,
+              "y": -190,
+              "width": 496.5,
+              "height": 408.9375,
+              "bottom": 218.9375,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 409,
+              "clientHeight": 409,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -190,
+              "width": 496.5,
+              "height": 408.9375,
+              "bottom": 218.9375,
+              "right": 496.5,
+              "display": "block",
+              "scrollHeight": 409,
+              "clientHeight": 409,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -142,
+              "width": 340,
+              "height": 345.9375,
+              "bottom": 203.9375,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 2078,
+              "clientHeight": 344,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 1451.5,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -178,
+              "width": 81.71875,
+              "height": 34,
+              "bottom": -144,
+              "right": 97.71875,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 80,
+              "clientWidth": 80,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 385.9296875,
+              "y": -178,
+              "width": 94.5703125,
+              "height": 34,
+              "bottom": -144,
+              "right": 480.5,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 218.9375,
+              "width": 496.5,
+              "height": 278.0625,
+              "bottom": 497,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 277,
+              "clientHeight": 277,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "sceneImage": "1024x768-200-large-earth-scene.png",
+          "scenePanels": {
+            ".workspace": {
+              "x": 0,
+              "y": 77.5,
+              "width": 496.5,
+              "height": 408.9375,
+              "bottom": 486.4375,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 409,
+              "clientHeight": 409,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": 77.5,
+              "width": 496.5,
+              "height": 408.9375,
+              "bottom": 486.4375,
+              "right": 496.5,
+              "display": "block",
+              "scrollHeight": 409,
+              "clientHeight": 409,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "explorer-dock panel"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": 89.5,
+              "width": 81.71875,
+              "height": 34,
+              "bottom": 123.5,
+              "right": 97.71875,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 80,
+              "clientWidth": 80,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 385.9296875,
+              "y": 89.5,
+              "width": 94.5703125,
+              "height": 34,
+              "bottom": 123.5,
+              "right": 480.5,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 486.4375,
+              "width": 496.5,
+              "height": 278.0625,
+              "bottom": 764.5,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 277,
+              "clientHeight": 277,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "compactLayout": {
+            "viewport": {
+              "width": 504,
+              "height": 308,
+              "visualWidth": 496.5
+            },
+            "documentWidth": 496,
+            "noHorizontalOverflow": true,
+            "header": {
+              "x": 0,
+              "y": 0,
+              "width": 496.5,
+              "height": 83,
+              "right": 496.5,
+              "bottom": 83,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+            },
+            "headerChildren": [
+              {
+                "tag": "BUTTON",
+                "className": "brand",
+                "x": 18,
+                "y": 25,
+                "width": 141.84375,
+                "height": 32,
+                "right": 159.84375,
+                "bottom": 57,
+                "scrollWidth": 142,
+                "clientWidth": 142,
+                "text": "✦ SPATIALASTROLOGY EXPLORER"
+              },
+              {
+                "tag": "DIV",
+                "className": "context-details",
+                "x": 177.84375,
+                "y": 2.25,
+                "width": 180.9609375,
+                "height": 77.5,
+                "right": 358.8046875,
+                "bottom": 79.75,
+                "scrollWidth": 181,
+                "clientWidth": 181,
+                "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+              },
+              {
+                "tag": "BUTTON",
+                "className": "button secondary compact",
+                "x": 376.8046875,
+                "y": 23,
+                "width": 101.6953125,
+                "height": 36,
+                "right": 478.5,
+                "bottom": 59,
+                "scrollWidth": 100,
+                "clientWidth": 100,
+                "text": "⌖ Edit moment"
+              }
+            ],
+            "headerChildrenWithinViewport": true,
+            "headerOverlaps": [],
+            "inspectorToggle": {
+              "x": 385.9296875,
+              "y": 95,
+              "width": 94.5703125,
+              "height": 34,
+              "right": 480.5,
+              "bottom": 129,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "text": "ⓘ Inspector"
+            },
+            "inspectorToggleWithinViewport": true,
+            "openInspector": {
+              "x": 124.5,
+              "width": 360,
+              "right": 484.5,
+              "viewportWidth": 504,
+              "fitsHorizontally": true
+            },
+            "inspectorImage": "1024x768-200-large-earth-inspector.png"
+          }
+        },
+        {
+          "textSize": "large",
+          "view": "outside",
+          "metrics": {
+            "dpr": 2,
+            "innerWidth": 504,
+            "innerHeight": 308,
+            "outerWidth": 1024,
+            "outerHeight": 768,
+            "screenWidth": 3440,
+            "screenHeight": 1440,
+            "visualViewportScale": 1,
+            "visualViewportWidth": 496.5,
+            "documentWidth": 496,
+            "documentHeight": 800,
+            "rootFont": "18px",
+            "compact": true,
+            "footer": "‹ ▶Play › Step1 minute1 hour1 dayCalendar monthCalendar year DirectionForward →← Backward Speed1 minute / real second1 hour / real second1 day / real second30 days / real second365 days / real second WindowCustom window1 hour1 day1 week30 days365 daysAbout 10 years ＋− ↺ Return to birth instantEdit moment ↗ Displayed 2000-01-01 12:00:00 UTCPaused    01 Jan 2000, 00:00 UTC◆ Birth marker02 Jan 2000, 00:00 UTC Thumb: requested · line: displayed · arrows: step · Shift+arrow: 10 steps · Space: play/pauseDay step = 24 elapsed hours; the local clock can shift at DST.   "
+          },
+          "panels": {
+            ".workspace": {
+              "x": 0,
+              "y": -189,
+              "width": 496.5,
+              "height": 408.9375,
+              "bottom": 219.9375,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 409,
+              "clientHeight": 409,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -189,
+              "width": 496.5,
+              "height": 408.9375,
+              "bottom": 219.9375,
+              "right": 496.5,
+              "display": "block",
+              "scrollHeight": 409,
+              "clientHeight": 409,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -141,
+              "width": 340,
+              "height": 345.9375,
+              "bottom": 204.9375,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 2078,
+              "clientHeight": 344,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 590.5,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -177,
+              "width": 81.71875,
+              "height": 34,
+              "bottom": -143,
+              "right": 97.71875,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 80,
+              "clientWidth": 80,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 385.9296875,
+              "y": -177,
+              "width": 94.5703125,
+              "height": 34,
+              "bottom": -143,
+              "right": 480.5,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 219.9375,
+              "width": 496.5,
+              "height": 278.0625,
+              "bottom": 498,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 277,
+              "clientHeight": 277,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "card": {
+            "before": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1130,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerAfter": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1130,
+              "scrollTop": 600,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": false,
+              "wrapperScrollTop": 0
+            },
+            "pointerScrolled": true,
+            "keyboardBefore": {
+              "bounds": {
+                "x": 12,
+                "y": 14.413928985595703,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 276.6326789855957
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1130,
+              "scrollTop": 0,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardAfter": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1130,
+              "scrollTop": 226.5,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "keyboardScrolled": true,
+            "end": {
+              "bounds": {
+                "x": 12,
+                "y": 12,
+                "width": 410,
+                "height": 262.21875,
+                "right": 422,
+                "bottom": 274.21875
+              },
+              "wrapperBounds": {
+                "x": 12,
+                "y": 12,
+                "width": 420,
+                "height": 262.21875,
+                "right": 432,
+                "bottom": 274.21875
+              },
+              "viewport": {
+                "width": 504,
+                "height": 308
+              },
+              "fits": true,
+              "clientHeight": 259,
+              "scrollHeight": 1130,
+              "scrollTop": 871.5,
+              "clientWidth": 402,
+              "scrollWidth": 402,
+              "overflowY": "auto",
+              "font": "18px",
+              "paragraphCount": 3,
+              "sections": [
+                "aspect-type:sextile",
+                "body-in-sign:sun:capricorn",
+                "body-in-sign:moon:scorpio"
+              ],
+              "measurements": "Longitude separation 57.05°Target 60.00°Departure 2.95°Configured orb 6.00°Actual sky angle 57.20°Displayed moment 2000-01-01 · 12:00:00 UTC",
+              "active": true,
+              "wrapperScrollTop": 0
+            },
+            "endReached": true,
+            "focusRestored": true,
+            "images": [
+              "1024x768-200-large-outside-hover.png",
+              "1024x768-200-large-outside-pointer-scrolled.png",
+              "1024x768-200-large-outside-keyboard-scrolled.png",
+              "1024x768-200-large-outside-keyboard-end.png"
+            ]
+          },
+          "afterPanels": {
+            ".workspace": {
+              "x": 0,
+              "y": -189,
+              "width": 496.5,
+              "height": 408.9375,
+              "bottom": 219.9375,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 409,
+              "clientHeight": 409,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": -189,
+              "width": 496.5,
+              "height": 408.9375,
+              "bottom": 219.9375,
+              "right": 496.5,
+              "display": "block",
+              "scrollHeight": 409,
+              "clientHeight": 409,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 12,
+              "y": -141,
+              "width": 340,
+              "height": 345.9375,
+              "bottom": 204.9375,
+              "right": 352,
+              "display": "flex",
+              "scrollHeight": 2078,
+              "clientHeight": 344,
+              "scrollWidth": 333,
+              "clientWidth": 333,
+              "scrollTop": 1451.5,
+              "inert": false,
+              "classes": "explorer-dock panel drawer-open"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": -177,
+              "width": 81.71875,
+              "height": 34,
+              "bottom": -143,
+              "right": 97.71875,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 80,
+              "clientWidth": 80,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 385.9296875,
+              "y": -177,
+              "width": 94.5703125,
+              "height": 34,
+              "bottom": -143,
+              "right": 480.5,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 219.9375,
+              "width": 496.5,
+              "height": 278.0625,
+              "bottom": 498,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 277,
+              "clientHeight": 277,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "sceneImage": "1024x768-200-large-outside-scene.png",
+          "scenePanels": {
+            ".workspace": {
+              "x": 0,
+              "y": 77.5,
+              "width": 496.5,
+              "height": 408.9375,
+              "bottom": 486.4375,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 409,
+              "clientHeight": 409,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "workspace inspector-collapsed"
+            },
+            ".scene-stage": {
+              "x": 0,
+              "y": 77.5,
+              "width": 496.5,
+              "height": 408.9375,
+              "bottom": 486.4375,
+              "right": 496.5,
+              "display": "block",
+              "scrollHeight": 409,
+              "clientHeight": 409,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "scene-stage"
+            },
+            "#explorer-dock": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "explorer-dock panel"
+            },
+            "#inspector": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "bottom": 0,
+              "right": 0,
+              "display": "none",
+              "scrollHeight": 0,
+              "clientHeight": 0,
+              "scrollWidth": 0,
+              "clientWidth": 0,
+              "scrollTop": 0,
+              "inert": true,
+              "classes": "inspector panel"
+            },
+            ".left-toggle": {
+              "x": 16,
+              "y": 89.5,
+              "width": 81.71875,
+              "height": 34,
+              "bottom": 123.5,
+              "right": 97.71875,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 80,
+              "clientWidth": 80,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle left-toggle"
+            },
+            ".right-toggle": {
+              "x": 385.9296875,
+              "y": 89.5,
+              "width": 94.5703125,
+              "height": 34,
+              "bottom": 123.5,
+              "right": 480.5,
+              "display": "block",
+              "scrollHeight": 32,
+              "clientHeight": 32,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "mobile-panel-toggle right-toggle"
+            },
+            ".explorer-timeline": {
+              "x": 0,
+              "y": 486.4375,
+              "width": 496.5,
+              "height": 278.0625,
+              "bottom": 764.5,
+              "right": 496.5,
+              "display": "grid",
+              "scrollHeight": 277,
+              "clientHeight": 277,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "scrollTop": 0,
+              "inert": false,
+              "classes": "timeline explorer-timeline svelte-hwm3dn"
+            }
+          },
+          "compactLayout": {
+            "viewport": {
+              "width": 504,
+              "height": 308,
+              "visualWidth": 496.5
+            },
+            "documentWidth": 496,
+            "noHorizontalOverflow": true,
+            "header": {
+              "x": 0,
+              "y": 0,
+              "width": 496.5,
+              "height": 83,
+              "right": 496.5,
+              "bottom": 83,
+              "scrollWidth": 497,
+              "clientWidth": 497,
+              "text": "✦ SPATIALASTROLOGY EXPLORER ◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗ ⌖ Edit moment"
+            },
+            "headerChildren": [
+              {
+                "tag": "BUTTON",
+                "className": "brand",
+                "x": 18,
+                "y": 25,
+                "width": 141.84375,
+                "height": 32,
+                "right": 159.84375,
+                "bottom": 57,
+                "scrollWidth": 142,
+                "clientWidth": 142,
+                "text": "✦ SPATIALASTROLOGY EXPLORER"
+              },
+              {
+                "tag": "DIV",
+                "className": "context-details",
+                "x": 177.84375,
+                "y": 2.25,
+                "width": 180.9609375,
+                "height": 77.5,
+                "right": 358.8046875,
+                "bottom": 79.75,
+                "scrollWidth": 181,
+                "clientWidth": 181,
+                "text": "◷ 2000-01-01 · 12:00:00 local01 Jan 2000 · 12:00:00 UTC · UTC+00:00Birth moment · Whole Sign  51.50° N · 0.00° EEurope/London · Change location ↗"
+              },
+              {
+                "tag": "BUTTON",
+                "className": "button secondary compact",
+                "x": 376.8046875,
+                "y": 23,
+                "width": 101.6953125,
+                "height": 36,
+                "right": 478.5,
+                "bottom": 59,
+                "scrollWidth": 100,
+                "clientWidth": 100,
+                "text": "⌖ Edit moment"
+              }
+            ],
+            "headerChildrenWithinViewport": true,
+            "headerOverlaps": [],
+            "inspectorToggle": {
+              "x": 385.9296875,
+              "y": 95,
+              "width": 94.5703125,
+              "height": 34,
+              "right": 480.5,
+              "bottom": 129,
+              "scrollWidth": 93,
+              "clientWidth": 93,
+              "text": "ⓘ Inspector"
+            },
+            "inspectorToggleWithinViewport": true,
+            "openInspector": {
+              "x": 124.5,
+              "width": 360,
+              "right": 484.5,
+              "viewportWidth": 504,
+              "fitsHorizontally": true
+            },
+            "inspectorImage": "1024x768-200-large-outside-inspector.png"
+          }
+        }
+      ],
+      "before": {
+        "dpr": 1,
+        "innerWidth": 1008,
+        "innerHeight": 617,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "screenWidth": 3440,
+        "screenHeight": 1440,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 993,
+        "documentWidth": 993,
+        "documentHeight": 720,
+        "rootFont": "18px",
+        "compact": false,
+        "footer": "‹ ▶Play › Step1 minute1 hour1 dayCalendar monthCalendar year DirectionForward →← Backward Speed1 minute / real second1 hour / real second1 day / real second30 days / real second365 days / real second WindowCustom window1 hour1 day1 week30 days365 daysAbout 10 years ＋− ↺ Return to birth instantEdit moment ↗ Displayed 2000-01-01 12:00:00 UTCPaused    01 Jan 2000, 00:00 UTC◆ Birth marker02 Jan 2000, 00:00 UTC Thumb: requested · line: displayed · arrows: step · Shift+arrow: 10 steps · Space: play/pauseDay step = 24 elapsed hours; the local clock can shift at DST.   "
+      },
+      "nativeBoundsBefore": {
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "width": 1024,
+          "height": 768,
+          "windowState": "normal"
+        }
+      },
+      "zoomSettingsImage": "settings-200-1024.png",
+      "after": {
+        "dpr": 2,
+        "innerWidth": 504,
+        "innerHeight": 308,
+        "outerWidth": 1024,
+        "outerHeight": 768,
+        "screenWidth": 3440,
+        "screenHeight": 1440,
+        "visualViewportScale": 1,
+        "visualViewportWidth": 496.5,
+        "documentWidth": 496,
+        "documentHeight": 800,
+        "rootFont": "18px",
+        "compact": true,
+        "footer": "‹ ▶Play › Step1 minute1 hour1 dayCalendar monthCalendar year DirectionForward →← Backward Speed1 minute / real second1 hour / real second1 day / real second30 days / real second365 days / real second WindowCustom window1 hour1 day1 week30 days365 daysAbout 10 years ＋− ↺ Return to birth instantEdit moment ↗ Displayed 2000-01-01 12:00:00 UTCPaused    01 Jan 2000, 00:00 UTC◆ Birth marker02 Jan 2000, 00:00 UTC Thumb: requested · line: displayed · arrows: step · Shift+arrow: 10 steps · Space: play/pauseDay step = 24 elapsed hours; the local clock can shift at DST.   "
+      },
+      "zoomRatio": 2,
+      "widthRatio": 2,
+      "nativeBoundsAfter": {
+        "bounds": {
+          "left": 0,
+          "top": 0,
+          "width": 1024,
+          "height": 768,
+          "windowState": "normal"
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "cleanup": [
+    {
+      "path": "D:\\dev\\astrology-viewer\\.cache\\m10-native-zoom\\owned-validation-profile-1792989217233",
+      "removed": true
+    },
+    {
+      "path": "D:\\dev\\astrology-viewer\\.cache\\m10-native-zoom\\owned-probe-profile-1792988892135",
+      "alreadyAbsent": true
+    }
+  ],
+  "sourceStatus": "M src/app.css\n M tests/browser/accessibility.spec.ts",
+  "zoomControl": {
+    "initialValue": "1",
+    "options": [
+      "\n            25%\n          ",
+      "\n            33%\n          ",
+      "\n            50%\n          ",
+      "\n            67%\n          ",
+      "\n            75%\n          ",
+      "\n            80%\n          ",
+      "\n            90%\n          ",
+      "\n            100%\n          ",
+      "\n            110%\n          ",
+      "\n            125%\n          ",
+      "\n            150%\n          ",
+      "\n            175%\n          ",
+      "\n            200%\n          ",
+      "\n            250%\n          ",
+      "\n            300%\n          ",
+      "\n            400%\n          ",
+      "\n            500%\n          "
+    ]
+  },
+  "screenshotMethod": "CDP Page.captureScreenshot without clip, captureBeyondViewport:false, no viewport emulation (Playwright page.screenshot incorrectly clips at real native page zoom).",
+  "screenshots": [
+    {
+      "file": "settings-200-1440.png",
+      "width": 1424,
+      "height": 805
+    },
+    {
+      "file": "1440x900-200-standard-earth-hover.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-standard-earth-pointer-scrolled.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-standard-earth-keyboard-scrolled.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-standard-earth-keyboard-end.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-standard-earth-scene.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-standard-earth-inspector.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-standard-outside-hover.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-standard-outside-pointer-scrolled.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-standard-outside-keyboard-scrolled.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-standard-outside-keyboard-end.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-standard-outside-scene.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-standard-outside-inspector.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-large-earth-hover.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-large-earth-pointer-scrolled.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-large-earth-keyboard-scrolled.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-large-earth-keyboard-end.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-large-earth-scene.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-large-earth-inspector.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-large-outside-hover.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-large-outside-pointer-scrolled.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-large-outside-keyboard-scrolled.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-large-outside-keyboard-end.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-large-outside-scene.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "1440x900-200-large-outside-inspector.png",
+      "width": 1424,
+      "height": 749
+    },
+    {
+      "file": "settings-200-1024.png",
+      "width": 1008,
+      "height": 673
+    },
+    {
+      "file": "1024x768-200-standard-earth-hover.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-standard-earth-pointer-scrolled.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-standard-earth-keyboard-scrolled.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-standard-earth-keyboard-end.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-standard-earth-scene.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-standard-earth-inspector.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-standard-outside-hover.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-standard-outside-pointer-scrolled.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-standard-outside-keyboard-scrolled.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-standard-outside-keyboard-end.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-standard-outside-scene.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-standard-outside-inspector.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-large-earth-hover.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-large-earth-pointer-scrolled.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-large-earth-keyboard-scrolled.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-large-earth-keyboard-end.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-large-earth-scene.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-large-earth-inspector.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-large-outside-hover.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-large-outside-pointer-scrolled.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-large-outside-keyboard-scrolled.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-large-outside-keyboard-end.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-large-outside-scene.png",
+      "width": 1008,
+      "height": 617
+    },
+    {
+      "file": "1024x768-200-large-outside-inspector.png",
+      "width": 1008,
+      "height": 617
+    }
+  ],
+  "sourceResponses": {
+    "src/App.svelte": {
+      "status": 200,
+      "sha256": "918fab64d6fef965609ae9c09afa05e3e2a66d89cf712e1c8b70e08d5034b186",
+      "savedAs": "served-App.svelte.txt"
+    },
+    "src/app.css": {
+      "status": 200,
+      "sha256": "17f23e1933a945a10128d1ef2f9c526e36be9b6e01d8ee6dc8c3743ad1d618fb",
+      "savedAs": "served-app.css.txt"
+    }
+  },
+  "completedAt": "2026-10-26T04:34:09.324Z"
+}

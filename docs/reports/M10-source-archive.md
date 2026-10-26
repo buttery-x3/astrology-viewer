@@ -1,5 +1,7 @@
 # M10 final source-archive rebuild
 
+This record verifies `da1404f` before the later native-zoom width repair. A new exact archive will be built for the settled candidate; repeated archive rebuilds are deferred during the user's requested product iteration. See the [iteration checkpoint](M10-iteration-status.md).
+
 The frontend source archive for final frozen revision `da1404f27ec1d470e9ff7a763ee26ddeddcdf336` was independently extracted, installed and rebuilt successfully on Windows with Node 24.15.0, npm 11.12.1 and pinned Vite 8.3.5. Exact hashes, file sizes, manifest identities and retained-data checks are recorded in [M10-source-archive.json](M10-source-archive.json).
 
 This supersedes the `a2ac392…` archive audit. The final source corrects Escape suppression to use the active feature and an explicitly restored keyboard origin, allowing a pointer reading to reopen on legitimate re-entry. Earlier audit evidence remains scoped to its earlier source revision; this repeat independently installed and rebuilt the corrected archive.

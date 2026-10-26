@@ -1,0 +1,1123 @@
+{
+  "reports": [
+    {
+      "path": ".cache/m10-installed-corrected.json",
+      "sha256": "dc8f68f6497c2cc9af7ed1f7505e155aa0e811751d9bd8ad4574951592d91870",
+      "stats": {
+        "startTime": "2026-10-26T04:19:12.556Z",
+        "duration": 396418.088,
+        "expected": 78,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "errors": [],
+      "projects": {
+        "chrome": {
+          "cases": 39,
+          "expected": 39,
+          "browserVersion": "156.0.8078.47"
+        },
+        "edge": {
+          "cases": 39,
+          "expected": 39,
+          "browserVersion": "142.0.3595.94"
+        }
+      },
+      "cases": [
+        {
+          "project": "chrome",
+          "file": "m10-angle-inspector.spec.ts",
+          "title": "Ascendant retains its hover theme and inspectable attribution after keyboard selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3147,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-angle-inspector.spec.ts",
+          "title": "Descendant retains its hover theme and inspectable attribution after keyboard selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2829,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-angle-inspector.spec.ts",
+          "title": "Midheaven retains its hover theme and inspectable attribution after keyboard selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2860,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-angle-inspector.spec.ts",
+          "title": "Imum Coeli retains its hover theme and inspectable attribution after keyboard selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3099,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-angle-inspector.spec.ts",
+          "title": "Ascendant retains its hover theme and inspectable attribution after keyboard selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3426,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-angle-inspector.spec.ts",
+          "title": "Descendant retains its hover theme and inspectable attribution after keyboard selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2574,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-angle-inspector.spec.ts",
+          "title": "Midheaven retains its hover theme and inspectable attribution after keyboard selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2475,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-angle-inspector.spec.ts",
+          "title": "Imum Coeli retains its hover theme and inspectable attribution after keyboard selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2266,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-defaults.spec.ts",
+          "title": "new and reset house displays use layered shells at zero lift",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2297,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-defaults.spec.ts",
+          "title": "legacy display choices migrate without overwriting an explicit house mode",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2047,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-defaults.spec.ts",
+          "title": "new and reset house displays use layered shells at zero lift",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 1656,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-defaults.spec.ts",
+          "title": "legacy display choices migrate without overwriting an explicit house mode",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 1474,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-earth.spec.ts",
+          "title": "constellation regions and modern figures remain independent, including endpoints with stars hidden",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3904,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-earth.spec.ts",
+          "title": "re-entering Earth overview restores its close globe and projections without changing the moment",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2678,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-earth.spec.ts",
+          "title": "a selected geographic line focuses from Outside sphere without applying the Earth re-entry preset",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3817,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-earth.spec.ts",
+          "title": "actual Earth house selection and sky house selection submit reciprocal highlights",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3919,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-earth.spec.ts",
+          "title": "a real Orion figure path opens its asterism reading without selecting the official region",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4742,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-earth.spec.ts",
+          "title": "a real aspect strand composes both placements and disappears from hover after an orb crossing",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4250,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-earth.spec.ts",
+          "title": "constellation regions and modern figures remain independent, including endpoints with stars hidden",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3099,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-earth.spec.ts",
+          "title": "re-entering Earth overview restores its close globe and projections without changing the moment",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 1961,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-earth.spec.ts",
+          "title": "a selected geographic line focuses from Outside sphere without applying the Earth re-entry preset",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2879,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-earth.spec.ts",
+          "title": "actual Earth house selection and sky house selection submit reciprocal highlights",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2773,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-earth.spec.ts",
+          "title": "a real Orion figure path opens its asterism reading without selecting the official region",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3683,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-earth.spec.ts",
+          "title": "a real aspect strand composes both placements and disappears from hover after an orb crossing",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3783,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-geographic-crossings.spec.ts",
+          "title": "a genuine geographic crossing offers both full identities and preserves each choice in the inspector",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3866,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-geographic-crossings.spec.ts",
+          "title": "disabled body, angle and master filters remove their real crossing targets from picking",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4101,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-geographic-crossings.spec.ts",
+          "title": "far-side geographic crossings stay unavailable through a translucent Earth",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3799,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-geographic-crossings.spec.ts",
+          "title": "a genuine geographic crossing offers both full identities and preserves each choice in the inspector",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3500,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-geographic-crossings.spec.ts",
+          "title": "disabled body, angle and master filters remove their real crossing targets from picking",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3718,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-geographic-crossings.spec.ts",
+          "title": "far-side geographic crossings stay unavailable through a translucent Earth",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3003,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-history-regions.spec.ts",
+          "title": "a true Orion region interior is a background canvas target and disappears when regions are disabled",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4719,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-history-regions.spec.ts",
+          "title": "a real comparison boundary pick retains its secondary system and full selection identity",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 5012,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-history-regions.spec.ts",
+          "title": "a real past trail sample caption keeps its exact sample context after canvas selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4733,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-history-regions.spec.ts",
+          "title": "a real historical cusp line retains its sample time, frame and old cusp after canvas selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 5924,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-history-regions.spec.ts",
+          "title": "a true Orion region interior is a background canvas target and disappears when regions are disabled",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4265,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-history-regions.spec.ts",
+          "title": "a real comparison boundary pick retains its secondary system and full selection identity",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4005,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-history-regions.spec.ts",
+          "title": "a real past trail sample caption keeps its exact sample context after canvas selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4358,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-history-regions.spec.ts",
+          "title": "a real historical cusp line retains its sample time, frame and old cusp after canvas selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4608,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-hover.spec.ts",
+          "title": "body preview waits for dwell and composes a single source-free calculated card",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2319,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-hover.spec.ts",
+          "title": "aspect preview remains readable and scrollable, and Escape preserves its selected pair",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4138,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-hover.spec.ts",
+          "title": "keyboard focus updates a hovered card and restores existing descriptions on Escape",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4383,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-hover.spec.ts",
+          "title": "keyboard readers can focus and scroll a card without changing selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4160,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-hover.spec.ts",
+          "title": "a body card stays reachable while the pointer crosses another valid target before its dwell",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3089,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-hover.spec.ts",
+          "title": "sparkles persist and motion settings retain the complete static design",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 7744,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-hover.spec.ts",
+          "title": "all five theme previews and enlarged cards fit a constrained logical zoom viewport",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 5612,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-hover.spec.ts",
+          "title": "paginated navigation gives its newly focused star the matching accessible preview",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3023,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-hover.spec.ts",
+          "title": "support-star and astro-line navigation preserve their own preview and inspector metadata",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4348,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-hover.spec.ts",
+          "title": "body preview waits for dwell and composes a single source-free calculated card",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 1925,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-hover.spec.ts",
+          "title": "aspect preview remains readable and scrollable, and Escape preserves its selected pair",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3390,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-hover.spec.ts",
+          "title": "keyboard focus updates a hovered card and restores existing descriptions on Escape",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3535,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-hover.spec.ts",
+          "title": "keyboard readers can focus and scroll a card without changing selection",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3581,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-hover.spec.ts",
+          "title": "a body card stays reachable while the pointer crosses another valid target before its dwell",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2533,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-hover.spec.ts",
+          "title": "sparkles persist and motion settings retain the complete static design",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 6352,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-hover.spec.ts",
+          "title": "all five theme previews and enlarged cards fit a constrained logical zoom viewport",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 4892,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-hover.spec.ts",
+          "title": "paginated navigation gives its newly focused star the matching accessible preview",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2441,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-hover.spec.ts",
+          "title": "support-star and astro-line navigation preserve their own preview and inspector metadata",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3225,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-targets.spec.ts",
+          "title": "a stale historical trail selection never falls back to current body placements",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3110,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-targets.spec.ts",
+          "title": "an explicit keyboard viewpoint change dismisses a card even while its pointer remains inside",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3243,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-targets.spec.ts",
+          "title": "a real canvas preview clears on graphics-context loss while the pointer reads its card",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2742,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-targets.spec.ts",
+          "title": "default overview keeps the actual GPU camera pose across hour stepping and context restoration",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2739,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-targets.spec.ts",
+          "title": "choosing the Equal C1 guide from a real ASC overlap preserves its construction meaning",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3722,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "m10-targets.spec.ts",
+          "title": "actual indexed catalogue points choose Mizar and Alcor exactly at the Observer centre ray",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 6613,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-targets.spec.ts",
+          "title": "a stale historical trail selection never falls back to current body placements",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2243,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-targets.spec.ts",
+          "title": "an explicit keyboard viewpoint change dismisses a card even while its pointer remains inside",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2672,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-targets.spec.ts",
+          "title": "a real canvas preview clears on graphics-context loss while the pointer reads its card",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 1975,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-targets.spec.ts",
+          "title": "default overview keeps the actual GPU camera pose across hour stepping and context restoration",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 1752,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-targets.spec.ts",
+          "title": "choosing the Equal C1 guide from a real ASC overlap preserves its construction meaning",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2288,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "m10-targets.spec.ts",
+          "title": "actual indexed catalogue points choose Mizar and Alcor exactly at the Observer centre ray",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 5110,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "release-source.spec.ts",
+          "title": "compiled release footer offers its exact served source archive and revision",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2575,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "release-source.spec.ts",
+          "title": "compiled release footer offers its exact served source archive and revision",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 1782,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "spatial.spec.ts",
+          "title": "keyboard users inspect signs, reference angles and real constellation regions in one sky",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 5162,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "spatial.spec.ts",
+          "title": "an ordinary Earth click inspects the globe and focus does not edit the observer",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3712,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "spatial.spec.ts",
+          "title": "camera and reference layers leave body measurements unchanged",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3562,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "spatial.spec.ts",
+          "title": "keyboard users inspect signs, reference angles and real constellation regions in one sky",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 3769,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "spatial.spec.ts",
+          "title": "an ordinary Earth click inspects the globe and focus does not edit the observer",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2693,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "spatial.spec.ts",
+          "title": "camera and reference layers leave body measurements unchanged",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 2499,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "chrome",
+          "file": "view-matrix.spec.ts",
+          "title": "63 system, house display and viewpoint combinations retain the same sky",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 49248,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        },
+        {
+          "project": "edge",
+          "file": "view-matrix.spec.ts",
+          "title": "63 system, house display and viewpoint combinations retain the same sky",
+          "status": "expected",
+          "attempts": [
+            {
+              "status": "passed",
+              "durationMs": 41632,
+              "retry": 0,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

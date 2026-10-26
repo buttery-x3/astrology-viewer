@@ -1,5 +1,7 @@
 # M10 performance and scene recovery
 
+**Iteration status:** the successful reference measurement below is bound to `dc1b846`, not the current review head. A later clean `a2ac392` confirmation recorded card reveal p95 28.7ms but picking p95 7.2/6.8/4.5ms, exceeding the 4ms target. Its cause is unresolved; unrelated busy processes observed later started after that run and do not establish its cause. The raw local result is retained at `.cache/m10-performance/final-hardware.json`. Further confirmation and any required repair are deferred while the user iterates on the product. Do not treat M10 performance acceptance as complete.
+
 Measured 26 October 2026 at 03:33 UTC against the complete development application served at `http://127.0.0.1:5196`. The measured source was clean commit `dc1b8469141c3521ebf84a226b37880563fdfcea`. This is physical Windows desktop evidence from the actual App, including its controls, worker and hover cards. It is not a packaged-release, integrated-GPU laptop, Safari, screen-reader or usability result.
 
 The final run meets the M10 card-processing and picking targets on this host. The scene stayed idle while card sparkles animated, and repeated scene operations reached a stable resource plateau.

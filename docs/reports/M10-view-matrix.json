@@ -1,0 +1,1298 @@
+{
+  "matrices": [
+    {
+      "browser": "chrome",
+      "browserVersion": "156.0.8078.47",
+      "graphics": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "vendor": "Google Inc. (NVIDIA)",
+        "devicePixelRatio": 1
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "captureMethod": "canvas.toDataURL synchronously after actual render, before the native requestAnimationFrame callback returns; decoded PNG pixels checked",
+      "entries": [
+        {
+          "system": "W",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "6baf04406b86139b95a3270576105cad2d34b01df7fe6a04226818cedc636d44",
+          "compositorSha256": "25a1a279f6e92fd7525f467625d4a4e78eb7edca307040c4d9edef207944f9f9",
+          "uniqueColours": 1629,
+          "nonBackgroundSamples": 12804
+        },
+        {
+          "system": "W",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 160,
+          "frameSha256": "447176f243fb30748561601c92d187d084f46be31de962f9ead1eb871c53f788",
+          "compositorSha256": "d31976707f8eefd62e36a1bc5cdb2979f85d3da35991f0283e8e777c0eabb413",
+          "uniqueColours": 54,
+          "nonBackgroundSamples": 519
+        },
+        {
+          "system": "W",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "5ab9270c2a29caf4123bf4d58d1a2967c1531ed13f5a5ff39109eee84a152f0d",
+          "compositorSha256": "3779bde8b8f3c33710df3313d1e0366ea95f8efe4d3877ba380a297639d1465e",
+          "uniqueColours": 1148,
+          "nonBackgroundSamples": 6275
+        },
+        {
+          "system": "W",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "5d9ae671598fb329eafdeb496190d71cba79aadc0daf1c0d0bebdecaecac48b2",
+          "compositorSha256": "1e7185eec5a1fda54c8b3c399350cc5996f4c282a9911a7c24e382776fd7288f",
+          "uniqueColours": 1534,
+          "nonBackgroundSamples": 12321
+        },
+        {
+          "system": "W",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 168,
+          "frameSha256": "e1f3117dce2fb5ba257604fa08ee016802111cda0bb413dcf9d1436be9783bf9",
+          "compositorSha256": "59d93be864bbeb2ab46827465b747ba1c695521a334125e9f35b1de8f9118c5c",
+          "uniqueColours": 80,
+          "nonBackgroundSamples": 567
+        },
+        {
+          "system": "W",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "57cd06a05978cb675a174023838d14d1878a85bee8f74307ab1941a1ba3eb0a1",
+          "compositorSha256": "9b87fbd77a2c790d8d820e7470ec6e66c5fd5366f760232bbf839b416ec78262",
+          "uniqueColours": 899,
+          "nonBackgroundSamples": 5890
+        },
+        {
+          "system": "W",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "f34c949875cdba02128db4c4d640b2689282829067a39fef53296e613382e295",
+          "compositorSha256": "98997ba07aa7caa964822818de784a05df12e68174185817e7abf5cac2732387",
+          "uniqueColours": 1368,
+          "nonBackgroundSamples": 7570
+        },
+        {
+          "system": "W",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 170,
+          "frameSha256": "5562a7471d5caa21f8b943cc986748688cb92685e370b4c9064fba6d4f9c1b29",
+          "compositorSha256": "7461a28f6b89a5a1bedecd9680c4ade6807c74d1269664f75ebe3206827a3531",
+          "uniqueColours": 72,
+          "nonBackgroundSamples": 567
+        },
+        {
+          "system": "W",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "d4a74394ca6465b74db471dd52fd4a2d1b5bbc61ceed2c6261d14ff13cb22408",
+          "compositorSha256": "2f97ae642d7cb42c18873b920dc73cf13438066e8f87cc3145a6cb75f87bceb7",
+          "uniqueColours": 851,
+          "nonBackgroundSamples": 5631
+        },
+        {
+          "system": "E",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "d8f35250d92fbe8a4613f1bb721fbe31dfd11aef8952f29d571c2e727559191d",
+          "compositorSha256": "4fae3992911f231075b626952fb386db47ee93cf580ea67f7159ccabf37eee21",
+          "uniqueColours": 1648,
+          "nonBackgroundSamples": 13096
+        },
+        {
+          "system": "E",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 167,
+          "frameSha256": "a5090718f7e5902d863aa619ce489c1ff8a388015025a4e44b33b1af111bbe08",
+          "compositorSha256": "6f255d9b701845ef1d335ebf04bef401640e607c49834fe38580aaa0b6c819a8",
+          "uniqueColours": 77,
+          "nonBackgroundSamples": 742
+        },
+        {
+          "system": "E",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "3bf8bd4118dd19b0d46f41e0ddc7e882f31ce642872f9ec867c0d028e2408bb3",
+          "compositorSha256": "3623511c744ca8d29a70aac9bbb761b71ebc872f36407534d36b69c923052244",
+          "uniqueColours": 1169,
+          "nonBackgroundSamples": 6285
+        },
+        {
+          "system": "E",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "3c33fd234abeaeaa50428e1aedf584d1ffa571ca8465b214a2fdd980a2d8299b",
+          "compositorSha256": "1aa8f4018ed862bad5cd387f103428b201caf9ffee9ad4bd974f2b284d082604",
+          "uniqueColours": 1537,
+          "nonBackgroundSamples": 12377
+        },
+        {
+          "system": "E",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 172,
+          "frameSha256": "1f21bc8f9984cb5676b4e431a68736b05369121941f75ddf3dd60ba89dbd866a",
+          "compositorSha256": "d729d97968503cf983e2a807b6d7d66f55e9a1cd1162339f6717120856fcf97c",
+          "uniqueColours": 123,
+          "nonBackgroundSamples": 927
+        },
+        {
+          "system": "E",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "9346dd368b1a5df4b35a08209aa4e48e61cc83aa249e0da80cf0ecf5411fd1a8",
+          "compositorSha256": "25ae6e6785f348a56679fbb29086d70f3ce7fc470ea17ad08f149ff5017031df",
+          "uniqueColours": 893,
+          "nonBackgroundSamples": 5925
+        },
+        {
+          "system": "E",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "239556a15a8b69ae6c404b34344c2b6c23c0a2e4883efdf63fada7cebee56912",
+          "compositorSha256": "f5f7a5ded724e7923e5e13c1779aba84cde66b0c08542be1fc1cee56ef65a8c4",
+          "uniqueColours": 1355,
+          "nonBackgroundSamples": 7821
+        },
+        {
+          "system": "E",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 183,
+          "frameSha256": "a81dd56bb9be08b5d3914e8d7163083c9a4cbb395d665f6a092b9f0d3fe4258e",
+          "compositorSha256": "3d8619a7c4dd4e55e9dacbcae954ba59ee3a32c81dc705c8a1adedc1a4a05fe1",
+          "uniqueColours": 116,
+          "nonBackgroundSamples": 1024
+        },
+        {
+          "system": "E",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "31e56cd55a07aecb767bf07791f4db465b8c70cc0bdbb279d3e62a5884203810",
+          "compositorSha256": "69b59acc4f73cd34c764125715ab55efb98c829efda83ad012aa23313ee90f57",
+          "uniqueColours": 851,
+          "nonBackgroundSamples": 5635
+        },
+        {
+          "system": "O",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "fcfdade549c0c9fe610e761b49add40de47074500bc391e22177ab1e6b9a2965",
+          "compositorSha256": "9ef9cad639662faeb29c263036c2629434d40a84996d3030d67112c05bb1526e",
+          "uniqueColours": 1637,
+          "nonBackgroundSamples": 12416
+        },
+        {
+          "system": "O",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 189,
+          "frameSha256": "22d906493bb8bad557d49fb74e29ff237cd3ab942becfce8399c803d84a1ff90",
+          "compositorSha256": "6e218cb4ea62733ecad863e6922bae896d9757d40e4da553ee755092c512f04c",
+          "uniqueColours": 142,
+          "nonBackgroundSamples": 1237
+        },
+        {
+          "system": "O",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "a051fc43a187c41f520c22a1efa97a4740e5d1b9e63abd67fd251cd6bd94fd13",
+          "compositorSha256": "b69c2f3688ee9d177df5965bfd2bd4d5427b52828114c361b38df98b8d72f33b",
+          "uniqueColours": 1136,
+          "nonBackgroundSamples": 6271
+        },
+        {
+          "system": "O",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "7c4ee62c0eb89f71b21486a62b9db952de997312f43b25621380474b6e84b346",
+          "compositorSha256": "e180224d9cc33e791119c7084e85a6bacdc77126f169c3a092abd89751ee85d2",
+          "uniqueColours": 1537,
+          "nonBackgroundSamples": 12421
+        },
+        {
+          "system": "O",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 202,
+          "frameSha256": "3dc664118d48b3ca2a725c86cd68165c84a06155d17443fe30a621b959423967",
+          "compositorSha256": "b8acf216f7c499cd9513c3b4cdbe18267ac0432dcf27c12fb3a1a240c20973e3",
+          "uniqueColours": 183,
+          "nonBackgroundSamples": 1309
+        },
+        {
+          "system": "O",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "4b5c1872d2ec189f3b5e06cb00741a40c59bfd6ba5a6ffbc7685f3060f970dcb",
+          "compositorSha256": "ea4506322a81169e7cd82d2c2b8a363ec7caa70476c85f23fea1983cd2dea736",
+          "uniqueColours": 909,
+          "nonBackgroundSamples": 5912
+        },
+        {
+          "system": "O",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "08d3b1308c4895336eb5cf88fdb0a2f0bbbb668e8b6f4d04c246440f38ac712a",
+          "compositorSha256": "d1bcd60572b0f8912e8342ece0218cfcaf781155925cccee43d4a51e63b86832",
+          "uniqueColours": 1380,
+          "nonBackgroundSamples": 7781
+        },
+        {
+          "system": "O",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 210,
+          "frameSha256": "0a14a583a29cacfb396286ed6c2a73b6acb0be8f7504d028c3eae2f039b61ff8",
+          "compositorSha256": "87e00613547777802bc55276df5bca0000beb8269101b774da675eaa558db371",
+          "uniqueColours": 198,
+          "nonBackgroundSamples": 1393
+        },
+        {
+          "system": "O",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "4d5d1bd483cc89305eb595995af3d338e0ae0b7089e38a9bd53e0db5c786dc9c",
+          "compositorSha256": "c68b40f61d80fa735bf4b819e97ce7f8c8d86adb953ecaa91f7424b761186050",
+          "uniqueColours": 857,
+          "nonBackgroundSamples": 5600
+        },
+        {
+          "system": "P",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "41a885af72eb9d3123e5addb05fd276fd4a088dc290e60b7650f53d882107b28",
+          "compositorSha256": "e9249e66236b34a78ad58744ecd5c214ca2bc4f92c85e99136b4587d84689434",
+          "uniqueColours": 1600,
+          "nonBackgroundSamples": 12295
+        },
+        {
+          "system": "P",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 205,
+          "frameSha256": "87ac75df060bb3fb6e1bfbe61a091d7211ce10a38a656c36337f3edb7e4f5b71",
+          "compositorSha256": "e8b3efd9ddfc74ce19f3cac95bed535258037d30da060fe288a26e1e16651103",
+          "uniqueColours": 177,
+          "nonBackgroundSamples": 1472
+        },
+        {
+          "system": "P",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "11b6f84a07fc8d0987df8348b0d52ec5b8cccf5d5c237881bed6b77f7bd211a6",
+          "compositorSha256": "55e1b426b432cf846ae63428a8abe5e7f40a2ab5d7ab63956e77e4224c09c0db",
+          "uniqueColours": 1168,
+          "nonBackgroundSamples": 6259
+        },
+        {
+          "system": "P",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "f7c0038120737fb9c3b647cc305b3258f1dc8ed37a78a74cc14cf0cdd974e487",
+          "compositorSha256": "c145933af9e9445a8fe397640c0623ea440a50943ff705f9bd65803528447289",
+          "uniqueColours": 1539,
+          "nonBackgroundSamples": 12308
+        },
+        {
+          "system": "P",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 204,
+          "frameSha256": "56021bbd0611d56a09954cc2ed357fb2d3b83396d68ed47a8baaf97167f6cfca",
+          "compositorSha256": "d81800594adb5aa751ebacd969bc14a42ba5f00a56747d4c9402e1f57b0913ec",
+          "uniqueColours": 181,
+          "nonBackgroundSamples": 1554
+        },
+        {
+          "system": "P",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "78076c48e944dc8d60a101324e2f4162c400a52998314852f06773295f3628c9",
+          "compositorSha256": "a373c40251bb7acc37cb97bc3709d7840f29be48c727b6d033bc56381e5f8920",
+          "uniqueColours": 910,
+          "nonBackgroundSamples": 5911
+        },
+        {
+          "system": "P",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "99e9035cbc559c91730555f9c05ddf2419825ad0618189d37f05b833b019cb0b",
+          "compositorSha256": "737cc5d819543bacc38929a01b4628d6e500ce8938373d2a059acdb615009b07",
+          "uniqueColours": 1393,
+          "nonBackgroundSamples": 7854
+        },
+        {
+          "system": "P",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 207,
+          "frameSha256": "fbdb10c6aaadaf1cb5349ef1a8cc362a25a7389360a41a3b09c46cffc1ca33d1",
+          "compositorSha256": "889ffbded57c5e8eb30e8c34a714492bcfc2f617b5b1bad7899d4acf0d49d756",
+          "uniqueColours": 188,
+          "nonBackgroundSamples": 15915
+        },
+        {
+          "system": "P",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "ac320a642c96d4ef709c65273cce33dcb101071e905f54a6483900b4a81222b0",
+          "compositorSha256": "531cc086b4960f86b28c2c273b7a51c48af284478782607b287e96de10966270",
+          "uniqueColours": 868,
+          "nonBackgroundSamples": 5673
+        },
+        {
+          "system": "K",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "cc1a4f4872873ffd5f5a6f1bea7e059c3ca86e1fbe9ddc52229922fc4e885b02",
+          "compositorSha256": "9c3438050b2e49969579c6b34329920123897446e3118f1c4e28353ef654f161",
+          "uniqueColours": 1605,
+          "nonBackgroundSamples": 12311
+        },
+        {
+          "system": "K",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 210,
+          "frameSha256": "d0d740ce439b9eba612300e2cfdfd8768a58b143f23f722982cafd4e194c0757",
+          "compositorSha256": "cd357f7e67dbfba35eaf8f23241be343bbaadfaa3871aad293d997a095aa3de7",
+          "uniqueColours": 177,
+          "nonBackgroundSamples": 1681
+        },
+        {
+          "system": "K",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "d6730529b54c6efe8be098d6d27affd40205047143997051f0eafddb21018d8e",
+          "compositorSha256": "0b98a0de87a9ae6ecc3dadfa8d595b6717f1f681e7fb413d6d12b0a76362ebb7",
+          "uniqueColours": 1168,
+          "nonBackgroundSamples": 6265
+        },
+        {
+          "system": "K",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "c005156a49d46fdb1ba7ec86c89c2d6cd3c58b4952a1c4a36f98239b883b1503",
+          "compositorSha256": "f19a91769a739aad2bb4dc5036bb1a3bfaa358020d1d919267a6726cc7cc35b7",
+          "uniqueColours": 1529,
+          "nonBackgroundSamples": 12324
+        },
+        {
+          "system": "K",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 213,
+          "frameSha256": "4c6fa4a3970bb629f0a8ee9889e127088451c0896fc521e14e1916fcf0267772",
+          "compositorSha256": "5fe96c2d61afc6763cc67dd9f85110e70c28e7977c666afb6f7432cc599dfae5",
+          "uniqueColours": 190,
+          "nonBackgroundSamples": 1802
+        },
+        {
+          "system": "K",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "c9013f3a06b580df233e6448c40915fbffd60e8c99fb516d723d489a76d46673",
+          "compositorSha256": "2111b76203e94bc6e17ce7d7b8e0b99cff3616e9fbf0892be9572d0a2e06a623",
+          "uniqueColours": 907,
+          "nonBackgroundSamples": 5907
+        },
+        {
+          "system": "K",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "8f60407a2c385a1e8f36dbc0501ea53e8dece7f85fec9f5ec672694909eca517",
+          "compositorSha256": "c26f4233958b82e5b0ba5c60fa006a1c9a32f045cdb8652b949367f9c29a5ddc",
+          "uniqueColours": 1384,
+          "nonBackgroundSamples": 7849
+        },
+        {
+          "system": "K",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 218,
+          "frameSha256": "17c00b67081c31212b53b146e2301e1c6757666a07743c3a704529621a87d8a1",
+          "compositorSha256": "194eb7ea69c949f6010195dcd596cab8112c83db25344402077f17149383db62",
+          "uniqueColours": 200,
+          "nonBackgroundSamples": 1817
+        },
+        {
+          "system": "K",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "ebd826a60a92c344ace6812015d8ace6c76787bdf5d3067afd14076a15c7052d",
+          "compositorSha256": "b9c3586b201cdb7b538f4ed4312cbdfbdf63f4e01b9eeea9cd10b66da57a5f25",
+          "uniqueColours": 865,
+          "nonBackgroundSamples": 5656
+        },
+        {
+          "system": "R",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "da84f97855045542f6203dbb5d59cdd9e191b7e54dff8ec0b093ed5f4ebd2cac",
+          "compositorSha256": "0c847593e9a20bc5be9e492c20c4155313bfe81dd577156ccb3dbcde7ef0901b",
+          "uniqueColours": 1596,
+          "nonBackgroundSamples": 12255
+        },
+        {
+          "system": "R",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 219,
+          "frameSha256": "c885b834a2e6e6a7610602acf4f30b7e88c404b46e589139a96c87608c54d7e0",
+          "compositorSha256": "5f7d9f57e4780b5af9c1a42a509544c2e122867d5a044c8ee3f18fe843f8e50b",
+          "uniqueColours": 208,
+          "nonBackgroundSamples": 1921
+        },
+        {
+          "system": "R",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "1c373456fc73311daddc9f923d9c99e09509be8610d55c292f37c517f7203d89",
+          "compositorSha256": "d02757a61a902b52ee9b31b10d166411b010d4a8a0b5bb11a4b6510e76544a5a",
+          "uniqueColours": 1160,
+          "nonBackgroundSamples": 6233
+        },
+        {
+          "system": "R",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "13f09f384af7b722bd6a465c9f780fa3fae2819f9df292b87508bf123a8a2acc",
+          "compositorSha256": "a5c02a19608b7e0fd22962f3ba02c3ca5ec5a4481ed3d230564cf9de955b837a",
+          "uniqueColours": 1540,
+          "nonBackgroundSamples": 12269
+        },
+        {
+          "system": "R",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 216,
+          "frameSha256": "7ac2b719bae9869bea5ad687d84ab5684e02ec3ba32b8f8219f3b2345142a6b4",
+          "compositorSha256": "ee7948ddfff2bf70f51abb4a5f1bb17239c2ce86f234408752b242f1bf987d63",
+          "uniqueColours": 214,
+          "nonBackgroundSamples": 1941
+        },
+        {
+          "system": "R",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "11a76547e32b8b7d7390d90bd0c1afdb90bba28bacddb4e617714e09bb8f8947",
+          "compositorSha256": "e773e5aaec607c262f562489e5e3d712530d2b7e1fc7c3e58936a572344d7229",
+          "uniqueColours": 897,
+          "nonBackgroundSamples": 5911
+        },
+        {
+          "system": "R",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "a37c15003ff9fb0667035462caa0e304a4ce1679c4eb0cd92fcd9ca87d278ebc",
+          "compositorSha256": "89630b02c5585cc9ba7f6e557bb6610d6bbd250463939372a612e8d43921f87a",
+          "uniqueColours": 1392,
+          "nonBackgroundSamples": 7896
+        },
+        {
+          "system": "R",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 220,
+          "frameSha256": "b00797833acb21b472706ac19d0b6bbe3c099235f19414630883340a89bc15c4",
+          "compositorSha256": "d3d0dae86be6d34761232005125b3e1affbabb4c92df17c1e5e789fe58cf47fb",
+          "uniqueColours": 221,
+          "nonBackgroundSamples": 2031
+        },
+        {
+          "system": "R",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "0df2dcdbcaa0dbf7732ffad5de05931b70f5c90cefd8f22c62259169f9e066b3",
+          "compositorSha256": "e37994202f1f46361b36986f555f2cc21bb36ac1c86b82b8cd48c61669fde2e6",
+          "uniqueColours": 864,
+          "nonBackgroundSamples": 5739
+        },
+        {
+          "system": "C",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "a7f38926969cda53c28e539b19622980a1a332beb63805cb6967098a141348ac",
+          "compositorSha256": "70ca2bd9e413f63ac0c3b3f5c2eb7d29d41158ae3cb69428503e5897454c6487",
+          "uniqueColours": 1583,
+          "nonBackgroundSamples": 12207
+        },
+        {
+          "system": "C",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 229,
+          "frameSha256": "fcbfa9b03d76997b594f8c02b6f736fecb327068fe67ea179da69e4c3e438f43",
+          "compositorSha256": "0882d2066e1d732d604bdbd63a22b675191b8e62afbf1618bff2bf9c1c6c2a9d",
+          "uniqueColours": 217,
+          "nonBackgroundSamples": 2087
+        },
+        {
+          "system": "C",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "60b392317cdcd5237e18ddb22a932297f9dc23b6c6d8b6f3c099a1bca664ce28",
+          "compositorSha256": "a5eeda638762f1e3711822c255c6cd3ad2b2e4afc9b65f7935c7e0b14928def5",
+          "uniqueColours": 1174,
+          "nonBackgroundSamples": 6197
+        },
+        {
+          "system": "C",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "f7cedabb3e2dd8347f69bf84161de5a93623197bbec09d9d1bfb31007c2c5a60",
+          "compositorSha256": "2957d637ce8ae253aef0ea797131973c9670c00012857a53c6129fb78518b952",
+          "uniqueColours": 1540,
+          "nonBackgroundSamples": 12208
+        },
+        {
+          "system": "C",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 238,
+          "frameSha256": "4bcea8eb00a30fea91d8b08a0c63764ea605a88c248c82f5f875beced1af65b4",
+          "compositorSha256": "2f4932e942ea3e12f52ba9922cdfc03494c6635d4e3e532b0a3fe2fff32b0ca4",
+          "uniqueColours": 248,
+          "nonBackgroundSamples": 2058
+        },
+        {
+          "system": "C",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "7ae66614f42095cc958a6ef2e175f506a58480efa91559c2c49224a4d28954d8",
+          "compositorSha256": "41d4b756a961c9204d3f02de50755e606a4ab62d133cf23ec6443feaa824877c",
+          "uniqueColours": 919,
+          "nonBackgroundSamples": 5900
+        },
+        {
+          "system": "C",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "b6286f3355e05dd5c4234f70a2036da07f43bc16d22f7feb1e00e3230e70b442",
+          "compositorSha256": "b484a84b8d6366ab4f95d779c9f899266c6815612d953b320394e02448fd4445",
+          "uniqueColours": 1400,
+          "nonBackgroundSamples": 7933
+        },
+        {
+          "system": "C",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 241,
+          "frameSha256": "bf9669d3689ad53b99d8793962a819617986adc16d89cff37b03865dae98bace",
+          "compositorSha256": "be5f7b49bfd1735a47fd33419feefcab07fa4b9bb4eecfc32a28eb7a5cda9c3f",
+          "uniqueColours": 254,
+          "nonBackgroundSamples": 2019
+        },
+        {
+          "system": "C",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "5d668704ca2c310bff27f5438f4fce3de1ec68642a527cb28a378634b1481967",
+          "compositorSha256": "e1fcdef78834c65c53bed820f5ebd6e3bac1dfe4f66becb59f64026fc49a52ab",
+          "uniqueColours": 893,
+          "nonBackgroundSamples": 5806
+        }
+      ],
+      "reportPath": ".cache/m10-installed-corrected.json"
+    },
+    {
+      "browser": "edge",
+      "browserVersion": "142.0.3595.94",
+      "graphics": {
+        "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 (0x00002487) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "vendor": "Google Inc. (NVIDIA)",
+        "devicePixelRatio": 1
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "captureMethod": "canvas.toDataURL synchronously after actual render, before the native requestAnimationFrame callback returns; decoded PNG pixels checked",
+      "entries": [
+        {
+          "system": "W",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "39ec8866066d4485f9db474f7458419320f9d090363fcb26cdc10dab91818104",
+          "compositorSha256": "93db4aaa7ab2fbbb77b04798aedb68d8bce74223f4728abc8f4e1ed8af007260",
+          "uniqueColours": 1627,
+          "nonBackgroundSamples": 12804
+        },
+        {
+          "system": "W",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 160,
+          "frameSha256": "447176f243fb30748561601c92d187d084f46be31de962f9ead1eb871c53f788",
+          "compositorSha256": "e6058ed1cca52900cce7e88f8cfe77f969ca268d400cc250b7a03a217d1b7692",
+          "uniqueColours": 54,
+          "nonBackgroundSamples": 519
+        },
+        {
+          "system": "W",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "a3180f4c9308b6825c997571e1afea1c9035ac45e1b08d40af6ff20b83b879d9",
+          "compositorSha256": "d2d6bb980d328b0cd5ca22f06f35fb26471a7c5bd76495ef32a23d91fb31f2b3",
+          "uniqueColours": 1148,
+          "nonBackgroundSamples": 6275
+        },
+        {
+          "system": "W",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "4356a2c78c4fb254593b40000edb27297333a04ec98d66942afc4efaec89b533",
+          "compositorSha256": "3520b3a345ea96cc269e44e6b3e4f80d5d038eec60ba0a24e05f6f5911eb5d42",
+          "uniqueColours": 1534,
+          "nonBackgroundSamples": 12321
+        },
+        {
+          "system": "W",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 168,
+          "frameSha256": "88007db5e0967ce400f8a07d200c36b1b9954f8ac811ce71b84b77f1c668beb8",
+          "compositorSha256": "a76f010fc9fbb4fd41203d59b8edf8c4e5d3c425e66afa3de19c0960a497e7e4",
+          "uniqueColours": 80,
+          "nonBackgroundSamples": 567
+        },
+        {
+          "system": "W",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "58328ee947b78be15cca24402833465c8ff9f4a9312a7e832e0f495502f680aa",
+          "compositorSha256": "9c205ba219f574569dd406d015d39e18dba5cbdaa703ffd6230929ef2e046941",
+          "uniqueColours": 903,
+          "nonBackgroundSamples": 5890
+        },
+        {
+          "system": "W",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "f34c949875cdba02128db4c4d640b2689282829067a39fef53296e613382e295",
+          "compositorSha256": "ea49f3d82a57f2eb9ebeae93788552c431fcf74bd02d8a43405c689e0bd6d166",
+          "uniqueColours": 1368,
+          "nonBackgroundSamples": 7570
+        },
+        {
+          "system": "W",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 170,
+          "frameSha256": "5562a7471d5caa21f8b943cc986748688cb92685e370b4c9064fba6d4f9c1b29",
+          "compositorSha256": "0817392ad42b788d038558b2331cb0ab7111568392b63c861af5f377d51dac58",
+          "uniqueColours": 72,
+          "nonBackgroundSamples": 567
+        },
+        {
+          "system": "W",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "db62f89cfb89c16b83eb3a2b2b7cf11561972781d46e2344a856d1e380939f81",
+          "compositorSha256": "c2f4ca9d7fd85618e75b6fdc07493f18d6049128bc59eb35806627c98408daff",
+          "uniqueColours": 851,
+          "nonBackgroundSamples": 5631
+        },
+        {
+          "system": "E",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "f6a1668c9cc747c4f92a2dd9ff7b1c62d61cf965838dacae7bc72bcd29cf6bf7",
+          "compositorSha256": "d897318da26a6313168c1457f7f9bde1767375df52da8a5917576156fe9ec2d6",
+          "uniqueColours": 1647,
+          "nonBackgroundSamples": 13096
+        },
+        {
+          "system": "E",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 167,
+          "frameSha256": "5a4e1705bc94f88cfd2dd324dd5dcb6709f6e5e91f1e56ef5a0d3d3e23952cc8",
+          "compositorSha256": "d4fc5abaab3ee42ba49c018ce5b5b3ba039fd724c678b35ff3a2b9a26d082326",
+          "uniqueColours": 76,
+          "nonBackgroundSamples": 742
+        },
+        {
+          "system": "E",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "205cc38d5eafbe26e058a117fe867346a35ff731124f45ba201f52c3bfad967c",
+          "compositorSha256": "c33ec587272867033ed1d59e4518d3a7b83f5f67c861b530268634fc3dbb60f6",
+          "uniqueColours": 1166,
+          "nonBackgroundSamples": 6285
+        },
+        {
+          "system": "E",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "aec066f289cb16e4177837569bdc33fed7c4bad26565b242cc5eb5c672f7cbd1",
+          "compositorSha256": "c7d7cf1bc826ae9d312c97e9cd19f3cffd32f8812a1ba93dcbaf1991b34ccfce",
+          "uniqueColours": 1537,
+          "nonBackgroundSamples": 12377
+        },
+        {
+          "system": "E",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 172,
+          "frameSha256": "1f21bc8f9984cb5676b4e431a68736b05369121941f75ddf3dd60ba89dbd866a",
+          "compositorSha256": "5b6430780faa5b556bfa37bb9e4bc61a62c3a197ec33511fc501debf458ab2f2",
+          "uniqueColours": 123,
+          "nonBackgroundSamples": 927
+        },
+        {
+          "system": "E",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "5bad540da004207f23c879b7e6f532ae2fe43c7c232aa71a72b1006534a90959",
+          "compositorSha256": "0c117c77e156ce68e5e9de54f2a82b0978c2f652481490dd2a7cd1379aea87f0",
+          "uniqueColours": 894,
+          "nonBackgroundSamples": 5925
+        },
+        {
+          "system": "E",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "120c92062077cbdeb78d3790dba81918044c6704647ae3f74712870f799eabe4",
+          "compositorSha256": "4d906abd442a4cb2757da7ef13eb4a602e198f6aa4239279e9457943d93d9dcf",
+          "uniqueColours": 1355,
+          "nonBackgroundSamples": 7821
+        },
+        {
+          "system": "E",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 183,
+          "frameSha256": "1a5772f7f8e213ffb87ad9adcda82ac5ac3c6d0ac4894651bc5d1b55ceb0d73b",
+          "compositorSha256": "78e2c1eae70ba6a0447e96f04dd4f5e011d8f43fb6cfdbae3e4fdc80e196c2f3",
+          "uniqueColours": 116,
+          "nonBackgroundSamples": 1024
+        },
+        {
+          "system": "E",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "31e56cd55a07aecb767bf07791f4db465b8c70cc0bdbb279d3e62a5884203810",
+          "compositorSha256": "f1788256679af75afee459f33a3e53066e7056348f855485d549c1ae4379454c",
+          "uniqueColours": 851,
+          "nonBackgroundSamples": 5635
+        },
+        {
+          "system": "O",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "5d6067e21d8ff3efa0272127efee972865fedf47df150b8eed7deaddfb4a1ee6",
+          "compositorSha256": "e7617188374ce16534fbad35c5db6ce945bc1e47c87fed8816cbc976ef3dd24f",
+          "uniqueColours": 1639,
+          "nonBackgroundSamples": 12416
+        },
+        {
+          "system": "O",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 189,
+          "frameSha256": "22d906493bb8bad557d49fb74e29ff237cd3ab942becfce8399c803d84a1ff90",
+          "compositorSha256": "807e613bf67556b8885ff34d5f8ed9111bbb50eabaee226c2eb62659219ba65e",
+          "uniqueColours": 142,
+          "nonBackgroundSamples": 1237
+        },
+        {
+          "system": "O",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "09882b0b83aecce6422869b99581bdf8dfbe341e6d8c73464d7f35f194b80189",
+          "compositorSha256": "0da4410bba3eb82c73123a5457b4603b21371b5f1c5abecdc96a1779e32126e7",
+          "uniqueColours": 1138,
+          "nonBackgroundSamples": 6271
+        },
+        {
+          "system": "O",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "043b1b3daa898cf8e378e692edb4f678d78e7060f05b19f52c32ea6239b3a4fe",
+          "compositorSha256": "31d53bfd8607fcaa05fe90eafd923474ad93667983488cf6bbdf917127d9a191",
+          "uniqueColours": 1538,
+          "nonBackgroundSamples": 12421
+        },
+        {
+          "system": "O",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 202,
+          "frameSha256": "3dc664118d48b3ca2a725c86cd68165c84a06155d17443fe30a621b959423967",
+          "compositorSha256": "5fa80e682c6cc83daf44b2b57ea76f1658f3d59017ad050cdb6c4bbd4d7657a2",
+          "uniqueColours": 183,
+          "nonBackgroundSamples": 1309
+        },
+        {
+          "system": "O",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "7fc26acb05687f561b6a6e2ac6f031fd626961bc8ac44601653d6831ee6b6391",
+          "compositorSha256": "762f370ca0573fe12d5c31ad8b755ca437b0e21c7d6c48b590cf01f788817dc9",
+          "uniqueColours": 909,
+          "nonBackgroundSamples": 5912
+        },
+        {
+          "system": "O",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "8777725ce50de8b6803b9307d88a3aca8560cc9a201fbfe163836bf585a17561",
+          "compositorSha256": "a08d2df3a1e1c3b1a5596e9af1ddfc0aaf671f578414febd0d61c10b8af9129e",
+          "uniqueColours": 1380,
+          "nonBackgroundSamples": 7781
+        },
+        {
+          "system": "O",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 210,
+          "frameSha256": "1dd8015f24a50ce33ec538991815143783f13db3358268e9d97399281340cd1c",
+          "compositorSha256": "51a19415c2fea7799f74a53e0c4585fb538916c24e72b7837b79dedf2f01fcc0",
+          "uniqueColours": 196,
+          "nonBackgroundSamples": 1393
+        },
+        {
+          "system": "O",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "6433ac896d1f958c7e599bd2a567346cf0872f17acaf6b0064cbc7b429024125",
+          "compositorSha256": "021a6ba1ca99b838774cc037b88351a5544902896c2a58f31cc304bc671e0dd5",
+          "uniqueColours": 860,
+          "nonBackgroundSamples": 5600
+        },
+        {
+          "system": "P",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "c15306bc9ea4fa9c1b7662fde8d51aa3a805d161b66c51209d93f7183231951d",
+          "compositorSha256": "3d7352eabbf4cb82c2bf9b4e5a4d0c04bbcccbf1a2bb6e93daaf8c53269aecf3",
+          "uniqueColours": 1601,
+          "nonBackgroundSamples": 12295
+        },
+        {
+          "system": "P",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 205,
+          "frameSha256": "87ac75df060bb3fb6e1bfbe61a091d7211ce10a38a656c36337f3edb7e4f5b71",
+          "compositorSha256": "43160341f6d04e4eb6d44e36c0957bd72d8b3486f9c35117e19a4ff3f51a524a",
+          "uniqueColours": 177,
+          "nonBackgroundSamples": 1472
+        },
+        {
+          "system": "P",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "1ec5515c88745ef1e38a2eb944e65e1bc673d723866b95814e382fba955257b4",
+          "compositorSha256": "ea33826f7be4b48119e9d8dde6b4307ad9e8c25e722df2cb6fa7e9e1f6a5f1b7",
+          "uniqueColours": 1168,
+          "nonBackgroundSamples": 6259
+        },
+        {
+          "system": "P",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "9f35f5dacef012fca1024aa282ef6793333afcc207229fa22e8e01f6397dc0b6",
+          "compositorSha256": "561c7f6fec287694e333f293c81999b50246d1322399757609528144e3a72368",
+          "uniqueColours": 1537,
+          "nonBackgroundSamples": 12308
+        },
+        {
+          "system": "P",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 204,
+          "frameSha256": "56021bbd0611d56a09954cc2ed357fb2d3b83396d68ed47a8baaf97167f6cfca",
+          "compositorSha256": "de908ee29409ea5b88e17d98cbd6ccc97c8172ff5953a3c5a17e1086677b1b69",
+          "uniqueColours": 181,
+          "nonBackgroundSamples": 1554
+        },
+        {
+          "system": "P",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "6511e581b9c495f9cd95efcb3ebe238a76f8a3a79e44565ed850566f5f53ae24",
+          "compositorSha256": "9f6af2e25d6bfe6614be0e9e7b62781d715342a771127b63bc8fb824f4305ee8",
+          "uniqueColours": 908,
+          "nonBackgroundSamples": 5911
+        },
+        {
+          "system": "P",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "3e3f050287dcb8ec4d1061d230a2989e7aa15a6eaaa24651897e877514efe117",
+          "compositorSha256": "7a54f3d691df973abe437a6bb5a5a72b0ef4542b39978b73f3bd11d396ccd51a",
+          "uniqueColours": 1397,
+          "nonBackgroundSamples": 7858
+        },
+        {
+          "system": "P",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 207,
+          "frameSha256": "fbdb10c6aaadaf1cb5349ef1a8cc362a25a7389360a41a3b09c46cffc1ca33d1",
+          "compositorSha256": "26c3dadbfa5558aa415934474a8d25b39842c86a0c4e7ab225a658848cf7b816",
+          "uniqueColours": 188,
+          "nonBackgroundSamples": 15915
+        },
+        {
+          "system": "P",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "8986efb67942d77d60b8a7b5effd9753124d492266ff9a194e1e40c5f6824bf3",
+          "compositorSha256": "079c3443d0502c14f082e6696332e3963201740447dcc8fa05b7bf02876f3607",
+          "uniqueColours": 867,
+          "nonBackgroundSamples": 5673
+        },
+        {
+          "system": "K",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "38e279d49b4213ae9df5a37e22662384a423d7b5f5273714e3325d3b9f9d58ad",
+          "compositorSha256": "3594be811ca443bf6356b8f96eb0aed4452709ab7acf973b112f20bc2497233b",
+          "uniqueColours": 1604,
+          "nonBackgroundSamples": 12311
+        },
+        {
+          "system": "K",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 210,
+          "frameSha256": "d0d740ce439b9eba612300e2cfdfd8768a58b143f23f722982cafd4e194c0757",
+          "compositorSha256": "187c350051da6bd7fd4ba50d7861db68b2d2ae39d62fd53f0681ee941d907006",
+          "uniqueColours": 177,
+          "nonBackgroundSamples": 1681
+        },
+        {
+          "system": "K",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "876f178753cc9ff8d0f5e4b56136b7b2f0348bce24866c0ded4768e2a14b2ae0",
+          "compositorSha256": "fd5969f5b8b86d665fedbc77df9dfa7008ce3a69bca18637e3a0c447a9953561",
+          "uniqueColours": 1167,
+          "nonBackgroundSamples": 6265
+        },
+        {
+          "system": "K",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "c2688d3f95fddc0fa9aeb61c6d3c3cb17b967b1872394fef9f6c80eee7bece77",
+          "compositorSha256": "3e08eb9bb42baed65e7d7fd7bac428e3ad189092f1898338526efebedeee173e",
+          "uniqueColours": 1529,
+          "nonBackgroundSamples": 12324
+        },
+        {
+          "system": "K",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 213,
+          "frameSha256": "346ce140c19b3b4d98a3aaadfffbb2ae942e7ff814ce16864781db076bf90c0f",
+          "compositorSha256": "226282fdab1f433b1fda9ddc7bb4e13652fd3b5e7aee6ffe37695532f08a4e07",
+          "uniqueColours": 188,
+          "nonBackgroundSamples": 1802
+        },
+        {
+          "system": "K",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "6c3dcd6d0a463a069910838e39ad5c6f13b0e3777b326ce2e1b69a48ba1496da",
+          "compositorSha256": "884a061065c77abac2933219e022445b77c92a6c321d2767d52641c5f48a737f",
+          "uniqueColours": 908,
+          "nonBackgroundSamples": 5907
+        },
+        {
+          "system": "K",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "e087f8cdfdff80c67e525bd8c1b554e84c57a387ca0769df7354943ddd82b765",
+          "compositorSha256": "02354c00d90d484d51bb6fd6798b8028e5328dc56d0a4130bb18c9491fb45229",
+          "uniqueColours": 1384,
+          "nonBackgroundSamples": 7849
+        },
+        {
+          "system": "K",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 218,
+          "frameSha256": "401c35d44a6df4d33250cd9276cd94a050981214933b017bb1918b92854a51a0",
+          "compositorSha256": "a2cdef6e1ecb642ad39da6ded7636725a96c5d991f2c7f9a4446c43135d82415",
+          "uniqueColours": 198,
+          "nonBackgroundSamples": 1817
+        },
+        {
+          "system": "K",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "bb38b0b1b586ae5e76661aed118ed635bfac9979fef2e55fed263b57b82e1f2f",
+          "compositorSha256": "f18f4f5c5e399b12f6ad316bc6b4f9a8bac20622b437d93cbcd5d4c08dd35925",
+          "uniqueColours": 864,
+          "nonBackgroundSamples": 5656
+        },
+        {
+          "system": "R",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "0e8ea590fcfb507f839922fdaf7f0592da091f217c281e34ffe86fe30ed8efeb",
+          "compositorSha256": "64a8f3c7486eb0c6bde7bc1c80f3ed0c8d765b94810233f24187a36959187e3f",
+          "uniqueColours": 1596,
+          "nonBackgroundSamples": 12255
+        },
+        {
+          "system": "R",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 219,
+          "frameSha256": "535fd3ad7e7a3556244bc29509e4f638de27f7d4e7e6480d826dfe172e74f562",
+          "compositorSha256": "dee54cc8596c0f7bca320ffb0f1761badcdef8ad205d68675fc8cee1d3f3ce17",
+          "uniqueColours": 208,
+          "nonBackgroundSamples": 1921
+        },
+        {
+          "system": "R",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "2b4cf2ad718e233599847beb0376c8408e92d13b563a5a6a60e8898593d5ccf4",
+          "compositorSha256": "b6b3188efd42efa2cc50ba3ba38358e07228d58dd100480fd0c0bba71466d184",
+          "uniqueColours": 1158,
+          "nonBackgroundSamples": 6233
+        },
+        {
+          "system": "R",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "0c2c21a382dcd547ddbde2843ae4f5f10f440ddba807b29590483c016aee9e29",
+          "compositorSha256": "17ad889c676b7c0f9c5b5f13b0c75d6b85257b784329acb328b8faff54ec8281",
+          "uniqueColours": 1540,
+          "nonBackgroundSamples": 12269
+        },
+        {
+          "system": "R",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 216,
+          "frameSha256": "0d159403f93fa589561b9038b34ce058fc80a5947c5002fe3fff1962d5f77ff2",
+          "compositorSha256": "e8b5bf772086f73b9f53376d63a053e3f27ff803206924a17e5607e1a978c81c",
+          "uniqueColours": 214,
+          "nonBackgroundSamples": 1941
+        },
+        {
+          "system": "R",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "a2d651e879b46e46112ef984317f7323f46ceb9c5d8b125ec1167878e11c4225",
+          "compositorSha256": "91df775e39c4cae274c360331c1d125e15668e393971442abdd4c9ce2303bc14",
+          "uniqueColours": 896,
+          "nonBackgroundSamples": 5911
+        },
+        {
+          "system": "R",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "759674d6e64dcee649fc46a7e122b6212da18d66709f4201b48acbcc97e5c874",
+          "compositorSha256": "46405731be4c289e1fc48d694e5eceb55a98573259e4cdc2f8fd9c491b47625d",
+          "uniqueColours": 1392,
+          "nonBackgroundSamples": 7896
+        },
+        {
+          "system": "R",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 220,
+          "frameSha256": "b00797833acb21b472706ac19d0b6bbe3c099235f19414630883340a89bc15c4",
+          "compositorSha256": "3140938982c340a4be8512f137826f022dac59f1ee8c699cf5996ab621cebc1b",
+          "uniqueColours": 221,
+          "nonBackgroundSamples": 2031
+        },
+        {
+          "system": "R",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "b709501ee6f7276715a77891980d7d853417d97177af06b8f014bc80d080046c",
+          "compositorSha256": "f2fd3aa08eb255bcb3209a6eb06c771f924ecde4efe6a7e1c564947c54df79a4",
+          "uniqueColours": 863,
+          "nonBackgroundSamples": 5739
+        },
+        {
+          "system": "C",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "3e3c8d7c26439b23c1b0d59fb3ad3a7ce2bf0112df33be38193dcfd7fecb8811",
+          "compositorSha256": "aa97bf23df5b73965ea45d508bd0f52a0fd12e88e76a46796f9fc860805d0170",
+          "uniqueColours": 1583,
+          "nonBackgroundSamples": 12207
+        },
+        {
+          "system": "C",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Observer sky",
+          "draws": 229,
+          "frameSha256": "2d4f024e27459ee1b10389710c95784227f27f393d74dc6cf589ac5f5fcd3458",
+          "compositorSha256": "85053a93a26c631eccd8319a83123e45a16df7bfaaeace31d2ec1e37f4a855a8",
+          "uniqueColours": 217,
+          "nonBackgroundSamples": 2087
+        },
+        {
+          "system": "C",
+          "mode": "Volumes / wedges",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "3c5ad3cc9b30b0023466b6c48dab5c1e30ebfb5345d06c25593074ae163616f0",
+          "compositorSha256": "747951fdc24fd49323f86c733cfeb5cc5a287ceffc1e4c05dcd500942ebb36ef",
+          "uniqueColours": 1173,
+          "nonBackgroundSamples": 6197
+        },
+        {
+          "system": "C",
+          "mode": "Boundary arcs",
+          "viewpoint": "Earth overview",
+          "draws": 441,
+          "frameSha256": "f7cedabb3e2dd8347f69bf84161de5a93623197bbec09d9d1bfb31007c2c5a60",
+          "compositorSha256": "9623d595f6d08008d3eede946715b1a206a55e7354c9062ee61ccb3acdb90b08",
+          "uniqueColours": 1540,
+          "nonBackgroundSamples": 12208
+        },
+        {
+          "system": "C",
+          "mode": "Boundary arcs",
+          "viewpoint": "Observer sky",
+          "draws": 238,
+          "frameSha256": "9b01accc3012e51f312ffc4ff6a496008ee46bc7b75a41de9e9c15aa1980ef7f",
+          "compositorSha256": "9678e661018468b888f3c8da746b484ef22ca40ed9a1c2c5609f3b5d9bf95377",
+          "uniqueColours": 248,
+          "nonBackgroundSamples": 2058
+        },
+        {
+          "system": "C",
+          "mode": "Boundary arcs",
+          "viewpoint": "Outside sphere",
+          "draws": 484,
+          "frameSha256": "20ae2307d67da42816034062e65691ec453a9211651695105f426ce1c223bbb2",
+          "compositorSha256": "645936be2cde6dd1ea574aac72ad90566227e1b533d2c30eb69f5b4280d0f724",
+          "uniqueColours": 918,
+          "nonBackgroundSamples": 5900
+        },
+        {
+          "system": "C",
+          "mode": "Layered shells",
+          "viewpoint": "Earth overview",
+          "draws": 444,
+          "frameSha256": "2e77444b5163b63477fcd9d2e65bbedfab536e09549a9c256d4494b36e3d8c82",
+          "compositorSha256": "f05ef77de1a2fccccdb5f68bb106cb4f967c003d40eea8ed487bd0dc7a86d427",
+          "uniqueColours": 1399,
+          "nonBackgroundSamples": 7933
+        },
+        {
+          "system": "C",
+          "mode": "Layered shells",
+          "viewpoint": "Observer sky",
+          "draws": 241,
+          "frameSha256": "9d7b53f249f9f049461d95bf3bc53113b56d8258d8836ba4bc2190fef1d84b4b",
+          "compositorSha256": "7c9f7b83716142288f9308fc8775485fe10b768dfaf61634b8ebccc5ba3f6ed0",
+          "uniqueColours": 254,
+          "nonBackgroundSamples": 2019
+        },
+        {
+          "system": "C",
+          "mode": "Layered shells",
+          "viewpoint": "Outside sphere",
+          "draws": 487,
+          "frameSha256": "911eeaa603b19724780d5623b37064d70a5576335c113046e936ecfbb2ac49ce",
+          "compositorSha256": "00e1e2269238e6c0c16656ef13ae5c2202a3ad1b367940df6f37e988efc2b678",
+          "uniqueColours": 893,
+          "nonBackgroundSamples": 5806
+        }
+      ],
+      "reportPath": ".cache/m10-installed-corrected.json"
+    }
+  ]
+}
