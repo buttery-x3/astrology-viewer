@@ -40,7 +40,7 @@
     "All 378 actual saved WebGL frames decode as nonblank; scene draws, zero GL errors, unchanged numerical coordinates/moment/observer and distinct Outside house presentations are asserted by view-matrix.spec.ts.",
     "Frame hashes refer to synchronous saved canvas frames; compositor hashes are recorded separately. A passing saved-frame result is not a claim that every WebKit compositor screenshot included the GL canvas.",
     "Complete PNG attachment bodies remain in the raw reports and the linked CI artifact. These structured records preserve their hashes and measured pixel checks.",
-    "Earlier installed Chrome/Edge matrices remain historical at commit0abdff1; they are not relabelled as final-candidate results."
+    "Earlier installed Chrome/Edge matrices remain historical at commit 0abdff1; they are not relabelled as final-candidate results."
   ],
   "matrices": [
     {
