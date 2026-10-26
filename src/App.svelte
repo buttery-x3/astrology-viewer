@@ -259,7 +259,7 @@
     }
     if(hit.kind==='asterism')explorer.setLayer('asterisms',true);
     if(hit.kind==='earth-house'||hit.kind==='astro-line'){
-      if($explorer.viewpoint==='observer')explorer.setViewpoint('overview');
+      if($explorer.viewpoint==='observer')explorer.setViewpoint('overview',false);
       explorer.setLayer('earthProjections',true);
       explorer.setLayer(hit.kind==='earth-house'?'earthHouses':'astrocartography',true);
       if(hit.kind==='astro-line'){

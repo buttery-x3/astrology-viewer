@@ -44,6 +44,7 @@ const probe=(page:Page)=>page.evaluate(()=>(window as any).m10EarthProbe as Prob
 async function example(page:Page){
   await instrument(page);await page.goto('/');await page.getByRole('button',{name:/Explore example/}).click();
   await expect(page.getByText('Moment calculated',{exact:true})).toBeVisible();
+  await page.getByRole('button',{name:'Earth overview',exact:true}).click();
   await expect.poll(async()=>(await probe(page)).view.length).toBe(16);
 }
 async function settle(page:Page){await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));}
@@ -92,7 +93,8 @@ test('re-entering Earth overview restores its close globe and projections withou
   await openControlGroup(page,'earth');await page.getByLabel('Earth projections',{exact:true}).uncheck();await page.getByLabel('Projected house sections',{exact:true}).uncheck();await page.getByLabel('Astrocartography lines',{exact:true}).uncheck();
   const canvas=page.locator('.scene-canvas canvas');await canvas.focus();await page.keyboard.press('ArrowRight');await expect.poll(async()=>(await probe(page)).view).not.toEqual(initial);
   await page.getByRole('button',{name:'Earth overview',exact:true}).click();
-  for(const name of ['Earth projections','Projected house sections','Astrocartography lines'])await expect(page.getByLabel(name,{exact:true})).toBeChecked();
+  for(const name of ['Earth projections','Astrocartography lines'])await expect(page.getByLabel(name,{exact:true})).toBeChecked();
+  await expect(page.getByLabel('Projected house sections',{exact:true})).not.toBeChecked();
   await expect.poll(async()=>separation((await probe(page)).view,initial)).toBeLessThan(1e-5);
   expect(await page.locator('.context-details').innerText()).toBe(context);
 });
@@ -155,7 +157,7 @@ test('a real Orion figure path opens its asterism reading without selecting the 
   const a=direction(path[0]!),b=direction(path[1]!),point=a.multiplyScalar(.65).addScaledVector(b,.35).normalize().multiplyScalar(5.8);
   await page.getByRole('button',{name:'Clear selection',exact:true}).click();await settle(page);const screen=await project(page,point,true);
   await page.mouse.move(screen.x,screen.y);const hover=page.getByTestId('scene-hover');
-  await expect(hover.getByRole('heading',{name:'Orion',exact:true})).toBeVisible();await expect(hover).toContainText('Constellation asterism');await expect(hover).toContainText('figure-path');
+  await expect(hover.getByRole('heading',{name:'Orion',exact:true})).toBeVisible();await expect(hover).toContainText('Constellation asterism');await expect(hover).not.toContainText('Feature role');
   await expect(hover.getByRole('link')).toHaveCount(0);await page.mouse.click(screen.x,screen.y);
   await expect(page.locator('#inspector').getByRole('heading',{name:'Orion',exact:true,level:2})).toBeVisible();
   await expect(page.locator('#inspector')).toContainText('Constellation asterism');
