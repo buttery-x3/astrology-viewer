@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "scope": "Actual canvas astrocartography crossing, independent visibility filters and far-side hover/selection rejection",
+  "sourceIdentity": {
+    "committedBase": "f2ca281e8f57fd8841ca2e0a0de96017373ea522",
+    "server": "http://127.0.0.1:5196",
+    "workingTree": "Live integration working tree; not an exact-revision packaged-release claim"
+  },
+  "playwrightVersion": "1.64.1",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "stats": {
+    "startTime": "2026-10-26T03:53:17.924Z",
+    "duration": 28190.767,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "cases": [
+    {
+      "title": "a genuine geographic crossing offers both full identities and preserves each choice in the inspector",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 9635,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "title": "disabled body, angle and master filters remove their real crossing targets from picking",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8330,
+          "retry": 0
+        }
+      ]
+    },
+    {
+      "title": "far-side geographic crossings stay unavailable through a translucent Earth",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7417,
+          "retry": 0
+        }
+      ]
+    }
+  ],
+  "evidence": {
+    "actual-geographic-crossing": {
+      "point": {
+        "point": {
+          "x": 0.5697513408143661,
+          "y": 0.008153016459747841,
+          "z": 0.8217766959234358
+        },
+        "latitudeDeg": 55.263045345996986,
+        "longitudeDeg": 0.8198340555935602
+      },
+      "ids": [
+        "astro:sun:mc",
+        "astro:jupiter:ac"
+      ],
+      "planeResidual": 2.8343609790602084E-34,
+      "measurements": [
+        {
+          "id": "astro:sun:mc",
+          "rightAscensionDeg": 281.27839011811307,
+          "declinationDeg": -23.03243007823738,
+          "hourAngleDeg": 0,
+          "geometricAltitudeDeg": 11.704524575765635,
+          "verticalRate": 0
+        },
+        {
+          "id": "astro:jupiter:ac",
+          "rightAscensionDeg": 23.86785614533224,
+          "declinationDeg": 8.594263901889828,
+          "hourAngleDeg": -102.58946602721915,
+          "geometricAltitudeDeg": 3.419096282573281E-14,
+          "verticalRate": 0.549865290757343
+        }
+      ],
+      "metadata": [
+        {
+          "id": "astro:sun:mc",
+          "entityId": "astro:sun:mc",
+          "kind": "astro-line",
+          "name": "Sun MC · geographic line",
+          "role": "line",
+          "representation": "earth",
+          "bodyId": "sun",
+          "angle": "mc",
+          "instantMs": 946728000000,
+          "convention": "geocentric-apparent-in-mundo-unrefracted",
+          "screen": {
+            "x": 862.902587890625,
+            "y": 376.1182861328125
+          }
+        },
+        {
+          "id": "astro:jupiter:ac",
+          "entityId": "astro:jupiter:ac",
+          "kind": "astro-line",
+          "name": "Jupiter AC · geographic line",
+          "role": "line",
+          "representation": "earth",
+          "bodyId": "jupiter",
+          "angle": "ac",
+          "instantMs": 946728000000,
+          "convention": "geocentric-apparent-in-mundo-unrefracted",
+          "screen": {
+            "x": 862.902587890625,
+            "y": 376.1182861328125
+          }
+        },
+        {
+          "id": "astro:sun:mc",
+          "entityId": "astro:sun:mc",
+          "kind": "astro-line",
+          "name": "Sun MC · geographic line",
+          "role": "line",
+          "representation": "earth",
+          "bodyId": "sun",
+          "angle": "mc",
+          "instantMs": 946728000000,
+          "convention": "geocentric-apparent-in-mundo-unrefracted",
+          "screen": {
+            "x": 702.902587890625,
+            "y": 376.1182861328125
+          }
+        },
+        {
+          "id": "astro:jupiter:ac",
+          "entityId": "astro:jupiter:ac",
+          "kind": "astro-line",
+          "name": "Jupiter AC · geographic line",
+          "role": "line",
+          "representation": "earth",
+          "bodyId": "jupiter",
+          "angle": "ac",
+          "instantMs": 946728000000,
+          "convention": "geocentric-apparent-in-mundo-unrefracted",
+          "screen": {
+            "x": 702.902587890625,
+            "y": 376.1182861328125
+          }
+        }
+      ]
+    },
+    "backside-crossing-rejection": {
+      "point": {
+        "point": {
+          "x": -0.348654535357099,
+          "y": -0.004989169769164766,
+          "z": -0.9372380290832952
+        },
+        "latitudeDeg": -69.59277532729062,
+        "longitudeDeg": -179.18016594440644
+      },
+      "ids": [
+        "astro:sun:ic",
+        "astro:moon:ac"
+      ],
+      "facing": -2.785718146284653,
+      "nearestVisibleCurveClearancePx": 152.8191894670119,
+      "earthOpacity": 0.3
+    }
+  }
+}
